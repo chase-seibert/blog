@@ -18,7 +18,7 @@ title_separator: "|"
 email:
 description: Facts, hacks and attacks from my life as a web application developer
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://chase-seibert.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://chase-seibert.github.io"
 repository: "chase-seibert/chase-seibert.github.io"
 
 author:
