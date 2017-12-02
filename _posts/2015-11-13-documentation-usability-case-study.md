@@ -33,7 +33,7 @@ This dedication to continuous improvement of the documentation is evident in som
 
 One common task in both ecosystems is accessing a database. Further, there is a common (if not core) use case where you want to query a database by a list of record IDs. If you Google for `Django query in list`, the first hit is the [Django documentation](https://docs.djangoproject.com/en/1.8/ref/models/querysets/#in), and there is a sidebar with the "in" clause called out:
 
-![django in](/blog/images/django_in.png)
+![django in](/images/django_in.png)
 
 If you search for `SQLAlchemy query in list`, you get five Stackoverflow answers before you see their official documentation. The first hit does not contain a correct answer. The [actual documentation hit](https://pythonhosted.org/Flask-SQLAlchemy/api.html) takes you a nebulously titled page, "API". The table of contents does not contain anything at the granularity of individual topics on that page. Searching the page for "in" is of course fruitless. There is [specific documentation for this feature](http://docs.sqlalchemy.org/en/rel_0_7/core/expression_api.html#sqlalchemy.sql.operators.ColumnOperators.in_), but it does not come back in the first few pages of Google results. Even if you find it, it does not include a specific code example.
 

@@ -41,7 +41,7 @@ After playing around with the [HappyBase](https://github.com/wbolster/happybase)
 
 The issue turned out to be a setting on the Rackspace load balancer.
 
-![Rackspace Load Balancer TCP Client First](/blog/images/rackspace_lb.png)
+![Rackspace Load Balancer TCP Client First](/images/rackspace_lb.png)
 
 The default TCP protocol, called simply "TCP", did not work. By changing the setting to "TCP (Client First)", HappyBase was able to connect via Thrift.
 

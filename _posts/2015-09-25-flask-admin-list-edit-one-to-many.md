@@ -21,7 +21,7 @@ class MyModelView(BaseModelView):
 
 This ends up looking like this:
 
-![column_editable_list](/blog/images/column_editable_list.png)
+![column_editable_list](/images/column_editable_list.png)
 
 This works for most `db.Model` column types I tried. For `String`, `Text` and `Integer`, you get a 
 simple `input` HTML element. For basic many to one relationships, you get a `select` HTML element.

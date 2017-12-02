@@ -8,7 +8,7 @@ My wife and I recently bought a house in the San Francisco bay area. Having no f
 
 Our experience buying a condo in Boston told us that you can spend months looking and not really getting excited about any of the places. But if all of a sudden you find the neighborhood that's right for you, then every place starts looking pretty good. For us that was the South End in Boston. In the bay area, it turned out to be [Alameda](http://www.streetadvisor.com/search/neighborhoods-in-alameda-alameda-county-california).
 
-![alameda](/blog/images/alameda.jpg)
+![alameda](/images/alameda.jpg)
 
 ## Picking a town
 

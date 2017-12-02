@@ -11,7 +11,7 @@ The schema itself can be counter intuitive for engineers who have only worked on
 
 ## The Problem
 
-![hierarchy](/blog/images/hierarchy.png)
+![hierarchy](/images/hierarchy.png)
 
 Here we have a somewhat complicated org chart, albeit a small one. Group 10 happens to roll up to both the State and Role hierarchies. This is known as a multi-hierarchy system. The company wants to be able to report on posts made by that group from two different perspectives, depending on the specific report they are trying to run.
 

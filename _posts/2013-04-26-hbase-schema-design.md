@@ -37,7 +37,7 @@ You're probably used to thinking of tables like this:
 
 In HBase, this is actually modelled like this:
 
-![HBase Table Shema](/blog/images/hbase_tables.png)
+![HBase Table Shema](/images/hbase_tables.png)
 
 Notice that each row is basically a linked list, ordered by column family and then column name. This is how it's laid down on disk, as well. Missing columns are free, because there is no space on disk pre-allocated to a null column. Given that, it's reasonable to design a schema where rows have hundreds or thousands of columns.
 

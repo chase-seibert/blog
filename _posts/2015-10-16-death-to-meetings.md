@@ -8,7 +8,7 @@ tags: process reading-list meetings manager newboss
 
 Meetings are a fact of life in corporate America, whether you're working at a large company, or a startup. Is that 35% number correct? Seems pretty close to my personal results. I've been using [Toggl]() for a while to track time, and over the last 30 days, I have spent more like 40% of my time in meetings.
 
-![toggl_meetings](/blog/images/toggl_meetings.png)
+![toggl_meetings](/images/toggl_meetings.png)
 
 *The red block is meetings, green is coding, and blue is writing.*
 

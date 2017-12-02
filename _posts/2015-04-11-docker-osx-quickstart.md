@@ -29,7 +29,7 @@ docker run ubuntu:14.04 /bin/echo 'Hello world'
 
 That's your hello world example. Let's breakdown what's happening here. `boot2docker init` creates a new virtual machine in VirtualBox.
 
-![boot2docker](/blog/images/boot2docker.png)
+![boot2docker](/images/boot2docker.png)
 
 The next step, `boot2docker up` runs the virtual machine. The `eval "$(boot2docker shellinit)"` step is setting some environment variables that tell Docker what container context you are currently in. If you run just `boot2docker shellinit` by itself, you can see the raw output:
 

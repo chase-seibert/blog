@@ -26,7 +26,7 @@ get the dreaded "Object Expected" error (the single most useless error of all ti
 What puny developer tools that Microsoft deigned to provide back in 2005 are of
 absolutely no use. Instead, all you see is a white screen and the following:
 
-![ie7 not responding](/blog/images/ie7_not_responding.png)
+![ie7 not responding](/images/ie7_not_responding.png)
 
 So it begins. In this case, I assume that we were not crashing IE7 at some point in
 the recent past. Otherwise, we would have presumably received this bug report
@@ -65,7 +65,7 @@ At 1,000 commits, I get a working build again. So I try 500 commits ago. Not wor
 left with a small set of potential breaking commits, which I manually browse through until
 I see this:
 
-![ie7 extra comma](/blog/images/ie7_extra_comma.png)
+![ie7 extra comma](/images/ie7_extra_comma.png)
 
 From experience, I suspected all along that this was likely either an unclosed HTML
 tag in a javascript template, or an extra comma. I have seen both [crash old versions](http://blog.bottomlessinc.com/2010/01/ie-bug-dont-put-extra-commas-in-your-js-arrays/)

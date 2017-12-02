@@ -39,8 +39,8 @@ blockers for release and what step on our release schedule we were on.
 
 But I also made some fun graphs!
 
-![img](/blog/images/qa_time.png)
-![img](/blog/images/qa_type.png)
+![img](/images/qa_time.png)
+![img](/images/qa_type.png)
 
 # Triage & Troubleshooting
 
