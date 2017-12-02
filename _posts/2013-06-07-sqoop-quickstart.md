@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Sqoop/HBase Quickstart on Linux
 tags: sqoop hadoop hbase
 ---

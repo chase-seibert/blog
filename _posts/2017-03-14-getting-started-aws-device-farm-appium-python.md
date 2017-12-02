@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Getting Started with AWS Device Farm and Python Appium
 tags:
 ---

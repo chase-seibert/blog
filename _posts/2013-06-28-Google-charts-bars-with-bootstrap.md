@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Fixing styling incompatibility with Google Charts and Twitter Bootstrap
 tags: bootstrap gcharts
 ---

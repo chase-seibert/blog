@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Celery fail silently context manager
 tags: python celery
 ---

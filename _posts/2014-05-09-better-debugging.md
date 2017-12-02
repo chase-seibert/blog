@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Better debugging through healthy living
 tags: process debugging reading-list
 ---

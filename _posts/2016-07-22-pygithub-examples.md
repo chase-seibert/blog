@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: PyGithub Quickstart Examples
 ---
 

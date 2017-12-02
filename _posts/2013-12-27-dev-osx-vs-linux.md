@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Development on a Mac versus Linux
 tags: osx linux
 ---

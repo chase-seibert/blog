@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Writing a cURL to Python Install Script for a Django development environment
 tags: python
 ---

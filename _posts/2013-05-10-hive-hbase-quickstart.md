@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Hive with HBase Quickstart
 tags: hbase hive
 ---

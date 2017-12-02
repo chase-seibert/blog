@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Introducing Advocoders
 tags: opensource blog
 ---

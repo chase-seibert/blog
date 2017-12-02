@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Picking a place to live in the East Bay
 tags: housing
 ---

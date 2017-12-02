@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: What makes a compelling product?
 ---
 

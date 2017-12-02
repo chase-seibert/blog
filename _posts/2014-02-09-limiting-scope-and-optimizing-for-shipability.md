@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Limiting Project Scope and Optimizing for Shipability
 tags: process reading-list
 ---

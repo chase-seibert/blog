@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Switching from Ubuntu Unity to LXDE
 tags: linux ubuntu lxde
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Per-OS virtual environments in Python
 tags: python
 ---

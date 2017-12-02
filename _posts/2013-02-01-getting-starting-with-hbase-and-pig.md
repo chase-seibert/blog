@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: HBase/Pig/Python Quickstart on OSX
 tags: hbase pig hadoop python
 ---

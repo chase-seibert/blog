@@ -1,6 +1,6 @@
 
 ---
-layout: post
+
 title: Logging Django shell and dbshell sessions
 tags: django logging
 ---

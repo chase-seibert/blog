@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Why software engineers should maintain a blog
 tags: reading-list career
 ---

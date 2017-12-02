@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Dynamic Attributes in Python
 tags: python tutorial
 ---

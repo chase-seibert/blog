@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Python Subprocess Asynchronous Read Stdout
 tags: python subprocess threads
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Mocking HTTP calls in Python tests
 tags: python
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: QA 101 - How to Write a Bug Report
 tags: reading-list qa
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Python script to delete merged git branches
 tags: git python
 ---

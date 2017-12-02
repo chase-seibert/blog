@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Designing for the Mental Model
 ---
 

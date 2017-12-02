@@ -13,20 +13,58 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Chase Seibert | blog
-email: chase.seibert@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Facts, hacks and attacks from my life as a web application developer
+title: Chase Seibert Blog
+title_separator: "|"
+email:
+description: Facts, hacks and attacks from my life as a web application developer
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://chase-seibert.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: chase_seibert
-github_username:  chase-seibert
+repository: "chase-seibert/chase-seibert.github.io"
+
+author:
+  name   : "Chase Seibert"
+  avatar : "/images/chase-square.jpg"
+  location: "San Francisco, CA"
+  bio    : Senior Engineering Manager, NerdWallet
+  email  : # optional
+  twitter: chase_seibert
+  facebook: chase.seibert
+  linkedin: chaseseibert
+  github: chase-seibert
+  stackoverflow: 7679
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "posts" # previously `post` in Jekyll 2.2.
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: false
+      share: false
+      related: true
+      toc: true
+      toc_label: "On this page"
 
 # Build settings
 markdown: kramdown
 theme: minima
+remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: "dirt" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
+paginate: 5
+paginate_path: /page:num/
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
+  - jekyll-paginate
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

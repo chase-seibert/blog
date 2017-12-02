@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Reading List (my common references)
 tags: reading-list
 ---

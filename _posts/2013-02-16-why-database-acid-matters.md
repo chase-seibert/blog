@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Why Database Integrity Matters
 tags: database
 ---

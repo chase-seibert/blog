@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Faster Django/sqlite runserver with /dev/shm
 tags: django linux
 ---

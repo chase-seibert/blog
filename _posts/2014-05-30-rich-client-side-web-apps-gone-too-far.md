@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Rich client side web apps gone too far!
 tags: web reading-list newboss
 ---

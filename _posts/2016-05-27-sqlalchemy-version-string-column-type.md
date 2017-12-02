@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: SQLAlchemy - Storing Application Version Strings
 ---
 

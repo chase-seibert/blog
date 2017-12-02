@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Joining a software startup right out of school
 tags: startups reading-list
 ---

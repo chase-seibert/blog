@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: What to spend your last two weeks at a job doing
 tags: career
 ---

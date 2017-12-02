@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Subclassing Django's runserver causes command to be run twice
 tags: django
 ---

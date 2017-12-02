@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Comparison of Chat Message Platforms
 ---
 

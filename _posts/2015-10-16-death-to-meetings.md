@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Death to Meetings (and other alternatives)
 tags: process reading-list meetings manager newboss
 ---

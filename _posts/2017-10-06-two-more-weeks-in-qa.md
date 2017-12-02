@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Two (more) Weeks in QA
 tags: qa
 ---

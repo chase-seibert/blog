@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Mocking HappyBase for unit testing HBase code
 tags: python hbase
 ---

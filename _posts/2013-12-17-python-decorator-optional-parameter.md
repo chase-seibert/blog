@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Writing a Python decorator that can be called as a function or a callable
 tags: python
 ---

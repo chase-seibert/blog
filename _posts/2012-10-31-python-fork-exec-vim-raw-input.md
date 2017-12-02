@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Using $EDITOR and a less paging from Python command line apps
 tags: python git
 ---

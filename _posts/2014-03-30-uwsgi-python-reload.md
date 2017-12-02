@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Reload Python inside uWSGI as fast as humanely possible
 tags: python uwsgi
 ---

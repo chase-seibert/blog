@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Using OmniFocus to manage your todo list and get shit done
 tags: reading-list gtd newboss manager
 ---

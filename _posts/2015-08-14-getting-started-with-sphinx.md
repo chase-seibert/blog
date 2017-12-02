@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Getting Started with Sphinx docs
 tags: python
 ---

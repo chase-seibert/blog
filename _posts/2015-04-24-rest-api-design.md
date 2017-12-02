@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: REST API Design
 tags: api
 ---

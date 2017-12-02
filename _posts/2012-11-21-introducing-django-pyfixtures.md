@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Introducing Django Pyfixtures
 tags: django fixtures
 ---

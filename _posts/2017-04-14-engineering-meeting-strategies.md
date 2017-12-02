@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Minimizing Impact of Interruptions on Engineers
 tags: meetings manager
 ---

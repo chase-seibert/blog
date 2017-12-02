@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Introducing Django Migratron
 tags: python django
 ---

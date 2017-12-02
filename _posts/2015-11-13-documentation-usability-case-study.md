@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Case Study in Documentation Usability - Django vs. Flask/SQLAlchemy
 tags: documentation
 ---

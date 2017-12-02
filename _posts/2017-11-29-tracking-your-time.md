@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Tracking Your Time
 tags:
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Happybase Connection Pooling
 tags: python hbase
 ---

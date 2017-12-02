@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Deploying React Native apps with Buddy Build
 tags: app react-native
 ---

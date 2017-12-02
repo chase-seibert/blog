@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: My favorite coding interview question
 tags: interview
 ---

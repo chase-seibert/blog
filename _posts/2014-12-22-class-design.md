@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Thoughts on Object Oriented Class Design
 tags: computer-science object-oriented
 ---

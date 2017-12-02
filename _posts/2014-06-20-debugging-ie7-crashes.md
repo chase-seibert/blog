@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Debugging an IE7 browser crash (manual git bisect)
 tags: ie7 javascript git
 ---

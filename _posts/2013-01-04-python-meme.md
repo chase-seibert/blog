@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: New Year Python Meme 2012
 tags: python pythonmeme
 ---

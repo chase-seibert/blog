@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Django Nose Lint Quickstart - Enforce fast unit tests
 tags: django testing
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Hadoop from a Python Perspective
 tags: python hbase hadoop
 ---

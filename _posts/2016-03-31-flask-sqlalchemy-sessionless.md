@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Abstracting away session handling in Flask/SQLAlchemy
 ---
 

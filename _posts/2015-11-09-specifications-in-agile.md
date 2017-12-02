@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: The Role of Specifications in Agile
 tags: process
 ---

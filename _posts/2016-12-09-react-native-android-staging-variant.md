@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: React Native Multiple Release Variants
 tags:
 ---

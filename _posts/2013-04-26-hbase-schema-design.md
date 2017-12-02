@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: HBase Schema Introduction for Programmers
 tags: hbase
 ---

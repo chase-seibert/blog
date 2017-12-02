@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Hacking Django runserver to run multiple Django instances
 tags: django
 ---

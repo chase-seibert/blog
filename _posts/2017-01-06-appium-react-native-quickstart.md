@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Appium + React Native Quickstart
 tags:
 ---

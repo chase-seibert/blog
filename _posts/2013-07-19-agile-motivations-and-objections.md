@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Agile Motivations and Objections
 tags: agile scrum
 ---

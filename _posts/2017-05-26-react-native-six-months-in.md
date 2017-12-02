@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: React Native Six Months In
 tags:
 ---

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Flask-Admin Edit One To Many Fields from the List View
 tags: python flask
 ---

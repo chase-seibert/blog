@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title: Creating International CSV files with Python
 tags: csv
 ---
