@@ -2,6 +2,9 @@
 layout: single
 title: Reading List (my common references)
 permalink: /reading-list/
+redirect_from:
+  - /tag/reading-list/
+  - /tag/reading-list
 ---
 
 This post is list of articles, blogs and other resources that I commonly reference.
