@@ -12,22 +12,22 @@ That's why I'm introducing [Advocoders](http://advocoders.herokuapp.com/), a pla
 
 Any engineer on your team can go sign up with their corporate Google Apps account.
 
-![Advododers Signup 1](/images/advocoders1.png)
+![Advododers Signup 1](/blog/images/advocoders1.png)
 
 They can fill out some basic information about themselves.
 
-![Advododers Signup 2](/images/advocoders2.png)
+![Advododers Signup 2](/blog/images/advocoders2.png)
 
 Then they link in their blog's RSS feed, their Stackoverflow account and their Github account.
 
-![Advododers Signup 3](/images/advocoders3.png)
+![Advododers Signup 3](/blog/images/advocoders3.png)
 
 They can also put in a blurb about your company.
 
-![Advododers Signup 4](/images/advocoders4.png)
+![Advododers Signup 4](/blog/images/advocoders4.png)
 
 Advocoders generates a combined news feed for all the engineers in the company, complete with syntax highlighting for code snippets. The engineers continue to get credit for their content, but right beside the content is a call out to contact the company for job opportunities.
 
-![Advododers News Feed](/images/advocoders.png)
+![Advododers News Feed](/blog/images/advocoders.png)
 
 Right now, it's hosted on [Heroku](https://www.heroku.com/). But it's just a Django app that you can [fork the code](https://github.com/chase-seibert/advocoders) and run yourself.

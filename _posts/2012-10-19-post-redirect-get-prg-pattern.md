@@ -6,9 +6,9 @@ tags: django view prg
 
 Anyone who has used a web browser has probably encountered the dreaded "form resubmission" dialog. This happens when the user tries to refresh or use the back button to navigate back to a HTTP POST.
 
-![Internet Explorer resubmit form dialog](/images/resubmit_ie.png)
-![Chrome resubmit form dialog](/images/resubmit_chrome.png)
-![Firefox resubmit form dialog](/images/resubmit_firefox.jpeg)
+![Internet Explorer resubmit form dialog](/blog/images/resubmit_ie.png)
+![Chrome resubmit form dialog](/blog/images/resubmit_chrome.png)
+![Firefox resubmit form dialog](/blog/images/resubmit_firefox.jpeg)
 
 A typical case where you might see this is when checking out from a web store. Maybe you have one page that takes your shipping address, and a second page that takes your billing information. The first page submits your data with an HTTP POST, and then returns a 200 response with the payment details form HTML. If the user hits the back button in their browser, or tries to refresh the second page, they will see one of the above dialogs.
 

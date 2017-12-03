@@ -23,7 +23,7 @@ The first command is just a simple alias for the above mentioned native grep. Li
 
 It also displays the results in a nice little buffer window, which you can navigate through with normal HJKL keys, and open matches in the main editor window.
 
-![vim Grep](/images/vimgrep.png)
+![vim Grep](/blog/images/vimgrep.png)
 
 The second line is a key mapping that will grep for the word currently under the cursor. You can just navigate to a word and hit `Leader-g` to issue the Grep command.
 

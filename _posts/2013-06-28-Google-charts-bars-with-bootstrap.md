@@ -6,7 +6,7 @@ tags: bootstrap gcharts
 
 Ran into a vexing issue this week when we upgraded to using [Twitter Bootstrap](http://twitter.github.io/bootstrap/). Some of our analytics graphs using [Google Charts](https://developers.google.com/chart/interactive/docs/index) were suddenly broken in IE 7/8/9. Instead of the expected 100px wide bar graphs, they were just a few pixels wide.
 
-![google charts bad](/images/google_chart_bars_bad.png)
+![google charts bad](/blog/images/google_chart_bars_bad.png)
 
 Normally Google Charts produces the following DOM for their bar graphs.
 
@@ -44,4 +44,4 @@ function fixGoogleChartsBarsBootstrap() {
 };
 {% endhighlight %}
 
-![google charts bad](/images/google_chart_bars_good.png)
+![google charts bad](/blog/images/google_chart_bars_good.png)

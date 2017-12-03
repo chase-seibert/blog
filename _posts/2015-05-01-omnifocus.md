@@ -13,11 +13,11 @@ Yep, it's paid software. I feel like I put in my time with free tools on this on
 
 As part of my [GTD](http://gettingthingsdone.com/) workflow, I enter tasks to my todo list whenever I happen to think of them, often from my phone.
 
-![omnifocus add](/images/omnifocus_add.png)
+![omnifocus add](/blog/images/omnifocus_add.png)
 
 Very often I will not categorize them in the moment. I'll typically take a pass at my "Inbox" (the list of items not tied to a project) first thing in the morning at work. Most will be assigned to existing projects, but occasionally I will create a new project for a task.
 
-![inbox](/images/omnifocus_inbox.png)
+![inbox](/blog/images/omnifocus_inbox.png)
 
 Then, I can work through items during the day and start checking things off. I can easily focus on one project at a time and see just those items. Or I can favorite items and just look at those. There is even a context feature which allows you to see tasks that are related to where you are physically located or who you are talking to at the moment.
 
@@ -28,7 +28,7 @@ I recently converted to [Inbox Zero](http://whatis.techtarget.com/definition/inb
 
 Both tasks and entire projects can be deferred into the future. You can also set hard due dates.
 
-![omnifocus_defer](/images/omnifocus_defer.png)
+![omnifocus_defer](/blog/images/omnifocus_defer.png)
 
 I use this feature to ensure that I'm making steady progress on a host of projects. Maybe on Mondays I start working on project A. I make some progress, checking off one or more tasks, and then I may defer that entire project a few days or a week into the future. It will pop back up then as a reminder to continue making progress, or defer it again.
 
@@ -37,7 +37,7 @@ I use this feature to ensure that I'm making steady progress on a host of projec
 
 Similarly, there are things I want to do every single business day. I have a "Daily" project for these items, with a project level setting to repeatedly defer them by one day every time I check off a task.
 
-![omnifocus_repeat](/images/omnifocus_repeat.png)
+![omnifocus_repeat](/blog/images/omnifocus_repeat.png)
 
 
 # Other Stuff

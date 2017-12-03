@@ -105,7 +105,7 @@ in Windows [Regional and Language](http://hotware.wordpress.com/2009/12/16/troub
 control panel called "List Separator". In the US version of Windows, the default is a comma (`,`). In other locales,
 specifically the European version, the default is often a semi-colon (`;`).
 
-![regional settings](/images/regional.png)
+![regional settings](/blog/images/regional.png)
 
 There are several hack solutions to this. The first is to tell all your European users to change their setting. The second
 is to save the file as a .txt file, and tell the users to choose "Open with Excel", which will then run the import wizard

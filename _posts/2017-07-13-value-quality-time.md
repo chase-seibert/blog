@@ -8,7 +8,7 @@ The traditional [Iron Triangle](https://en.wikipedia.org/wiki/Project_management
 tries to explain in graphical form how software projects need to make hard
 tradeoffs between scope, schedule and resources.
 
-![img](/images/ironTriangle.jpg)
+![img](/blog/images/ironTriangle.jpg)
 
 This is alternatively referred to as the Time-Cost-Quality Triangle,
 Triple Constraints, the Triangle of Balance, or the Iron Triangle.
@@ -17,13 +17,13 @@ Triple Constraints, the Triangle of Balance, or the Iron Triangle.
 
 There are many variants. A common variant is phrase "Fast, Cheap or Good. Pick two."
 
-![img](/images/fast-cheap-good.png)
+![img](/blog/images/fast-cheap-good.png)
 
 A more nuanced version allows illustrates the nature of the tradeoffs that
 you're making, an allows for a middle option where all three are in balance, but
 you're not really optimizing any of them.
 
-![img](/images/Project_Management_Triangle.jpg)
+![img](/blog/images/Project_Management_Triangle.jpg)
 
 Software engineers is all about managing tradeoffs. The highest level
 tradeoff is during planning and prioritization in the form of trading off
@@ -40,14 +40,14 @@ have the resources to hire many engineers. You're also typically building an
 MVP type product, trading off scope versus time. Scope can be further broken
 down into feature breadth and depth, and the quality of the whole experience.
 
-![img](/images/agiletriangle.jpg)
+![img](/blog/images/agiletriangle.jpg)
 
 
 # My Agile MVP Triangle
 
 To simplify, my version of the Agile MVP triangle looks like this.
 
-![img](/images/Value-Quality-Time.png)
+![img](/blog/images/Value-Quality-Time.png)
 
 You can pick exactly one spot on this triangle for a given project. If you
 choose a spot close to the value point of the triangle, you are explicitly

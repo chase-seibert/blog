@@ -84,7 +84,7 @@ git config core.preloadindex true
 
 Here are the stats for our git repository. This was in a repo with approximately 33,000 files. The host machine is OSX 10.9 with an SSD. The guest VM was configured with 2GB RAM and 2 CPUs. My methodology was to run `git status` four times for each configuration. The first time is noted separately, and the last three times are averaged. Time was measured using the `time` command.
 
-![performance numbers](/images/nfsgit.png)
+![performance numbers](/blog/images/nfsgit.png)
 
 # Still looking for a better solution
 

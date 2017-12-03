@@ -10,7 +10,7 @@ Software is typically more complicated under the hood than it looks on the surfa
 
 This user expectation is what I will call their mental model of your product. A good example of a simple mental model, and one that is never violated, is iOS.
 
-![ios home](/images/ios_home.png)
+![ios home](/blog/images/ios_home.png)
 
 Under the hood, there is a more or less traditional operating system with a file system, a multi-tasking process scheduler, even a [command line](http://www.iphonefaq.org/archives/971616). But you *never* see these things. Do you even know what a file path on iOS looks like? You don't, and that's because the user interface model is inviolate - it never breaks down.
 
@@ -20,7 +20,7 @@ These behaviors enforce the mental model that there IS nothing underlying the iO
 
 Apple has a history of inviolate mental models. When I started on Macs, the GUI was already the only thing that existed. There was no "there" underneath.
 
-![system 6](/images/system6.jpg)
+![system 6](/blog/images/system6.jpg)
 
 Applications were icons; there was nothing else. You installed and uninstalled them by moving the icon around, or to the trash. There was no other way to make an action happen than to navigate to a menu item; that's where the platonic form of that action "lived".
 

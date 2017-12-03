@@ -15,13 +15,13 @@ can see some interesting data.
 The primary tool I've been using is [Toggl](https://toggl.com/). It's a simple app that sits in you status bar and prompts you to start a timer for what you're currently working on,
 if there isn't one running already.
 
-![img](/images/toggl.png)
+![img](/blog/images/toggl.png)
 
 I eventually settled on five primary "projects" that my time is categorized under:
 meetings, coding, 1:1s, writing and other. In the end, I did end up spending more
 time in meetings than doing anything else.
 
-![img](/images/toggl_year.png)
+![img](/blog/images/toggl_year.png)
 
 ## Other/GTD time
 
@@ -32,7 +32,7 @@ I just categorize and set a due date for. Other tasks I complete right then, if
 they are quick. My time spent on this category over the course of the year was
 pretty constant.
 
-![img](/images/toggl_other.png)
+![img](/blog/images/toggl_other.png)
 
 I have a whole [separate blog post](http://chase-seibert.github.io/blog/2015/05/01/omnifocus.html) on GTD, if you want to learn more.
 
@@ -42,7 +42,7 @@ The amount of time I spend writing wiki pages, blog posts and longer emails also
 stayed pretty constant over the year. If I had broken this down into blog time
 and everything else, I would imagine that blogging is at most two hours a month.
 
-![img](/images/toggl_writing.png)
+![img](/blog/images/toggl_writing.png)
 
 ## Coding time
 
@@ -52,7 +52,7 @@ hands on coding, to three teams with 12 total people. In the past, I've noticed
 that right when you get to 5 or 6 people, you basically cannot write code
 anymore.
 
-![img](/images/toggl_coding.png)
+![img](/blog/images/toggl_coding.png)
 
 April was a hackathon project that I spent way to much extra time on. October
 was a major release that was all hands on deck. I spent a bunch of time
@@ -66,12 +66,12 @@ interviews, including a potential aquihire. There is another big spike in
 September, which was getting a new boss, splitting up a team and also
 a bunch of late project schedule coordination meetings.
 
-![img](/images/toggle_meetings.png)
+![img](/blog/images/toggle_meetings.png)
 
 For one on ones, there was a steady increase as we added new team members, and
 then a big spike in August as we added a few new people all at once.
 
-![img](/images/toggl_ones.png)
+![img](/blog/images/toggl_ones.png)
 
 # Timebox
 
@@ -83,7 +83,7 @@ meeting time has gone up, I've actually been pretty successful at maintaining
 and even increasing the amount of free time I have in blocks - time to actually
 work on something substantial without interruptions.
 
-![img](/images/timebox_2017.jpeg)
+![img](/blog/images/timebox_2017.jpeg)
 
 In fact, my time this year was 57% free time with 267 hours in blocks of at
 least 3 hours. Doesn't sound too bad when you put it that way!
@@ -96,4 +96,4 @@ a breakdown of time spent by app/website. I'm spending more time in Google
 Spreadsheets than in my terminal app and my code editor combined, which is
 definitely a strong signal.
 
-![img](/images/rescue.png)
+![img](/blog/images/rescue.png)

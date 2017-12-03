@@ -122,6 +122,6 @@ The only tricky bit was getting `virtualenv` to activate properly inside the scr
 
 The result is a single session of multiple windows that you can toggle through with the standard screen commans like `C-a`.
 
-![screen django](/images/screen.png)
+![screen django](/blog/images/screen.png)
 
 *Note*: I'm also running into intermittent issues with `sqlite3` locking the database, due to many processes trying to access it. Running with `--nothreading` and reducing celery to one worker seems to have helped, but we may need to move to `mysql` for development.

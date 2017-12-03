@@ -17,7 +17,7 @@ Not everyone needs to go to every meeting. If you're using Google Calendar,
 when you invite a team, expand the group into individuals and click on the
 person icon to the left of a name to mark that attendee optional.
 
-![optional attendees](/images/meetings_optional.png)
+![optional attendees](/blog/images/meetings_optional.png)
 
 ## Write an agenda
 
@@ -45,7 +45,7 @@ be remote that day. You can use the [Zoom Chrome plugin](https://chrome.google.c
 to quickly create Zoom info. This will allow attendees to dial in before the
 meeting even starts.
 
-![zoom plugin](/images/meetings_zoom.png)
+![zoom plugin](/blog/images/meetings_zoom.png)
 
 # During the Meeting
 

@@ -24,7 +24,7 @@ The stock market has historically returned [about 9.5% annually](http://observat
 
 Over time, that 7% interest will overtake your actual cash deposits into your savings. Your savings will be growing more and more due to interest than anything else.
 
-![compound interest 2](/images/compound.png)
+![compound interest 2](/blog/images/compound.png)
 
 If you save $25k a year for 45 years at 7% interest, you will end up with $7.6m. Start just 10 years later at age 30, and you will have $3.6m. Feel free to play around with a [compound interest calculator](http://www.thecalculatorsite.com/finance/calculators/compoundinterestcalculator.php) yourself.
 

@@ -23,7 +23,7 @@ How does it work? You setup all your servers to forward certain log statements t
 
 The first thing you will notice is that your log files are broken down by host, and optionally by source. This means that you can quickly search all the logs from one machine, or from a logical group of machines (ex: web servers versus database servers).
 
-![splunk sources](/images/splunk2.png)
+![splunk sources](/blog/images/splunk2.png)
 
 
 ### Searching
@@ -36,7 +36,7 @@ Searching is pretty easy to use, just type in a search string! You can also do m
 - `sourcetype="hsl-prod-crawl" facebook OR twitter NOT linkedin`
 - `sourcetype="hsl-prod-crawl" facebook OR linkedin OR twitter earliest=-24h`
 
-![splunk sources](/images/splunk3.png)
+![splunk sources](/blog/images/splunk3.png)
 
 
 ### Extracting
@@ -87,7 +87,7 @@ Other [functions](http://docs.splunk.com/Documentation/Splunk/5.0.4/SearchRefere
 
 It's easy to create graphs and charts by pointing and clicking your way through their GUI builder. You can also do the same thing with raw commands and functions, assuming you know what to call. You can create pie charts, bar, columns and line graphs, as well as more complicated stuff like gauges.
 
-![splunk dashboard](/images/splunk1.png)
+![splunk dashboard](/blog/images/splunk1.png)
 
 
 ### Email Alerts

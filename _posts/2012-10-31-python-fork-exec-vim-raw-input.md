@@ -63,4 +63,4 @@ except KeyboardInterrupt:
 
 Finally, adding some color to your console text is easy with the [termcolor](http://pypi.python.org/pypi/termcolor/) library.
 
-![Color terminal text example](/images/termcolor.jpeg)
+![Color terminal text example](/blog/images/termcolor.jpeg)
