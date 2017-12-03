@@ -17,8 +17,8 @@ title: Personal Blog
 title_separator: "|"
 email:
 description: Facts, hacks and attacks from my life as a web application developer
-baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://chase-seibert.github.io"
+baseurl: "/blog" # the subpath of your site, e.g. /blog
 repository: "chase-seibert/chase-seibert.github.io"
 
 author:
