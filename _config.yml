@@ -45,7 +45,6 @@ defaults:
       comments: false
       share: false
       related: true
-      toc: true
       toc_label: "On this page"
 
 # Build settings

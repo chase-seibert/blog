@@ -1,6 +1,7 @@
 ---
 title: Tracking Your Time
 tags:
+toc: true
 ---
 
 I've been using a time tracking tool pretty consistently for the last year to
