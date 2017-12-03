@@ -44,7 +44,7 @@ defaults:
       read_time: true
       comments: false
       share: false
-      related: true
+      related: false
       toc_label: "On this page"
 
 # Build settings
