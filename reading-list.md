@@ -1,6 +1,7 @@
 ---
 layout: single
 title: Reading List (my common references)
+author_profile: true
 permalink: /reading-list/
 redirect_from:
   - /tag/reading-list/
