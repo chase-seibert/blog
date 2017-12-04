@@ -1,5 +1,5 @@
 ---
-title: Tiger Team Survival Guide - Part 1
+title: Tiger Team Survival Guide
 tags: manager
 ---
 
@@ -115,5 +115,3 @@ Don't make it a death march. Plan to work reasonable hours and have some fun act
 - Get a photographer to document your awesomeness for posterity
 - Special lunch outings (food trucks, local spots)
 - Get out of the office and play basketball, or go to a movie as a team
-
-*Stay tuned for part two...*
