@@ -1,5 +1,4 @@
 ---
-
 title: PyGithub Quickstart Examples
 ---
 

@@ -1,5 +1,4 @@
 ---
-
 title: Python pickle AttributeError 'module' object has no attribute 'foobar'
 tags: python pickle
 ---

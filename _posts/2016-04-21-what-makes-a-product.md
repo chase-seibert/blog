@@ -1,5 +1,4 @@
 ---
-
 title: What makes a compelling product?
 ---
 

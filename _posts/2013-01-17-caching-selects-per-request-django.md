@@ -1,5 +1,4 @@
 ---
-
 title: Per-request Query Caching in Django
 tags: python cache
 ---

@@ -1,5 +1,4 @@
 ---
-
 title: Scrum in a Nutshell
 tags: agile scrum reading-list
 ---

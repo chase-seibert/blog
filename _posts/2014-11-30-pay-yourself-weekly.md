@@ -1,5 +1,4 @@
 ---
-
 title: Creating a Budget and Sticking to It
 tags: finance 401k
 ---

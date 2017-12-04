@@ -1,5 +1,4 @@
 ---
-
 title: Cross Functional Scrum Teams
 tags: scrum newboss
 ---

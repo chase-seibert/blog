@@ -1,5 +1,4 @@
 ---
-
 title: Keep Track of Vim Tabs Per Git Branch
 tags: django view prg
 ---

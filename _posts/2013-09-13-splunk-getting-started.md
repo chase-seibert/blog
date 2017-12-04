@@ -1,5 +1,4 @@
 ---
-
 title: Getting started with Splunk as an Engineer
 tags: splunk
 ---

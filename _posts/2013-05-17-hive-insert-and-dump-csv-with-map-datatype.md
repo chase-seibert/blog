@@ -1,5 +1,4 @@
 ---
-
 title: Write CSV data into Hive and Python
 tags: python hive
 ---

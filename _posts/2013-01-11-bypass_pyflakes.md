@@ -1,5 +1,4 @@
 ---
-
 title: Ignore pyflakes warnings with bypass_pyflakes
 tags: python pyflakes
 ---

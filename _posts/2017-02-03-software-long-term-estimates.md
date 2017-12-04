@@ -1,5 +1,4 @@
 ---
-
 title: Long Term Software Estimates
 tags: manager newboss
 ---

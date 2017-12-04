@@ -1,5 +1,4 @@
 ---
-
 title: REST API Design
 tags: api
 ---

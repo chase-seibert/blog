@@ -1,5 +1,4 @@
 ---
-
 title: Docker/OSX Quickstart (not grokking docker yet? start here)
 tags: docker
 ---

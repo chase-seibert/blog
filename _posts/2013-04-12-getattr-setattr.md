@@ -1,5 +1,4 @@
 ---
-
 title: Dynamic Attributes in Python
 tags: python tutorial
 ---

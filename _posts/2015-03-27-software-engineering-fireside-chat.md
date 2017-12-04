@@ -1,5 +1,4 @@
 ---
-
 title: Introducing the Software Engineering Fireside Chat Podcast
 tags: podcast
 ---

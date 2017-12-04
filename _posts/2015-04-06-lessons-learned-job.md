@@ -1,5 +1,4 @@
 ---
-
 title: Lessons Learned at My Most Recent Job
 tags: newboss
 ---

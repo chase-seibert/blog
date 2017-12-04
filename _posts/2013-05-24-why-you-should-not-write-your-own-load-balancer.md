@@ -1,5 +1,4 @@
 ---
-
 title: High availability via client libraries versus dedicated services
 tags:
 ---

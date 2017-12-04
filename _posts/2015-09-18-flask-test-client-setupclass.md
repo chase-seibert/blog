@@ -1,5 +1,4 @@
 ---
-
 title: Optimizing Flask client tests
 tags: python flask
 ---

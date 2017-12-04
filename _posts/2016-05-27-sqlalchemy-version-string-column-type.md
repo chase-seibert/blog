@@ -1,5 +1,4 @@
 ---
-
 title: SQLAlchemy - Storing Application Version Strings
 ---
 

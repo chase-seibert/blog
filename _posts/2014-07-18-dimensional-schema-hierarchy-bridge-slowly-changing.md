@@ -1,5 +1,4 @@
 ---
-
 title: Designing a Dimensional Schema for a hierarchy that can change over time
 tags: datawarehouse
 ---

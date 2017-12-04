@@ -1,5 +1,4 @@
 ---
-
 title: React Native Multiple Release Variants
 tags:
 ---

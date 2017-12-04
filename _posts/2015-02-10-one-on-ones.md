@@ -1,5 +1,4 @@
 ---
-
 title: Topics for One on Ones
 tags: manager reading-list newboss
 ---

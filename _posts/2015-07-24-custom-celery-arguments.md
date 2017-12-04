@@ -1,5 +1,4 @@
 ---
-
 title: Customizing Celery with Task Arguments
 tags: celery
 ---

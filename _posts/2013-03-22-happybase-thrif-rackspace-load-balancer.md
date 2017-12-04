@@ -1,5 +1,4 @@
 ---
-
 title: Using HBase/Thrift through the Rackspace Load Balancer
 tags: hbase
 ---

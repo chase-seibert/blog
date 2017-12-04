@@ -1,5 +1,4 @@
 ---
-
 title: Using grep from inside vim
 tags: vim
 ---

@@ -1,5 +1,4 @@
 ---
-
 title: Enabling SOLR autocommit with a custom Haystack backend
 tags: python haystack solr
 ---

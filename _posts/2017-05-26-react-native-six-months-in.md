@@ -1,5 +1,4 @@
 ---
-
 title: React Native Six Months In
 tags:
 ---

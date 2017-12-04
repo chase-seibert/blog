@@ -1,5 +1,4 @@
 ---
-
 title: Trading off Value, Quality and Time
 tags: manager newboss
 ---

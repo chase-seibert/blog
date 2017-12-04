@@ -1,5 +1,4 @@
 ---
-
 title: Distributing Vagrant base boxes securely
 tags: vagrant
 ---

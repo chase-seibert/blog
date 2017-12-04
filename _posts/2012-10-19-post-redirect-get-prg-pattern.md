@@ -1,5 +1,4 @@
 ---
-
 title: The Post/Redirect/Get (PRG) Pattern
 tags: django view prg
 ---

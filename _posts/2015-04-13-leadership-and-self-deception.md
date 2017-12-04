@@ -1,5 +1,4 @@
 ---
-
 title: Book Review - Leadership and Self Deception
 tags: book-review newboss
 ---

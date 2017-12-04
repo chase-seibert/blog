@@ -1,5 +1,4 @@
 ---
-
 title: Estimating Epic Stories in Three Steps
 tags: manager
 ---

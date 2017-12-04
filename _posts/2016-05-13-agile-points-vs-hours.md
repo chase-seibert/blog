@@ -1,5 +1,4 @@
 ---
-
 title: Using Points vs Hours for Estimates
 tags: manager
 ---

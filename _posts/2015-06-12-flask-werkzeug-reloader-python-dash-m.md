@@ -1,5 +1,4 @@
 ---
-
 title: Flask absolute import bug in debug mode
 tags: python, flask
 ---

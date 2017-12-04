@@ -1,5 +1,4 @@
 ---
-
 title: Designing for the Mental Model
 ---
 

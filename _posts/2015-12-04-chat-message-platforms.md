@@ -1,5 +1,4 @@
 ---
-
 title: Comparison of Chat Message Platforms
 ---
 

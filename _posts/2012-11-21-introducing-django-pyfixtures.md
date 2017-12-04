@@ -1,5 +1,4 @@
 ---
-
 title: Introducing Django Pyfixtures
 tags: django fixtures
 ---

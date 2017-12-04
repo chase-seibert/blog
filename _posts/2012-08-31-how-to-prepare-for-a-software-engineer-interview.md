@@ -1,5 +1,4 @@
 ---
-
 title: How to prepare for a software engineer interview
 tags: interview workplace career
 ---

@@ -1,5 +1,4 @@
 ---
-
 title: Python Mock Cookbook
 tags: python, testing
 ---

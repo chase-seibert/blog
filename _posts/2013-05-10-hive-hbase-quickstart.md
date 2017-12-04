@@ -1,5 +1,4 @@
 ---
-
 title: Hive with HBase Quickstart
 tags: hbase hive
 ---

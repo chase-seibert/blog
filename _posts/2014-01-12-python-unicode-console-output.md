@@ -1,5 +1,4 @@
 ---
-
 title: Print to the console in Python without UnicodeEncodeErrors
 tags: python
 ---

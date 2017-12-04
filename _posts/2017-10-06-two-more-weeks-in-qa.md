@@ -1,5 +1,4 @@
 ---
-
 title: Two (more) Weeks in QA
 tags: qa
 ---

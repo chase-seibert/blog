@@ -1,5 +1,4 @@
 ---
-
 title: Flatten entire HBase column families with Pig and Python UDFs
 tags: hbase pig
 ---

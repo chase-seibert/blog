@@ -1,5 +1,4 @@
 ---
-
 title: Saying the Same Thing Multiple Times
 tags: manager
 ---

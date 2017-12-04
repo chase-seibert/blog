@@ -1,5 +1,4 @@
 ---
-
 title: Read only Django shell
 tags: django shell
 ---

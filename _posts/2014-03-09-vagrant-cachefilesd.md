@@ -1,5 +1,4 @@
 ---
-
 title: Speed up your Vagrant NFS shares with cachefilesd
 tags: vagrant
 ---
