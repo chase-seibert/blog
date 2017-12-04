@@ -27,3 +27,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "jekyll-remote-theme"
 gem "jekyll-paginate"
+gem "jekyll-redirect-from"
