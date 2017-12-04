@@ -2,6 +2,6 @@ main:
   - title: "Reading List"
     url: /reading-list/
   - title: "New Managers"
-    url: /tags/#manager
+    url: /manager/
   - title: "Resume"
     url: /resume.pdf

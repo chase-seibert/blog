@@ -1,7 +1,9 @@
 ---
 layout: single
-title: Reading List (my common references)
+title: Reading List
 author_profile: true
+toc: true
+toc_label: "On this page"
 permalink: /reading-list/
 redirect_from:
   - /tag/reading-list/
@@ -10,7 +12,7 @@ redirect_from:
 
 This post is list of articles, blogs and other resources that I commonly reference.
 
-# Books
+## Books
 
 - [Rocket Surgery Made Easy](http://www.amazon.com/gp/product/B002UXRGNO) - Usability testing
 - [The Bogleheads' Guide to Investing](http://www.amazon.com/gp/product/0471730335) - Saving for retirement
@@ -22,7 +24,7 @@ This post is list of articles, blogs and other resources that I commonly referen
 - [Agile Software Development with Scrum](http://www.amazon.com/gp/product/0130676349) - Agile
 - [The Coaching Habit](https://www.amazon.com/Coaching-Habit-Less-Change-Forever/dp/0978440749) - Management
 
-# Articles
+## Articles
 
 - [Three Snakes](http://www.celebrazio.net/jimb/15.html)
 - [The Twelve Factor App](http://12factor.net/) - Tenets for building microservices
