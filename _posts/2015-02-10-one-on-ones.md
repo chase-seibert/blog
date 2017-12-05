@@ -1,5 +1,6 @@
 ---
 title: Topics for One on Ones
+toc: true
 tags: manager reading-list newboss
 ---
 
@@ -25,40 +26,41 @@ When you're stuck, Michael suggests some emergency topics.
 - Mini performance review.
 - Your current disaster.
 
+## Specific Questions
 
-##  How is it going?
+### How is it going?
 
 This is a variation on "How are you"? This does lead to a status update most times, so you often need to redirect. It's important to lead with something that lets people talk about whatever they want.
 
-## How do you feel about coming to work every day?
+### How do you feel about coming to work every day?
 
 More direct question to get at their mood/happiness.
 
-## How do you feel about working on project X?
+### How do you feel about working on project X?
 
 Give the employee permission to say that they don't like their current project, as well as implicitly tell them that it's something we can change.
 
-## How is it going working with person X?
+### How is it going working with person X?
 
 Is there some asshole that's bothering you? Maybe I can help.
 
-## Who are your best friends at work?
+### Who are your best friends at work?
 
 For some people, work friend ships are critical.
 
-## Who are the top people outside the company who you want to work with again?
+### Who are the top people outside the company who you want to work with again?
 
 We should try to hire them.
 
-## What features would you add?
+### What features would you add?
 
 Are you thinking about the long-term future of the software? I care about what you think!
 
-## What could I be doing better?
+### What could I be doing better?
 
 I try to ask this as often as I can, but often forget.
 
-## How comfortable are you with uncertainty?
+### How comfortable are you with uncertainty?
 
 i.e. - how much insight into the sausage making can you stomach? Is that
 motivational for you, or counter-productive?
@@ -67,7 +69,7 @@ motivational for you, or counter-productive?
 
 One thing I like to do is change the scenery of a one on one. Taking a walk outside is a great idea. I also like to do a one on one over lunch occasionally. On the other hand, you definitely want to be in a traditional conference room if you need to give hard feedback, or have a tough conversation.
 
-# The Coaching Habit
+## The Coaching Habit
 
 [Recommended reading](https://www.amazon.com/Coaching-Habit-Less-Change-Forever/dp/0978440749).
 The seven questions they recommend work well for one on ones, too:

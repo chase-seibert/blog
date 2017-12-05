@@ -1,6 +1,7 @@
 ---
 title: Trading off Value, Quality and Time
 tags: manager newboss
+toc: true
 ---
 
 The traditional [Iron Triangle](https://en.wikipedia.org/wiki/Project_management_triangle)
@@ -12,7 +13,7 @@ tradeoffs between scope, schedule and resources.
 This is alternatively referred to as the Time-Cost-Quality Triangle,
 Triple Constraints, the Triangle of Balance, or the Iron Triangle.
 
-# Many Triangles
+## Many Triangles
 
 There are many variants. A common variant is phrase "Fast, Cheap or Good. Pick two."
 
@@ -28,7 +29,7 @@ Software engineers is all about managing tradeoffs. The highest level
 tradeoff is during planning and prioritization in the form of trading off
 value delivered, the quality level of that value and the time to deliver it.
 
-# The Agile Triangle
+## The Agile Triangle
 
 >"If you're a team that practices waterfall development or new to agile development, the important thing to remember is the difference between what is fixed and what is estimated. Unlike waterfall development, agile projects have a fixed schedule and resources while the scope varies."
 [https://www.atlassian.com/agile/agile-iron-triangle](https://www.atlassian.com/agile/agile-iron-triangle)
@@ -42,7 +43,7 @@ down into feature breadth and depth, and the quality of the whole experience.
 ![img](/blog/images/agiletriangle.jpg)
 
 
-# My Agile MVP Triangle
+## My Agile MVP Triangle
 
 To simplify, my version of the Agile MVP triangle looks like this.
 
@@ -62,7 +63,7 @@ doesn't actually speed up the delivery.
 
 What do these points mean, exactly?
 
-## Value
+### Value
 
 This is basically scope. It could also be labeled "Features", both in terms of
 breadth of different features, and the depth/scope of an individual feature. I
@@ -71,7 +72,7 @@ deliver user value. Likewise, scope could include quality/polish work. In the
 end, this isn't a perfect term, but I basically mean user value excluding
 quality/polish.
 
-## Quality
+### Quality
 
 Some examples of quality are high fidelity graphic style, UX optimizations
 based on feedback and performance tuning. This is often subjective, and can
@@ -79,6 +80,6 @@ take a virtually unlimited amount of time as you polish on the far end of the
 diminishing returns curve. The trick is getting to 80% of max quality with 20%
 of the effort.
 
-## Time
+### Time
 
 This is simply the time to ship - to put the software in front of real users.

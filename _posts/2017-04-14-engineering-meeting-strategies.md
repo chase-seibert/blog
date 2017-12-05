@@ -1,13 +1,14 @@
 ---
 title: Minimizing Impact of Interruptions on Engineers
 tags: meetings manager
+toc: true
 ---
 
 Any software engineer knows the feeling of being "in the flow", or
 "in the zone". It's when you get a large block of uninterrupted time to just
 code. These periods are rare, super productive and morale boosting.
 
-# Importance of Flow
+## Importance of Flow
 
 > During single-minded work time, people are ideally in a state that psychologists call flow. It is a condition of deep, nearly meditative involvement, a gentle sense of euphoria when one is largely unaware of the passage of time. For anyone involved in engineering, design, development, writing or similar tasks, flow is a must. These are high-momentum tasks that only go well when you’re in flow. Unfortunately, it can’t be turned on like a switch, it takes a slow descent into the subject, 15 minutes of more of concentration before the state is locked in. Each time you’re interrupted, you require an additional immersion period to get back into flow. [Peopleware](https://www.amazon.com/Peopleware-Productive-Projects-Teams-Second/dp/0932633439)
 
@@ -17,7 +18,7 @@ disrupt flow, they must be minimized. Beyond that, what should our goal be
 for flow time?
 
 
-# Maximize Large Blocks of Flow Time
+## Maximize Large Blocks of Flow Time
 
 The current state of the industry is that a programmer is likely to get just
 one two hour session of flow per day [[Programmer Interrupted](http://blog.ninlabs.com/2013/01/programmer-interrupted/)]. That
@@ -41,7 +42,7 @@ That aligns with surveys which show that [50% of engineering time](http://www.in
 20 hours of coding time, but only 10 of those hours are "in the flow".*
 
 
-# Strategies to Minimize Interruptions
+## Strategies to Minimize Interruptions
 
 These are mostly common knowledge.
 
@@ -55,7 +56,7 @@ Notice that these are entirely on the individual engineer to manage. What
 can we do as managers to help?
 
 
-# Strategies to Maximize Flow Blocks
+## Strategies to Maximize Flow Blocks
 
 As managers, the most effective way to maximize the number of blocks of flow
 our teams get is to clear the calendar. In this context, what types of calendar
@@ -68,7 +69,7 @@ and our goal is 20 flow hours per week.
 
 Also, remember we are assuming a **maximum of five effective hours per day.**
 
-## No Meeting Days
+### No Meeting Days
 
 The most popular strategy is to have an entire day per week with no meetings,
 where everyone can be heads down. You might combine that with giving people
@@ -81,14 +82,14 @@ most one day.
 In the best case scenario, this translates to a 1 four hour block
 per week and 4 two hour blocks a week, for a total of 12 flow hours.
 
-## Consolidating Meetings to One or Two days
+### Consolidating Meetings to One or Two days
 
 If you hold all meetings on one or two days a week, and leave the entire rest
 of the calendar free, you would have 3 or 4 four hour blocks per week. Assume
 that the one or two days you actually have meetings are complete write-offs.
 That results in a total of 12 to 15 flow hours.
 
-## No Meeting Mornings/Afternoons
+### No Meeting Mornings/Afternoons
 
 You could block off 3-4 hours every day for interruption free working
 time. This could take the form of never scheduling meetings before lunch,
@@ -99,7 +100,7 @@ hours.
 This would result in 5 three or four hour blocks a week. Any non-free time
 can be assumed to involve interruptions. Let's estimate 15 to 20 flow hours.
 
-# Conclusion
+## Conclusion
 
 Given that engineers are going to get at most five effective hours a day, the
 ideal set up from a flow perspective is to get a 3-4 hour block of time blocked off

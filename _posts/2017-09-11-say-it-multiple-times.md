@@ -1,6 +1,7 @@
 ---
 title: Saying the Same Thing Multiple Times
 tags: manager
+toc: true
 ---
 
 To communicate something to an organization of people, you need to repeat
@@ -35,7 +36,7 @@ The 19th time, they count their money very carefully.<br>
 The 20th time prospects see the ad, they buy what it is offering.<br>
   - [Thomas Smith, 1885, Successful Advertising](https://www.amazon.com/Successful-Advertising-Secrets-Explained-AnnuaL/dp/B00HERMNYS)
 
-# Seven Corporate Communication Methods
+## Seven Corporate Communication Methods
 
 The seven most obvious mechanisms for communicating information inside an
 organization are:
@@ -57,14 +58,14 @@ already nodding their heads.
 For anything important that many people need to hear about, you should plan on
 going all the way up to #6 or #7 *and all the steps before that*.
 
-## Minor Communication Methods
+### Minor Communication Methods
 
 In addition, you can also communicate via one of the lesser methods:
 
 - Written status updates
 - Personal blog
 
-# Communication Anti-Patterns
+## Communication Anti-Patterns
 
 Don't do these.
 
@@ -73,7 +74,7 @@ Don't do these.
 - Write multiple paragraphs without headings, lists or other structure conducive to
 skimming.
 
-# Advanced Communication Tips
+## Advanced Communication Tips
 
 - Include a `TL;DR` section at the top of your email for the 75% of people who
 will not read the entire thing.

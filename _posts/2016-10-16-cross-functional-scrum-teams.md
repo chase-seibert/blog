@@ -1,6 +1,7 @@
 ---
 title: Cross Functional Scrum Teams
 tags: scrum newboss
+toc: true
 ---
 
 > Teams are also cross-functional; Team members must have all of the skills
@@ -23,7 +24,7 @@ That means everyone regularly working in all parts of the stack. I'm not sure
 this is better for all teams, but I think it's a good idea for a small 3-5
 person product team that has to do with in many parts of the stack. Why?
 
-# Better for Team
+## Better for Team
 
 One tenet of scrum is group estimation and grooming. The more people that are up
 to speed on the technologies and the codebase, the more likely you are to think
@@ -46,7 +47,7 @@ Finally, on small teams, you can remove single points of failure by being
 cross-functional. On a specialized team, if your only mobile engineer goes on
 vacation or quits, it's much more disruptive.
 
-# Better for Individuals
+## Better for Individuals
 
 Cross-training can be good for individual engineers, too. During an engineering
 career, you will find yourself needing to pick up new languages and technologies
@@ -64,7 +65,7 @@ intellectual level their manager is more than happy to have them change
 specialization again, it might be easier mentally to simply look for another job.
 This could even be an unconscious process.
 
-# Mixed Bag for the Product
+## Mixed Bag for the Product
 
 It's a less obvious win at the product level. A team of specialists will
 produce more raw output than cross-functional team. This is most obviously true
@@ -85,7 +86,7 @@ need to be cross-functional.
 In the end, the biggest product wins are better code reviews and thus product quality,
 and better grooming/estimates.
 
-# In Practice
+## In Practice
 
 In the real world, you are always going to have engineers who are better at
 some parts of the stack. Those people should definitely be first in line for

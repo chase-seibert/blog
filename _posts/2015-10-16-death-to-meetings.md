@@ -1,6 +1,7 @@
 ---
 title: Death to Meetings (and other alternatives)
 tags: process reading-list meetings manager newboss
+toc: true
 ---
 
 > What percentage of your time at work do spend in meetings? If you’re a middle manager, it's likely about 35% of your time, and if you’re in upper management, it can be a whopping 50%. What's worse is how unproductive these meetings usually are. - [themuse.com](https://www.themuse.com/advice/how-much-time-do-we-spend-in-meetings-hint-its-scary)
@@ -13,8 +14,7 @@ Meetings are a fact of life in corporate America, whether you're working at a la
 
 What's worse, it's actually not that much lower for individual contributors. Do business owners really want their employees spending this much time in meetings? Is that the most productive arrangement? What's wrong with meetings, anyway?
 
-
-# Bad Meetings
+## Bad Meetings
 
 > Meetings are indispensable when you don't want to do anything. - [John Kenneth Galbraith](http://www.brainyquote.com/quotes/keywords/meetings.html#z5clr8zclSbxAafk.99)
 
@@ -26,15 +26,13 @@ The worst case scenario is that meetings are being called primarily for the bene
 
 For a software engineer, that looks a lot like synchronous blocking on I/O. You're killing throughput. Wouldn't a system of asynchronous callbacks be a lot more efficient?
 
-
-# Alternative to Meetings
+## Alternative to Meetings
 
 > If you had to identify, in one word, the reason why the human race has not achieved, and never will achieve, its full potential, that word would be 'meetings.' - [Dave Barry](http://www.brainyquote.com/quotes/keywords/meetings.html#z5clr8zclSbxAafk.99)
 
 We have tools at our disposal to solve this problem - but we need a shift in approach.
 
-
-## Slack
+### Slack
 
 [Slack](https://slack.com/) is awesome. You should get it. If you're on anything else, you're missing out. How can you use it to replace some meetings? Just create a channel or private group instead of a meeting. Invite the attendees. Put the agenda in the chat. Link to some shared docs that people need to reference. Start a discussion.
 
@@ -46,15 +44,15 @@ Bonus points: your meeting is taking its own notes! Next time you have the meeti
 
 *PS: If you work at Slack and you're reading this - you guys should totally implement a "kill this meeting" plugin for Google calendar that deletes the meeting and sets up a temporary Slack channel with all the attendees.*
 
-## Email
+### Email
 
 Email is another good option. Less collaborative than chat, but maybe better for longer prose. Of course, email is only slightly less maligned than meetings themselves. But hey, at least it's asynchronous.
 
-## GoToMeeting
+### GoToMeeting
 
 GoToMeeting is another good option, especially for screen sharing. Slack really needs to get on this, but for now it's probably your best option for some types of meetings.
 
-## Recurring "Meetings"
+### Recurring "Meetings"
 
 One sticky wicket is the recurring meeting. If you have the same meeting weekly, do you still need a calendar item to remind people to join the chat, or start the email chain?
 
@@ -62,8 +60,7 @@ I guess you could, but that seems like the wrong tool for the job. Most recurrin
 
 Better yet, maybe you don't actually *need* the meeting this week. This is a subtle benefit - recurring meetings default to *not happening*, versus defaulting to happening unless someone cancels them. Inertia is a funny thing. Managers *should* be consciously thinking about whether a meeting is really required, every time.
 
-
-# Good Meetings
+## Good Meetings
 
 > Meetings are at the heart of an effective organization, and each meeting is an opportunity to clarify issues, set new directions, sharpen focus, create alignment, and move objectives forward. - [Paul Axtell](http://www.amazon.com/Meetings-Matter-Strategies-Remarkable-Conversations/dp/0943097142)
 
@@ -77,8 +74,7 @@ What are some examples of good meetings?
 
 *Note: if you're going to have a brainstorming meeting, make sure people know how to brainstorm. Talking about potential implementation and challanges is not brainstorming.*
 
-
-# Meeting Hygiene
+## Meeting Hygiene
 
 No matter what the meeting is for, practice basic meeting hygiene.
 
@@ -90,8 +86,7 @@ No matter what the meeting is for, practice basic meeting hygiene.
 - End the meeting on time, if not early
 - Send out meeting notes via email to the whole team
 
-
-# Culture
+## Culture
 
 > Management's job is to convey leadership's message in a compelling and inspiring way. Not just in meetings, but also by example. - [Jeffrey Gitomer](http://www.brainyquote.com/quotes/keywords/meetings.html#z5clr8zclSbxAafk.99)
 

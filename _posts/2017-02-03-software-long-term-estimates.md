@@ -1,6 +1,7 @@
 ---
 title: Long Term Software Estimates
 tags: manager newboss
+toc: true
 ---
 
 > False scheduling to match a patron's desired date is more common in our discipline than elsewhere in engineering because it is VERY DIFFICULT to make a vigorous, plausible, job-risking defense of an estimate that is derived by no quantitative method, supported by little data, and brought about by the hunches of developers.
@@ -10,7 +11,7 @@ Estimating a timeline for a project that will take many months and dozens of
 engineers to complete has a very high failure rate - defined as the rate of
 projects that take longer than the estimate to complete.
 
-# The Myth of Software Project Planning
+## The Myth of Software Project Planning
 
 The biggest myth of software engineering is that we can estimate with any
 accuracy. Junior engineers often learn this the hard way; coming up with estimates
@@ -22,7 +23,7 @@ So why do we keep relying on estimates that the estimators themselves know are
 unreliable? Because there is a legitimate business need to know. But we should
 not confuse the need for certainty with the ability to be certain.
 
-# Estimates Change as Scope Changes
+## Estimates Change as Scope Changes
 
 ![Dilbert](https://s-media-cache-ak0.pinimg.com/736x/7f/cc/b0/7fccb03a99c29ca90290709cf08afc7c.jpg)
 
@@ -31,7 +32,7 @@ A successful business realizes that they need to keep requirements loosely defin
 so that they can respond to new data as it comes up. Of course, if the scope
 of a project is not high confidence, the estimate cannot be high confidence, either.
 
-# Agile - Enter the Ordered Backlog
+## Agile - Enter the Ordered Backlog
 
 > No battle plan survives contact with the enemy.
 - [Helmuth von Moltke](http://www.lexician.com/lexblog/2010/11/no-battle-plan-survives-contact-with-the-enemy/)

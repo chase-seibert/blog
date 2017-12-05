@@ -1,13 +1,14 @@
 ---
 title: Tiger Team Survival Guide
 tags: manager
+toc: true
 ---
 
 
 > A tiger team is a diversified group of experts brought together for a single project, need, or event. They are usually assigned to investigate, solve, build, or recommend possible solutions to unique situations or problems. They are almost always populated with mature experts who know what's at stake, what needs to be done, and how to work well with others. Their strengths are diversity of knowledge, a single focus or purpose, cross-functional communications, decision-making sovereignty, and organizational agility. Once their venture is completed they cease to be a team and usually go back to their previous assignments.
 
 
-# Scope, Time and Money
+## Scope, Time and Money
 
 As an engineering manager, you can typically have some input on the scope, time and resources allocated to a project. This is a variation of the ["pick two problem"](https://en.wikipedia.org/wiki/Project_management_triangle#.22Pick_any_two.22). When the project scope and timeline are largely dictated by business needs for a high priority project, resourcing may be the most flexible factor.
 
@@ -23,7 +24,7 @@ Some specific resources to think about:
 - Are you planning on making a deep technical contribution yourself, or focusing on organizing/leading?
 - Make sure you have 100% alignment on the KPI for the project.
 
-# The War Room Model
+## The War Room Model
 
 A natural instinct on a short schedule is to find a private space where the team can isolate themselves, have persistent wall space for collaborating, and cancel all other obligations within reason.
 
@@ -55,7 +56,7 @@ Communication tools:
 - Create a Google Docs folder
 - Start compiling a list of important team links and put them on a Trello card, pinned to the Slack channel topic
 
-# Reducing Risk
+## Reducing Risk
 
 - What dependencies do you have on other teams?
   - For engineering dependencies, try to get a dedicated domain expert on the tiger team.
@@ -67,7 +68,7 @@ Communication tools:
 - Does the re-use require another team to refactor something?
 - What is your analytics/data integration plan?
 
-# Sample Kick-off Day Agenda
+## Sample Kick-off Day Agenda
 
 - *start at 10am sharp*
 - Intros (5 min)
@@ -101,7 +102,7 @@ Communication tools:
 - Demo
 - *done at 6pm*
 
-# Make it fun
+## Make it fun
 
 Don't make it a death march. Plan to work reasonable hours and have some fun activities mixed in.
 

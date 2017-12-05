@@ -1,6 +1,7 @@
 ---
 title: Using Points vs Hours for Estimates
 tags: manager
+toc: true
 ---
 
 One of the key innovations of Agile is that estimates should NOT be in hours,
@@ -15,7 +16,7 @@ yourselves chronically under-estimating stories and not completing them? If so,
 maybe I can convince you to give points a shot.
 
 
-# Points are Relative, Hours are Absolute
+## Points are Relative, Hours are Absolute
 
 One of the primary insights of Agile is that humans suck at estimating in
 absolute terms, but are much better estimating in relative terms.
@@ -35,7 +36,7 @@ it is relative to another task. In [terms of an analogy](https://www.mountaingoa
 we want to know how long the trail is, not how long it would take you to run it.
 
 
-# Points Enable Collaborative Estimates
+## Points Enable Collaborative Estimates
 
 An absolute estimate is how long it would take a particular engineer to complete
 the task. If the task needs to be re-assigned to another engineer, it would need
@@ -58,7 +59,7 @@ Besides, the team will be much more committed to estimates that they came up
 with themselves.
 
 
-# Points Communicate Uncertainty
+## Points Communicate Uncertainty
 
 In particular, Agile recommends that you stick to the Fibonacci numbers for
 point estimates. Why? Because it accurately communicates the inherent
@@ -75,7 +76,7 @@ there is. It's common to say that a story should only be 3 points of work, but
 we're calling it an 8 because we're not sure about some of the details.
 
 
-# Points Make the Team Accountable for Stories, not Estimates
+## Points Make the Team Accountable for Stories, not Estimates
 
 A point is NOT equal to any number of hours - it's an average. Eventually, you
 will get a sense that a point may take you anywhere from say 1 to 4 hours of
@@ -91,7 +92,7 @@ it really took three". That doesn't matter! You should not even measure it.
 What matters is, did you complete all of the stories in the sprint?
 
 
-# References
+## References
 
 - [Is there any published research about story points vs time estimation?](http://pm.stackexchange.com/questions/11675/is-there-any-published-research-about-story-points-vs-time-estimation)
 - [Sprint Planning: Story Points Versus Hours](https://www.infoq.com/news/2009/09/story-points-versus-hours)
