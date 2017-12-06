@@ -1,6 +1,7 @@
 ---
 title: Manager Layoff Survival Guide
 tags: manager
+toc: true
 ---
 
 It's inevitable as a manager that at some point, you will have to lay someone
@@ -15,7 +16,7 @@ effects the rest of the team that has to pick up the pieces and move on.
 This guide assumes that you are going to be the one laying off your employee.
 If you're given that oppertunity, I suggest you take it.
 
-# Initial Shock
+## Initial Shock
 
 Don't be surprised if you don't learn about the layoffs until just before you
 have to tell other people. There is no great way to co-ordinate a mass
@@ -32,7 +33,7 @@ Do the effected individuals get severance? What about their health
 care? Do they have stock options then can exercise? What is the consistent
 message that you will presenting them about why this is happening?
 
-# Come Up With a Plan
+## Come Up With a Plan
 
 As a manager, part of your job in a layoff is to tell the same story as the
 company is telling about why this is happening, and how the effected individuals
@@ -62,7 +63,7 @@ be good, too. Have them ask you hard questions as the employee. You're probably
 worried about how the real employee will take it. It's not going to be as bad
 as you think, but have the role player do their worst.
 
-# Layoff Day
+## Layoff Day
 
 Don't put anything on the calendar. Schedule a room if you need to, but as early
 as possible in the day, start pulling people you need to terminate in. As soon
@@ -76,7 +77,7 @@ is going to tap you on the shoulder. Remember, for the team that needs to carry
 on after this layoff, how you handle today might be the most impactful thing
 you do all year.
 
-# The Termination Conversation
+## The Termination Conversation
 
 Look the person in the eye. Tell them right up front that the company is having
 layoffs today and that unfortunately they are in the effected group. Tell them
@@ -99,7 +100,7 @@ of clean our their desk and go to HR to sign some papers. This is the part you
 most likely have absolute clarity on from the company. You might want to say it
 a few times; it's hard for anyone to process information in this situation.
 
-# Hard Questions
+## Hard Questions
 
 The conversation will probably be far short of your imagined worst case
 scenario. If things do go fully sideways, just try to optimize for empathy and
@@ -107,24 +108,24 @@ clarity.
 
 More likely, you will get questions similar to these.
 
-## Why me, specifically?
+### Why me, specifically?
 
 This is about company financials, not your performance.
 
-## Why didn't you give me feedback earlier?
+### Why didn't you give me feedback earlier?
 
 The layoffs were a decision that we had to make on a very short timeframe. I
 simply thought we would have more time to work on those issues.
 
-## I thought this team was a priority for the company?
+### I thought this team was a priority for the company?
 
 It is, but we had to make cuts across the board.
 
-## But, didn't we just hire more people?
+### But, didn't we just hire more people?
 
 Those hires are for different roles.
 
-# Afterwards
+## Afterwards
 
 The real hard part comes afterwards. You now have to bring together a bunch of
 people who are hurting emotionally, help them pick up and pieces and move
@@ -141,7 +142,7 @@ Make sure in all these conversations to bring it back to the company vision
 and mission. Good luck.
 
 
-# References
+## References
 
 - [Delivering Big/Bad News](http://randsinrepose.com/archives/delivering_bigbad_news/)
 - [Deconstructing Managers (Day #6)](http://randsinrepose.com/archives/deconstructing-managers-day-6/)

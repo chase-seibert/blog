@@ -1,6 +1,7 @@
 ---
 title: Pushing Back on Product
 tags: manager
+toc: true
 ---
 
 There is no shortcut for a well functioning scrum team that has built the trust
@@ -14,7 +15,7 @@ technical lead's job to protect the team.
 You can look at this through two lenses: sprints and longer roadmaps. The same
 principles and tactics apply to both.
 
-# Basic Engineer Hygiene
+## Basic Engineer Hygiene
 
 You're an engineer. At the core, software engineering is all about breaking down
 problems, finding creative solutions and generating the right abstractions. Pick
@@ -31,7 +32,7 @@ but something that solves 80%. Worst case scenario, you can have a discussion
 about shipping it as-is if not everything gets done in time. But it has to be
 working and shippable.
 
-# Scrum Basics
+## Scrum Basics
 
 The next bucket of tactics come directly from textbook Agile. There is a reason
 these principles are so widespread; they work.
@@ -53,40 +54,40 @@ can commit to more work on not. This is one good reason for the Scrum Master to
 NOT be one of the engineers on the team (or the product owner). There is a
 perceived [conflict of interest](https://www.mountaingoatsoftware.com/blog/protecting-the-team-cuts-both-ways).
 
-# Guerrilla Tactics:
+## Guerrilla Tactics:
 
 Finally, if you have to pull out all the stops, don't be afraid to play dirty.
 *Note: no actual product owners were harmed in the compilation of this list.*
 
-## The Outside the Box
+### The Outside the Box
 
 Identify something that could be significantly better about the design.
 Pitch it to the product owner. Try to convince them to go back to the drawing
 board.
 
-## The Big Picture
+### The Big Picture
 
 Suggest a better long term technical solution, but one which is
 otherwise not ready to proceed.
 
-## The Deflection
+### The Deflection
 
 Find another group that makes more sense to work on this item.
 
-## The Disappearing Engineer
+### The Disappearing Engineer
 
 Make sure that every man-day of engineering you're assuming actually exists.
 Does someone have a vacation coming up? Is there a project that you might need
 to pull people off for? Are you accounting for interrupt driven work?
 
-## The Consolidator
+### The Consolidator
 
 If you have more work items than engineers, consider having an engineer
 focus on one task at a time. In many cases it would be better to go deeper on
 high priority items in the backlog versus doing more discrete items. More
 applicable to roadmap planning than sprint planning.
 
-## The Missing Link
+### The Missing Link
 
 Is there a dependency which there is some uncertainty around? Consider holding
 off on a work item until that dependency is actually delivered, in production
