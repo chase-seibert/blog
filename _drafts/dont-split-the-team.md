@@ -29,7 +29,7 @@ two teams.
 A more direct solution would be to simple decrease the size of the team. Move
 an engineer to another team.
 
-### Too Many Product or Product Owners
+### Too Many Products or Product Owners
 
 If you have multiple products or product owners, you could split up the team
 along those lines. This works, but keep in mind ideal Scrum team size. If you
@@ -77,4 +77,4 @@ too lightly.
 
 You want to avoid splitting up a team until you absolutely have to. You should
 prefer moving people to other teams versus splitting the team. Make sure you're
-solving the root cause of your problems. 
+solving the root cause of your problems.
