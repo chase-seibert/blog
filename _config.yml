@@ -67,6 +67,7 @@ plugins:
   - jekyll-remote-theme
   - jekyll-paginate
   - jekyll-redirect-from
+  - jekyll-sitemap
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
