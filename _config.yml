@@ -21,6 +21,7 @@ url: "https://chase-seibert.github.io"
 baseurl: "/blog" # the subpath of your site, e.g. /blog
 repository: "chase-seibert/chase-seibert.github.io"
 search: true
+google_site_verification: "googlebfb25d2ce8956d04"
 
 author:
   name   : "Chase Seibert"
