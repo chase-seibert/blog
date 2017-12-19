@@ -35,6 +35,10 @@ author:
   github: chase-seibert
   stackoverflow: 7679
 
+# social sharing
+twitter:
+  username: "chase_seibert"
+
 defaults:
   -
     scope:
