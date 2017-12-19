@@ -86,18 +86,20 @@ critical.
 
 Personally, I use [GitHub Pages](https://pages.github.com/) and a static site generator called
 [Jekyll](http://jekyllrb.com/). The beauty of the system is that your posts are regular GitHub markdown, just like
-when you're making comments on a pull request. You publish new articles with a simple `git push`. You could spend a
-couple of hours crafting the HTML templates and basic Jekyll configuration yourself, or you can fork my repository:
+when you're making comments on a pull request. You publish new articles with a simple `git push`. I also use a theme called [minimal-mistakes](https://mmistakes.github.io/minimal-mistakes/).
+
+It's a good use of time to start from scratch and follow the various docs. Or,
+you can just fork my repository:
 
 ```bash
-brew install hub  # http://brew.sh/
-git-hub fork git@github.com:chase-seibert/blog.git
-git-hub clone blog
+git clone git@github.com:chase-seibert/blog.git
 cd blog
-git branch -D gh-pages
-git checkout origin/quickstart -b gh-pages
-./run.sh
+rm -f _posts/* _drafts/* images/* reading-list.md manager.md resume.pdf favicon.ico
+rm -fR .git
+bundle install  # make need: gem install bundler
+make server
 ```
 
-A few minutes after you push your `gh-pages` branch to GitHub, you should be able to see your blog at
+A few minutes after you push your `master` branch to GitHub under a new repo
+called `blog`, you should be able to see your blog at
 http://$username.github.io/blog.
