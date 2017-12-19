@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Personal Blog
-title_separator: "|"
+title_separator: "-"
 email:
 description: Facts, hacks and attacks from my life as a web application developer
 url: "https://chase-seibert.github.io"
