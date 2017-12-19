@@ -5,14 +5,13 @@ toc: true
 ---
 
 If you have a team that is unable to work effectively, there could be any
-number of causes. Maybe you're thinking about splitting the team into two or
-more teams as a way to solve the problem. My advice is to identify the root
-cause of the problem, and fix that instead.
+number of causes. If you're thinking about splitting the team into two or
+more teams as a way to solve the problem, my advice is to fix the root
+cause of the problem instead.
 
 ## Splitting the Team
 
-Maybe you think that splitting the team will have one of the following
-benefits.
+There are various reasons for wanting to split up a team.
 
 ### Team Too Big
 
@@ -31,8 +30,13 @@ an engineer to another team.
 
 ### Too Many Products or Product Owners
 
-If you have multiple products or product owners, you could split up the team
-along those lines. This works, but keep in mind ideal Scrum team size. If you
+If you have multiple products or product owners, you might experience frequent
+shifting between projects. Engineers may feel that they are not able to focus
+on a problem for long, before they are pulled onto something else. Overall
+velocity may suffer.
+
+You could split up the team along product or product owner lines.
+Make sure not to end up with teams that are too small. If you
 only have one or two engineers on a team, you will be subject to wild swings
 in team velocity when one or both people go on vacation, or are sick. You are
 likely going to struggle to provide healthy levels of code review and mentorship
@@ -44,15 +48,21 @@ on, and funnel the product backlog through a single product owner.
 
 ### Prioritize Technical Work
 
-I actually did split a team once in order to get more engineering time for
-technical backlog work. Product owners are naturally going to prioritize
-feature work, and we had a lot of platform debt to pay down. We ended up
-doing a lot of platform work, but it was much harder than expected to keep the
-two teams in sync. There was drift on alignment. A constant complaint was the
-team not knowing what the other team was working on.
+Product owners are naturally going to prioritize feature work. If the team is
+not getting the time they need to invest in technical platform and refactoring,
+you may be experiencing instability in production, and what should be small code
+changes resulting in much more work than expected, or frequent regressions.
 
-A better solution in this case would have been to come to an agreement to
-reserve the time for platform work in the team's normal sprints.
+Splitting the team so that one group can focus on platform work will result in
+getting more of that work done. But there are non-obvious downsides that go with
+it. It will be difficult to keep the two teams in sync about what projects are
+going on. Both teams may feel that they don't get to do as much of the product
+or platform work as they would like. The two teams may start to drift in their
+alignment on technical solutions.
+
+A better solution in this case would be to come to an agreement to
+reserve the time for platform work in the team's normal sprints. A common ratio
+is 20% of team velocity.
 
 ### Empire Building
 
@@ -65,7 +75,6 @@ For technical projects, you need to find a way for people to have ownership
 regardless of team makeup. For people interested in management, this is probably
 a negative signal about whether they are a good fit for management. But just wait
 a while, there will always be more organic opportunities for that.
-
 
 ## Other Stuff
 
