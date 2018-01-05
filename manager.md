@@ -21,6 +21,7 @@ I use this as an initial brain dump for new engineering managers I work with.
 - [Trading off Value, Quality and Time]({{ site.baseurl }}{% post_url 2017-07-13-value-quality-time %})
 - [Cross Functional Scrum Teams]({{ site.baseurl }}{% post_url 2016-10-16-cross-functional-scrum-teams %})
 - [Minimizing Impact of Interruptions on Engineers]({{ site.baseurl }}{% post_url 2017-04-14-engineering-meeting-strategies %})
+- [Teams Working at a Sustainable Pace]({{ site.baseurl }}{% post_url 2018-01-05-sustainable-pace %})
 
 ## Communication
 - [Saying the Same Thing Multiple Times]({{ site.baseurl }}{% post_url 2017-09-11-say-it-multiple-times %})
