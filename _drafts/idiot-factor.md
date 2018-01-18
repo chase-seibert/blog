@@ -1,6 +1,7 @@
 ---
 title: The Idiot Factor
 tags: manager
+toc: true
 ---
 
 I worked with a PM who had a pet concept he called the "Idiot Factor". With
