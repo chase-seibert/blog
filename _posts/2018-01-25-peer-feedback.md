@@ -6,7 +6,7 @@ toc: true
 
 Managers have a lot of practice giving people feedback. Most other engineers
 are only asked to give formal peer feedback once or twice a year. These are
-know as [360 reviews](https://en.wikipedia.org/wiki/360-degree_feedback). From
+known as [360 reviews](https://en.wikipedia.org/wiki/360-degree_feedback). From
 a management perspective, the free text feedback portion is the most important
 part. But, often the content in that section could be much more valuable with a
 little more context.
@@ -32,7 +32,7 @@ or negative issue occurred. But, negative feedback should be given privately.
 Managers already know it's a good idea to write down feedback as it comes.
 It helps tremendously when reviews come around. This is good practice for anyone!
 You can write down feedback in a shared document that you use for one on one notes.
-It will help you remember specific examples, later. More on that in a bit.
+It will help you remember specific examples later. More on that in a bit.
 
 What else can you do to generate feedback? Here are some things that might jog
 your memory.
