@@ -1,6 +1,6 @@
 ---
 title: Teams Working at a Sustainable Pace
-tags: manager
+tags: manager product-management 
 toc: true
 ---
 

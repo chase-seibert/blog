@@ -1,6 +1,6 @@
 ---
 title: Saying the Same Thing Multiple Times
-tags: manager
+tags: manager product-management
 toc: true
 ---
 

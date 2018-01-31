@@ -1,6 +1,6 @@
 ---
 title: Getting Engineering Involved Early in a Project
-tags: process newboss
+tags: process newboss product-management
 ---
 
 > Agile requirements are ideally visual and should be barely sufficient, i.e. the absolute

@@ -1,6 +1,6 @@
 ---
 title: QA 101 - How to Write a Bug Report
-tags: reading-list qa
+tags: reading-list qa product-management
 ---
 
 The purpose of a bug report is to enable an engineer to fix the bug.

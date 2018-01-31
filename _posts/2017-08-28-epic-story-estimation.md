@@ -1,6 +1,6 @@
 ---
 title: Estimating Epic Stories in Three Steps
-tags: manager
+tags: manager product-management
 toc: true
 ---
 

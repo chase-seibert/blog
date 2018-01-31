@@ -1,5 +1,6 @@
 ---
 title: Designing for the Mental Model
+tags: product-management
 ---
 
 Software is typically more complicated under the hood than it looks on the surface. A good product presents a simple and consistent user interface. Ideally, the implementation is also simple and consistent with the story the UI is telling. But that's often not possible. If the implementation is complex, if and when that complexity leaks through to the user experience, it will violate the user's expectations and provide a bad experience.

@@ -1,6 +1,6 @@
 ---
 title: Trading off Value, Quality and Time
-tags: manager newboss
+tags: manager newboss product-management
 toc: true
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: What makes a compelling product?
+tags: product-management
 ---
 
 Words matter. When we use the term "product", what do we mean? Are we talking about the same thing? In the context of tech startups, we often mean product with a capital "P" - as in [Minimum Viable Product](https://www.quora.com/What-is-a-minimum-viable-product). While there is a lot of discussion about what constitutes the "minimum" part of MVP, the actual definition of product is often implicit, not explicit.
