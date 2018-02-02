@@ -73,7 +73,7 @@ unexpected behavior and a poor user experience.
 There is no magic bullet for this. One thing I would suggest is actually
 white-boarding your take on system architecture with the engineering lead on a
 regular basis. The product manager should drive. This will quickly highlight
-gaps that you can dive into more detail on. 
+gaps that you can dive into more detail on.
 
 ## Third Rails
 
@@ -100,6 +100,11 @@ The number one silent killer of projects is lack of alignment with upper
 management. The product manager must be relentless about continuously
 re-aligning on goals. Often, they are the only alignment touch point for the
 team.
+
+## More
+
+See my [previous posts](/blog/tags/#product-management) that are relevant for
+product managers. 
 
 ## References
 - [What It Takes to Become a Great Product Manager](https://hbr.org/2017/12/what-it-takes-to-become-a-great-product-manager)
