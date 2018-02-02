@@ -31,22 +31,26 @@ and distill context in a different way for each of them.
 
 The product manager is likely to have the best people skills of anyone on the
 execution team. The best product managers I have worked with are also the
-champion of team health. They should have semi-regular 1:1s with everyone on the
-team.
+champion of team health.
 
 The product manager has a special relationship with both the designer and the
-engineering lead. They should have weekly 1:1 syncs with both of them, and a regular
-product/design/engineering lead sync where the three of them talk about all the
-features that are in progress and coming up.
+engineering lead. The product/design/engineering leads should have a regular
+sync where they talk about all the features that are in progress and coming up.
+
+### One on Ones
+
+The exact topics of your 1:1s will vary. The most important things are building
+trust and repeating context so people internalize it. It can help to have a list
+of [generic topics](/blog/2015/02/10/one-on-ones.html) to get conversations
+started.
+
+The minimum set of 1:1s looks something like this:
+
+- Weekly 1:1s with the engineering lead and the designer.
+- Weekly 1:1 with your boss.
+- Semi-regular 1:1s with everyone on the execution team.
 
 ## Next Level
-
-The very best product managers I have worked with have some level of technical
-understanding of the implementation the team has created. It should be just
-enough to sketch out how the product works at a high level. Otherwise, there
-will be a mismatch between the [mental model](/blog/2016/04/15/mental-models.html)
-of how it works, and how it actually works. Over time, that will result in
-unexpected behavior and a poor user experience.
 
 Both the product manager and the engineering manager have a responsibility to
 protect the team from thrash. This is the [shit umbrella](https://roadmunk.com/blog/shit-umbrella/)
@@ -56,6 +60,20 @@ Many teams do not have a dedicated QA person. In that case, the product manager
 typically takes the role of identifying and documenting production bugs. Product
 managers need to know how to write a great
 [bug report](/blog/2016/02/26/QA-101-How-to-write-a-bug-report.html).
+
+The very best product managers I have worked with have some level of technical
+understanding of the implementation the team has created. It should be just
+enough to sketch out how the product works at a high level. Otherwise, there
+will be a mismatch between the [mental model](/blog/2016/04/15/mental-models.html)
+of how it works, and how it actually works. Over time, that will result in
+unexpected behavior and a poor user experience.
+
+### Up-Leveling Technical Understanding
+
+There is no magic bullet for this. One thing I would suggest is actually
+white-boarding your take on system architecture with the engineering lead on a
+regular basis. The product manager should drive. This will quickly highlight
+gaps that you can dive into more detail on. 
 
 ## Third Rails
 
