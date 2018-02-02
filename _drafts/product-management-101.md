@@ -4,7 +4,7 @@ toc: true
 tags: product-management
 ---
 
-This is intended as a guide for new product managers on my
+This is intended as a guide for new front-line product managers on my
 team. It could also double as an introduction for people brand new to the
 discipline. My views are inexorably colored by working as an engineer
 exclusively on Agile teams at small companies.
@@ -104,7 +104,7 @@ team.
 ## More
 
 See my [previous posts](/blog/tags/#product-management) that are relevant for
-product managers. 
+product managers.
 
 ## References
 - [What It Takes to Become a Great Product Manager](https://hbr.org/2017/12/what-it-takes-to-become-a-great-product-manager)
