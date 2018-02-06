@@ -25,7 +25,7 @@ Highlight if the group is focusing on minor or too specific points
 Give them
 Share write up ahead of time
 Ask them for their key take-aways, what stood out to them
-Don't soft pedal anything 
+Don't soft pedal anything
 
 Ongoing
 Draft them over time (once a month) as notes, focus on the constructive stuff

@@ -5,21 +5,21 @@ toc: true
 ---
 
 It's inevitable as a manager that at some point, you will have to lay someone
-off. I'm not taking about firing someone because they are not performing. I'm
+off. I'm not talking about firing someone because they are not performing. I'm
 talking about the company is laying off 15% of the workforce for financial
 reasons, and you have to deliver the news. When it happens, remember that this
 is fundamentally not about you. You likely did not have any input in who is being
 let go. That doesn't matter. This is about the people who are losing their
-jobs and how it effects them and their loved ones. It's also about how it
-effects the rest of the team that has to pick up the pieces and move on.
+jobs and how it affects them and their loved ones. It's also about how it
+affects the rest of the team that has to pick up the pieces and move on.
 
 This guide assumes that you are going to be the one laying off your employee.
-If you're given that oppertunity, I suggest you take it.
+If you're given that opportunity, I suggest you take it.
 
 ## Initial Shock
 
 Don't be surprised if you don't learn about the layoffs until just before you
-have to tell other people. There is no great way to co-ordinate a mass
+have to tell other people. There is no great way to coordinate a mass
 termination, but you can imagine that controlling that information on a need to
 know basis is important.
 
@@ -29,25 +29,25 @@ capitalize on the relationships you're building all the time to try to bring
 some stability to what's happening.
 
 You also need to quickly figure out some important details. Who is being let go?
-Do the effected individuals get severance? What about their health
-care? Do they have stock options then can exercise? What is the consistent
-message that you will presenting them about why this is happening?
+Do the affected individuals get severance? What about their health
+care? Do they have stock options they can exercise? What is the consistent
+message that you will be presenting them about why this is happening?
 
 ## Come Up With a Plan
 
 As a manager, part of your job in a layoff is to tell the same story as the
-company is telling about why this is happening, and how the effected individuals
+company is telling about why this is happening, and how the affected individuals
 were selected. You never want to communicate, especially to the people being
 laid off, that this was not your decision. You are going to be saying the same
 things to many people and groups of people over the coming days. You need to
-own that message, and make sure everyone hears the same thing.
+own that message and make sure everyone hears the same thing.
 
 Start by writing down what you are going to say. The HR department likely has
-provided an official version as guidance. Hopefully it's not to impersonal.
+provided an official version as guidance. Hopefully, it's not to impersonal.
 Translate it into your own language. Decide what you want to emphasize. Common
 points:
 
-- This is effecting a lot of people.
+- This is affecting a lot of people.
 - It's about financials, not performance.
 - Thank them for their work.
 
@@ -57,7 +57,7 @@ the company vision and mission by the end. More on how to actually have both
 types of conversations later.
 
 Again, you may not have a lot of time to prepare. I suggest you use this time
-to role play the termination conversation with someone else. If you have an HR
+to role-play the termination conversation with someone else. If you have an HR
 buddy, that would be good. An experienced manager who is also in the loop would
 be good, too. Have them ask you hard questions as the employee. You're probably
 worried about how the real employee will take it. It's not going to be as bad
@@ -66,7 +66,7 @@ as you think, but have the role player do their worst.
 ## Layoff Day
 
 Don't put anything on the calendar. Schedule a room if you need to, but as early
-as possible in the day, start pulling people you need to terminate in. As soon
+as possible in the day, start pulling in people you need to terminate. As soon
 as the first person is terminated, and likely before that, rumors will be
 circulating about what is happening. You want to get all your people out of the
 way as early as possible.
@@ -80,17 +80,17 @@ you do all year.
 ## The Termination Conversation
 
 Look the person in the eye. Tell them right up front that the company is having
-layoffs today and that unfortunately they are in the effected group. Tell them
+layoffs today and that unfortunately, they are in the affected group. Tell them
 that as of this moment, that they are no longer employed here. Tell them you're
 sorry.
 
-Then don't say anything for 10 seconds. You basic job from here on out is to
+Then don't say anything for 10 seconds. Your basic job from here on out is to
 empathize, provide clarity about some logistics, and represent the company. When
 they leave this room, you want them to feel they were afforded some respect in
 a truly crappy situation.
 
-Give them a chance to process. They will have questions. Hopefully you covered
-them in role playing. Absolutely do not say this was not your decision, and that
+Give them a chance to process. They will have questions. Hopefully, you covered
+them in role-playing. Absolutely do not say this was not your decision, and that
 if it were up to you, they would still be employed. Even if that is true, it was
 your job as a manager to make them more successful. It doesn't cost you anything
 to own that.
@@ -114,7 +114,7 @@ This is about company financials, not your performance.
 
 ### Why didn't you give me feedback earlier?
 
-The layoffs were a decision that we had to make on a very short timeframe. I
+The layoffs were a decision that we had to make in a very short timeframe. I
 simply thought we would have more time to work on those issues.
 
 ### I thought this team was a priority for the company?
@@ -127,7 +127,7 @@ Those hires are for different roles.
 
 ## Afterwards
 
-The real hard part comes afterwards. You now have to bring together a bunch of
+The real hard part comes afterward. You now have to bring together a bunch of
 people who are hurting emotionally, help them pick up and pieces and move
 forward. Luckily, this looks much more like what you need to do all the time
 to be a good manager. It will be tough, but it's not as outside your wheelhouse
