@@ -52,6 +52,11 @@ defaults:
       share: false
       related: false
       toc_label: "On this page"
+  -
+    scope:
+      path: "files" # path to href is /blog/files/foo.pdf
+    values:
+      image: true
 
 # Build settings
 markdown: kramdown
