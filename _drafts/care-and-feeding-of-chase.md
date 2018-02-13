@@ -4,12 +4,9 @@ tags: newboss
 toc: true
 header:
   overlay_image: /images/header-alameda-beach.jpg
+excerpt: "These are various personality and work style frameworks I've been exposed to
+has part of training and coaching sessions."
 ---
-
-## Personality Frameworks
-
-These are various personality and work style frameworks I've been exposed to
-has part of training and coaching sessions.
 
 ### MBTI - Type ISTJ
 
@@ -70,7 +67,7 @@ At my worst
 
 This is a lesser known framework from [Sarah Dillard](http://www.ahumancapitalist.com/)
 and the [SPD Advisory](http://www.spdadvisory.com/). I've found it to be useful
-at communicating with coworkers how you can work together best. 
+at communicating with coworkers how you can work together best.
 
 | My work style | We will be successful if |
 | ------------- | ------------- |
