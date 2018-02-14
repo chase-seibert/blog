@@ -2,6 +2,9 @@
 title: Who to Copy on Emails
 toc: true
 tags: manager
+header:
+  overlay_image: /images/header-email.jpg
+#excerpt: "XXX"
 ---
 
 When to CC a boss

@@ -2,6 +2,9 @@
 title: Journeyman Equity at Startups vs. Large Company
 tags: startups reading-list
 toc: true
+header:
+  overlay_image: /images/header-rsus.jpg
+#excerpt: "XXX"
 ---
 
 data:

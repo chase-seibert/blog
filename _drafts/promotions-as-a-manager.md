@@ -2,6 +2,9 @@
 title: Promotions as a Manager
 toc: true
 tags: manager
+header:
+  overlay_image: /images/header-promotion.jpg
+#excerpt: "XXX"
 ---
 
 In advance

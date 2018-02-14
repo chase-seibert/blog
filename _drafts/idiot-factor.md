@@ -2,10 +2,11 @@
 title: The Idiot Factor
 tags: manager
 toc: true
+header:
+  overlay_image: /images/header-idiot.jpg
+excerpt: "I worked with a PM who had a pet concept he called the 'Idiot Factor',
+with regards to hitting deadlines on a software project."
 ---
-
-I worked with a PM who had a pet concept he called the "Idiot Factor". With
-regards to hitting deadlines on a software project:
 
 > If you're going to slip a schedule, the later in the schedule you communicate
 out that you are slipping, and the more you are slipping by, the higher your
@@ -15,7 +16,7 @@ In other words, slipping a three month project by a week is OK, as long as you
 let people know a month in advance. But identifying a slip very late, or not
 identifying a very large slip is not OK.
 
-# Running the Numbers
+## Running the Numbers
 
 If you're going to call something a factor, might as well make it an actual
 number. Here is the formula I came up with:
@@ -31,9 +32,9 @@ number. Here is the formula I came up with:
 Note: if you identify the estimate is wrong early AND don't slip it by too much,
 you're fine.
 
-# Tech Leads
+## Tech Leads
 
-# Product Managers
+## Product Managers
 
 Blog about the idiot factor both fit engineers need to tell you they're sleeping early and management needs to tell you if you're changing the product early
 

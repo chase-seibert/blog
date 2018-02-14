@@ -2,12 +2,15 @@
 title: Manager Layoff Survival Guide
 tags: manager
 toc: true
+header:
+  overlay_image: /images/header-layoff.jpg
+excerpt: "All companies go through layoffs. As a manager, you can count on
+participating in one, someday."
 ---
 
 As apposed to firing someone for performance reasons, layoffs are typically
-for financial reasons. All companies go through layoffs. They are part of a
-natural cycle of growth and restructuring. As a manager, you can count on
-participating in one, someday.
+for financial reasons. They are part of a natural cycle of growth and
+restructuring.
 
 If you are given the opportunity to have the actual termination conversation
 with the people on your team, I suggest you take it. It will be difficult - but
