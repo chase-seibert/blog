@@ -1,10 +1,13 @@
 ---
+title: My Posts
 layout: single
 author_profile: true
 toc: true
 toc_label: "On this page"
 permalink: /me
 ---
+
+This is a collection of some of my most representative blog posts.
 
 ## Management
 
