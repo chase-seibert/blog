@@ -1,0 +1,28 @@
+---
+---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+ <channel>
+  <title>{{ site.title  | xml_escape }} - manager</title>
+  <description>Posts tagged as 'manager'</description>
+     <atom:link href="{{ site.url }}/feeds/feed.manager.xml" rel="self" type="application/rss+xml" />
+  <link>{{ site.url }}/tag/manager/</link>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <author>
+   <name>{{ site.author.name }}</name>
+   <email>{{ site.author.email }}</email>
+  </author>
+
+  {% assign posts = site.tags.manager | where_exp: "post", "post.draft != true" %}
+  {% for post in posts limit:10 %}
+   <item>
+    <title>{{ post.title | xml_escape }}</title>
+    <description>{{ post.content | xml_escape }}</description>
+    <link>{{ site.url }}{{ post.url }} </link>
+    <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
+    <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+   </item>
+  {% endfor %}
+ </channel>
+</rss>
