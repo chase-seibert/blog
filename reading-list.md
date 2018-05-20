@@ -34,3 +34,4 @@ This post is list of articles, blogs and other resources that I commonly referen
 - [15 Fundamental Laws of Software Development](http://www.exceptionnotfound.net/fundamental-laws-of-software-development/)
 - [The Scrum Guide](http://www.scrumguides.org/scrum-guide.html)
 - [IT'S NOT A PROMOTION - IT'S A CAREER CHANGE](http://fractio.nl/2014/09/19/not-a-promotion-a-career-change/)
+- [Falling Into The Pit of Success](https://blog.codinghorror.com/falling-into-the-pit-of-success/)
