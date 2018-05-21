@@ -1,34 +1,29 @@
 ---
-title: Care and Feeding of Chase
+title: Working with Chase
 tags: newboss
 toc: true
 header:
   overlay_image: /images/header-alameda-beach.jpg
-excerpt: "Part of my job is building working relationships, sometimes without
-a lot of time. Maybe this will help."
+excerpt: "Let's set some expectations about how we can most effectively work
+together, whether we're on the same team, different teams, or even if you're
+my boss."
 ---
 
-I recently came across the concept of writing a [user guide](http://firstround.com/review/the-indispensable-document-for-the-modern-manager/)
-for yourself. The idea is to bootstrap new people you're working with to give
-them more upfront context about yourself.
+Part of my job is building working relationships, sometimes without
+a lot of time. Maybe this will help.
 
-As part of a recent job search, I had chance to be deliberate about how I communicate
-my personal working style. I thought I would write those down, along with my results
-in various standard personality tests.
-
-## Background
+## About Me
 
 I started coding in middle school, and got into web stuff after Apple World 1996.
 I did some freelance during college at Boston University, where I majored in
-Computer Science. I went to a tiny startup called Bullhorn after graduation. It
+Computer Science. I went to a tiny startup called [Bullhorn](https://www.bullhorn.com/) after graduation. It
 was a 10 person company that grew to 300+ by the time I left. I was hands on,
 doing everything from coding a custom email server to racking physical servers.
 
 At the subsequent two companies, I focused on Python back-end work. I also
 transitioned to be a full time manager. I've found that managing people is the
-way that I can have the most impact. Specifically, I can help create healthy
-relationships, excellent communication and promote high-leverage work from the
-team.
+way that I can have the most impact. Specifically, I can help promote healthy
+relationships, excellent communication and high-leverage work on the team.
 
 I love mentoring new engineers, and also first time managers. I geek out on
 culture and process initiatives like hiring, promotion process, tech talks
@@ -60,10 +55,26 @@ unique leverage of software is re-usability. Whenever possible, teams should be
 solving local problems AND helping the global organization solve related
 problems.
 
-## Behavioral Questions
+## Management Philosophy
 
 During my latest job search, I fielded the some of the same questions many times.
 I thought it would be useful to document some of the most common ones.
+
+### What are your expectations from your team?
+
+- Hit your short-term sprint estimates nearly 100% of the time.
+- Don't skip one on ones, come engaged with stuff to talk about.
+- Identify a personal goal I can help you work on.
+- Be excellent to each other.
+- Bias to over-communicate in writing.
+
+### What can you expect of me, as a manager?
+
+- Weekly one on ones.
+- Honest real-time feedback.
+- Running a tight meeting.
+- Autonomy to make your own technical decisions.
+- Freedom to work your own hours, as long as your tasks get done. 
 
 ### How do you manage people?
 
@@ -103,13 +114,13 @@ I'm introverted, but I can get energy from spending time with people as long as
 I know them well. I find that it takes six months to get comfortable with a new
 team or business partner.
 
-## Personality Tests
+## Working Style
 
 These were all encountered during various work trainings and team building
 exercises. I've found that while not perfect, they can help a team build more
 context quickly, IF the team is bought into it.
 
-### MBTI - Type ISTJ
+### Personality
 
 My Myers & Briggs personality inventory is `ISTJ`. This is a common personality
 type known as [The Logistician](https://www.16personalities.com/istj-personality).
@@ -129,12 +140,10 @@ tolerant of people who are less process oriented.
 
 [Full MBTI report](/blog/files/mbti.pdf)
 
-### Strengths Finder
+### What Motivates Me
 
 My top [Gallup Strengths Finder](https://www.gallupstrengthscenter.com) themes
 are `Analytical`, `Focus`, `Discipline`, `Futuristic` and `Relator`.
-
-Here are my high level take-aways.
 
 | Theme | I find motivating | How I can be perceived |
 | ------------- | ------------- | ------------- |
@@ -146,10 +155,9 @@ Here are my high level take-aways.
 
 [Full Strengths Finder report](/blog/files/strengthfinder.pdf).
 
-### Enneagram - Type 8
+### When I'm at my Best
 
 My Enneagram type is [Type 8](https://www.enneagraminstitute.com/type-8/).
-These are the points that stand out to me.
 
 At my best
 
@@ -164,7 +172,7 @@ At my worst
 - By believing that others are against you and reacting against them, you tend to alienate them and confirm your own fears.
 - Eights typically overvalue power.
 
-### Let's Work Together
+### Working Together Effectively
 
 This is a lesser known framework from [Sarah Dillard](http://www.ahumancapitalist.com/)
 and the [SPD Advisory](http://www.spdadvisory.com/). I've found it to be useful
