@@ -8,5 +8,3 @@ excerpt: "XXX"
 ---
 
 # See: https://mmistakes.github.io/minimal-mistakes/docs/layouts/
-
-## MBTI - Type ISTJ
