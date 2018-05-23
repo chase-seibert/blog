@@ -39,6 +39,12 @@ author:
 twitter:
   username: "chase_seibert"
 
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "UA-34759164-2"
+    anonymize_ip: false # default
+
 defaults:
   -
     scope:
