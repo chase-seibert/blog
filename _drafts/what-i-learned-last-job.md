@@ -37,6 +37,8 @@ Once, the red flag was a reliance on Facebook as a partner. This time, it was a 
 
 Finally, here are some smaller, more tactical items that I will take with me going forward. 
 
+- The biggest reason projects fail is lack of alignment with upper management. You need to continuously re-align. 
+- Treat performance reviews as a year round job. You want to have a living draft of reviews for all your direct reports, and regularly talk about the feedback with them. This is especially important if layoffs occur unexpectedly; you don't want to add to the number of surprises. 
 - Be flexible about team composition. You don’t have to create the ideal team right away; especially if there is not alignment with leadership. 
 - In the face of ambiguity, a bias to action should be tempered somewhat with seeking to understand first. 
 - If you can’t sit down for a one on one with a high-level stakeholder, at least try to put yourself in their shoes. 
