@@ -11,7 +11,7 @@ At my last job, I learned what it really means to be a manager. For the first ti
 
 ## Pivots Are Hard
 
-The term "pivot" is used when a company changes its business model. While not that drastic, I was pitched on helping the company transform from a content/SEO focus to a product focus. My teams built the company's first non-content products. 
+The term "pivot" is used when a company changes its business model. Specifically, I was pitched on helping the company transform from a content/SEO focus to a product focus. My teams built the company's first non-content products. 
 
 This process was extremely painful. Three years later, even getting on the same page about what being a product meant was still an ongoing discussion. Basic concepts such as user engagement, what a product manager is, and engineering as a value center were still not universally well understood. 
 
@@ -37,12 +37,16 @@ Once before, the red flag was a reliance on Facebook as a partner. This time, it
 
 Finally, here are some smaller, more tactical items I will take with me going forward. 
 
-- The biggest reason projects fail is lack of alignment with upper management. You need to continuously realign. 
-- Treat performance reviews as a year-round job. You should have a living draft of reviews for all your direct reports and regularly talk about the feedback with them. This is especially important if layoffs occur unexpectedly: you don't want to add to the surprises. 
-- Be flexible about team composition. You don’t have to create the ideal team right away, especially if there isn't alignment with leadership. 
-- In the face of ambiguity, a bias toward action should be tempered somewhat with seeking first to understand. 
-- If you can’t sit down for a one-on-one with a high-level stakeholder, at least try to put yourself in their shoes. 
-- Set expectations of confidentiality around personnel moves. Specifically when moving people between teams and when people are leaving the company, make sure anyone who does know ahead of time keeps it under their hat. 
-- Be careful about executing a succession plan for yourself without knowing what your next role will be. Always do the right thing for the company, but you may be moved quickly into a new role that you’re not as excited about.
-- Identifying a problem is not enough. You also need to propose a solution. Otherwise, it’s just complaining. 
+- The biggest reason projects fail is **lack of alignment** with upper management. You need to continuously realign. 
+- Treat performance reviews as a year-round job. You should have a **living draft of reviews** for all your direct reports and regularly talk about the feedback with them. This is especially important if layoffs occur unexpectedly: you don't want to add to the surprises. 
+- **Be flexible** about team composition. You don’t have to create the ideal team right away, especially if there isn't alignment with leadership. 
+- In the face of ambiguity, a bias toward action should be tempered somewhat with **seeking first to understand**. 
+- If you can’t sit down for a one-on-one with a high-level stakeholder, at least **try to put yourself in their shoes**. 
+- Set expectations of **confidentiality** around personnel moves. Specifically when moving people between teams and when people are leaving the company, make sure anyone who does know ahead of time keeps it under their hat. 
+- Be careful about executing a **succession plan** for yourself without knowing what your next role will be. Always do the right thing for the company, but you may be moved quickly into a new role that you’re not as excited about.
+- Identifying a problem is not enough. You also need to **propose a solution**. Otherwise, it’s just complaining. 
 - Think about who to CC on email outside your direct group. Any email that you send above your boss in the reporting chain should also include them. 
+
+## Conclusion 
+
+What I really learned was that in a management role, you need to think a lot more about the big picture. You need to think about not just the business fundamentals, but also the the highest level stakeholders. 
