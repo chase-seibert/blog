@@ -28,6 +28,11 @@ I love mentoring new engineers, and also first time managers. I geek out on
 culture and process initiatives like hiring, promotion process, tech talks
 and blogging.
 
+Outside work, I enjoy basketball, ultimate frisbee, RPG video games,
+photography, gardening, personal finance,
+[reading science fiction](https://www.goodreads.com/user/show/9297327-chase-seibert)
+and [cooking](https://www.dropbox.com/s/j16y65jm26780n8/cookbook.pdf?dl=0).
+
 ## Principles
 
 My definition of high functioning individuals and teams tie back to these principles.
