@@ -36,3 +36,4 @@ This post is list of articles, blogs and other resources that I commonly referen
 - [IT'S NOT A PROMOTION - IT'S A CAREER CHANGE](http://fractio.nl/2014/09/19/not-a-promotion-a-career-change/)
 - [Falling Into The Pit of Success](https://blog.codinghorror.com/falling-into-the-pit-of-success/)
 - [Developer Metrics for Teams](https://lethain.com/accelerate-developer-productivity/)
+- [A Challenge for the Immutable Law of On Call](https://medium.com/@solidspark/a-challenge-for-the-immutable-law-of-on-call-719a7ae86e)
