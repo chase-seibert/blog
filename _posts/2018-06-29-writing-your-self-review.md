@@ -10,10 +10,10 @@ excerpt: "The best feedback is tied to one or more specific examples, and
 also highlights the impact of what happened on the team or company."
 ---
 
-Many companies ask employees to write 360 reviews of their coworkers at least
-once a year. For self-reviews, you should put a lot of time into coming up with specifics. For example, you might discuss
+Many companies ask employees to write both self-reviews and 360 reviews of their coworkers at least
+once a year. Especially for self-reviews, you should put a lot of time into coming up with specifics. For example, you might discuss
 how quickly you were able to troubleshoot a production issue. You should try
-to gather data and metrics as well. Again, make sure to specify what the
+to gather data and metrics as well. Make sure to specify what the
 impact was in each case.
 
 ## Gathering Data
