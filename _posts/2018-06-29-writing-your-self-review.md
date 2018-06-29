@@ -57,8 +57,8 @@ brainstorm additional accomplishments, examples, and impacts.
 
  Right after you have written your self-review is an excellent time to think
 about updating your resume. Many of the accomplishments in your self-review, especially the
- data-oriented ones, are the exact things you should be adding to your public
--facing resume. People often forget their accomplishments when it comes time to
+ data-oriented ones, are the exact things you should be adding to your public-facing
+ resume. People often forget their accomplishments when it comes time to
 update their resumes for a job search. Gathering specific metrics and data points
 contemporaneously with the work that you are doing is much easier than trying
 to dig them up later.
