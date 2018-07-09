@@ -37,3 +37,4 @@ This post is list of articles, blogs and other resources that I commonly referen
 - [Falling Into The Pit of Success](https://blog.codinghorror.com/falling-into-the-pit-of-success/)
 - [Developer Metrics for Teams](https://lethain.com/accelerate-developer-productivity/)
 - [A Challenge for the Immutable Law of On Call](https://medium.com/@solidspark/a-challenge-for-the-immutable-law-of-on-call-719a7ae86e)
+- [Writing strategies and visions](https://lethain.com/strategies-visions/)
