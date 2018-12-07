@@ -4,7 +4,7 @@ tags: newboss
 toc: true
 header:
   overlay_image: /images/header-alameda-beach.jpg
-excerpt: "The care the feeding of Chase"
+excerpt: "A little bit about me"
 ---
 
 During a recent job search, I introduced myself to many people, and had to

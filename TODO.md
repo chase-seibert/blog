@@ -1,4 +1,4 @@
-Blog
+PM/EM concentric circles of trust
 Blog people don’t read
 Blog manager on a new team - how to get oriented
 How to facilitate a vision/strategy session
