@@ -5,6 +5,8 @@ toc: true
 header:
   overlay_image: /images/header-alameda-beach.jpg
 excerpt: "A little bit about me"
+redirect_from:
+  - /2018/05/14/care-and-feeding-of-chase.html
 ---
 
 During a recent job search, I introduced myself to many people, and had to
