@@ -131,7 +131,7 @@ def test_context_manager(self, mock_open_car):
 
 # Bonus - Mocking All Tests in a Suite
 
-San you have a certain mock that you want to apply to all tests in a TestCase class. You have two options. You can apply the patch in the `setUp` and un-apply the patch in `tearDown`, or you can over-ride `run`.
+Say you have a certain mock that you want to apply to all tests in a TestCase class. You have two options. You can apply the patch in the `setUp` and un-apply the patch in `tearDown`, or you can over-ride `run`.
 
 ```python
 def run(self, result=None):
