@@ -20,7 +20,7 @@ description: Facts, hacks and attacks from my life as a web application develope
 url: "https://chase-seibert.github.io"
 baseurl: "/blog" # the subpath of your site, e.g. /blog
 repository: "chase-seibert/chase-seibert.github.io"
-search: true
+search: false
 google_site_verification: "KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM"
 
 author:
