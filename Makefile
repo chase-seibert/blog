@@ -3,8 +3,7 @@ server:
 tags:
 	egrep -r --color -h "tags:\ (.+)" _posts/ |xargs -n1 |sort |uniq -c |sort
 words:
-	find _posts/ |xargs wc -w
-	find _drafts/ |xargs wc -w
+	find _posts/ |sort |xargs wc -w
 diff:
 	git diff -w --word-diff
 draft:
