@@ -40,6 +40,7 @@ The computer’s portion of the loop time is variable based on the language, the
 To my mind, slow loop time recalls some of the worst debugging nightmares of my career, what I call “flying blind”. The worst cases have two properties: they are not reliably reproducible, and each attempt at reproduction takes a long time. For debugging, non-reproducibility by itself can lead to unacceptably slow loop time. If you have a deploy to production to see if it worked, or you have to run the code many times to see if it fails once, that’s a worst case slow loop time scenario.
 
 It’s easy to see how this extreme scenario can lead to slow development, and low quality output.
+
 In contrast, some of my most positive memories of being “in the flow” invoke the sensation of being in constant, fluid dialog with the computer. Like a back-and-forth conversation, you’re arriving at your conclusion collaboratively. You’re validating the code nearly as fast as you can think it and type it. For me, even a 10 second latency in being able to run and validate a change can break that flow.
 
 Still, the assertion that shorter loops times are better rests on an unprovable assumption — that running more cycles for a given scope of work will result in higher output per time period, and/or higher quality. I believe this is true, but I concede that (no matter how personally counter-intuitive) it’s possible that over-all throughput and quality could be as high or higher with slow loop times.
@@ -60,8 +61,8 @@ Without running code in a fully integrated environment at some point before ship
 
 No QA person on the planet would condone shipping something to production without running it the same way a user will experience it — integrated together.
 
-
 > Validating ONLY with tests is basically flying the plane on instrumentation, versus being able to look out the windshield. Flying visually and by muscle-memory is both more efficient and safer, in conjunction with instrumentation. You’re much less likely to hit a mountain by mistake.
+
 # Does Complexity Lead to Test Validation Loops?
 
 Keeping loop time short is hard when you have complex systems, and large codebases. Hot reloading may very well take longer than 10 seconds by itself, in order to load and recompile a large codebase. Scripting languages have an advantage here, but have their own non-orthogonal costs. Even scripting languages may have unacceptable latency if the framework requires transpiling.
@@ -84,8 +85,6 @@ The premise is that you hook your development service up to staging, and route y
 
 The switch from in-application validation to test validation in the primary debug loop lead to lower quality, slower velocity, and to context switching.
 
-
 ![](https://imgs.xkcd.com/comics/compiling.png)
-
 
 System entropy towards test validation takes a LOT of work to counter. Maintaining short debug loops quickly becomes a full time job for someone, or a team of someones. But, even with as few as 50 engineers, organizations I’ve been in have opted to pay that cost. It’s possible (though I’m not yet convinced) that the cost grows exponentially as you scale up in terms of people and codebase size. In that case, I would expect companies at large scale to near-universally live with slow debug cycles and the primacy of test validation.
