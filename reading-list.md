@@ -23,6 +23,7 @@ This post is list of articles, blogs and other resources that I commonly referen
 - [The Mythical Man-Month](http://www.amazon.com/Mythical-Man-Month-Software-Engineering-Anniversary/dp/0201835959) - Project management
 - [Agile Software Development with Scrum](http://www.amazon.com/gp/product/0130676349) - Agile
 - [The Coaching Habit](https://www.amazon.com/Coaching-Habit-Less-Change-Forever/dp/0978440749) - Management
+- [Being Glue](https://noidea.dog/glue)
 
 ## Articles
 
