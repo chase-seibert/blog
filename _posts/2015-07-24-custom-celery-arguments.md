@@ -36,7 +36,8 @@ class MyTask(Task):
         # parse any custom task options from the .delay() or .apply_async() calls
         safe = options.pop('safe', False)  # safely trap errors talking to celery broker
 
-        options['headers'] = options.get('headers', {})
+        if 'headers' not in options or options['headers'] is None:
+            options['headers'] = {}
         options['headers'].update({
             'safe': safe,
         })
