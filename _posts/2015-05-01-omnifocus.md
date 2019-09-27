@@ -50,30 +50,4 @@ Check it out!
 
 I recorded a video of my daily routine.
 
-<style>
-  .embed-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    max-width: 100%;
-  }
-
-  .embed-container iframe, .embed-container object, .embed-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>
-
-<div class="embed-container">
-  <iframe
-      width="640"
-      height="480"
-      src="https://www.dropbox.com/s/mqb6qubbxldt9ao/Daily%20GTD%20OmniFocus.mov?dl=0&raw=1"
-      frameborder="0"
-      allowfullscreen="">
-  </iframe>
-</div>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/VT3r0OLRtSo"></iframe>
