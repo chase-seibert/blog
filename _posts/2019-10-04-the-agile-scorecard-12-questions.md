@@ -15,6 +15,7 @@ In 2000, [Joel Spolsky](https://en.wikipedia.org/wiki/Joel_Spolsky) wrote [The J
 
 
 > The neat thing about The Joel Test is that it’s easy to get a quick yes or no to each question. You don’t have to figure out lines-of-code-per-day or average-bugs-per-inflection-point. Give your team 1 point for each “yes” answer.
+
 # The Questions
 1. Do you use story points?
 2. Do engineers estimate their work as a group?
