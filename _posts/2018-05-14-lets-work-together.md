@@ -55,11 +55,11 @@ the face of change if it can be candid with itself.
 
 ### High-Leverage
 
-As engineers, we often have a choice between solving a specific problem, or
-solving the generic problem. That usually means more work. But part of the
-unique leverage of software is re-usability. Whenever possible, teams should be
-solving local problems AND helping the global organization solve related
-problems.
+In  the course of a project, there are many choices along the way about scope.
+How exactly is the team optimizing, and making the right trade-offs between the
+Iron Triangle axis of scope, quality and time? If they are NOT continuously making
+those trade-offs, they are in danger of having too much scope, and taking too
+much time.
 
 ## Management Philosophy
 
