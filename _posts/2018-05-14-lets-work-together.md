@@ -63,7 +63,7 @@ much time.
 
 ## Management Philosophy
 
-During my latest job search, I fielded the some of the same questions many times.
+During my latest job search, I fielded some of the same questions many times.
 I thought it would be useful to document some of the most common ones.
 
 ### What are your expectations from your team?
