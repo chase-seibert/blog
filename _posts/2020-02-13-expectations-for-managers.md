@@ -1,5 +1,5 @@
 ---
-title: Expectations for Managers
+title: My Expectations for Managers
 tags: manager newboss
 toc: true
 header:
