@@ -13,6 +13,7 @@ redirect_from:
 I use this as an initial brain dump for new engineering managers I work with.
 
 ## Basics
+- [My Expectations for Managers]({{ site.baseurl }}{% post_url 2020-02-13-expectations-for-managers %})
 - [Management 101]({{ site.baseurl }}{% post_url 2016-06-24-management-101 %})
 - [Topics for One on Ones]({{ site.baseurl }}{% post_url 2015-02-10-one-on-ones %})
 - [Using OmniFocus to manage your todo list and get shit done]({{ site.baseurl }}{% post_url 2015-05-01-omnifocus %})

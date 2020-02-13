@@ -74,6 +74,10 @@ I thought it would be useful to document some of the most common ones.
 - Be excellent to each other.
 - Bias to over-communicate in writing.
 
+### What are your expectations for managers that report to you?
+
+See [My Expectations for Managers]({{ site.baseurl }}{% post_url 2020-02-13-expectations-for-managers %})
+
 ### What can you expect from me, as a manager?
 
 - Weekly one on ones.
