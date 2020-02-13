@@ -6,7 +6,7 @@ header:
   overlay_image: /images/header-sprinter.jpg
   overlay_color: "#000"
   overlay_filter: "0.5"
-excerpt: "Lot’s of people claim to do Agile. Most believe it. Many are not doing the basics right."
+excerpt: "Lots of people claim to do Agile. Most believe it. Many are not doing the basics right."
 ---
 
 I want to put a stake in the ground for an opinionated, simple, reductionist rubric that covers the basics of what it means to be an Agile team.
