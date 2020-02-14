@@ -143,5 +143,5 @@ I'm motivated by projects where I can:
 - Take my time to think things through
 - Offer guidance to others
 
-My super power is my ability to inspire and uplift people. I'm at at my best
+My super power is managing execution. I'm at at my best
 when I can take charge and help everyone through a crisis.
