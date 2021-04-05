@@ -1,5 +1,5 @@
 ---
-title: XXX
+title: "XXX"
 tags: XXX
 toc: true
 header:
