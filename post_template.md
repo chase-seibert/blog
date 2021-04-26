@@ -10,3 +10,5 @@ excerpt: "XXX"
 ---
 
 # See: https://mmistakes.github.io/minimal-mistakes/docs/layouts/
+
+# ![](/blog/images/escalations2.png)
