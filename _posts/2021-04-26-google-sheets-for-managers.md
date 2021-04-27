@@ -15,7 +15,7 @@ This blog post has a companion [Google Sheet playground](https://docs.google.com
 
 # Understanding Cell References
 
-A cell reference in a spreadsheet is a variable that points to another cell. For formula `=A1` would copy the value from cell `A1` to the current cell. Bonus: you can give a cell an easy-to-reference name via `Data → Named ranges`. 
+A cell reference in a spreadsheet is a variable that points to another cell. For example formula `=A1` would copy the value from cell `A1` to the current cell. Bonus: you can give a cell an easy-to-reference name via `Data → Named ranges`. 
 
 ![](/blog/images/gsheet1.png)
 
@@ -35,8 +35,26 @@ These cover the majority of basic text manipulation.
 
 ![](/blog/images/gsheet2.png)
 
+Official documentation is here: 
 
-Honorable mentions: `REGEXMATCH`, `REGEXREPLACE`, `COUNTIF`. 
+- [CONCAT](https://support.google.com/docs/answer/3093592)
+- [CONCATENATE](https://support.google.com/docs/answer/3094123)
+- [SEARCH](https://support.google.com/docs/answer/3094154)
+- [SUBSTITUTE](https://support.google.com/docs/answer/3094215)
+- [INDEX](https://support.google.com/docs/answer/3098242)
+- [SPLIT](https://support.google.com/docs/answer/3094136)
+- [IFERROR](https://support.google.com/docs/answer/3093304)
+- [MID](https://support.google.com/docs/answer/3094129)
+- [LEN](https://support.google.com/docs/answer/3094081)
+- [TEXT](https://support.google.com/docs/answer/3094139)
+- [IF](https://support.google.com/docs/answer/3093364)
+- [AND](https://support.google.com/docs/answer/3093301)
+- [NOW](https://support.google.com/docs/answer/3092981)
+- [YEAR](https://support.google.com/docs/answer/3093061)
+- [TO_DATE](https://support.google.com/docs/answer/3094239)
+- [DATEVALUE](https://support.google.com/docs/answer/3093039)
+
+Honorable mentions: [REGEXMATCH](https://support.google.com/docs/answer/3098292), [REGEXREPLACE](https://support.google.com/docs/answer/3098245), and [COUNTIF](https://support.google.com/docs/answer/3093480).
 
 # Import & Export CSV
 
@@ -77,9 +95,9 @@ Then use the editor to `Add` rows and values. Here, I’m summing Widgets by Tea
 
 # VLOOKUP
 
-If Pivot Tables are analogous to `GROUP BY` in SQL, then a VLOOKUP is like a `JOIN`. You can join to data in another sheet of the current Google Sheet document, and you can also join to external sheets. 
+If Pivot Tables are analogous to `GROUP BY` in SQL, then a VLOOKUP is like a `JOIN`. You can join to data in another sheet in the current Google Sheet document, and you can also join to external sheets. 
 
-This is great for at least a few use cases:
+This is great for at least two use cases:
 
 - You want to treat one sheet as a source-of-truth enum-like mapping, i.e. a translation table. 
 - You want to reference another dataset either to not repeat data or because you know that the source-of-truth sheet will change regularly, i.e. a list of employees and their current manager. 
