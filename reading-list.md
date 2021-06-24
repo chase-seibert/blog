@@ -41,3 +41,4 @@ This post is list of articles, blogs and other resources that I commonly referen
 - [Writing strategies and visions](https://lethain.com/strategies-visions/)
 - [Service Cookbooks](https://lethain.com/service-cookbooks/)
 - [I could do that in a weekend!](https://danluu.com/sounds-easy/)
+- [Software Architecture for SAAS Startups](https://alexkrupp.typepad.com/sensemaking/2021/06/django-for-startup-founders-a-better-software-architecture-for-saas-startups-and-consumer-apps.html)
