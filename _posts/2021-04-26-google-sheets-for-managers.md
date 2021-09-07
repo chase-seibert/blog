@@ -23,7 +23,9 @@ A cell reference in a spreadsheet is a variable that points to another cell. For
 
 When a range of cells is selected, there is a box handle in the lower right of the range that you can use to copy the formula to other cells. This is mostly used to “fill in” the rest of a column (or occasionally a row) with the same formula. 
 
-*Note: you can quickly fill the rest of a column with a given formula by holding down* `COMMAND` (on a Mac) *and double-clicking on the copy formula box handle. Alternatively, you can script this with* [ARRAYFORMULA](https://www.benlcollins.com/formula-examples/array-formulas-forms/). 
+*Note: you can quickly fill the rest of a column with a given formula by holding down* `COMMAND` (on a Mac) *and double-clicking on the copy formula box handle. Alternatively, you can script this with [ARRAYFORMULA](https://www.benlcollins.com/formula-examples/array-formulas-forms/). This is especially useful if you want to automatically apply the formula to new rows in the sheet.*
+
+Array formulas should reference entire columns, for example: `=ARRAYFORMULA(YEAR(C2:C))`
 
 When copying a formula, it’s often useful to keep either the source column number or source row number (or both) fixed. For example, if you are a value in one specific cell, such as the dollar cost average per engineer, you may want to reference that value in another formula. In this case, you would use an absolute reference like `$A$1`, which would always point to `A1`, no matter where you copied the formula. 
 
@@ -86,8 +88,9 @@ Think of a pivot table as a `GROUP BY` clause in SQL. It’s a general-purpose w
 
 First, select the data you want to pivot on and go to `Data → Pivot table`. 
 
-![You need to select a destination, or have it create a new sheet for the results.](/blog/images/gsheet6.png)
+*Note: you can make sure that your pivot table will pick up new rows in the source sheet automatically by updating the data range to reference entire columns without specific row numbers, such as `A:C`. When you do this, you will likely need to add a filter to exclude blank values.*
 
+![You need to select a destination, or have it create a new sheet for the results.](/blog/images/gsheet6.png)
 
 Then use the editor to `Add` rows and values. Here, I’m summing Widgets by Team. 
 
