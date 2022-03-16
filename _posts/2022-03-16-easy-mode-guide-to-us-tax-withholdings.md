@@ -19,7 +19,7 @@ Somehow, I had muddled through for about 20 years, filing taxes and not really u
 
 - **Withholdings** are deductions from your paycheck that go immediately to the federal government to cover taxes. 
 - **Tax liability** is how much you actually owe in taxes, for the whole year. *How much you withhold does **not** change how much you owe*; it will get equalized when you file your taxes at the end of the year. 
-- **Marginal rate** is the percentage of the last dollar you earn that you owe in taxes. This is different from the first dollar. 
+- **Marginal rate** is the percentage of the last dollar you earn that you owe in taxes. This is different from the first dollar. That's because we have a graduated tax system with [tax brackets](https://www.investopedia.com/terms/p/progressivetax.asp). 
 - **W4** is the form you file with your employer that tells them how much to withhold from your paycheck.
 - **RSUs** are one of three buckets of compensation for many software engineers. In addition to your regular salary, and your annual bonus, RSUs are quarterly stock grants that you get taxed on every quarter, when you receive the stock, even if you don't sell it. 
 
@@ -31,17 +31,23 @@ Things start getting tricky with bonus and RSUs. Early in your career, these are
 
 > Your W4 withholdings are designed to account for the tax liability on just your salary. Bonus and RSUs are withheld at a flat 22%. You need to account for the delta between 22% and your real marginal tax rate, by using either extra W4 withholdings from each paycheck, or with quarterly estimated taxes. 
 
-Let's assume that your marginal tax rate of 37%, which is true if you make more than $250,000 in total compensation a year. Your W4 is withholding enough taxes to from your salary piece, but you need to make your own plans to cover difference between 37% and the flat 22% for your bonus and RSUs combined, or 15% of those pieces. 
+Let's assume that your marginal tax rate is 37%, which is true if you make more than $250,000 in total compensation a year. Your W4 is withholding enough taxes to from your salary piece, but you need to make your own plans to cover difference between 37% and the flat 22% for your bonus and RSUs combined, or 15% of those pieces. 
 
 # Three ways to pay what you owe 
 
-The first method to pay is to wait until tax season. It's not uncommon for folks to get to RSUs for the first time, and be surprised when they start filing taxes and figure out they owe tens of thousands of dollars in additional taxes. The IRS will also charge you an interest penalty if the difference between withholdings and tax liability is large enough. For me, it was more about not wanting to be surprised.  
+## Pay at tax time
+
+The first method to pay is to wait until tax season. It's not uncommon for folks to get RSUs for the first time, and be surprised when they start filing taxes and figure out they owe tens of thousands of dollars in additional taxes. The IRS will also charge you an interest penalty if the difference between withholdings and tax liability is large enough. For me, it was more about not wanting to be surprised.  
+
+## Extra W4 Withholdings
 
 The second method to pay is with extra W4 withholdings. The W4 form was updated in 2020 to allow you to input any amount of "extra withholdings", as a dollar amount. So, you can add your bonus and RSUs for the year together, multiple by 15%, and divide by the number of pay periods (probably 24) to calculate your W4 extra withholdings. You file an updated form with your employer, and that should be it. Just double-check your next paycheck, and look for the "extra withholdings" label. 
 
 W4 extra withholdings have the benefit of being adjustable throughout the year. But, as the percentage of your total compensation that comes from bonus and RSUs goes up, this could be a significant portion of your paycheck. In my case, it could be up to 1/3 of the gross amount, just the for **extra** federal tax! Combined with all the other deductions, it could easily eat up most of the paycheck. You could end up budgeting your annual bonus plus your quarterly RSUs to cover your month to month spending, which is the opposite of what most people want to do.
 
-The third method to pay is quarterly Estimated Tax payments. It's not scary; it takes about 10 minutes a quarter, and you pay online. You don't need to fill out any forms or paperwork. The main downsides are that you need to remember to pay them, you need to save the money from your bonus and RSUs to pay them, and you need to make four **equal** payments for the year. The equal payments piece is a bummer; it means you need to make the most accurate calculation possible at the beginning of the year, and you cannot adjust as you go. 
+## Quarterly Estimated Tax Payments
+
+The third method to pay is quarterly estimated tax payments. It's not scary; it takes about 10 minutes a quarter, and you pay online. You don't need to fill out any forms or paperwork. The main downsides are that you need to remember to pay them, you need to save the money from your bonus and RSUs to pay them, and you need to make four **equal** payments for the year. The equal payments piece is a bummer; it means you need to make the most accurate calculation possible at the beginning of the year, and you cannot adjust as you go. 
 
 # Double check your work
 
