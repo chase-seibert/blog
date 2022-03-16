@@ -6,10 +6,10 @@ header:
   overlay_image: /images/header-tax-withholdings.png
   overlay_color: "#000"
   overlay_filter: "0.5"
-excerpt: "Set withholdings to zero, and pay an extra 15% of your bonus and RSU grant in the form of quarterly estimated taxes"
+excerpt: "Set withholdings to zero, and pay up to an extra 15% of your bonus and RSU grant in the form of quarterly estimated taxes"
 ---
 
-For years I've struggled with trying to minimize the difference between taxes withheld and taxes owed. It's quite complex, with salary, bonus, and equity changing every year. That is, until I had a breakthrough. The year after I made quarterly estimated payments for the first time, it finally clicked.
+For years I've struggled with trying to minimize the difference between taxes withheld and taxes owed. It's quite complex, with salary, bonus, and RSUs changing every year. That is, until I had a breakthrough. The year after I made quarterly estimated payments for the first time, it finally clicked.
 
 *Note: this blog post is only talking about your federal tax liability, not state taxes, social security, or medicare. That's because the federal taxes are the largest chunk out of your paycheck, and are generally the only piece you can or need to plan for.*
 
@@ -20,6 +20,7 @@ Somehow, I had muddled through for about 20 years, filing taxes and not really u
 - **Withholdings** are deductions from your paycheck that go immediately to the federal government to cover taxes. 
 - **Tax liability** is how much you actually owe in taxes, for the whole year. *How much you withhold does **not** change how much you owe*; it will get equalized when you file your taxes at the end of the year. 
 - **Marginal rate** is the percentage of the last dollar you earn that you owe in taxes. This is different from the first dollar. That's because we have a graduated tax system with [tax brackets](https://www.investopedia.com/terms/p/progressivetax.asp). 
+- **Effective rate** is the percentage of your tax liability versus your gross income. 
 - **W4** is the form you file with your employer that tells them how much to withhold from your paycheck.
 - **RSUs** are one of three buckets of compensation for many software engineers. In addition to your regular salary, and your annual bonus, RSUs are quarterly stock grants that you get taxed on every quarter, when you receive the stock, even if you don't sell it. 
 
@@ -29,9 +30,9 @@ Your regular W4 withholdings will cover the full tax liability of your salary al
 
 Things start getting tricky with bonus and RSUs. Early in your career, these are small. Over time, they become a larger and larger part of your compensation. For taxes, that's a problem, because **bonus and RSUs are not withheld at the correct rate -- you owe more!**
 
-> Your W4 withholdings are designed to account for the tax liability on just your salary. Bonus and RSUs are withheld at a flat 22%. You need to account for the delta between 22% and your real marginal tax rate, by using either extra W4 withholdings from each paycheck, or with quarterly estimated taxes. 
+> Your W4 withholdings are designed to account for the tax liability on just your salary. Bonus and RSUs are withheld at a flat 22%. You need to account for the delta between 22% and your marginal tax rate, by using either extra W4 withholdings from each paycheck, or with quarterly estimated taxes. 
 
-Let's assume that your marginal tax rate is 37%, which is true if you make more than $250,000 in total compensation a year. Your W4 is withholding enough taxes to from your salary piece, but you need to make your own plans to cover difference between 37% and the flat 22% for your bonus and RSUs combined, or 15% of those pieces. 
+You use marginal rate here, instead of effective rate, because you will be paying the most for these "last dollars". Another way to think about it is that you have already paid bellow your effective rate for your salary dollars. Let's assume that your marginal tax rate is the maximum of 37%. Your W4 is withholding enough taxes to from your salary piece, but you need to make your own plans to cover difference between 37% and the flat 22% for your bonus and RSUs combined, or 15% of those pieces. 
 
 # Three ways to pay what you owe 
 
