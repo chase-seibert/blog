@@ -18,6 +18,7 @@ For years I've struggled with trying to minimize the difference between taxes wi
 Somehow, I had muddled through for about 20 years, filing taxes and not really understanding what was going on. That's possible for most people, thanks to the magic of automatic withholding. All the same, it's better to actually understand some of the basic terms and concepts. Here is what I learned, slowly. 
 
 - **Withholdings** are deductions from your paycheck that go immediately to the federal government to cover taxes. 
+- **Gross income** your total salary, bonus, and RSUs, for the year, before taxes. 
 - **Tax liability** is how much you actually owe in taxes, for the whole year. *How much you withhold does **not** change how much you owe*; it will get equalized when you file your taxes at the end of the year. 
 - **Marginal rate** is the percentage of the last dollar you earn that you owe in taxes. This is different from the first dollar. That's because we have a graduated tax system with [tax brackets](https://www.investopedia.com/terms/p/progressivetax.asp). 
 - **Effective rate** is the percentage of your tax liability versus your gross income. 
@@ -26,13 +27,13 @@ Somehow, I had muddled through for about 20 years, filing taxes and not really u
 
 # The easy way to calculate what you owe
 
-Your regular W4 withholdings will cover the full tax liability of your salary alone. For example, if you have no bonus or RSU grant, and you fill out the W4 correctly, you will withhold the correct amount from each paycheck so that the difference between taxes withheld and taxes owned for the year is negligible. 
+Your regular W4 withholdings will cover the full tax liability of your salary alone. For example, if you have no bonus or RSU grant, and you fill out the W4 correctly, you will withhold the correct amount from each paycheck so that the difference between taxes withheld and taxes owed for the year is negligible. 
 
 Things start getting tricky with bonus and RSUs. Early in your career, these are small. Over time, they become a larger and larger part of your compensation. For taxes, that's a problem, because **bonus and RSUs are not withheld at the correct rate -- you owe more!**
 
 > Your W4 withholdings are designed to account for the tax liability on just your salary. Bonus and RSUs are withheld at a flat 22%. You need to account for the delta between 22% and your marginal tax rate, by using either extra W4 withholdings from each paycheck, or with quarterly estimated taxes. 
 
-You use marginal rate here, instead of effective rate, because you will be paying the most for these "last dollars". Another way to think about it is that you have already paid bellow your effective rate for your salary dollars. Let's assume that your marginal tax rate is the maximum of 37%. Your W4 is withholding enough taxes to from your salary piece, but you need to make your own plans to cover difference between 37% and the flat 22% for your bonus and RSUs combined, or 15% of those pieces. 
+You use marginal rate here, instead of effective rate, because you will be paying the most for these "last dollars". Another way to think about it is that you have already paid bellow your effective rate for your salary dollars. Let's assume that your marginal tax rate is the maximum of 37%. Your W4 is withholding enough taxes to cover your salary piece, but you need to make your own plans to cover difference between 37% and the flat 22% for your bonus and RSUs combined, or 15% of those pieces. 
 
 # Three ways to pay what you owe 
 
