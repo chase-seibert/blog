@@ -63,7 +63,7 @@ to a project. If the task has a natural due date, I also schedule it.
 ![inbox](/blog/images/omnifocus_inbox.png)
 
 During the day, in between meetings or during free time, I start completing items and checking them off. But that's
-a nice-to-have. What is absolutely required is heads-down time to do real work. That's when the bulk ok the tasks
+a nice-to-have. What is absolutely required is heads-down time to do real work. That's when the bulk of the tasks
 on my list actually get completed. For me, it's about 90 minutes a day, ideally in one big chunk. I block this off 
 on my calendar so that it's free every day, and I defend that time aggressively. 
 
@@ -106,7 +106,7 @@ daily tasks that said "Smile more", and "Remember to think about how other peopl
 I capture everything. Even things that end up not being good idea, or are not actionable. Maybe it's decent idea,
 it's just not a high priority. Over time, I've developed confidence to delete these items. Whether it's a project 
 that's been languishing in my backlog for weeks with no actionable work, or a task that I've been procrastinating 
-on, almost 50% of the items I enter get deleted, not completed. I feel fine about it! What I've realized is that 
+on, almost 50% of the items I enter get deleted, not completed. What I've realized is that 
 these are not important. By virtue of not rising above other tasks or projects, over time they have settled into  
 their naturally low priority spot. Often they are completed simply by telling someone else you're not going to do
 them, after all. 
