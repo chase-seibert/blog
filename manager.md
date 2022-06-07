@@ -15,7 +15,7 @@ I use this as an initial brain dump for new engineering managers I work with.
 ## Introductions & About Me
 - [Let’s Work Together]({{ site.baseurl }}{% post_url 2018-05-14-lets-work-together %})
 - [My Expectations for Managers]({{ site.baseurl }}{% post_url 2020-02-13-expectations-for-managers %})
-- [How I use OmniFocus get stuff done]({{ site.baseurl }}{% post_url 2015-05-01-omnifocus %})
+- [How I use OmniFocus Get Things Done]({{ site.baseurl }}{% post_url 2022-06-06-how-i-get-things-done-with-omnifocus %})
 
 ## Execution & Results
 - [💯 The Agile Scorecard – 12 Questions]({{ site.baseurl }}{% post_url 2019-10-04-the-agile-scorecard-12-questions %})
