@@ -38,7 +38,7 @@ but here is one way to translate it to modern digital tools.
 Personally, I use [OmniFocus](https://www.omnigroup.com/omnifocus) as my GTD tool. I prefer open source or free tools when possible, but this is one purchase that's worth every penny. You can also expense it to work.
 
 Here is an example combined daily inbox processing and truncated heads-down working session processing tasks. 
-<a href="https://www.youtube.com/embed/VT3r0OLRtSo">https://www.youtube.com/embed/VT3r0OLRtSo</a>
+<a href="https://youtu.be/VT3r0OLRtSo">https://youtu.be/VT3r0OLRtSo</a>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VT3r0OLRtSo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
