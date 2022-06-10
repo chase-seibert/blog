@@ -27,11 +27,14 @@ This post is list of articles, blogs and other resources that I commonly referen
 
 ## Articles
 
-- [Three Snakes](http://www.celebrazio.net/jimb/15.html)
+- [Choose Boring Technology](https://mcfunley.com/choose-boring-technologys)
+- [Radical Simplicity in Technology](https://www.radicalsimpli.city/)
+- [Software Architecture for SAAS Startups](https://alexkrupp.typepad.com/sensemaking/2021/06/django-for-startup-founders-a-better-software-architecture-for-saas-startups-and-consumer-apps.html)
+- [I could do that in a weekend!](https://danluu.com/sounds-easy/)
 - [The Twelve Factor App](http://12factor.net/) - Tenets for building microservices
+- [Three Snakes](http://www.celebrazio.net/jimb/15.html)
 - [Give it Five Minutes](https://signalvnoise.com/posts/3124-give-it-five-minutes) - Knee jerk idea dismissal
 - [The Hiring Post](http://sockpuppet.org/blog/2015/03/06/the-hiring-post/) - Software engineer interviews suck
-- [SQLAlchemy for Django Devs](http://lucumr.pocoo.org/2011/7/19/sqlachemy-and-you/)
 - [15 Fundamental Laws of Software Development](http://www.exceptionnotfound.net/fundamental-laws-of-software-development/)
 - [The Scrum Guide](http://www.scrumguides.org/scrum-guide.html)
 - [IT'S NOT A PROMOTION - IT'S A CAREER CHANGE](http://fractio.nl/2014/09/19/not-a-promotion-a-career-change/)
@@ -40,5 +43,3 @@ This post is list of articles, blogs and other resources that I commonly referen
 - [A Challenge for the Immutable Law of On Call](https://medium.com/@solidspark/a-challenge-for-the-immutable-law-of-on-call-719a7ae86e)
 - [Writing strategies and visions](https://lethain.com/strategies-visions/)
 - [Service Cookbooks](https://lethain.com/service-cookbooks/)
-- [I could do that in a weekend!](https://danluu.com/sounds-easy/)
-- [Software Architecture for SAAS Startups](https://alexkrupp.typepad.com/sensemaking/2021/06/django-for-startup-founders-a-better-software-architecture-for-saas-startups-and-consumer-apps.html)
