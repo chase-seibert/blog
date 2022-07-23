@@ -29,7 +29,7 @@ Once you have a rough draft you’re happy with, you should share the document w
 
 ## Self-Serve Links
 
-Your first slides are probably going to be an intro slide that shows while people are still joining the Zoom and the agenda slide for the All Hands itself. You should also include an easy-to-type URL for the presentation itself, right on the screen. Attendees should be able to join the Zoom, and type in the URL for the document, if they want to follow along. This doubles as a way to access the presentation, later. You should also include this URL on the last slide. Individual slides can also have their own easy-to-type URLs, where appropriate. 
+Your first slides are probably going to be an intro slide that shows while people are still joining the Zoom and the agenda slide for the All Hands. You should also include an easy-to-type URL for the presentation itself, right on the screen. Attendees should be able to join the Zoom, and type in the URL for the document, if they want to follow along. This doubles as a way to access the presentation, later. You should also include this URL on the last slide. Individual slides can also have their own easy-to-type URLs, where appropriate. 
 
 ## Slide Show
 
@@ -41,7 +41,7 @@ For the agenda slide, a simple bulleted list of 4-5 topics will suffice. Typical
 
 ## Ice Breaker 
 
-You want to maximize the opportunity to get people engaged, right at the start. Nothing is engaging as participation. The easiest ice breaker for a large group is to use Zoom breakout rooms, and people a prompt of something to talk about. Five people for five minutes is a good rule of thumb. 
+You want to maximize the opportunity to get people engaged, right at the start. Nothing is engaging as participation. The easiest ice breaker for a large group is to use Zoom breakout rooms, and give people a prompt of something to talk about. Five people for five minutes is a good rule of thumb. 
 
 Easy conversation prompts:
 
@@ -53,7 +53,7 @@ Another easy ice breaker is to prompt people to share a recent photo from their 
 
 ## New Faces 
 
-Shouting out to new folks to join the team is also a good way to get people engaged. Plus, it lets you highlight that the team is growing. This is one slide that you want to crowdsource, to make sure you don’t miss anyone. You should include new hires, anyone who has recently transferred onto the team, and any new cross-functional partners. 
+Shouting out to new folks who joined the team is also a good way to get people engaged. Plus, it lets you highlight that the team is growing. This is one slide that you want to crowdsource, to make sure you don’t miss anyone. You should include new hires, anyone who has recently transferred onto the team, and any new cross-functional partners. 
 
 If one of the new faces is a leader for the organization, consider having a dedicated slide for them, and a few minutes set aside for them to introduce themselves. 
 
@@ -71,7 +71,7 @@ You should recap any big wins that have occurred since your last All Hands. Thes
 
 ## Upcoming Initiatives 
 
-This can over any other things that are happening, which everyone should know about. Maybe you had a great Hack Week, or you just started doing org-wide demos, or off-sites. Again, have the individuals most responsible for the work speak to it. 
+This can cover any other things that are happening, which everyone should know about. Maybe you had a great Hack Week, or you just started doing org-wide demos, or off-sites. Again, have the individuals most responsible for the work speak to it. 
 
 ## Product & Strategy 
 
@@ -87,7 +87,7 @@ If you’re going to give away some company-branded merchandise, All Hands are a
 
 This section is often the most valuable part of the All Hands. If you put out a call for questions ahead of time, start with those. But also take live questions from the audience. If you don’t have pre-submitted questions, you may want to “plant” a question asker in the audience, to get the ball rolling. Often people are hesitant to be the first one to ask a question. If all else fails, you can always “ask yourself” a question. 
 
-Make sure to set aside a lot of time for Q&A. It’s frustrating as an audience member when the regular presentation the time runs over, and time for Q&A is short. A good rule of thumb for a one-hour All Hands is 40 minutes of content, and 20 minutes of Q&A. You should practice presenting your content as a group, to check whether it’s less than 40 minutes. 
+Make sure to set aside a lot of time for Q&A. It’s frustrating as an audience member when the regular presentation time runs over, and time for Q&A is short. A good rule of thumb for a one-hour All Hands is 40 minutes of content, and 20 minutes of Q&A. You should practice presenting your content as a group, to check whether it’s less than 40 minutes. 
 
 # Avoiding Technical Difficulties 
 
