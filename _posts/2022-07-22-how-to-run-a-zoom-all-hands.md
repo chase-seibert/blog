@@ -149,3 +149,4 @@ Here is a quick checklist for planning an All Hands, to make sure you don’t fo
 - [ ] Dry run: test switching presenters 
 - [ ] Send out a reminder announcement just before the All Hands starts 
 - [ ] After: send out a link to the deck + video recording 
+- [ ] After: send separate communication for any big announcements, don't assume everyone saw All Hands 
