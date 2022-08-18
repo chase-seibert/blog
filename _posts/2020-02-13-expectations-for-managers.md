@@ -13,7 +13,7 @@ excerpt: "These are my basic expectations for managers that report to me"
 
 - Have weekly 1:1s with all your direct reports, don’t skip them
 - Run a tight meeting, keep to an agenda, send out meeting notes and action items
-- Hit quarter level commits 95% of the time, prioritizing external commitments
+- Hit quarter level commits 90% of the time, prioritizing external commitments
 - Commitment misses should be on the lowest priority items
 - Be able to “do the math” to rationalize quarter level commits based on team velocity
 - If you’re going to slip, communicate it early, for example 1/3 of the way in to a quarter
