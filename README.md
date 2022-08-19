@@ -5,34 +5,18 @@
 See: https://jekyllrb.com/docs/quickstart/
 
 ```bash
-brew install rbenv ruby-build
-echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile
-source ~/.bash_profile
-rbenv install 2.5.1
-rbenv global 2.5.1
+brew install chruby ruby-install
+ruby-install ruby
+echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.bash_profile
+# restart terminal 
+chruby
+# copy actual version number bellow
+echo "chruby ruby-3.1.2" >> ~/.bash_profile 
+ruby-install ruby
+# restart terminal 
 ruby -v
-# open new terminal
-gem install jekyll bundler
+gem install jekyll
 bundle install
-```
-
-## Trouble-shooting
-
-```bash
-brew update && brew upgrade
-brew doctor
-brew uninstall --force ruby
-brew install ruby
-# close and reopen terminal
-```
-
-Big guns:
-
-```bash
-
-sudo chown -R $(whoami) /usr/local/lib/ruby/*
-sudo chown -R $(whoami) /Library/Ruby/Gems/2.0.0
-brew link ruby
 ```
 
 ## Run the server
