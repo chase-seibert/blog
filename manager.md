@@ -27,8 +27,8 @@ I use this as an initial brain dump for new engineering managers I work with.
 - [Topics for One on Ones]({{ site.baseurl }}{% post_url 2015-02-10-one-on-ones %})
 
 ## Direction Setting 
-- [Dirty Escalations: Making Frenemies and Pissing Off People]({{ site.baseurl }}{% post_url 2021-04-05-escalations %})
-- [Killing Features and Complexity to Reduce “KTLO”]({{ site.baseurl }}{% post_url 2021-03-15-killing-features-and-complexity-to-reduce-KTLO %})
+- [Setting Direction: Create a Strategy]({{ site.baseurl }}{% post_url 2022-09-27-create-a-strategy %})
+- [Setting Direction: Define a Vision]({{ site.baseurl }}{% post_url 2022-02-14-define-a-vision %})
 
 ## First-time Managers
 - [Growing an Engineering Manager]({{ site.baseurl }}{% post_url 2020-10-12-growing-an-engineering-manager %})
