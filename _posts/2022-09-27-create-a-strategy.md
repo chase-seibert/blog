@@ -51,14 +51,14 @@ on a few innovative investments
 next-generation operating system 
 ```
 
-In the following years, Apple release the G3 Mac (1998), which had a radically delightful design aesthetic. It was a hit with the market. It released the iPod (2001), which was the first product in the category to be successful, due to a combination of excellent design and brand loyalty. Apple also released Mac OSX (2001), a technically innovative and aesthetically beautiful operating system. None of these product decisions were obvious at the time, but together they comprised a series of market hits that continued though the iPhone (2007), and turned the company around.
+In the following years, Apple released the G3 Mac (1998), which had a radically delightful design aesthetic. It was a hit with the market. It released the iPod (2001), which was the first product in the category to be successful, due to a combination of excellent design and brand loyalty. Apple also released Mac OSX (2001), a technically innovative and aesthetically beautiful operating system. None of these product decisions were obvious at the time, but together they comprised a series of market hits that continued though the iPhone (2007), and turned the company around. Apple was successful because they focused, and they executed.
 
 
 # What is Strategy? 
 
-Let's break down this strategy, using [Good Strategy Bad Strategy: The Difference and Why It Matters](https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239). The hypothetical Apple strategy is a short, written document that diagnosis the problem, defines how the company will focus efforts, and contains specific actions. This matches Rumelt's definition of a good strategy: 
+Let's break down this strategy, using the format in the Rumelt book. The hypothetical Apple strategy is a short, written document that diagnosis the problem, defines how the company will focus efforts, and contains specific actions. This matches Rumelt's definition of a good strategy: 
 
-> The kernel of a strategy contains three elements: a diagnosis, a guiding policy, and coherent action.
+> The kernel of a strategy contains three elements: a diagnosis, a guiding policy, and coherent action. -- [Good Strategy Bad Strategy: The Difference and Why It Matters](https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239)
 
 # ![](/blog/images/strategy1.png)
 
@@ -66,7 +66,7 @@ The hard parts are making the *correct* diagnosis, making the difficult decision
 
 ## Diagnosis
 
-Steve Jobs' diagnosis is that the company has failed to innovate. That did prove to be a decisive challenge to the business, that once solved, did lead to success. That's not to say that it was the *only* strategy that would have been successful. This diagnosis is a good example of what Rumelt calls a key insight.
+Steve Jobs' diagnosis was that the company has failed to innovate. That did prove to be a decisive challenge to the business, that once solved, did lead to success. That's not to say that it was the *only* strategy that would have been successful. This diagnosis is a good example of what Rumelt calls a key insight.
 
 > The first step of making strategy real is figuring out the big ‘aha’ to gain sustainable competitive advantage—in other words, a significant, meaningful insight about how to win.
 
