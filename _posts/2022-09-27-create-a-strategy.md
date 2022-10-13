@@ -28,7 +28,7 @@ I'm going to borrow a strategy format from [Good Strategy Bad Strategy: The Diff
 ```
 Apple Strategy 1997
 
-Out primary business challenge is that was are failing to 
+Our primary business challenge is that was are failing to 
 innovate. Microsoft has caught up with MacOS, while we have 
 been standing still. We need to leverage our excellent people, 
 and our brand loyalty, and innovate our way back to 
