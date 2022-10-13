@@ -1,0 +1,14 @@
+{% if site.tag_archive.type and page.tags[0] %}
+  {% include tag-list.html %}
+{% endif %}
+
+{% if site.category_archive.type and page.categories[0] %}
+  {% include category-list.html %}
+{% endif %}
+
+{% if page.path %}
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/{{page.path}}">{{page.path}}</a>
+    </p>
+{% endif %}
