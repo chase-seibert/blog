@@ -3,6 +3,8 @@ title: Introducing Advocoders
 tags: opensource blog
 ---
 
+*Update: this app was decommissioned in 2022*
+
 Hiring engineers is tough, especially right now with a general shortage of qualified candidates and record demand. Good companies realize they need involve their engineering team to help recruit. That could mean hosting drink ups, sending the team to conferences and old fashioned professional networking. But what about your engineering blog?
 
 Many medium sized companies have some kind of blog for the engineering team. Larger companies often have a site run by corporate marketing disguised as a grassroots blog. Lots of companies have nothing! But I bet even those companies have engineers generating _some_ interesting content. Under their own personal [Stackoverflow](http://stackoverflow.com/) and [Github](http://github.com) accounts, they are likely generating at least a slow trickle of content. Some of them may even have their own blogs. But none of that stuff is directly tied back to the team, or aiding the recruiting effort.
