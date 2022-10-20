@@ -9,6 +9,9 @@ header:
 excerpt: "XXX"
 ---
 
-# See: https://mmistakes.github.io/minimal-mistakes/docs/layouts/
+# story format first
 
+# bullets to hit
+
+# See: https://itopaloglu83.github.io/Jekyll-Markdown-Cheat-Sheet/
 # ![](/blog/images/escalations2.png)
