@@ -9,95 +9,74 @@ header:
 excerpt: "XXX"
 ---
 
-Story time: early career, first engineer, 360 feedback that folks didn't want to work with me, especially cross-functional folks. "Cocky". Manager got some quotes from peers. Formative. The lesson was I had a lot of growing to do on the soft skills side. Impact was overall effectiveness. Realized that internal credibility had hit a ceiling, and that it would be tough to change. Took 5 years ;) 
-
-You're not wrong Walter, you're just an asshole -- The Big Lebowski
-
-<a href="https://www.youtube.com/watch?v=C6BYzLIqKB8">https://www.youtube.com/watch?v=C6BYzLIqKB8</a>
+Five years into my career, I had gone from being one of the few engineers at a start-up to being an expert on a medium-sized engineering team. If someone misunderstood how something worked, I could list all the ways there were wrong. If someone had a product idea, I could find all the ways it might not work. No one ever said anything directly, but my manager started getting feedback about how I was coming across in my communication. I got some formal 360 feedback that was filled with phrases describing me as "always needing to be right", "thinks he knows everything", and "too cocky". 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/C6BYzLIqKB8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Crossing into unhealthy is a combination of frequency, and severity. It’s ok to complain sometimes. It's like a diet. You can’t go wrong in terms of fostering healthy relationships by taking extreme ownership, assuming good intent, and radiating positivity. Expect more as you get more senior. 
+> You're not wrong Walter, you're just an asshole -- [The Big Lebowski](https://www.youtube.com/watch?v=C6BYzLIqKB8)
 
-# Expectations for Senior Folks 
-Expect excellent feedback, your direct reports and peers. Level where I ask you a direct reports how they feel about working with you. 
-There will very likely be anonymous surveys that score you as a manager.
-I expect that when you’re dealing with other teams, across the organization, that you’re representing both your team and your leader ship team well.
-I expect you demonstrate that you trust you and that today despite trust in you. 
-Team check ins with your leads, expect peers to be not contradicting each other, you need to be on the same page.
-I expect him ever get exclusive reports of negative feedback about interactions with you whether they’re written or verbal
-Expect that someone leaving does not cite their manager as the cause, with the possible exception of performance management 
+I wasn't sure how to process the feedback at first, but eventually I realized that the biggest thing limiting my impact was my relationships with other people. This was a formative piece of feedback in my career, and marked the first time I started thinking about my "soft skills". 
 
-For managers, recap and reframe w/ direct reports 
+Healthy relationships at work are not just about the people on your team, or even the people you interact with. It's also the way you interact over email, in a large Slack channel, or in a document. It's OK to occasionally cross into curmudgeon territory, but don't make a steady diet of it. If it's too frequent, too visible, or inappropriate for the audience, it can cross the line. You can't go wrong if you consistently take ownership, assuming good intent, and radiate positivity.
 
-# Common Stressors on Health Relationships 
+# Expectations as a Manager
+
+As a manager, I expect excellent 360 feedback about folks on my team. For engineering managers, this means both their direct reports, and also their peers like product managers and designers. This usually comes from my one on ones with my peers, your peers, and occasional skip levels with your direct reports. It can also come from anonymous surveys to employees, which often include questions about their manager. It can also come from exit surveys when people leave the team. 
+
+As you get more senior, the pool of people with visibility on you grows. At some point, you can reasonably expect feedback to potentially come from anywhere in the company. It starts to reflect not just on you, but also your whole team, and your leads. I expect feedback on your professionalism, tone, and collaboration to be excellent, no matter where it comes from.
+
+When I'm directly observing you, I expect that you demonstrate trust in your team, and trust in your peers. I would not expect you to be openly contradicting each other, for example. 
+
+# Common Stressors on Healthy Relationships 
+
+Healthy Relationships does not mean that nothing will ever go wrong. It means that when things go wrong, your relationships are not the cause, and your relationships are not burned resolving the issue. 
 
 ## Blockers 
-Healthy relationship doesn’t mean nothing ever goes wrong
-Of course, I expect you to bring up walking issues both to me directly and to your leads as a group
-Never come from the position that there is nothing you can do that’s under your control.
-If you have a potential solution propose it. Oh goodness motions like your hands green lighting something you think solves the blocker. 
-Of course it’s OK to bring up blockers without having a solution
-Assume good intent, ask open, ended questions, keep the tone positive
-Blockers about uncertainty in particular may not be resolved in a timely fashion
-It’s OK to ask whether you can expect your boss with resolve a blocker, and clarify whether it’s their responsibility. Don’t assume. 
+
+Whatever the issue is, I want to hear about it in one on ones, and team check-ins. To some extent, it's OK to vent or be frustrated in a one one one with your manager. That's part of what I'm here for. But, I want to quickly move forward from a place of extreme ownership, where you are taking responsibility to solve the issue -- with my help. 
+
+If you have an idea for a solution, I can be a sounding board to help you work through it. It's OK to come without a solution, but be prepared for some ideas from me. Expect that 80% of the time, it will be a solution you can act on, yourself.
+
+What if the blocker is another person? I'm going to coach you to assume good intent, ask open-ended questions, and frame things in a positive light. It's always OK to ask whether you should expect me or someone else to unblock you -- don't assume! 
 
 ## Uncertainty 
-The level of uncertainty and ambiguity you encounter and deal with on a regular basis, is only going to increase as your seniority and scope increases
-At a certain level, no amount of uncertainty around acuity is anomalous or outside the range of expectations for your role
-Uncertainty is not an excuse for unhealthy relationships or interactions
-Escalations should be healthy 
+
+The level of uncertainty and ambiguity you encounter and deal with on a regular basis is only going to increase as your seniority and scope increases. At a certain level, no amount of uncertainty is anomalous or outside the range of expectations for your role. Uncertainty itself is not an excuse for unhealthy relationships or interactions. 
+
+Sometimes, you need to live with the uncertainty for a bit. In my career, I have more often made the mistake of trying to resolve uncertainty too quickly, versus not quickly enough. In general, your best tools here are going to be perspective, curiosity, and reaching out to the right people. 
+
+If you need to escalate to resolve the uncertainty, be sure to follow [healthy escalation best practices]({{ site.baseurl }}{% post_url 2021-04-05-escalations %}). 
 
 ## Lack of Confidence 
-What if you don’t trust that someone will perform their role?
-Coach them
-Give them feedback
-Give their manager feedback, either through me or directly
-I expect the working relationship never suffers. I expect you to have relationships even with someone under performing, and then it doesn’t come on blocker for the work. 
-Whether a cross function peer, your boss, or anyone outside your org is performing well in their role is not your decision — you cannot make that determination unilaterally with the information you have. Don’t assume you know what is expected of them outside the context of your roles and responsibilities with each other. It’s a good idea to make roles and responsibilities clear with key relationships. 
-Specifically, we should not be barking at performing our own rules, based on our own evaluation about whether someone else is performing, there’s
-A specific case that I’ve seen a lot is refusing to estimate or put work onto the roadmap if an engineering manager is not happy with either a product spec or a design mock
-There are normal and healthy ways to refine scope as a team, that do not look like taking your ball and going home
+
+What if you think that a peer is not performing in their role? First, try giving them feedback. Then, try coaching them. Finally, give their manager feedback, either directly, or though me. Your working relationship with the person should never suffer. Even if the person is under performing, I expect that your relationship itself does not become a contributor to blocking the team. 
+
+Whether a cross-functional peer, another engineer manager, or anyone outside your org is performing well in their role is not your decision. You cannot make that determination unilaterally with the information you have. Don’t assume you know what is expected of them outside the context of your roles and responsibilities with each other. It’s a good idea to make roles and responsibilities clear with key relationships. 
+
+Never balk at performing your own role based on a sense that someone else is not performing well. A specific case that I’ve seen a lot is refusing to estimate work or put items onto the roadmap if an engineering manager is not happy with the level of detail in a product spec or a design mock. There are normal and healthy ways to refine scope as a team that do not look like taking your ball and going home. 
 
 ### Example: All Hands Q&A (uncertainty AND lack of confidence)
-Particular bad pattern I’ve seen 
-Even if a question is anonymous, make sure it comes across with good intent
-Avoid stating assumptions as facts 
-Time should be positive 
-Asking a hard question is not valuable enough to warrant a negative tone 
-Being right, or being honest does not absolve you from accountability for how you are perceived 
-Your ratio of spicy questions matters — you don’t want to be the person everyone knows will be throwing bombs 
-Seeing that your typing a question should not make your leads nervous 
 
+A particularly bad pattern I’ve seen is asking questions in an All Hands (large audience) Q&A, where the audience may read it as bad intent. Even if a question is anonymous, make sure it comes across in a healthy way. Avoid stating assumptions as facts. The tone should be positive. 
+
+Asking provocative questions is valuable, but not if they negatively affect morale, or reflect poorly on your team. It doesn't matter if you're 100% right, if you don't find an effective way to ask the question. The ratio also matters, you don’t want to be the person always throwing bombs. Ask yourself -- is my team going to be nervous when they see me asking a question? 
 
 # How to Optimize for Health Relationships 
 
 ## Tone and Positivity
-It’s up to you to radiate the positivity and then you would want to see in anyone 
-Relentlessly assume good intent 
-Psychological safety is a two way street. Part of tailoring communication is leaving the door open for constructive discussion. A culture of feedback doesn’t absolve people from accountability for how they communicate.  
-Feedback with frustrated or entitled elements should go through me 1:1. I encourage everyone to reach out directly to others leaders across the org, but you’re responsible for how your feedback is perceived. 
-Praise in public, criticize in private applies to all audiences, not just your reports. 
 
-## Optimize Team and Company 
-We are all accountable for the entire organization under us, being reasonably happy, engaged, and retentive 
-That does not mean that we are optimizing for engineers, being happy over the team or the company being successful 
-Specifically, managers at all levels should be optimizing for what is best for the company not what is strictly best for a team or an individual 
-Part of the managers responsibility is maximizing team house is in any cases of Schoen in terms of continuity other teams roadmap for continuity of team membership 
-People stay at jobs ultimately because they like, trust, and respect the humans around them 
+It's up to you to radiate the positivity that you would want to see in anyone. Relentlessly assume good intent. Psychological safety is a two way street. Part of tailoring communication is leaving the door open for constructive discussion. A culture of feedback doesn’t absolve people from accountability for how they communicate.  
 
-## Giving feedback to your direct reports and still maintaining relationship health 
-Give feedback promptly after an incident 
-Use the situation behavior impacts format
-Stick to the facts 
-Keep the tone of the feedback neutral 
-Avoid judgment phrases about whether the person is good or bad, or making assumptions about their feelings or motivations 
-Sometimes damaging the relationship is unavoidable, but I expect it to always be professional 
+Feedback with frustrated or entitled elements should go through our one on ones. I encourage everyone to reach out directly to others leaders across the org, but you’re responsible for how your feedback is perceived. Praise in public, criticize in private applies to all audiences, not just your reports. 
+
+## Optimize for Company, then Team
+
+We are all accountable for the entire organization under us being reasonably happy, engaged, and retentive. That does not mean that we are optimizing for engineers being happy over the team or the company being successful. Specifically, managers at all levels should be optimizing for what is best for the company, not what is strictly best for a team or an individual. Remember that people stay at jobs ultimately because they like, trust, and respect the humans around them. 
 
 # Conclusion
-Story time. Getting fired at NerdWallet. Results were great. Peer, team and direct lead relationships were great.  It I pissed off my bosses bosses boss, and that was it. No warning, no feedback. Not even sure what happened, but I can guess. Came down to a refusal to engage, balked at moving forward with a project that didn’t have key personnel that I judged was required. Gave them direct feedback, but tone was this is crazy / unreasonable / you need to solve this. Later, there was a misunderstanding about who shared internal transfer information — but my credibility with them was shot. I had burned trust instead of taken responsibility, and that was unrecoverable. 
 
-Outside layoffs, attitude and unhealthy relationships is tied with actual performance issues for cases where people were fired 
-Sometimes you can do enough damage to your internal reputation that it’s impossible to recover — there is no PIP
-for that case 
-Inability to constructively collaborate with a cross function peer is potentially grounds for not meeting expectations all by itself 
+Much later in my career, I was fired from a role for having unhealthy relationships. My results were great. My peer, team and direct lead relationships were great. But, I had pissed off my great grand boss, and that was the end. There was no warning, and no feedback. I'm not even 100% sure what happened, but I can guess. 
+
+It came down to a refusal to engage my team, when I balked at moving forward with a project that didn’t have a product manager. I had given direct feedback, but my tone was "this is crazy", "this is unreasonable", and "YOU need to solve this". That interaction put me on a knife's edge. Later, there was a simple misunderstanding, but my credibility with this person was shot. I had burned the relationship, and it was unrecoverable. 
+
+Outside of layoffs, I have more often seen attitude and unhealthy relationships result in termination than actual performance issues. Sometimes you can do enough damage to your internal reputation that it’s impossible to recover. There is no PIP for that. 
