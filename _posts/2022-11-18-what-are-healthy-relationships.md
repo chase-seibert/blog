@@ -19,11 +19,11 @@ Healthy relationships at work are not just about the people on your team, or eve
 
 # What Good Looks Like
 
-You always want 360 feedback from your relationships to be excellent. For engineering managers, this means both your direct reports, and your peer product managers, designers, and engineering managers. Your manager probably gets feedback from these folks in one on ones, and from anonymous surveys. Feedback can also come from exit surveys when people leave the team. 
+You always want 360 feedback from your relationships to be excellent. In terms of having healthy relationships, this looks like consistent positive comments about your professionalism, tone, and collaboration. Feedback that is specifically about you or your relationship should not be negative, even if there are challenging projects, or circumstances. You want feedback from others to be critical of outcomes, not of you personally. 
+
+For engineering managers, this means feedback from your direct reports as well as your peer product managers, designers, and engineering managers. Your manager probably gets feedback from these folks in one on ones, and from anonymous surveys. Feedback can also come from exit surveys when people leave the team. 
 
 As you get more senior, the pool of people who have visibility on you grows. At some point, you can reasonably expect feedback to potentially come from anywhere in the company. It starts to reflect not just on you, but also your whole team, and your leads. 
-
-In terms of having healthy relationships, excellent feedback looks like consistent positive comments about your professionalism, tone, and collaboration. Feedback that specifically is about you or your relationship should not be negative, even if there are challenging projects, or circumstances. You want people others to be critical of outcomes, not of you personally. 
 
 Model the relationship that you want in your own interactions with folks. Demonstrate trust, always keep things professional, and criticize the work, not the person. Also, keep an eye out for common work stressors. 
 
@@ -33,7 +33,7 @@ Having healthy relationships does not mean that nothing will ever go wrong. But 
 
 ## Blockers 
 
-Whatever the issue is, you want to talk about it with your team, peers, and your boss. This happens in one on ones, and team check-ins. To some extent, it's OK to vent or be frustrated in a one one one with your manager. That's part of they are there for. But in a team meeting, you want to quickly move forward constructively. You can do this by taking a lens of extreme ownership, where you take responsibility to solve the issue together. 
+Whatever the issue is, you want to talk about it with your team, peers, and your boss. This happens in one on ones, and team check-ins. To some extent, it's OK to vent or be frustrated in a one one one with your manager. That's part of what they are there for. But in a team meeting, you want to quickly move forward constructively. You can do this by taking a lens of extreme ownership, where you take responsibility to solve the issue together. 
 
 If you have an idea for a solution, use your manager as a sounding board to help you work through it. It's OK to come to them without a solution, but be prepared for ideas from them. You should expect that 80% of the time, your manager will propose a solution you can act on yourself, versus having them act.
 
@@ -57,7 +57,7 @@ Never balk at performing your own role based on a sense that someone else is not
 
 ## All Hands Q&A
 
-The larger the audience, the more potential risk there is to damage relationships. One of the larger forums that you may be a part of in your work is an All Hands Q&A session. You never want someone to be able to interpret a question you're asking as having bad intent. Even if a question is anonymous, make sure it comes across in a healthy way. Avoid making invalidated assumptions, and keep the tone positive. Ask your self, how would you feel if this question was on the front page of the New York Times? 
+The larger the audience, the more potential risk there is to damage relationships. One of the larger forums that you may be a part of in your work is an All Hands Q&A session. You never want someone to be able to interpret a question you're asking as having bad intent. Even if a question is anonymous, make sure it comes across in a healthy way. Avoid making unvalidated assumptions, and keep the tone positive. Ask yourself, how would you feel if this question was on the front page of the New York Times? 
 
 Asking provocative questions is valuable, but not if they negatively affect morale, or reflect poorly on your team. It doesn't matter if you're 100% right, if you don't find an effective way to ask the question. The ratio also matters, you don’t want to be the person always throwing bombs. 
 
@@ -65,7 +65,7 @@ Asking provocative questions is valuable, but not if they negatively affect mora
 
 ## Communicate with Ruthless Positivity 
 
-It's up to you to radiate the positivity that you would want to see in anyone. Relentlessly assume good intent. Psychological safety is a two-way street; in your interactions with peers and your manager, given them space to feel safe. Tailor your communication to leave the door open for constructive discussion. Take accountability for how you communicate, how that is perceived by others, and it makes them feel.  
+It's up to you to radiate the positivity that you would want to see in anyone. Relentlessly assume good intent. Psychological safety is a two-way street; in your interactions with peers and your manager, given them space to feel safe. Tailor your communication to leave the door open for constructive discussion. Take accountability for how you communicate, how it's perceived by others, and it makes them feel.  
 
 If you find yourself communicating with a sense of frustration or entitlement, take a step back. If you can't find a way to say something that does not pose a risk to healthy relationships, save it for a one on one with your manager. You might try explicitly labeling it as a "rant". As always, praise in public, and criticize in private.
 
