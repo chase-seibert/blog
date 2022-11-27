@@ -29,15 +29,37 @@ author:
   location: "San Francisco, CA"
   bio    : Director of Engineering at Dropbox
   email  : # optional
-  twitter: chase_seibert
-  facebook: chase.seibert
-  linkedin: chaseseibert
-  github: chase-seibert
-  stackoverflow: 7679
+  # https://fontawesome.com/v5/search
+  links:
+    - label: "Facebook"
+      icon: "fab fa-fw fa-facebook-square"
+      url: "https://www.facebook.com/chase.seibert"    
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/chase-seibert"        
+    - label: "Goodreads"
+      icon: "fab fa-fw fa-goodreads"
+      url: "https://www.goodreads.com/chaseseibert"        
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/chaseseibert/"      
+    - label: "Mastodon"
+      icon: "fab fa-fw fa-mastodon"
+      url: "https://hachyderm.io/@chase_seibert"    
+    - label: "Stack Overflow"
+      icon: "fab fa-fw fa-stack-overflow"
+      url: "https://stackoverflow.com/users/7679"        
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/chase_seibert"  
 
 # social sharing
 twitter:
   username: "chase_seibert"
+
+mastodon:
+- username: chase_seibert
+  instance: hachyderm.io
 
 analytics:
   provider: "google-gtag"
