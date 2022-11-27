@@ -86,7 +86,7 @@ defaults:
 markdown: kramdown
 theme: minima
 remote_theme: "mmistakes/minimal-mistakes"
-minimal_mistakes_skin: "dirt" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
+minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 paginate: 10
 paginate_path: /page:num/
 category_archive:
