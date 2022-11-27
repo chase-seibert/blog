@@ -57,10 +57,6 @@ author:
 twitter:
   username: "chase_seibert"
 
-mastodon:
-- username: chase_seibert
-  instance: hachyderm.io
-
 analytics:
   provider: "google-gtag"
   google:
