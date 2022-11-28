@@ -1,7 +1,7 @@
 main:
   - title: "Top Posts"
-    url: /me/
+    url: /me
   - title: "Reading List"
-    url: /reading-list/
+    url: /reading-list
   - title: "Resume"
     url: /resume.pdf

@@ -4,7 +4,7 @@ title: Reading List
 author_profile: true
 toc: true
 toc_label: "On this page"
-permalink: /reading-list/
+permalink: /reading-list
 redirect_from:
   - /tag/reading-list/
   - /tag/reading-list
