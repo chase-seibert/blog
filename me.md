@@ -4,7 +4,7 @@ layout: single
 author_profile: true
 toc: true
 toc_label: "On this page"
-permalink: /me
+permalink: /me/
 redirect_from:
   - /tag/manager/
   - /manager/
