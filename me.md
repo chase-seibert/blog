@@ -5,59 +5,35 @@ author_profile: true
 toc: true
 toc_label: "On this page"
 permalink: /me
+redirect_from:
+  - /tag/manager/
+  - /manager/
+  - /managers/
 ---
 
 This is a collection of some of my most representative blog posts.
 
-## Management
+## Introductions & About Me
+- [Let’s Work Together]({{ site.baseurl }}{% post_url 2022-08-18-lets-work-together %})
+- [My Expectations for Managers]({{ site.baseurl }}{% post_url 2020-02-13-expectations-for-managers %})
+- [How I use OmniFocus Get Things Done]({{ site.baseurl }}{% post_url 2022-06-06-how-i-get-things-done-with-omnifocus %})
 
-<!-- ### [Interviewing: How to run an interview loop]() -->
+## Execution & Results
+- [💯 The Agile Scorecard – 12 Questions]({{ site.baseurl }}{% post_url 2019-10-04-the-agile-scorecard-12-questions %})
+- [Getting Started Estimating with Story Points]({{ site.baseurl }}{% post_url 2019-01-30-getting-started-with-story-points %})
+- [Estimating Epic Stories in Three Steps]({{ site.baseurl }}{% post_url 2017-08-28-epic-story-estimation %})
 
-<!-- ### [Closing: Create meaning with the candidate]() -->
+## Culture & Talent 
+- [Trust Eats Process for Lunch]({{ site.baseurl }}{% post_url 2020-08-20-trust-eats-process-for-lunch %})
+- [Topics for One on Ones]({{ site.baseurl }}{% post_url 2015-02-10-one-on-ones %})
 
-<!-- ### [Bootstrapping: finding managers and structuring teams]() -->
+## Direction Setting 
+- [Setting Direction: Create a Strategy]({{ site.baseurl }}{% post_url 2022-09-27-create-a-strategy %})
+- [Setting Direction: Define a Vision]({{ site.baseurl }}{% post_url 2022-02-14-define-a-vision %})
 
-### [One on Ones: how to have them effectively](/blog/2015/02/10/one-on-ones.html)
-Getting good information out of your one on one conversations is something of an art. Given the amount of time over a career that you will spend during one on ones, it’s worth a small time investment to improve your skills.
-
-### [Cross functional teams](/blog/2016/10/16/cross-functional-scrum-teams.html)
-That means everyone regularly working in all parts of the stack. I’m not sure
-this is better for all teams, but I think it’s a good idea for a small 3-5
-person product team that has to do with in many parts of the stack.
-
-<!-- ### [Delivery/Feature teams]() -->
-
-<!-- ### [Culture: how to define and live it]() -->
-
-### [Meetings: how to run one effectively](/blog/2017/03/31/meeting-best-practices.html)
-If you are the owner of the meeting, it’s your responsibility to make sure that this is a great use of team time.
-
-### [Communication: how to introduce change](/blog/2017/09/11/say-it-multiple-times.html)
-To communicate something to an organization of people, you need to repeat yourself. The more people involved, the more you will need to repeat yourself if you want everyone to really hear it.
-
-## Technical
-
-### [REST API Design](/blog/2015/04/24/rest-api-design.html)
-In spite of a simple definition, there is a wide degree of latitude when
-designing a REST API to mess it up. Don’t do that!
-
-### [Object Oriented Class Design](/blog/2014/12/22/class-design.html)
-The concepts seem simple enough that it’s easy to fool yourself into thinking
-that knowing the basics is equivalent to being an expert. The reality is that
-most people could use a refresher on what makes a good object oriented abstraction.
-
-### [Relational Database Design](/blog/2013/02/16/why-database-acid-matters.html)
-For traditional RDBMS systems, it's important to re-emphasize the value of data
-consistency.
-
-<!-- non-relational database -->
-
-## Python
-
-### [Advanced Memory Leaks](/blog/2013/08/03/diagnosing-memory-leaks-python.html)
-Long running Python jobs that consume a lot of memory while running may not return that memory to the operating system until the process actually terminates, even if everything is garbage collected properly. That was news to me, but it’s true.
-
-### [Advanced Decorators](/blog/2013/12/17/python-decorator-optional-parameter.html)
-Sometimes you want to pass parameters to your decorators. The trick here is to add another layer of indirection and create a function that takes parameters and returns your original decorator.
+## First-time Managers
+- [Growing an Engineering Manager]({{ site.baseurl }}{% post_url 2020-10-12-growing-an-engineering-manager %})
+- [Management 101]({{ site.baseurl }}{% post_url 2016-06-24-management-101 %})
+- [Best Practices for Meetings]({{ site.baseurl }}{% post_url 2017-03-31-meeting-best-practices %})
 
 [More Posts](/blog/)
