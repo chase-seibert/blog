@@ -24,6 +24,7 @@ This is a collection of some of my most representative blog posts.
 - [Estimating Epic Stories in Three Steps]({{ site.baseurl }}{% post_url 2017-08-28-epic-story-estimation %})
 
 ## Culture & Talent 
+- [What are Healthy Relationships?]({{ site.baseurl }}{% post_url 2022-11-18-what-are-healthy-relationships %})
 - [Trust Eats Process for Lunch]({{ site.baseurl }}{% post_url 2020-08-20-trust-eats-process-for-lunch %})
 - [Topics for One on Ones]({{ site.baseurl }}{% post_url 2015-02-10-one-on-ones %})
 
