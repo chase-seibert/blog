@@ -114,7 +114,7 @@ The arguments of the `vlookup` function are:
     1. You can provide a range in the local sheet like `A:C`
     2. You can provide a range in another sheet in the current document like `'Filters and Slicers'!A:C` (you must use single quotes if the name of your sheet contains spaces)
     3. You can provide a range in another Google Sheet document like `importrange("https://docs.google.com/spreadsheets/d/1YH6-gXcIix5Pql97nqVaENxN8rUbL-JarOrpnH9DNZT0/edit#gid=1511625096","employees!A:G")`
-3. The index of the value in the range to return 
+3. The index of the value in the range to return. If you find yourself wanting to return a value with a negative index (i.e. to the left of the range), you can instead change the range to an array where you reorder the columns. For example: instead of `A:C`, use `{'Filters and Slicers'!C:C,'Filters and Slicers'!A:A}`.
 4. Returns exact matches only when set to `False` (you probably want this)
 
 
