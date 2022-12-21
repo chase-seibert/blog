@@ -1,4 +1,4 @@
-name: Build Jekyll 4 and deploy to GitHub Pages
+name: Build Jekyll 4
 
 on:
   push:
@@ -22,3 +22,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}    
           target_branch: 'gh-pages'
+
+      # deployment done by second action
