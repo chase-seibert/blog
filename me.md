@@ -15,6 +15,7 @@ This is a collection of some of my most representative blog posts.
 
 ## Introductions & About Me
 - [Let’s Work Together]({{ site.baseurl }}{% post_url 2022-08-18-lets-work-together %})
+- [Let’s Work Together 2]({% link _posts/2022-08-18-lets-work-together.md %})
 - [My Expectations for Managers]({{ site.baseurl }}{% post_url 2020-02-13-expectations-for-managers %})
 - [How I use OmniFocus Get Things Done]({{ site.baseurl }}{% post_url 2022-06-06-how-i-get-things-done-with-omnifocus %})
 
