@@ -124,7 +124,7 @@ Strategy is upwards facing. It's about making a compelling case to your leadersh
 
 Vision is downwards facing. It's about making a compelling case to the teams and individuals that they should be excited about the work. It's about inspiring builders and creative workers. It's about connecting the work to the user. The audience can be a single team. 
 
-[Defining a vision]({{ site.baseurl }}{% post_url 2022-02-14-define-a-vision %}) should be done after creating a strategy, for the simple reason that strategy informs what to focus on. It's true that you can't make sure a strategy is achievable without concrete actions, and eventually estimates. But, the greater risk is defining a vision and roadmap that do not address the critical business challenge. After creating a strategy and defining a vision, the next step is to start [building a roadmap with high level estimates]({{ site.baseurl }}{% post_url 2017-08-28-epic-story-estimation %}).
+[Defining a vision]({% link _posts/2022-02-14-define-a-vision.md %}) should be done after creating a strategy, for the simple reason that strategy informs what to focus on. It's true that you can't make sure a strategy is achievable without concrete actions, and eventually estimates. But, the greater risk is defining a vision and roadmap that do not address the critical business challenge. After creating a strategy and defining a vision, the next step is to start [building a roadmap with high level estimates]({% link _posts/2017-08-28-epic-story-estimation.md %}).
 
 # Example Template 
 

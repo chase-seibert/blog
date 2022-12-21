@@ -36,7 +36,7 @@ These are in no particular order. They are also somewhat overlapping — not com
 
 Estimates are a core building block for a well-functioning team to be able to have a conversation about trade-offs between time, scope and quality. Relative estimation is one of the key innovations in Agile, and story points are the unit of relative “hardness” estimation versus previously completed user stories.
 
-It’s common for teams to resits adopting story points, and continue giving estimates as delivery dates, or in time units. My opinion is that if you’re still doing time-based estimates, you have not understood a key concept of Agile. See [Using Points vs Hours for Estimates]({{ site.baseurl }}{% post_url 2016-05-13-agile-points-vs-hours %}).
+It’s common for teams to resits adopting story points, and continue giving estimates as delivery dates, or in time units. My opinion is that if you’re still doing time-based estimates, you have not understood a key concept of Agile. See [Using Points vs Hours for Estimates]({% link _posts/2016-05-13-agile-points-vs-hours.md %}).
 
 # 2. Do engineers estimate their work as a group?
 

@@ -45,7 +45,7 @@ The level of uncertainty and ambiguity you deal with on a regular basis is only 
 
 Sometimes, you need to live with the uncertainty for a bit. You may catch yourself making the  mistake of trying to resolve uncertainty too quickly, versus not quickly enough. Sometimes what is required is just to sit patiently with the uncertainty. In general, your best tools here are going to be perspective, curiosity, and reaching out to the right people. 
 
-If you need to escalate to resolve the uncertainty, be sure to follow [healthy escalation best practices]({{ site.baseurl }}{% post_url 2021-04-05-escalations %}). 
+If you need to escalate to resolve the uncertainty, be sure to follow [healthy escalation best practices]({% link _posts/2021-04-05-escalations.md %}). 
 
 ## Lack of Confidence 
 
