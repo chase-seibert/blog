@@ -10,20 +10,18 @@ excerpt: "These are my basic expectations for managers that report to me"
 ---
 
 When working with a new manager that's reporting to me for the first time, I like to 
-share this document. Hopefully, it's helpful to get on the same page up front about
-what is most important to me for your role. I hold myself to the same bar on all of
-these -- you can expect the same thing from me that I expect of you. 
+share this document. Hopefully, it helps us get on the same page about our shared 
+expectations for your role. I hold myself to the same bar on all of
+these -- you can expect the same things from me that I expect from you. 
 
-These are probably not controversial. If they are, let's talk about it! More likely, 
-the discussion points will be on the specifics of the expectations. 
+These are probably not controversial. If they are, let's talk about it! 
 
 
 # Weekly 1:1s
 
 You should have weekly, regularly scheduled 1:1s with your direct reports. For most roles,
-this will be somewhere between 5-8 1:1s a week. For product teams, you should also have weekly
-1:1s with your direct product manager and design partner. Let people reschedule as needed, but
-hold the bar of talking to them weekly (i.e., don't skip too often). 
+this will be somewhere between five and eight 1:1s a week. For product teams, you should also have weekly 1:1s with your direct product manager and design partner. Let people reschedule as needed, but
+don't skip too often. 
 
 You can expect the same from me. You can also expect that I will have monthly skip level 1:1s
 with your more senior individual contributors, and any managers that report to you. These are 
@@ -49,19 +47,15 @@ and say I won't be doing it after all).
 
 # Excellent Execution 
 
-90% of the time, when we commit to a deliverable on a quarterly roadmap, those items should 
-ship on time. If a team has four or five main items on their roadmap, that means that one item 
-might slip every two quarters. This one can surprise people; regularly slipping milestones is
-common in our industry. 
+When you commit to a deliverable on a quarterly roadmap, those should be delivered on time 90% of the time. If a team has four or five main items on their roadmap, that means that one item 
+might slip every two quarters. The expectation that 9/10 items ship on time can surprise people; that is a higher bar than industry average for not slipping commitments. 
 
-I hold myself to the same bar for the roadmap across a few, or many, teams. That doesn't mean 
-that I expect teams to kill themselves to hit unrealistic timelines. What I expect is that after
-a period of forming/storming/norming, a team gets proficient at estimates that include an 
+I hold myself to the same bar for the roadmap delivery across all my teams, collectively. That doesn't mean that I expect teams to kill themselves to hit unrealistic timelines. What I expect is that after a period of forming/storming/norming, a team gets proficient at estimates that include an 
 appropriate risk buffer. 
 
 The real secret sauce is when a team develops a working relationship with their product owner
 such that they can seamlessly trade off scope, time, and quality. In my experience, these
-teams can deliver on any timeline; it's that fluid. 
+teams can deliver on any timeline; because the scope is fluid. 
 
 At the end of the day, I expect the engineering manager and the product owner to agree on 
 whether something was delivered on time, and that it satisfies the deliverable. As long as 
@@ -90,14 +84,14 @@ For a deep dive, see [What are Healthy Relationships?]({% link _posts/2022-11-18
 # Impact Outside your Team 
 
 You should have one major piece of impact a year, outside the scope of your team and mission.
-For example, this could look like shipping an internal tool, revamping an interview question, or 
+This could look like shipping an internal tool, revamping an interview question, or 
 updating the company career framework. I can help you identify opportunities. If you sign up to 
 take on something like this, I expect you to proactively drive it forward. 
 
 
 # Influence the Roadmap 
 
-You should come up with one major product or foundational initiative a year. These will mostly
+You should also come up with one major product or foundational initiative a year. These will mostly
 be in the scope of the team mission, but could be anything related to the overall product, or 
 internal processes. As you get more senior, this means understanding the business context almost
 as well as a product manager, and understanding the technical context almost as well as a senior
@@ -120,7 +114,7 @@ impediment to healthy relationships.
 You can expect a reasonable level of transparency from me about any given situation. I won't
 necessarily commit to pushing to resolve any given uncertainty as soon as possible. That's often 
 a premature optimization. But, I will tell you when I plan to sit with the uncertainty, and when
-I indent to resolve it. 
+I intend to resolve it. 
 
 
 # Grow a Successor
@@ -132,11 +126,11 @@ where you think they are already ready for a next level opportunity, and where t
 
 You're primarily going to be judged on your track record of delivering business impact. This should not be a surprise; it's the cornerstone of most written company expectations for any role. 
 
-As an engineering manager, we are going to primarily deliver impact through excellent execution. But what if something is delivered on time, but does not result in the impact that we hoped for? I expect this to happen maybe 50% of the time. But, I do hold engineering managers accountable for that. Parts of our jobs are to influence the roadmap towards high impact work, refine the scope so that it actually does have impact, and deliver quickly so that we can fail and learn fast. 
+As an engineering manager, we are going to primarily deliver impact through excellent execution. What if something is delivered on time, but does not result in the impact that we hoped for? I expect this to happen on individual projects maybe 50% of the time. I do hold engineering managers accountable for their portfolio of projects, and the total impact. Part of our job is to influence the roadmap towards high impact work, refine the scope so that it actually does have impact, and deliver quickly so that we can fail and learn fast. 
 
 Anything in the realm of execution is also fair game. Common blockers like cross-organization dependencies, alignment with leadership, and even a project being de-prioritized before shipping are things we are ultimately accountable for resolving. 
 
 
 # Do the best thing for the company 
 
-When in doubt, do the best thing for the company. 
+When in doubt, do the best thing for the company. I expect this from anyone in a leadership position. Often there is temptation to optimize for the local team. As you get more senior, I expect you to optimize for the company more. 
