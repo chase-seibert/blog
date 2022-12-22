@@ -15,7 +15,7 @@ This is a collection of some of my most representative blog posts.
 
 ## Introductions & About Me
 - [Let’s Work Together]({% link _posts/2022-08-18-lets-work-together.md %})
-- [My Expectations for Managers]({% link _posts/2020-02-13-expectations-for-managers.md %})
+- [My Expectations for Managers]({% link _posts/2022-12-21-my-expectations-for-managers.md %})
 
 ## Execution & Results
 - [💯 The Agile Scorecard – 12 Questions]({% link _posts/2019-10-04-the-agile-scorecard-12-questions.md %})

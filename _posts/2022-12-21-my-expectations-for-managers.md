@@ -7,6 +7,8 @@ header:
   overlay_color: "#000"
   overlay_filter: "0.5"
 excerpt: "These are my basic expectations for managers that report to me"
+redirect_from:
+  - /2020/02/13/expectations-for-managers.html
 ---
 
 When working with a new manager that's reporting to me for the first time, I like to 

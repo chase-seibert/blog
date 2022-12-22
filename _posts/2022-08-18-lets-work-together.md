@@ -70,7 +70,7 @@ that impact.
 - Follow up proactively on action items.
 - Excellent written communication.
 
-See also [My Expectations for Managers]({% link _posts/2020-02-13-expectations-for-managers.md %})
+See also [My Expectations for Managers]({% link _posts/2022-12-21-my-expectations-for-managers.md %})
 
 ### What can you expect from me, as a manager?
 
