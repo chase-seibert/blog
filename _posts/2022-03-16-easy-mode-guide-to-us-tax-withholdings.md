@@ -6,7 +6,7 @@ header:
   overlay_image: /images/header-tax-withholdings.png
   overlay_color: "#000"
   overlay_filter: "0.5"
-excerpt: "Set withholdings to zero, and pay up to an extra 15% of your bonus and RSU grant in the form of quarterly estimated taxes"
+excerpt: "Set withholdings to zero, and pay up to an extra 15% of your bonus and RSU vest in the form of quarterly estimated taxes"
 ---
 
 For years I've struggled with trying to minimize the difference between taxes withheld and taxes owed. It's quite complex, with salary, bonus, and RSUs changing every year. That is, until I had a breakthrough. The year after I made quarterly estimated payments for the first time, it finally clicked.
@@ -23,11 +23,11 @@ Somehow, I had muddled through for about 20 years, filing taxes and not really u
 - **Marginal rate** is the percentage of the last dollar you earn that you owe in taxes. This is different from the first dollar. That's because we have a graduated tax system with [tax brackets](https://www.investopedia.com/terms/p/progressivetax.asp).
 - **Effective rate** is the percentage of your tax liability versus your gross income.
 - **W4** is the form you file with your employer that tells them how much to withhold from your paycheck.
-- **RSUs** are one of three buckets of compensation for many software engineers. In addition to your regular salary, and your annual bonus, RSUs are quarterly stock grants that you get taxed on every quarter, when you receive the stock, even if you don't sell it.
+- **RSUs** are one of three buckets of compensation for many software engineers. In addition to your regular salary, and your annual bonus, RSUs are quarterly stock vestings that you get taxed on every quarter, when you receive the stock, even if you don't sell it.
 
 # The easy way to calculate what you owe
 
-Your regular W4 withholdings will cover the full tax liability of your salary alone. For example, if you have no bonus or RSU grant, and you fill out the W4 correctly, you will withhold the correct amount from each paycheck so that the difference between taxes withheld and taxes owed for the year is negligible.
+Your regular W4 withholdings will cover the full tax liability of your salary alone. For example, if you have no bonus or RSU vest, and you fill out the W4 correctly, you will withhold the correct amount from each paycheck so that the difference between taxes withheld and taxes owed for the year is negligible.
 
 Things start getting tricky with bonus and RSUs. Early in your career, these are small. Over time, they become a larger and larger part of your compensation. For taxes, that's a problem, because **bonus and RSUs are not withheld at the correct rate -- you owe more!**
 
