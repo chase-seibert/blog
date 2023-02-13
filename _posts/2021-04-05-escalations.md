@@ -1,12 +1,12 @@
 ---
-title: "Dirty Escalations: Making Frenemies and Pissing Off People"
+title: "How to Escalate"
 tags: manager process
 toc: true
 header:
   overlay_image: /images/header-godzilla.webp
   overlay_color: "#000"
   overlay_filter: "0.5"
-excerpt: "Sometimes escalation looks like Godzilla stomping on your city"
+excerpt: "The magic of clean escalations is that 50% of the time, you come up with a compromise before you actually escalate. That's just good collaboration."
 ---
 
 In the context of business and organizations, escalations are when more people are brought into a decision to resolve an issue. 
