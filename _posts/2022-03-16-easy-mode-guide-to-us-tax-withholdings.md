@@ -35,6 +35,8 @@ Things start getting tricky with bonus and RSUs. Early in your career, these are
 
 You use marginal rate here, instead of effective rate, because you will be paying the most for these "last dollars". Another way to think about it is that you have already paid bellow your effective rate for your salary dollars. Let's assume that your marginal tax rate is the maximum of 37%. Your W4 is withholding enough taxes to cover your salary piece, but you need to make your own plans to cover difference between 37% and the flat 22% for your bonus and RSUs combined, or 15% of those pieces.
 
+*Update: I ran this for my 2022 taxes. It turns out that this method gets you close, and it guaranteed to be conservative; i.e. you will over pay and get a refund. In my case is was high by about 10%. This is because of the way that tax brackets work. I suggest you over pay the first year, and adjust down from there.*
+
 # Three ways to pay what you owe
 
 ## Pay at tax time
