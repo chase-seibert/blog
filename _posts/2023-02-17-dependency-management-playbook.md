@@ -6,7 +6,7 @@ header:
   overlay_image: /images/header-dependency-management.webp
   overlay_color: "#000"
   overlay_filter: "0.5"
-excerpt: "Not only can dependencies make you feel helpless, they can seduce you into ignoring them"
+excerpt: "How to manage risk for your project dependencies, i.e. when you need another team to put something on their roadmap."
 ---
 
 For engineering managers, delivering projects reliably and on time is a critical part of the job. Even if everything is estimated and executed well on your team, dependencies can derail you. If you poll a group of managers on their top risks — and I have — they will come back with a list that’s 80% dependencies on other teams. But many will feel helpless to resolve those dependencies. If your project requires another team to prioritize your dependency, what can you actually do to mitigate that risk?
