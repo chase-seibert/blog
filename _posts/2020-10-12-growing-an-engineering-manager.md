@@ -1,6 +1,6 @@
 ---
 title: Growing an Engineering Manager
-tags: manager
+tags: manager playbook
 toc: true
 header:
   overlay_image: /images/header-growing-em.jpg

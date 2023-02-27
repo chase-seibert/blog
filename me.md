@@ -13,6 +13,8 @@ redirect_from:
 
 This is a collection of some of my most representative blog posts.
 
+<!-- TODO organize into line manager, MoM, director level posts -->
+
 ## Introductions & About Me
 - [Let’s Work Together]({% link _posts/2022-08-18-lets-work-together.md %})
 - [My Expectations for Managers]({% link _posts/2022-12-21-my-expectations-for-managers.md %})

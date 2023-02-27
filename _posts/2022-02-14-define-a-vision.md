@@ -1,6 +1,6 @@
 ---
 title: "Setting Direction: Define a Vision"
-tags: manager reading-list
+tags: manager reading-list playbook
 toc: true
 header:
   overlay_image: /images/header-vision.png

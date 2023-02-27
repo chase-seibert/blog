@@ -1,5 +1,5 @@
 ---
-title: The “Eye of Sauron” Model of Force Concentration on Teams
+title: How to Choose a Team Size
 tags: manager process scrum
 toc: true
 header:
@@ -7,6 +7,8 @@ header:
   overlay_color: "#000"
   overlay_filter: "0.5"
 excerpt: "Teams operate best at certain sizes. Try sub-teams of 3-4 engineers, and interleaving active projects more often at the sprint boundaries."
+redirect_from:
+  - /2019/08/05/eye-of-sauron-force-concentration.html
 ---
 
 # Force Concentration and Team Size
@@ -30,7 +32,7 @@ In the end, teams need to realize that success is in the context of the team, no
 
 Like any group of people in a relationship, it takes constant work to fight entropy. For a team, the best way to continuously build trust in each other and garner the trust of the organization is to commit as a team and execute with teamwork on those commitments.
 
-# The “Eye of Sauron” Model of Force Concentration
+# Ideal Team Sizes
 
 Using 7+/-2 as a rule of thumb (remember, this includes non-engineering roles), smaller teams of 3-4 engineers and 1-2 non-engineers are going to be most successful if they focus on one major project at at time. Two or more concurrent major projects would mean that the working set is broken down into too-small pieces. Larger teams, such as 7 engineers and 2 non-engineers, could work sustainably on two initiatives, maintaining two sub-groups that still achieve critical mass.
 

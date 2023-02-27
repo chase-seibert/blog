@@ -1,6 +1,6 @@
 ---
 title: "Organizational Design"
-tags: manager director
+tags: manager director playbook
 toc: true
 header:
   overlay_image: /images/header-org-design.webp

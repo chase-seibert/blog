@@ -1,6 +1,6 @@
 ---
 title: "Dependency Management Playbook"
-tags: manager checklist scorecard
+tags: manager checklist scorecard playbook
 toc: true
 header:
   overlay_image: /images/header-dependency-management.webp
