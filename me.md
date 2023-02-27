@@ -22,6 +22,7 @@ This is a collection of some of my most representative blog posts.
 - [Getting Started Estimating with Story Points]({% link _posts/2019-01-30-getting-started-with-story-points.md %})
 - [Estimating Epic Stories in Three Steps]({% link _posts/2017-08-28-epic-story-estimation.md %})
 - [Dependency Management Playbook]({% link _posts/2023-02-17-dependency-management-playbook.md %})
+<!-- how to execute initiatives -->
 
 ## Culture & Talent 
 - [What are Healthy Relationships?]({% link _posts/2022-11-18-what-are-healthy-relationships.md %})

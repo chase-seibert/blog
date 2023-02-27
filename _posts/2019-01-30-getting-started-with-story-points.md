@@ -1,6 +1,6 @@
 ---
 title: Getting Started Estimating with Story Points
-tags: manager process scrum
+tags: manager process scrum workshop
 toc: true
 header:
   overlay_image: /images/header-story-points.jpg

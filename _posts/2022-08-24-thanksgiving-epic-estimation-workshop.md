@@ -1,6 +1,6 @@
 ---
 title: "Thanksgiving Epic Estimation Workshop"
-tags: process scrum 
+tags: process scrum workshop
 toc: true
 header:
   overlay_image: /images/header-thanksgiving.jpeg
