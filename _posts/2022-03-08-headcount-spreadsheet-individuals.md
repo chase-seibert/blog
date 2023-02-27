@@ -1,6 +1,6 @@
 ---
 title: "Headcount Tracking for a Medium Sized Org using a Spreadsheet"
-tags: managers process
+tags: managers process template
 toc: true
 header:
   overlay_image: /images/header-crowd.png

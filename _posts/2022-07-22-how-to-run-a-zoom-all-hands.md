@@ -1,6 +1,6 @@
 ---
 title: "How to Run a Zoom All Hands"
-tags: manager 
+tags: manager checklist
 toc: true
 header:
   overlay_image: /images/header-all-hands.jpeg

@@ -1,6 +1,6 @@
 ---
 title: "Dependency Management Playbook"
-tags: manager 
+tags: manager checklist scorecard
 toc: true
 header:
   overlay_image: /images/header-dependency-management.webp
@@ -70,7 +70,7 @@ Done correctly, most escalations will be resolved by a compromise before your le
 
 # Checklists 
 
-## Dependency Risk Level Checklist 
+## Dependency Risk Level Scorecard 
 
 How high risk is your dependency? If you cannot answer “Yes” to three or more of these, your dependency is at high risk.
 

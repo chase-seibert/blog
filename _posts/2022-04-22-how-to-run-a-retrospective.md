@@ -1,6 +1,6 @@
 ---
 title: "How to run a Retrospective"
-tags: process agile manager
+tags: process agile manager scorecard
 toc: true
 header:
   overlay_image: /images/retro-start-stop.jpeg

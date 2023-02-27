@@ -1,6 +1,6 @@
 ---
 title: 💯 The Agile Scorecard -- 12 Questions
-tags: agile scrum process
+tags: agile scrum process scorecard
 toc: true
 header:
   overlay_image: /images/header-sprinter.jpg

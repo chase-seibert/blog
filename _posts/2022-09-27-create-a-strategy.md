@@ -1,6 +1,6 @@
 ---
 title: "Setting Direction: Create a Strategy"
-tags: manager reading-list 
+tags: manager reading-list template
 toc: true
 header:
   overlay_image: /images/header-strategy.jpg
