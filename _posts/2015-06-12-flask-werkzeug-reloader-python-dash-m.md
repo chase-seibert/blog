@@ -1,6 +1,6 @@
 ---
 title: Flask absolute import bug in debug mode
-tags: python, flask
+tags: python flask
 ---
 
 Ran into a vexing issue this week. I was getting errors trying to use absolute imports in a new flask app:
