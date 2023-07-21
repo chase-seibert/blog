@@ -126,6 +126,6 @@ Don't wait for an exciting project to come down the pipe before you re-engage. Y
 - [ ] Delegate current projects that you are not enthusiastic about 
 - [ ] Identify some small wins you can achieve 
 - [ ] List what you have learned from challenging situations 
-- [ ] Write down how your professional relates to your self-worth 
+- [ ] Write down how your professional life relates to your self-worth 
 - [ ] Write down what is most important to you in life 
 - [ ] Write down what you are giving yourself permission to do in the name of mental health 
