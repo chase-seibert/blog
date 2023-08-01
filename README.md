@@ -1,4 +1,4 @@
-# Chase's Blog
+# Chase Seibert's Blog
 
 ## Install
 
