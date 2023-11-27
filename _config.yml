@@ -41,7 +41,7 @@ author:
       icon: "fab fa-fw fa-goodreads"
       url: "https://www.goodreads.com/chaseseibert"        
     - label: "Letterboxd"
-      icon: "fas fa-film"
+      icon: "fas fa-fw fa-film"
       url: "https://letterboxd.com/quasigenx/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
