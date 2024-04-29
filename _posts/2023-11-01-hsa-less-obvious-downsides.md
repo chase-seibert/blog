@@ -6,7 +6,7 @@ header:
   overlay_image: /images/header-hsa.webp
   overlay_color: "#000"
   overlay_filter: "0.5"
-excerpt: "As someone with a young family and who is generally on track for retirement savings, I switched to an HSA and HDHP for two years, but then switched back."
+excerpt: "As someone with a young family and who is generally on track for retirement savings, I switched to an HSA and HDHP for two years, but then switched back"
 ---
 
 A Health Savings Accounts (HSA) lets you save money pre-tax to use for medical expenses at any time in the future. You can also invest the money if you plan to use it in the distant future, such as in retirement. It’s one of only a handful of vehicles for pre-tax investing, which makes it very attractive. HSAs exist in large part to get people to enroll in a High Deductible Health Plan (HDHP). Even though HSAs look attractive financially, they are non-financial drawbacks that are not obvious at first. 
