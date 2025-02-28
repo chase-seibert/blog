@@ -8,6 +8,10 @@ excerpt: "The first step is getting to know each other"
 redirect_from:
   - /2018/05/14/care-and-feeding-of-chase.html
   - /2018/05/14/lets-work-together.html
+  - /2022/08/18/lets-work-together.html
+title: "My Blog Post"
+date: 2025-02-28
+last_modified_at: 2025-02-28 11:00:00
 ---
 
 # My Journey in Tech and Beyond  
