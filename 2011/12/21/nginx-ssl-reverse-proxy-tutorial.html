@@ -1,0 +1,527 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>nginx + SSL reverse proxy tutorial - Chase Seibert Blog</title>
+<meta name="description" content="If you have an existing HTTP application that you want to enable SSL for, nginx provides a convenient reverse proxy mode. In this mode, nginx is just responsible for providing SSL encryption; the actual HTTP content is still being served from your existing web server or load balancer.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="nginx + SSL reverse proxy tutorial">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2011/12/21/nginx-ssl-reverse-proxy-tutorial.html">
+
+
+  <meta property="og:description" content="If you have an existing HTTP application that you want to enable SSL for, nginx provides a convenient reverse proxy mode. In this mode, nginx is just responsible for providing SSL encryption; the actual HTTP content is still being served from your existing web server or load balancer.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="nginx + SSL reverse proxy tutorial">
+  <meta name="twitter:description" content="If you have an existing HTTP application that you want to enable SSL for, nginx provides a convenient reverse proxy mode. In this mode, nginx is just responsible for providing SSL encryption; the actual HTTP content is still being served from your existing web server or load balancer.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2011/12/21/nginx-ssl-reverse-proxy-tutorial.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2011-12-21T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2011/12/21/nginx-ssl-reverse-proxy-tutorial.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="nginx + SSL reverse proxy tutorial">
+    <meta itemprop="description" content="If you have an existing HTTP application that you want to enable SSL for, nginx provides a convenient reverse proxy mode. In this mode, nginx is just responsible for providing SSL encryption; the actual HTTP content is still being served from your existing web server or load balancer.">
+    <meta itemprop="datePublished" content="2011-12-21T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2011/12/21/nginx-ssl-reverse-proxy-tutorial.html" itemprop="url">nginx + SSL reverse proxy tutorial
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+If you have an existing HTTP application that you want to enable SSL for, <a href="http://nginx.org/">nginx</a> provides a convenient <a href="http://en.wikipedia.org/wiki/Reverse_proxy">reverse proxy</a> mode. In this mode, nginx is just responsible for providing SSL encryption; the actual HTTP content is still being served from your existing web server or load balancer.
+</p>
+
+<p>
+First, you need to install nginx. On Ubuntu 11.10, you can install it directly from the Ubuntu repositories.
+</p>
+
+<pre name="code" class="bash">
+sudo apt-get install nginx
+</pre>
+
+<p>
+On older Ubuntu distributions, you will need to add a custom PPA.
+</p>
+
+<pre name="code" class="bash">
+sudo -s
+nginx=stable # use nginx=development for latest development version
+echo &quot;deb http://ppa.launchpad.net/nginx/$nginx/ubuntu lucid main&quot; &gt; /etc/apt/sources.list.d/nginx-$nginx-lucid.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C
+apt-get update
+apt-get install nginx
+</pre>
+
+<p>
+Next, you need to generate a <a href="http://en.wikipedia.org/wiki/Certificate_signing_request">Certificate Signing Request</a> and a secret key file. I created mine directly inside a new directory that we will point nginx to.
+</p>
+
+<pre name="code" class="bash">
+sudo mkdir /usr/local/nginx
+sudo mkdir /usr/local/nginx/conf
+cd /usr/local/nginx/conf
+sudo openssl genrsa -des3 -out server.key 2048
+sudo openssl req -new -key server.key -out server.csr
+</pre>
+
+<p>
+You will be asked a bunch of questions about the SSL certificate. This is semi-official information, so you want it to be accurate. The certificate authority may actually call/email people to verify some of the information. Technically, the only important field is the Common Name, which is the domain name you want the certificate for. You should look up some <a href="http://www.digicert.com/csr-creation.htm">SSL creation tutorials</a> to make sure you have the correct values.
+</p>
+
+<p>
+In my case, I wanted a wildcard certificate, which can be used for all subdomains on the domain in question, so I entered *.example.com for the common name.
+</p>
+
+<p>
+Now you get out your credit card. You need to purchase a certificate based on this .csr file. I chose <a href="http://www.digicert.com/">Digicert</a>. A wildcard certificate cost about $1300 for three years.
+</p>
+
+<p>
+They will ask you for the csr file. You can also paste in the text of the file, which looks something like this.
+</p>
+
+<pre name="code" class="bash">
+-----BEGIN CERTIFICATE REQUEST-----
+MIIC3zCCAccCAQAwgZkxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJNQTEPMA0GA1UE
+BxMGQm9zdG9uMRcwFQYDVQQKEw5CdWxsaG9ybiwgSW5jLjEOMAwGA1UECxMFUmVh
+Y2gxHDAaBgNVBAMUEyouYnVsbGhvcm5yZWFjaC5jb20xJTAjBgkqhkiG9w0BCQEW
+FnJlYWNoYmV0YUBidWxsaG9ybi5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+ggEKAoIBAQCqayVplOo/PJhoufXSaFD7q66pmIfveWW3dlRNxltgk7l2jhusnsVz
+37P9F/qwxUjn6ijgZnopXNMQn2UEPKr8J65DgdSyLEFYFIO1DtLEYxS4myL2Bjc+
+mDEPirC05jDLOMMP7tr+607jWxOaM9p5G+kNjUc+gFCN4T7BSYKn1gnpmUPJDdYO
+FOD0sZ4G0SWrEDWNhzp5fNAqtviApDWfFWcDL2FJIiYKethp3moLsu5eAycji3PE
+hLqDZPXO3AQ+eaFAmRbkjB0imlbYgLn4MHWQWZHuPjvTV1puJfbnb4auMmu1xBCE
+wKgTS7ZgHp/9RbR19W5aDNBkiM+WkdMhAgMBAAGgADANBgkqhkiG9w0BAQUFAAOC
+AQEAkfuZ5GU7f1sxECH3hP2TOVRCvPay4R6J3Ql2782DaGjmqix8KsJMXNymVE8B
+9+09NFKo9Mv+Rwb/bZCjwviEADLXeMCjm503UMgWjyH+ONY4bNOs6k6hZYM7rmVb
+WnRgk2FXi9Kxgp5YMDQrTV1o2o6eykObqAfnWlG8Awka7w9aPNnp+HiFNtygB78R
+oFP/8v4KGVbSOGsvXRNPGs7y6dYCBnPxd5OxoXlc06j7gnuPbHKh69Bo7e2gTRYp
+T2g6GC3fgglMmq7pku775adR30E3CnS/Huc+MmBWC/TYYZv1Uv+8+sLnBZUDHgrH
+oeMl/QXd6Nnev+IVx0am4moU0Q==
+-----END CERTIFICATE REQUEST-----
+</pre>
+
+<p>
+The certificate authority vendor will produce a <a href="http://serverfault.com/questions/9708/what-is-a-pem-file-and-how-does-it-differ-from-other-openssl-generated-key-file">.pem file</a>, which has both your new certificate and the vendor's certificate bundled together. Once you get the certificate via email, you can proceed to setup a reverse proxy in nginx. First, remove the passphrase from the .key file. Otherwise, nginx will prompt for it interactively every time the service starts.
+</p>
+
+<pre name="code" class="bash">
+sudo cp server.key server.key.org
+sudo openssl rsa -in server.key.org -out server.key
+</pre>
+
+<p>
+Then you have to configure nginx to use the .pem file from the certificate authority, as well as your secret .key file. There is an <a href="http://wiki.nginx.org/Configuration">excellent wiki</a> for other configurations that nginx supports.
+</p>
+
+<pre name="code" class="bash">
+server {
+
+    listen 443 default_server;
+    server_name www.example.com;
+
+    ssl on;
+    ssl_certificate /usr/local/nginx/conf/server.pem;
+    ssl_certificate_key /usr/local/nginx/conf/server.key;
+    ssl_session_cache shared:SSL:10m;
+
+    location / {
+
+        proxy_pass http://localhost:8000; # my existing apache instance
+        proxy_set_header Host $host;
+
+        # re-write redirects to http as to https, example: /home
+        proxy_redirect http:// https://;
+    }
+}
+</pre>
+
+<p>
+Note the proxy_redirect directive. I noticed that when my application performed a redirect internally, it was using the global URL, ie http://www.example.com. To keep the user on the SSL version w/o having to make my application SSL aware, or change to <a href="http://blog.httpwatch.com/2010/02/10/using-protocol-relative-urls-to-switch-between-http-and-https/">protocol relative</a> redirects, I simply told nginx to re-write the redirect on the fly. Since I am only asking nginx to handle SSL traffic, it can safely use https for all redirects, given that I'm not redirecting to other sites.
+</p>
+
+<p>
+That's it. You just need to start the server with "service nginx start". You can test that it's working in a browser, or "openssl s_client -connect localhost:443" for a more verbose test.
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#nginx" class="page__taxonomy-item p-category" rel="tag">nginx</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#ssl" class="page__taxonomy-item p-category" rel="tag">ssl</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2011-12-21-nginx-ssl-reverse-proxy-tutorial.html">_posts/2011-12-21-nginx-ssl-reverse-proxy-tutorial.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2011-12-21T00:00:00+00:00">December 21, 2011</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2011/12/16/migrate-your-python-app-to-facebook-oauth-20.html" class="pagination--pager" title="Migrate your Python app to Facebook OAuth 2.0">Previous</a>
+    
+    
+      <a href="/blog/2012/01/06/django-reset-database-connection.html" class="pagination--pager" title="Django reset database connection">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

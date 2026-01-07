@@ -1,0 +1,447 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Faster Django/sqlite runserver with /dev/shm - Chase Seibert Blog</title>
+<meta name="description" content="When you’re writing software, the feedback loop is king. Whether you’re implementing new functionality, changing server configuration or writing unit tests, the speed of your feedback cycle is critical. The ideal scenario is that you make a change, and you can immediately see and effect. For web apps, this means that you should be able to save your Python/HTML/CSS/Javascript code, ALT-TAB to your browser, hit refresh, and see the changes. Any lag introduced in that cycle is bad; the more lag, the worse off you are.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Faster Django/sqlite runserver with /dev/shm">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/11/15/linux-shm-faster-sqlite.html">
+
+
+  <meta property="og:description" content="When you’re writing software, the feedback loop is king. Whether you’re implementing new functionality, changing server configuration or writing unit tests, the speed of your feedback cycle is critical. The ideal scenario is that you make a change, and you can immediately see and effect. For web apps, this means that you should be able to save your Python/HTML/CSS/Javascript code, ALT-TAB to your browser, hit refresh, and see the changes. Any lag introduced in that cycle is bad; the more lag, the worse off you are.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Faster Django/sqlite runserver with /dev/shm">
+  <meta name="twitter:description" content="When you’re writing software, the feedback loop is king. Whether you’re implementing new functionality, changing server configuration or writing unit tests, the speed of your feedback cycle is critical. The ideal scenario is that you make a change, and you can immediately see and effect. For web apps, this means that you should be able to save your Python/HTML/CSS/Javascript code, ALT-TAB to your browser, hit refresh, and see the changes. Any lag introduced in that cycle is bad; the more lag, the worse off you are.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/11/15/linux-shm-faster-sqlite.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-11-15T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/11/15/linux-shm-faster-sqlite.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Faster Django/sqlite runserver with /dev/shm">
+    <meta itemprop="description" content="When you’re writing software, the feedback loop is king. Whether you’re implementing new functionality, changing server configuration or writing unit tests, the speed of your feedback cycle is critical. The ideal scenario is that you make a change, and you can immediately see and effect. For web apps, this means that you should be able to save your Python/HTML/CSS/Javascript code, ALT-TAB to your browser, hit refresh, and see the changes. Any lag introduced in that cycle is bad; the more lag, the worse off you are.">
+    <meta itemprop="datePublished" content="2013-11-15T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/11/15/linux-shm-faster-sqlite.html" itemprop="url">Faster Django/sqlite runserver with /dev/shm
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>When you’re writing software, the feedback loop is king. Whether you’re implementing new functionality, changing server configuration or writing unit tests, the speed of your feedback cycle is critical. The ideal scenario is that you make a change, and you can immediately see and effect. For web apps, this means that you should be able to save your Python/HTML/CSS/Javascript code, <code class="language-plaintext highlighter-rouge">ALT-TAB</code> to your browser, hit refresh, and see the changes. Any lag introduced in that cycle is bad; the more lag, the worse off you are.</p>
+
+<p>A while back, I found out that when running Django unit tests, you can use sqlite in-memory mode to greatly speed up your test runs. Because Django unit tests create your schema from scratch and insert fixtures every time you run them, this can mean the difference between tens of seconds per change, and just one or two seconds. You can edit your <code class="language-plaintext highlighter-rouge">settings.py</code> and set the <code class="language-plaintext highlighter-rouge">TEST_NAME</code> to <code class="language-plaintext highlighter-rouge">None</code> or <code class="language-plaintext highlighter-rouge">:memory:</code> to tell sqlite to use and in-memory database.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'ENGINE'</span><span class="p">:</span> <span class="s">'django.db.backends.sqlite3'</span><span class="p">,</span>
+        <span class="s">'NAME'</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATABASE_DIR</span><span class="p">,</span> <span class="s">'sqlite3.db'</span><span class="p">),</span>
+        <span class="s">'TEST_CHARSET'</span><span class="p">:</span> <span class="s">'UTF8'</span><span class="p">,</span>
+        <span class="s">'TEST_NAME'</span><span class="p">:</span> <span class="bp">None</span>  <span class="c1"># in-memory sqlite db
+</span>    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>I just recently discovered that you can also use an in-memory database for your actual <code class="language-plaintext highlighter-rouge">runserver</code> development server process. You can’t just set the <code class="language-plaintext highlighter-rouge">NAME</code> to <code class="language-plaintext highlighter-rouge">None</code>; Django will not start in this mode. Presumably this is because it would not work very well in practice; every time the process started, it would create a schema-less database with no data. This is because <code class="language-plaintext highlighter-rouge">runserver</code> has no facility to run <code class="language-plaintext highlighter-rouge">syncdb</code> first. If you ran those two commands back-to-back, it would still not work because the second command-line is a separate process, where the in-memory sqlite database is again created from scratch.</p>
+
+<p>The solution is to save your <code class="language-plaintext highlighter-rouge">sqlite3.db</code> file in <code class="language-plaintext highlighter-rouge">/dev/shm</code> or <code class="language-plaintext highlighter-rouge">/run/shm</code> on Linux. These are what’s known as <code class="language-plaintext highlighter-rouge">tmpfs</code> file systems on Linux. They act as normal directories, except they are entirely <a href="http://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html">stored in RAM</a>, which is <a href="http://stackoverflow.com/questions/1371400/how-much-faster-is-the-memory-usually-than-the-disk">about 10,000 times faster</a> than disk for random access. One notable side-effect is that they are also completely wiped out every time you power down. For Django development, this may be OK. Depending on how good a test fixture you have, you may already be regularly blowing away and re-creating your database.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">mount</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="n">on</span> <span class="o">/</span> <span class="nb">type</span> <span class="n">ext4</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">errors</span><span class="o">=</span><span class="n">remount</span><span class="o">-</span><span class="n">ro</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">none</span> <span class="n">on</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">shm</span> <span class="nb">type</span> <span class="n">tmpfs</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">nosuid</span><span class="p">,</span><span class="n">nodev</span><span class="p">)</span></code></pre></figure>
+
+<p>These directories are already world-writable. To configure Django to save its database there, you can do the following:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'default'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'ENGINE'</span><span class="p">:</span> <span class="s">'django.db.backends.sqlite3'</span><span class="p">,</span>
+        <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'/dev/shm/sqlite3.db'</span><span class="p">,</span>
+        <span class="s">'TEST_CHARSET'</span><span class="p">:</span> <span class="s">'UTF8'</span><span class="p">,</span>
+        <span class="s">'TEST_NAME'</span><span class="p">:</span> <span class="bp">None</span>  <span class="c1"># in-memory sqlite db
+</span>    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>On my system, this took a <code class="language-plaintext highlighter-rouge">syncdb</code> command from to 15 seconds (mostly creating indexes) to 3 seconds flat. The actual app also feels much faster.</p>
+
+<p>For OSX, you can do the same thing, but there is no in-memory file system mounted by default. Instead, you can use the <a href="https://gist.github.com/koshigoe/822455">mount-ram.sh gist</a>. Simply download the gist and run <code class="language-plaintext highlighter-rouge">bash mount-ram.sh /tmp/shm 128</code> to create a 128MB RAM-backed folder.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#linux" class="page__taxonomy-item p-category" rel="tag">linux</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-11-15-linux-shm-faster-sqlite.md">_posts/2013-11-15-linux-shm-faster-sqlite.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-11-15T00:00:00+00:00">November 15, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/11/03/django-runserver-launch-multiple-screen.html" class="pagination--pager" title="Hacking Django runserver to run multiple Django instances">Previous</a>
+    
+    
+      <a href="/blog/2013/12/17/python-decorator-optional-parameter.html" class="pagination--pager" title="Writing a Python decorator that can be called as a function or a callable">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

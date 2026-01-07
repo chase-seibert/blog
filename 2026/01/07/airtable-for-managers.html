@@ -1,0 +1,593 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Beyond Google Sheets, Practical Airtable Workflows for Managers - Chase Seibert Blog</title>
+<meta name="description" content="A practical guide to using Airtable for people data, permissions, forms, and lightweight dashboards">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Beyond Google Sheets, Practical Airtable Workflows for Managers">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2026/01/07/airtable-for-managers.html">
+
+
+  <meta property="og:description" content="A practical guide to using Airtable for people data, permissions, forms, and lightweight dashboards">
+
+
+
+  <meta property="og:image" content="https://chase-seibert.github.io/blog/images/header-airtable.png">
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Beyond Google Sheets, Practical Airtable Workflows for Managers">
+  <meta name="twitter:description" content="A practical guide to using Airtable for people data, permissions, forms, and lightweight dashboards">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2026/01/07/airtable-for-managers.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chase-seibert.github.io/blog/images/header-airtable.png">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2026-01-07T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2026/01/07/airtable-for-managers.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/blog/images/header-airtable.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Beyond Google Sheets, Practical Airtable Workflows for Managers
+
+        
+      </h1>
+      
+        <p class="page__lead">A practical guide to using Airtable for people data, permissions, forms, and lightweight dashboards
+</p>
+      
+      
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Beyond Google Sheets, Practical Airtable Workflows for Managers">
+    <meta itemprop="description" content="A practical guide to using Airtable for people data, permissions, forms, and lightweight dashboards">
+    <meta itemprop="datePublished" content="2026-01-07T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#why-use-airtable">Why use Airtable?</a></li><li><a href="#scenario-calibrations">Scenario: Calibrations</a></li><li><a href="#create-simple-tables">Create simple Tables</a></li><li><a href="#create-an-interface">Create an Interface</a></li><li><a href="#filter-to-the-current-user">Filter to the current user</a></li><li><a href="#calibration-feedback">Calibration Feedback</a></li><li><a href="#scripting">Scripting</a></li><li><a href="#analysis--dashboards">Analysis &amp; Dashboards</a></li><li><a href="#exporting-to-google-sheets">Exporting to Google Sheets</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p>This post is a quick start guide for Airtable, focused on use cases of spreadsheets of people. It will cover row level access permissions, Interfaces, scripting, and pivot table dashboards. If you’re coming from Google Sheets, and want to up-level your spreadsheet game for some common manager tasks, this post is for you.</p>
+
+<h1 id="why-use-airtable">Why use Airtable?</h1>
+
+<p>I’m a <a href="/blog/2021/04/26/google-sheets-for-managers.html">Google Sheets power user</a>. Even so, I recognize there are some things that are easier or better in Airtable. The sheet itself is prettier. That matters if you’re presenting this content as part of your work! Forms are natively supported, meaning submissions can edit your sheet content directly (and in the format you want) versus feeding into a new sheet. It’s more intuitive to link a bunch of tables together with a foreign key, as opposed to using <code class="language-plaintext highlighter-rouge">VLOOKUP</code>. You can control visibility at the row level with Interfaces. Finally, there are more options for data visualization.</p>
+
+<p>That being said, I still turn to Google Sheets when I want to do something quickly, especially if it’s just for me.</p>
+
+<h1 id="scenario-calibrations">Scenario: Calibrations</h1>
+
+<p><a href="/blog/2023/03/28/calibrations.html">Calibrations</a> happen during performance review season. It’s a useful example for managers because it’s familiar, and involves the most common data type for managers, people! It also provides natural use cases for forms to collect data, and access control so that other managers only see people they are calibrating on.</p>
+
+<h1 id="create-simple-tables">Create simple Tables</h1>
+
+<p>First, create a new Table with a list of managers. You want the first column to be the primary key, meaning it should be unique. Generally email addresses or IDs are better than names, for tables of people.</p>
+
+<p>Add a column to the same Table for calibration panels. These are the names of one or more panels that the manager will review calibration cases for. Use the “Multiple select” column type to normalize the data.</p>
+
+<p>Also add a column with type User to tie to an Airtable user. This will come in handy later.</p>
+
+<p><img src="/blog/images/airtable1.png" alt="img" /></p>
+
+<p>Next, create a list of cases to calibrate on. These rows are people. Each one is assigned to a cohort. Note that this Panel column is a new “Single select” column, which must have the same options as the column in the Managers Table. Alternatively, you can create a normalized Table just for panels, and link both Managers and Cases to those.</p>
+
+<p>I’ve also added a blank column for the link to the calibration document.</p>
+
+<p><img src="/blog/images/airtable2.png" alt="img" /></p>
+
+<h1 id="create-an-interface">Create an Interface</h1>
+
+<p>Ok, now we get to create a view for managers to enter the link to the calibration document for their cases.</p>
+
+<p>Create an Interface called “Calibrations”. Make it type “List”, and point it to the Table of cases. To start, this just gives you back the full list of cases. Notice that it’s not editable by default. To make it editable, go back to the data view, click on the Table name, and select “Edit table permissions”.</p>
+
+<p>Now, go back to editing the Interface, select the field Calibration Doc, and make it editable. Make the other fields view only. Note that some field types are editable in the list view itself, and some are not. The URL type is not editable in the list view; users need to open the record and edit it in the preview.</p>
+
+<p><img src="/blog/images/airtable5.png" alt="img" /></p>
+
+<h1 id="filter-to-the-current-user">Filter to the current user</h1>
+
+<p>Notice that users can filter this view. For example, they can filter down to rows that they are the manager for. What if you wanted to make this the default for this Interface?</p>
+
+<p>First, we need rows to be associated with an Airtable User record, not just the name of the manager. Go back to the Cases Table, and add a column of type User. You need to manually select the right User for each row.</p>
+
+<p>Now edit the Interface again, and you can define a default filter for the Manager to be “Current User”.</p>
+
+<p><img src="/blog/images/airtable6.png" alt="img" /></p>
+
+<h1 id="calibration-feedback">Calibration Feedback</h1>
+
+<p>Now, we are going to add a Table and an Interface to collect calibration feedback from panel members on every case in that panel. We’re going to work backwards from what we want, which is a Table where each row is feedback from a manager on a specific case. There will be multiple rows in this Table from any given manager.</p>
+
+<p>Create a Table “Feedback”, with columns:</p>
+<ul>
+  <li>Primary Key: ID (type Autonumber)</li>
+  <li>Manager (type Link to Managers)</li>
+  <li>Case (type Link to Cases)</li>
+  <li>Rating</li>
+  <li>Comments</li>
+</ul>
+
+<p>These should not allow linking to multiple records, just one record. But, how can we populate this Table with one row for every combination of case and panelist for that case?</p>
+
+<h1 id="scripting">Scripting</h1>
+
+<p>Create an Automation where when you press a Button, it runs a script. I wish the Airtable AI supported helping you write this code, but here is what I came up with using ChatGPT and some iteration.</p>
+
+<p><strong>Warning: this script deletes all existing Feedback records.</strong></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">managers</span> <span class="o">=</span> <span class="nx">base</span><span class="p">.</span><span class="nx">getTable</span><span class="p">(</span><span class="dl">"</span><span class="s2">Managers</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">cases</span> <span class="o">=</span> <span class="nx">base</span><span class="p">.</span><span class="nx">getTable</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cases</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">feedback</span> <span class="o">=</span> <span class="nx">base</span><span class="p">.</span><span class="nx">getTable</span><span class="p">(</span><span class="dl">"</span><span class="s2">Feedback</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// delete all feedback records; you could also do this manually instead </span>
+<span class="kd">let</span> <span class="nx">query</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">feedback</span><span class="p">.</span><span class="nx">selectRecordsAsync</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">recordIds</span> <span class="o">=</span> <span class="nx">query</span><span class="p">.</span><span class="nx">records</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">recordIds</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">feedback</span><span class="p">.</span><span class="nx">deleteRecordsAsync</span><span class="p">(</span><span class="nx">recordIds</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+    <span class="nx">recordIds</span> <span class="o">=</span> <span class="nx">recordIds</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">allManagers</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">managers</span><span class="p">.</span><span class="nx">selectRecordsAsync</span><span class="p">({</span><span class="na">fields</span><span class="p">:</span> <span class="nx">managers</span><span class="p">.</span><span class="nx">fields</span><span class="p">});</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">manager</span> <span class="k">of</span> <span class="nx">allManagers</span><span class="p">.</span><span class="nx">records</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">manager</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panels</span><span class="dl">"</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span> 
+    <span class="kd">let</span> <span class="nx">managerPanels</span> <span class="o">=</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panels</span><span class="dl">"</span><span class="p">);</span>
+
+    <span class="kd">let</span> <span class="nx">allCases</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">cases</span><span class="p">.</span><span class="nx">selectRecordsAsync</span><span class="p">({</span><span class="na">fields</span><span class="p">:</span> <span class="nx">cases</span><span class="p">.</span><span class="nx">fields</span><span class="p">});</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">thisCase</span> <span class="k">of</span> <span class="nx">allCases</span><span class="p">.</span><span class="nx">records</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panel</span><span class="dl">"</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span> 
+
+        <span class="kd">let</span> <span class="nx">casePanelName</span> <span class="o">=</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panel</span><span class="dl">"</span><span class="p">).</span><span class="nx">name</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">managerPanels</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span>
+                <span class="nx">panel</span> <span class="o">=&gt;</span> <span class="nx">panel</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="nx">casePanelName</span>
+            <span class="p">)</span>
+        <span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Creating empty Feedback record:</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>                
+                <span class="na">manager</span><span class="p">:</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Name</span><span class="dl">"</span><span class="p">),</span>
+                <span class="na">caseName</span><span class="p">:</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Name</span><span class="dl">"</span><span class="p">),</span>
+                <span class="na">panel</span><span class="p">:</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panel</span><span class="dl">"</span><span class="p">).</span><span class="nx">name</span><span class="p">,</span>
+            <span class="p">});</span>
+
+            <span class="k">await</span> <span class="nx">feedback</span><span class="p">.</span><span class="nx">createRecordAsync</span><span class="p">({</span>
+                <span class="dl">"</span><span class="s2">Manager</span><span class="dl">"</span><span class="p">:</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">id</span> <span class="p">}],</span>
+                <span class="dl">"</span><span class="s2">Case</span><span class="dl">"</span><span class="p">:</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">id</span> <span class="p">}],</span>
+            <span class="p">});</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You don’t have to attach this automation to anything. Instead, you can come back to this Automation tab anytime, and run the automation manually.</p>
+
+<p>Running it will yield something like this:</p>
+
+<p><img src="/blog/images/airtable7.png" alt="img" /></p>
+
+<p>Using our techniques before, it’s simple to add a second Interface to expose just the Feedback rows for the currently logged-in user.</p>
+
+<p><img src="/blog/images/airtable8.png" alt="img" /></p>
+
+<h1 id="analysis--dashboards">Analysis &amp; Dashboards</h1>
+
+<p>In order to build an example of analyzing the feedback results, first fabricate some dummy data.</p>
+
+<p><img src="/blog/images/airtable9.png" alt="img" /></p>
+
+<p>Now, we need to aggregate ratings and comments per case. You can do this by creating a new Interface using the type “Dashboard” based on the Feedback Table. Once inside the Interface builder, select the option to add a “Pivot Table”.</p>
+
+<p>It’s straightforward to create both a bar chart of average rating per case. You can also create a list of counts of comments, where the user can click into each case to view the various comment text.</p>
+
+<p><img src="/blog/images/airtable10.png" alt="img" /></p>
+
+<p><img src="/blog/images/airtable11.png" alt="img" /></p>
+
+<h1 id="exporting-to-google-sheets">Exporting to Google Sheets</h1>
+
+<p>The Airtable pivot table and list views are limited. Compared to Google Sheets pivot tables, they are missing one piece of critical functionality. That’s the ability to have multiple value columns in a pivot table. That enables you to do things like have one table with the average rating, the count of ratings and even the concatenated comments.</p>
+
+<p>It’s easy to export one or more Airtable Tables to Google Sheets. For a small Table, you can simply select all the rows in the data view, and copy and paste into Google Sheets. You can also download to CSV from Airtable. Finally, there are third party extensions that can sync live to Google Sheets, though I would not recommend that.</p>
+
+<p><img src="/blog/images/airtable12.png" alt="img" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Airtable is basically a database builder that also lets you build mini applications on top. It excels at having tables with enforced data type schemas, defined relationships between tables, and defining Interfaces to both enter and report on data.</p>
+
+<p>Google Sheets excels at manipulating data, and also analyzing data.</p>
+
+<p>You can easily combine the two tools, and leverage the strengths of each one. My recommendation is to use Airtable for gathering data in a consistent format with easy to use interfaces, and then export the results to Google Sheets if you need to do serious analysis.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#manager" class="page__taxonomy-item p-category" rel="tag">manager</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2026-01-07-airtable-for-managers.md">_posts/2026-01-07-airtable-for-managers.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-01-07T00:00:00+00:00">January 7, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2025/02/28/lets-work-together.html" class="pagination--pager" title="Let’s Work Together">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

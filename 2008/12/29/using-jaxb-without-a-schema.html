@@ -1,0 +1,557 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Using JAXB without a schema - Chase Seibert Blog</title>
+<meta name="description" content="A Yahoo HotJobs API project has been my first exposure to REST APIs. Usually, I&#39;m working with SOAP web-services. Bullhorn is actually thinking about trying to support REST with its own APIs, so this was a good opportunity to learn about the strengths and weaknesses of REST.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Using JAXB without a schema">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2008/12/29/using-jaxb-without-a-schema.html">
+
+
+  <meta property="og:description" content="A Yahoo HotJobs API project has been my first exposure to REST APIs. Usually, I&#39;m working with SOAP web-services. Bullhorn is actually thinking about trying to support REST with its own APIs, so this was a good opportunity to learn about the strengths and weaknesses of REST.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Using JAXB without a schema">
+  <meta name="twitter:description" content="A Yahoo HotJobs API project has been my first exposure to REST APIs. Usually, I&#39;m working with SOAP web-services. Bullhorn is actually thinking about trying to support REST with its own APIs, so this was a good opportunity to learn about the strengths and weaknesses of REST.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2008/12/29/using-jaxb-without-a-schema.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2008-12-29T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2008/12/29/using-jaxb-without-a-schema.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Using JAXB without a schema">
+    <meta itemprop="description" content="A Yahoo HotJobs API project has been my first exposure to REST APIs. Usually, I&#39;m working with SOAP web-services. Bullhorn is actually thinking about trying to support REST with its own APIs, so this was a good opportunity to learn about the strengths and weaknesses of REST.">
+    <meta itemprop="datePublished" content="2008-12-29T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2008/12/29/using-jaxb-without-a-schema.html" itemprop="url">Using JAXB without a schema
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A <a href="http://developer.yahoo.com/hotjobs/">Yahoo HotJobs API</a> project has been my first exposure to <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a> APIs. Usually, I'm working with <a href="http://en.wikipedia.org/wiki/SOAP_(protocol)">SOAP web-services</a>. Bullhorn is actually thinking about trying to support REST with its own APIs, so this was a good opportunity to learn about the strengths and weaknesses of REST.</p>
+
+<p>With a typical SOAP API, my strategy would look something like:</p>
+<ul>
+   <li>Find the link to the <a href="http://en.wikipedia.org/wiki/Web_Services_Description_Language">WSDL</a> in their documentation.</li>
+   <li>Use the <a href="https://jax-ws.dev.java.net/jax-ws-ea3/docs/wsimport.html">wsimport</a> command to create <a href="http://en.wikipedia.org/wiki/JAXB">JAXB</a> stubs for the web-service.</li>
+   <li>Copy the stubs over to my project.</li>
+   <li>Start coding some unit tests to make sure they work, and you got your prototype.</li>
+</ul>
+
+<p><b>First problem:</b> there is no WSDL in REST. Instead, they use a similar <a href="http://en.wikipedia.org/wiki/Web_Application_Description_Language">WADL</a> standard. There is even a <a href="http://www.google.com/search?q=wadl2java&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a">wadl2java</a> tool to create stubs.</p>
+
+<p><b>Second problem:</b> this actual web-service doesn't support WADL. In fact, many REST web-services don't support it. The main problem is that there is no codified standard for REST; it evolved to its current state. WADL was an after-thought, and is still gaining traction.</p>
+
+<p>So, I needed to produce XML and post it to this API somehow. My initial implementation was to create the XML by hand, and post it to the API using <a href="http://hc.apache.org/httpclient-3.x/">Apache's HttpClient</a>. HttpClient is great, because it supports all the standard HTTP methods (POST, GET), plus the less frequently used ones needed for REST (PUT, DELETE, etc).</p>
+
+<p>For the XML part; I had been looking for a reason to play around with <a href="http://www.cs.usfca.edu/~parrt/course/601/lectures/stringtemplate.html">StringTemplate</a>. I started with a template XML file that looked like:</p>
+
+<pre name="code" class="xml">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;atom:feed xmlns:yheader=&quot;http://schemas.yahoo.com/ypost/jobsHeader/3.0&quot;
+   xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;
+   xmlns:yjob=&quot;http://schemas.yahoo.com/ypost/jobs/3.0&quot;
+   xmlns:ycontrol=&quot;http://schemas.yahoo.com/ypost/control/1.0&quot;&gt;
+   &lt;yheader:Credential&gt;
+       &lt;yheader:Login&gt;$login$&lt;/yheader:Login&gt;
+       &lt;yheader:Password&gt;$password$&lt;/yheader:Password&gt;
+       &lt;yheader:Version&gt;3.0&lt;/yheader:Version&gt;
+       &lt;yheader:LicenseKey&gt;$license$&lt;/yheader:LicenseKey&gt;
+   &lt;/yheader:Credential&gt;
+   &lt;atom:id&gt;$account$&lt;/atom:id&gt;
+&lt;/atom:feed&gt;
+</pre>
+
+<p>... and a code segment that looked like:</p>
+
+<pre name="code" class="java">
+    private static final String AUTH_XML_FILE = &quot;HotJobs.template.auth.xml&quot;;
+    private static Map&lt;String, String&gt; replacements = new HashMap&lt;String, String&gt;() &#123;&#123;
+            put(&quot;login&quot;, &quot;user@user.com&quot;);
+            put(&quot;password&quot;, &quot;password&quot;);
+            put(&quot;account&quot;, &quot;12345&quot;);
+            put(&quot;license&quot;, &quot;abc123&quot;);
+        &#125;&#125;;
+
+    public static String getXml() {
+
+        StringTemplate xml
+                = new StringTemplate(getFileContents(AuthRequest.class.getResourceAsStream(AUTH_XML_FILE)));
+
+        for (String key: replacements.keySet())
+            xml.setAttribute(key, replacements.get(key));
+
+        return xml.toString();
+    }
+
+    public static String getFileContents(InputStream resourceAsStream) {
+        // left as an exercise for the reader ;)
+    }
+</pre>
+
+<p>Pretty soon, I ran into into a situation where I was posting invalid XML. Of course, I should have realized that you can't just cram any string into an XML element; it may contain an <a href="http://www.w3schools.com/xml/xml_cdata.asp">invalid character</a>, such as the ampersand. Or it may just be the wrong encoding. The hack fix is to escape the values:</p>
+
+<pre name="code" class="java">
+   // using org.apache.commons.lang.StringEscapeUtils
+   xml.setAttribute(key, StringEscapeUtils.escapeXml(replacements.get(key)));
+</pre>
+
+<p>However, this is really a symptom of a poor design. In general, it's <a href="http://stackoverflow.com/questions/139650/when-writing-xml-is-it-better-to-hand-write-it-or-to-use-a-generator-such-as-si">not a good idea</a> to generate XML by hand like this.</p>
+
+<p>I set out to use JAXB, instead. With no schema provided by the vendor, I would need to make one. I loaded up my trusted copy of <a href="http://www.altova.com/">XMLSpy</a>, and copy and pasted an example XML document. Then I selected DTD/Schema -> Generate DTD/Schema:</p>
+
+<img src="http://lh5.ggpht.com/_EE2zVzGv1Ds/SVlEQ6y4WcI/AAAAAAAAH2o/TSeApwM2leo/s800/XMLSpy1.gif">
+
+<p>There were a few tweaks necessary. String fields came across as enumerations, which is somewhat understandable because XMLSpy has to guess at what types the fields are. I couldn't find a configuration option to change it, so I edited it by hand:</p>
+
+<pre name="code" class="xml">
+&lt;xs:element name=&quot;id&quot;&gt;
+ &lt;xs:simpleType&gt;
+  &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+   &lt;xs:enumeration value=&quot;1-JYNURD&quot;/&gt;
+  &lt;/xs:restriction&gt;
+ &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+
+<p>became...</p>
+
+<pre name="code" class="xml">
+&lt;xs:element name=&quot;id&quot;&gt;
+ &lt;xs:simpleType&gt;
+  &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+  &lt;/xs:restriction&gt;
+ &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+
+<p>Then, all I needed to do was to generate the JAXB stubs. Xjc handled the multiple chained XSD files just fine.</p>
+
+<pre name="code" class="xml">
+xjc -d generated -p com.bullhorn.athens.jobboards.hotjobs.generated.login login.xsd
+</pre>
+
+<p>Once I plugged this into my existing implementation, it <i>almost</i> worked. By default, JAXB was marshalling the objects into XML without the custom namespaces. For example, "yheader" was becoming "ns1", while "atom" was not namespaced at all. The namespace declarations were properly changed to match, so it was valid XML,  just not what the API was expecting.</p>
+
+<p>This would work for many REST APIs, but this particular one doesn't seem to be using an XML parser on the other end. I assume they are parsing the XML by hand using regular expressions or something. This is another good argument for using XML parsers versus doing it yourself!</p>
+
+<p>Fixing the namespace issue was easy. All you have to do is provide an implementation of NamespacePrefixMapper. In my case, it looked like:</p>
+
+<pre name="code" class="java">
+import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
+
+public class YahooNamespacePrefixMapper extends NamespacePrefixMapper {
+
+    public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
+
+        if (namespaceUri.equalsIgnoreCase(&quot;http://www.w3.org/2005/Atom&quot;)) return &quot;atom&quot;;
+        return &quot;yheader&quot;;
+    }
+}
+</pre>
+
+<p>Then, in my marshalling code, you have to pass in the custom prefix mapper:</p>
+
+<pre name="code" class="java">
+    public static String marshall(Class className, Object value) {
+
+        try {
+
+            JAXBContext jaxbContext = JAXBContext.newInstance(className);
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(NAMESPACE_PREFIX_MAPPER, new YahooNamespacePrefixMapper());
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            marshaller.marshal(value, bytes);
+            return bytes.toString();
+
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
+    }
+</pre>
+
+<p>Success! Of course, generating a schema by hand is not ideal, either. But if there is no first-party schema, at least it's an option.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#jaxb" class="page__taxonomy-item p-category" rel="tag">jaxb</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#xml" class="page__taxonomy-item p-category" rel="tag">xml</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#xmlspy" class="page__taxonomy-item p-category" rel="tag">xmlspy</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2008-12-29-using-jaxb-without-a-schema.html">_posts/2008-12-29-using-jaxb-without-a-schema.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2008-12-29T00:00:00+00:00">December 29, 2008</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2008/12/24/coldfusion-json-exception-handling.html" class="pagination--pager" title="ColdFusion JSON Exception Handling">Previous</a>
+    
+    
+      <a href="/blog/2009/01/08/first-awk-script.html" class="pagination--pager" title="First AWK script">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

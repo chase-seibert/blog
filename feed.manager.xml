@@ -1,0 +1,1216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+ <channel>
+  <title>Chase Seibert Blog - manager</title>
+  <description>Posts tagged as 'manager'</description>
+     <atom:link href="https://chase-seibert.github.io/feeds/feed.manager.xml" rel="self" type="application/rss+xml" />
+  <link>https://chase-seibert.github.io/tag/manager/</link>
+  <updated>2026-01-07T18:58:58+00:00</updated>
+  <author>
+   <name>Chase Seibert</name>
+   <email></email>
+  </author>
+
+  
+  
+   <item>
+    <title>Beyond Google Sheets, Practical Airtable Workflows for Managers</title>
+    <description>&lt;p&gt;This post is a quick start guide for Airtable, focused on use cases of spreadsheets of people. It will cover row level access permissions, Interfaces, scripting, and pivot table dashboards. If you’re coming from Google Sheets, and want to up-level your spreadsheet game for some common manager tasks, this post is for you.&lt;/p&gt;
+
+&lt;h1 id=&quot;why-use-airtable&quot;&gt;Why use Airtable?&lt;/h1&gt;
+
+&lt;p&gt;I’m a &lt;a href=&quot;/blog/2021/04/26/google-sheets-for-managers.html&quot;&gt;Google Sheets power user&lt;/a&gt;. Even so, I recognize there are some things that are easier or better in Airtable. The sheet itself is prettier. That matters if you’re presenting this content as part of your work! Forms are natively supported, meaning submissions can edit your sheet content directly (and in the format you want) versus feeding into a new sheet. It’s more intuitive to link a bunch of tables together with a foreign key, as opposed to using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VLOOKUP&lt;/code&gt;. You can control visibility at the row level with Interfaces. Finally, there are more options for data visualization.&lt;/p&gt;
+
+&lt;p&gt;That being said, I still turn to Google Sheets when I want to do something quickly, especially if it’s just for me.&lt;/p&gt;
+
+&lt;h1 id=&quot;scenario-calibrations&quot;&gt;Scenario: Calibrations&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/blog/2023/03/28/calibrations.html&quot;&gt;Calibrations&lt;/a&gt; happen during performance review season. It’s a useful example for managers because it’s familiar, and involves the most common data type for managers, people! It also provides natural use cases for forms to collect data, and access control so that other managers only see people they are calibrating on.&lt;/p&gt;
+
+&lt;h1 id=&quot;create-simple-tables&quot;&gt;Create simple Tables&lt;/h1&gt;
+
+&lt;p&gt;First, create a new Table with a list of managers. You want the first column to be the primary key, meaning it should be unique. Generally email addresses or IDs are better than names, for tables of people.&lt;/p&gt;
+
+&lt;p&gt;Add a column to the same Table for calibration panels. These are the names of one or more panels that the manager will review calibration cases for. Use the “Multiple select” column type to normalize the data.&lt;/p&gt;
+
+&lt;p&gt;Also add a column with type User to tie to an Airtable user. This will come in handy later.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, create a list of cases to calibrate on. These rows are people. Each one is assigned to a cohort. Note that this Panel column is a new “Single select” column, which must have the same options as the column in the Managers Table. Alternatively, you can create a normalized Table just for panels, and link both Managers and Cases to those.&lt;/p&gt;
+
+&lt;p&gt;I’ve also added a blank column for the link to the calibration document.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable2.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;create-an-interface&quot;&gt;Create an Interface&lt;/h1&gt;
+
+&lt;p&gt;Ok, now we get to create a view for managers to enter the link to the calibration document for their cases.&lt;/p&gt;
+
+&lt;p&gt;Create an Interface called “Calibrations”. Make it type “List”, and point it to the Table of cases. To start, this just gives you back the full list of cases. Notice that it’s not editable by default. To make it editable, go back to the data view, click on the Table name, and select “Edit table permissions”.&lt;/p&gt;
+
+&lt;p&gt;Now, go back to editing the Interface, select the field Calibration Doc, and make it editable. Make the other fields view only. Note that some field types are editable in the list view itself, and some are not. The URL type is not editable in the list view; users need to open the record and edit it in the preview.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable5.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;filter-to-the-current-user&quot;&gt;Filter to the current user&lt;/h1&gt;
+
+&lt;p&gt;Notice that users can filter this view. For example, they can filter down to rows that they are the manager for. What if you wanted to make this the default for this Interface?&lt;/p&gt;
+
+&lt;p&gt;First, we need rows to be associated with an Airtable User record, not just the name of the manager. Go back to the Cases Table, and add a column of type User. You need to manually select the right User for each row.&lt;/p&gt;
+
+&lt;p&gt;Now edit the Interface again, and you can define a default filter for the Manager to be “Current User”.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable6.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;calibration-feedback&quot;&gt;Calibration Feedback&lt;/h1&gt;
+
+&lt;p&gt;Now, we are going to add a Table and an Interface to collect calibration feedback from panel members on every case in that panel. We’re going to work backwards from what we want, which is a Table where each row is feedback from a manager on a specific case. There will be multiple rows in this Table from any given manager.&lt;/p&gt;
+
+&lt;p&gt;Create a Table “Feedback”, with columns:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Primary Key: ID (type Autonumber)&lt;/li&gt;
+  &lt;li&gt;Manager (type Link to Managers)&lt;/li&gt;
+  &lt;li&gt;Case (type Link to Cases)&lt;/li&gt;
+  &lt;li&gt;Rating&lt;/li&gt;
+  &lt;li&gt;Comments&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These should not allow linking to multiple records, just one record. But, how can we populate this Table with one row for every combination of case and panelist for that case?&lt;/p&gt;
+
+&lt;h1 id=&quot;scripting&quot;&gt;Scripting&lt;/h1&gt;
+
+&lt;p&gt;Create an Automation where when you press a Button, it runs a script. I wish the Airtable AI supported helping you write this code, but here is what I came up with using ChatGPT and some iteration.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Warning: this script deletes all existing Feedback records.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;managers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Managers&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cases&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Cases&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;feedback&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Feedback&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// delete all feedback records; you could also do this manually instead &lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;feedback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;selectRecordsAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;recordIds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;records&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;recordIds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;feedback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;deleteRecordsAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;recordIds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;recordIds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;recordIds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allManagers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;managers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;selectRecordsAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;managers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;manager&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allManagers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;records&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCellValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Panels&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;managerPanels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCellValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Panels&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allCases&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;selectRecordsAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;thisCase&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;allCases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;records&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;thisCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCellValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Panel&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+
+        &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;casePanelName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;thisCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCellValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Panel&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;managerPanels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;some&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;panel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;panel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;casePanelName&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Creating empty Feedback record:&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;                
+                &lt;span class=&quot;na&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCellValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;caseName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;thisCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCellValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                &lt;span class=&quot;na&quot;&gt;panel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;thisCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCellValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Panel&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;feedback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createRecordAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+                &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Manager&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}],&lt;/span&gt;
+                &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Case&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;thisCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}],&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You don’t have to attach this automation to anything. Instead, you can come back to this Automation tab anytime, and run the automation manually.&lt;/p&gt;
+
+&lt;p&gt;Running it will yield something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable7.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using our techniques before, it’s simple to add a second Interface to expose just the Feedback rows for the currently logged-in user.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable8.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;analysis--dashboards&quot;&gt;Analysis &amp;amp; Dashboards&lt;/h1&gt;
+
+&lt;p&gt;In order to build an example of analyzing the feedback results, first fabricate some dummy data.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable9.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, we need to aggregate ratings and comments per case. You can do this by creating a new Interface using the type “Dashboard” based on the Feedback Table. Once inside the Interface builder, select the option to add a “Pivot Table”.&lt;/p&gt;
+
+&lt;p&gt;It’s straightforward to create both a bar chart of average rating per case. You can also create a list of counts of comments, where the user can click into each case to view the various comment text.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable10.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable11.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;exporting-to-google-sheets&quot;&gt;Exporting to Google Sheets&lt;/h1&gt;
+
+&lt;p&gt;The Airtable pivot table and list views are limited. Compared to Google Sheets pivot tables, they are missing one piece of critical functionality. That’s the ability to have multiple value columns in a pivot table. That enables you to do things like have one table with the average rating, the count of ratings and even the concatenated comments.&lt;/p&gt;
+
+&lt;p&gt;It’s easy to export one or more Airtable Tables to Google Sheets. For a small Table, you can simply select all the rows in the data view, and copy and paste into Google Sheets. You can also download to CSV from Airtable. Finally, there are third party extensions that can sync live to Google Sheets, though I would not recommend that.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/airtable12.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Airtable is basically a database builder that also lets you build mini applications on top. It excels at having tables with enforced data type schemas, defined relationships between tables, and defining Interfaces to both enter and report on data.&lt;/p&gt;
+
+&lt;p&gt;Google Sheets excels at manipulating data, and also analyzing data.&lt;/p&gt;
+
+&lt;p&gt;You can easily combine the two tools, and leverage the strengths of each one. My recommendation is to use Airtable for gathering data in a consistent format with easy to use interfaces, and then export the results to Google Sheets if you need to do serious analysis.&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2026/01/07/airtable-for-managers.html </link>
+    <pubDate>2026-01-07T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2026/01/07/airtable-for-managers.html</guid>
+   </item>
+  
+   <item>
+    <title>Dependency Management Playbook</title>
+    <description>&lt;p&gt;For engineering managers, delivering projects reliably and on time is a critical part of the job. Even if everything is estimated and executed well on your team, dependencies can derail you. If you poll a group of managers on their top risks — and I have — they will come back with a list that’s 80% dependencies on other teams. But many will feel helpless to resolve those dependencies. If your project requires another team to prioritize your dependency, what can you actually do to mitigate that risk?&lt;/p&gt;
+
+&lt;p&gt;Not needing dependencies is a luxury afforded to teams in small companies, or those running very high priority projects. I once ran a tiger team that was both. We moved experts from across the company onto the team so that we could own every piece of the execution. In large companies where a single product spans many teams, most projects will require one or more dependencies. You need to have a playbook for managing dependency risk.&lt;/p&gt;
+
+&lt;h1 id=&quot;list-the-dependencies&quot;&gt;List the Dependencies&lt;/h1&gt;
+
+&lt;p&gt;First, you need to know what the dependencies are. One of your core competencies as an engineering manager is “asking the right questions”. Hold a brainstorm and help the team see dependencies that they might not know exist. Cross-functional dependencies like security, legal and compliance can be particular blind spots for engineers. For actual software engineering, the team can almost certainly identify the big dependencies off the top of their heads. Doing a pre-mortem exercise can be one way to enumerate them and quantify the risk for each. You want to do this early in the project, as part of project estimation.&lt;/p&gt;
+
+&lt;p&gt;Create a list of all the dependencies for the team, for the year. Each one should have a project name, a short description of the dependency, the risk or priority of the dependency, the name of the remote team that you are dependent on, and a specific team member who owns it. Try stack ranking them, with the highest risk/impact dependencies first. Share this list with your manager.&lt;/p&gt;
+
+&lt;p&gt;Having a prioritized list of dependencies is useful for more than just your team. Suggest that your manager ask all their teams for this, and that they create a combined list. How they prioritize the list across teams will tell you a lot about how well aligned you are, how they are going to present these priorities to their own peers and stakeholders, and may also give you early signals on when a dependency is a non-starter.&lt;/p&gt;
+
+&lt;p&gt;Show your list to the engineering managers you are asking for dependencies from. Ask them to share their full roadmap, and share yours. Include not just the engineering managers, but tech leads and product managers on both sides, as well. Make sure you have a solid business case for your project. These stakeholders, artifacts, and visibility are how dependency problems are turned into creative solutions.&lt;/p&gt;
+
+&lt;p&gt;For any given dependency, you should first try to remove it, and then you should secondarily try to push it back. Removing a dependency typically looks like changing scope, so that the dependency is not required. Pushing it back looks like structuring milestones – provided that early milestones deliver user value – so that it is not required until later. This is basic execution management that should happen for all your projects, and should be old hat for yourself, your tech lead, and your product manager.&lt;/p&gt;
+
+&lt;h1 id=&quot;get-engineers-engaged&quot;&gt;Get Engineers Engaged&lt;/h1&gt;
+
+&lt;p&gt;If the dependency cannot be resolved with a creative solution, the next step is to get the right people to bring the right expertise to bear on the problem, and to get work started right away. A dependency that is not being actively worked on by engineers is an at-risk dependency. As an engineering manager, allocating these resources appropriately for the business is another core competency. That’s not to say that it will be easy! Managers sometimes confuse accountability for allocating resources with having authority to dictate those decisions. Given that we know that we will mostly not be unilaterally allocating people across disparate teams, what staffing levers do we have at our disposal?&lt;/p&gt;
+
+&lt;p&gt;Use your knowledge about the organization and other teams to identify the correct team for the dependency, and also the most likely points of contact on that team — the experts — who can help the most. Start by asking for a consultation with that expert. This could start as one-time, and then you can collectively evaluate if consultation alone can satisfy the dependency. Identify your own experts, and get them involved. If you respect the remote team’s time, create a pre-read, and get aligned ahead of time with their manager, this should be a slam dunk. Even if the work turns out to be too large for a consult, you will have cemented a clear point of contact on the remote team.&lt;/p&gt;
+
+&lt;p&gt;Next, create a dialog with the right points of contact on both sides. This could be a simple Slack channel dedicated to the consultation. Eventually, this may be the rally point for a full on roadmap dependency. Your goal is to create and nurture a relationship between the teams, to facilitate a conversation. If you make it transactional, that is how it will feel to the other team. Try to set ground rule expectations. Can the other team agree to provide support for things like technical spec reviews, and code reviews?&lt;/p&gt;
+
+&lt;p&gt;Another staffing mechanism available to all managers is embedding, also known as tours of duty. This means offering to loan one of your engineers to another team for a specific period of time. Alternatively, they could loan you an engineer. It’s easier than a roadmap commitment, because it’s timeboxed. The receiving team agrees to return the engineer on a specific date, based on the initiating team’s estimates of the work. The engineer(s) exclusively work on the dependency. If it’s not resolved in time, that is the responsibility of the initiating team. The embedding should end on time regardless. Managers should write down expectations for things like how specs and code get reviewed, what needs to happen to merge a code change, and whether the person is expected to improve the state of the surrounding code. If folks are willing to cross-train, this can work even if there is a skills or domain knowledge gap in the person being embedded.&lt;/p&gt;
+
+&lt;p&gt;Other staffing solutions may or may not be available to you. Most dependencies that get to this stage require domain knowledge. If the dependency is primarily about raw staffing, you can of course hire. Even if this is not the case, if you are in charge of a headcount budget, reserving some budget for dependencies like this can be effective, to facilitate potential internal transfers, both to be able to receive an internal transfer, or to offer as compensation to another team for a transfer.&lt;/p&gt;
+
+&lt;p&gt;Depending on your scope, other options like moving people between teams, or moving entire teams, may be available. During a regular reorganization of teams, you should be actively managing your dependency risk.&lt;/p&gt;
+
+&lt;h1 id=&quot;mitigate-risk-with-milestones&quot;&gt;Mitigate Risk with Milestones&lt;/h1&gt;
+
+&lt;p&gt;Once you know what your dependencies are, and the right people are working on them, the next step is to structure the work. How you structure the work greatly affects how much risk you are taking on. Your goals are to shorten the window before work begins, bring forward the first increment that delivers user value, and shorten the cycle time between further iterations.&lt;/p&gt;
+
+&lt;p&gt;Creating a prototype is a critical early milestone. This should be a quick and dirty development environment only implementation of just the very core of the product. This gives you some real code to discuss, some real experience to demo, and will also uncover some of the primary unknowns and decisions that need to be resolved. Concurrently, you can also do “spike” sprints to try to resolve specific unknown and technical risks.&lt;/p&gt;
+
+&lt;p&gt;After that, you want to move to an in-production implementation, behind a feature flag, as soon as possible. This is Milestone 0, a foothold that you can continue to expand, refine, and polish for the rest of the project lifecycle. After that, milestones should be “theoretically shippable”, i.e. a user could get some value out of this, no matter how small. Don’t break things down into milestones like backend, front-end, release testing, etc. Instead, think of thin vertical slices. Each slice should deliver some user value, end to end. The slice itself should accomplish part of the overall job to be done. It should be just polished enough that you could release to wider and wider audiences, such as team-only, internal-only, early access customers, etc.&lt;/p&gt;
+
+&lt;p&gt;When planning the scope of the milestones, think about whether certain dependencies are only required for some of the scope. Pushing that scope back into future milestones will reduce the risk associated with delivering earlier milestones, at the cost of non resolving unknown technical risk inside those dependencies early. If possible, try to de-risk those separately with their own prototypes, potentially on another team’s roadmap.&lt;/p&gt;
+
+&lt;p&gt;For any cross-team dependencies, agree on a code interface for the dependency. This can greatly clarify what each team needs. You may also want to create failing unit tests for those code interfaces. You could go as far as to mock the dependency with basic behavior, which will be useful in your own development and testing. Any performance or scalability requirements can also be part of your interface definition.&lt;/p&gt;
+
+&lt;p&gt;Finally, come up with a Plan B for each dependency. This will not always be possible. Examples include planning to build and ship a heuristic solution to a machine learning model dependency, or hard-coding something that will eventually be configurable. Other examples could be shipping a mock implementation of a back-end system, or further dropping scope so that it’s not necessary.&lt;/p&gt;
+
+&lt;h1 id=&quot;escalate-unless-development-starts&quot;&gt;Escalate Unless Development Starts&lt;/h1&gt;
+
+&lt;p&gt;If dependencies cannot be eliminated or committed to such that they are beginning work soon, you should escalate. This is a last resort, only because you need to attempt other methods first. But don’t let dependency conversations linger too long without making forward progress. If progress has plateaued for two or three weeks, it’s time to start the escalation process. Much of the time, you will not end up having to escalate at all, but that’s part of the magic!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Often the mere act of sitting down and trying to write up a proposal will lead to Frank and Faythe to come to a compromise. Partially this is because writing down details forces clarity on the situation. It also reveals options that neither party had thought of independently. A big part of last-minute compromises is that everyone is reluctant to involve their manager, asking for a decision. This makes it more likely that each side will accept a compromise that they would not otherwise have accepted, simply to avoid escalating. — &lt;a href=&quot;https://chase-seibert.github.io/blog/2021/04/05/escalations.html#clean-escalations-the-one-pager&quot;&gt;How to Escalate&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The short version of how to escalate is:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Create a doc collaboratively with the other engineering manager, and include cross-functional peers&lt;/li&gt;
+  &lt;li&gt;Pair down to two or three potential outcomes&lt;/li&gt;
+  &lt;li&gt;CC both of your leads at the same time, plus any cross-functional partners, via email&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If the escalation results in a roadmap commitment, you should have a record in the above email. If not, create one. This is critical for clarity and accountability.&lt;/p&gt;
+
+&lt;p&gt;Done correctly, most escalations will be resolved by a compromise before your leads are included. This is what healthy cross-team collaboration looks like; identifying problems and finding solutions. Don’t treat an escalation as a threat, your goal is to share context and exercise empathy, and iterate to a solution that is best for the entire company. The biggest failure mode in escalations is not doing them, or not doing them early enough.&lt;/p&gt;
+
+&lt;h1 id=&quot;checklists&quot;&gt;Checklists&lt;/h1&gt;
+
+&lt;h2 id=&quot;dependency-risk-level-scorecard&quot;&gt;Dependency Risk Level Scorecard&lt;/h2&gt;
+
+&lt;p&gt;How high risk is your dependency? If you cannot answer “Yes” to three or more of these, your dependency is at high risk.&lt;/p&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Has work started?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Is work starting in the next quarter?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Is there a working prototype of the solution?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Is the team confident that they know what the technical solution is, exactly?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Do you have an API interface definition agreed on by both teams?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;team-lead-dependency-mitigation-checklist&quot;&gt;Team Lead Dependency Mitigation Checklist&lt;/h2&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you asked critical questions about the product and the technical plan?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you identified the right stakeholders?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you written and communicated a compelling business case for this work?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you brainstormed potential dependencies and risks with the team?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you held a pre-mortem about what could go wrong, worst case?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you listed all of your dependencies and risks somewhere?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you prioritized your dependencies by negative impact?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you documented your full team roadmap, and shared it?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you defined milestones that are thin vertical slices of potentially shippable product increment?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you cut scope from early milestones to de-risk dependencies?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you set up an ongoing consultation with your primary dependencies for questions, design review, and code review?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you created a safe space where you can engage in dialog with each dependency?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you built a working prototype of the solution?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you mocked up a code interface for each dependency, with example inputs and output?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you documented the dependency and the commitment in an email?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you identified specific people as points of contact for the dependency?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you put together an escalation doc for this dependency?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you sent the escalation doc to leads on both sides?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you created a Plan B for if this dependency is not satisfied?&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you determined whether there is a relationship or trust issue between these teams? (manager of managers)&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you brought in the right experts from outside the teams to consult on this dependency? (manager of managers)&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you considered moving people around for this dependency? (manager of managers)&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you considered embedding engineers across teams? (manager of managers)&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Have you reserved headcount to facilitate this dependency? (director)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <link>https://chase-seibert.github.io/2023/02/17/dependency-management-playbook.html </link>
+    <pubDate>2023-02-17T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2023/02/17/dependency-management-playbook.html</guid>
+   </item>
+  
+   <item>
+    <title>Organizational Design</title>
+    <description>&lt;p&gt;Organizational Design is how you group teams together in order to optimize for various constraints. There is no perfect organization design, only a series of trade-offs. Unless you’re a small company, how you group teams together will optimize for some dimensions and constraints over others. No organization design you choose will remain stable any longer than a few years. But you can mix and match different design strategies for different parts of the organization.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-is-an-organization&quot;&gt;What is an Organization?&lt;/h1&gt;
+
+&lt;p&gt;An organization is a set of teams with one name. Your company is one organization. A large company includes many nested sets of organizations. How you group sets of teams together, and what type of shared mission you give them, is the result of trade-offs you make between competing factors like coordination and dependencies.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-is-organizational-design&quot;&gt;What is Organizational Design?&lt;/h1&gt;
+
+&lt;p&gt;Organization design is how you choose to group the teams together, and what name you give them. Mission scope, coordination cost, and dependency management are the primary factors in any organization design.&lt;/p&gt;
+
+&lt;p&gt;Mission scope simple means the job of the team. What is their primary goal, and what problem are they trying to solve? The mission should be compelling, distinct from the missions of other organizations, and meaty enough to have impact commensurate with the expectations of the larger company.&lt;/p&gt;
+
+&lt;p&gt;Coordination cost is incurred in the form of communication overhead for any two teams that have a dependency between them. If possible, you want to remove the dependency altogether. If you cannot remove it, you want two teams involved in the same work to share the shallowest common “branches”. As the distance increases, so does the risk of misalignment and prioritization conflict, which can lead to the dependency blocking the project.&lt;/p&gt;
+
+&lt;p&gt;The reporting structure of the organization, literally who reports to whom, determines the distance and number of people in the decision-making loop. In terms of risk, there is a natural incentive to make sets of teams in an organization as small as possible. But there is a competing factor called the “span of control”—giving teams a sufficient number of people to realize impact—that incentivizes larger sets of teams. For any given manager, most companies ideally want somewhere between five and eight direct reports, for cost efficiency and to give each direct report the right amount of attention and support for their personal development.&lt;/p&gt;
+
+&lt;p&gt;Making trade-offs between these factors are the primary driving force informing organization structure.&lt;/p&gt;
+
+&lt;h1 id=&quot;small-organizations-dont-need-structure&quot;&gt;Small Organizations Don’t Need Structure&lt;/h1&gt;
+
+&lt;p&gt;My first job was in a start-up with one and a half other software engineers, and no product managers or designers. There were no teams, or rather we were one big team of 12 including sales, finance, and customer support. There was a reporting structure, where sales people reported to the head of sales, etc. But there wasn’t an organization structure. We didn’t need one.&lt;/p&gt;
+
+&lt;p&gt;In a small company, communication and coordination overhead is negligible. When you’re coding a feature, there are probably no dependencies. If there are, you can literally turn to the person next to you to resolve it with a quick conversation. Engineers are able to deliver almost all their work by themselves.&lt;/p&gt;
+
+&lt;h1 id=&quot;medium-sized-organizations&quot;&gt;Medium-Sized Organizations&lt;/h1&gt;
+
+&lt;p&gt;As a company gets larger, there will be many teams. You’re all working on one product, but no matter how you organize, you will start to see more and more dependencies.&lt;/p&gt;
+
+&lt;p&gt;Teams can be grouped by technology, feature, business goal, or customer. We are going to ignore grouping by customer, because it tends not to scale past a few types of customer.&lt;/p&gt;
+
+&lt;h2 id=&quot;grouping-teams-by-technology&quot;&gt;Grouping Teams by Technology&lt;/h2&gt;
+
+&lt;p&gt;Codebases are broken up into repositories, services, modules, and files. They are naturally categorized by theme, i.e. what can I include in this set that’s cohesive as a unit, and has minimal dependencies on other things?&lt;/p&gt;
+
+&lt;p&gt;Engineers have a tendency to first think of organizational structures that match these themes. This makes sense! You know this will minimize dependencies, and you know that assigning code ownership will be straightforward. Using an organization structure like this for a set of teams will tend to incentivize quality, which is also a classic engineering value.&lt;/p&gt;
+
+&lt;p&gt;Organizations structured this way will excel at keeping things running, and running well. They will maximize uptime, performance, and correctness. They will tend to be more stable over time, as the basic thematic groupings of code do not change often. They are great for knowledge sharing across engineering teams. This structure is often used in Platform organizations.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, these organizations will bias towards investment in existing use cases vs new use cases. Innovation will often look like rewriting an existing component. Engineers may gravitate towards this work, even when the business thinks it’s low value. It may be difficult to get engineers to work on higher impact stuff. Work on new initiatives may be diffused across more teams, increasing overhead and risk, and reducing accountability.&lt;/p&gt;
+
+&lt;h2 id=&quot;group-teams-by-feature&quot;&gt;Group Teams by Feature&lt;/h2&gt;
+
+&lt;p&gt;If you need to make significant progress on a relatively well-known new or existing feature, consider grouping all the teams who need to deliver work for that feature together. This may make sense, especially for a handful of top priority initiatives. By having every skillset the teams need to deliver their roadmap, you are minimizing coordination cost and dependency risk.&lt;/p&gt;
+
+&lt;p&gt;This could look like front-end, back-end, mobile, database, and devops engineers all working directly together on cross-functional teams, separate from other engineers of the same horizontal discipline. One manager may have direct reports from each discipline, and together with their peer managers report to one organization manager, who can easily resolve prioritization issues.&lt;/p&gt;
+
+&lt;p&gt;This organization structure maximizes execution, assuming that the solution is relatively well known. It may be ideal for large cannot-fail mega-projects. Of course, projects can always fail, but this structure greatly decreases execution risk.&lt;/p&gt;
+
+&lt;p&gt;With this organization design, you are incurring maximum churn on team missions and superstructure, as missions revolving around features will naturally change more often as the features ship. When that churn happens, more people will change managers, and it will take time to reestablish processes on affected teams. Plus, there is a high likelihood that this churn will be incurred again, as the project is completed and teams align to the next feature.&lt;/p&gt;
+
+&lt;p&gt;In the initial move to feature organization, there may be resistance to decoupling teams from their previous groupings, especially if they have formed a sense of identity around being a “platform”, or “mobile” organization.&lt;/p&gt;
+
+&lt;p&gt;These organizations are sometimes over-staffed. It’s a fine balance on the continuum between creating an organization for a solution that’s fairly well known, versus creating the organization in order to define the solution. Too much of the latter, and you run the risk of having people and teams roped in without a lot of actual work to do. Worst case scenario, this can lead to scope creep and unneeded complexity as teams “invent” work to do.&lt;/p&gt;
+
+&lt;h1 id=&quot;large-organizations&quot;&gt;Large Organizations&lt;/h1&gt;
+
+&lt;p&gt;As the company gets even larger, you are likely to be working on many more totally different things, even multiple different products. The number of dependencies grows exponentially. You cannot truly minimize dependencies, instead you need to pick which ones to derisk.&lt;/p&gt;
+
+&lt;p&gt;Large companies contain many organizations. Each organization may be responsible for one product, or one sub-goal. Inside each organization, you can mix and match grouping sets of teams by technology, features, or customer.&lt;/p&gt;
+
+&lt;h2 id=&quot;grouping-teams-by-business-goals&quot;&gt;Grouping Teams by Business Goals&lt;/h2&gt;
+
+&lt;p&gt;Like the feature grouping, grouping by business goal puts a sufficient number of people under one overall accountable person to achieve the goal self-sufficiently. Unlike feature grouping, the solution is often undefined. Instead of being about estimates to build a specific feature, the number of people allocated to this type of organization is based on how much of a “bet” the company is willing to make on this goal. Sub organizations can be created for sub goals, which should have their own single accountable person.&lt;/p&gt;
+
+&lt;p&gt;This type of structure prioritizes innovation. Doing this well requires clear goals and metrics. The strategic vision must be compelling. With unknown solutions, there is a tendency to give each product leader similar resources. This option is often used for product-led organizations, i.e. organizations where everyone ultimate reports to a head of product.&lt;/p&gt;
+
+&lt;p&gt;Teams and individuals in this model may need to exercise more of their cross-functional skills, versus organizing by technology or feature. You may need to repurpose an engineer for something that does not 100% match their skillset, or you may discover that you need a new skillset as you uncover solutions in the space. You may also need to unblock dependencies by changing the working agreement so that teams inside your organization can do work in codebases that other teams own. These both have real costs. Swim lanes inside the organization may be unclear, especially as you uncover new solutions that don’t match the initial structure.&lt;/p&gt;
+
+&lt;h2 id=&quot;hybrid-grouping&quot;&gt;Hybrid Grouping&lt;/h2&gt;
+
+&lt;p&gt;You don’t have to choose just one organizational strategy for your entire company. A mature product may be organized by goal, while a new product has no organization, and a shared platform organization is structured by technology. Structures will also change over time, as the situation changes. Knowing when to use which structure is important, even if there is no “right” answer.&lt;/p&gt;
+
+&lt;p&gt;A common tool when mixing structures is the “matrixed organization”. This means that the reporting structure does not match the sets of teams structure. For example, an engineering manager may have direct reports in various squads, working on different things, and working with different product managers. This increases coordination cost. It also reduces the context between a manager and their direct reports, which can make performance evaluation more difficult. Watch out for negative impact on cross-functional alignment.&lt;/p&gt;
+
+&lt;h2 id=&quot;other-factors-to-consider&quot;&gt;Other Factors to Consider&lt;/h2&gt;
+
+&lt;p&gt;Inertia is a force that is actively fighting your organizational design. All else being equal, change is hard, and people will be naturally resistant to it. Assuming you overcome that, enacting change is a lot of work. You need to communicate the changes, move people around, and change the names of teams in hundreds of places. Teams with personnel or mission changes will be starting further back on the forming/norming/storming curve.&lt;/p&gt;
+
+&lt;p&gt;Changes in code ownership have their own cost. There should be a very good reason for moving ownership between teams. “Keep the Lights On” (KTLO) type work should be as uniform as possible across teams, which may involve additional ownership changes.&lt;/p&gt;
+
+&lt;p&gt;Teams and organization names are a powerful tool for autonomy, i.e. “You’re the Activation team, you’re empowered to own anything that involves user activation across the entire company”. But names can also be burdens, as in “every team with something they can squint at and call activation work is going to try to get you to own that”.&lt;/p&gt;
+
+&lt;p&gt;You should also consider whether to group specialized skill sets together (i.e. Mobile, Devops, etc). You may also want to think about giving teams the largest possible “swim lane” to an organization, where they can have autonomy, cohesion, and separation of concerns from others.&lt;/p&gt;
+
+&lt;p&gt;There is no perfect solution that will solve all factors. The best you can do is pick a set of dimensions to optimize for, and be aware of the trade-offs you’re making.&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;As an organizational design changes over time, you will make different trade-offs. This is fine, because there is no perfect organization structure. If you stay at a company long enough, you may see a particular pendulum swing back and forth more than once. Each time is a response to a current problem.&lt;/p&gt;
+
+&lt;p&gt;Organizational design is not something you can solve permanently. It will need to be solved again as strategies change, and projects come and go. You can only design an organization for about 12 months, the typical macrocycle where both company and team roadmaps are most stable.&lt;/p&gt;
+
+&lt;p&gt;Remember to not create dependencies if you don’t have to. Definitely don’t architect in more dependencies than absolutely necessary. Make the best trade-offs you can, for today. You can always make different trade-offs in the next reorg!&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2023/01/30/organizational-design.html </link>
+    <pubDate>2023-01-30T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2023/01/30/organizational-design.html</guid>
+   </item>
+  
+   <item>
+    <title>My Expectations for Managers</title>
+    <description>&lt;p&gt;When working with a new manager that’s reporting to me for the first time, I like to 
+share this document. Hopefully, it helps us get on the same page about our shared 
+expectations for your role. I hold myself to the same bar on all of
+these – you can expect the same things from me that I expect from you.&lt;/p&gt;
+
+&lt;p&gt;These are probably not controversial. If they are, let’s talk about it!&lt;/p&gt;
+
+&lt;h1 id=&quot;weekly-11s&quot;&gt;Weekly 1:1s&lt;/h1&gt;
+
+&lt;p&gt;You should have weekly, regularly scheduled 1:1s with your direct reports. For most roles,
+this will be somewhere between five and eight 1:1s a week. For product teams, you should also have weekly 1:1s with your direct product manager and design partner. Let people reschedule as needed, but
+don’t skip too often.&lt;/p&gt;
+
+&lt;p&gt;You can expect the same from me. You can also expect that I will have monthly skip level 1:1s
+with your more senior individual contributors, and any managers that report to you. These are 
+mostly for feedback, which I will share with you as appropriate. I also use them to develop
+bench talent.&lt;/p&gt;
+
+&lt;p&gt;How you run the 1:1s is up to you. You will find that I tend to run mine with written agendas, 
+and lots of transparency.&lt;/p&gt;
+
+&lt;h1 id=&quot;tight-meetings&quot;&gt;Tight Meetings&lt;/h1&gt;
+
+&lt;p&gt;If we’re in a meeting together, it should be well run! As an engineering manager, either you, 
+me, or my manager will probably run 80% of the meetings we’re in together. Even if it’s a meeting 
+hosted by a cross-functional partner, you should take responsibility for making sure it’s well run.&lt;/p&gt;
+
+&lt;p&gt;You can expect that if I invite you to a meeting, that it will have an agenda ahead of time. I will 
+make sure that we stay on topic, take notes, and end on time.&lt;/p&gt;
+
+&lt;p&gt;If I take an action item in a meeting, I will resolve those 100% of the time (or get back to you 
+and say I won’t be doing it after all).&lt;/p&gt;
+
+&lt;h1 id=&quot;excellent-execution&quot;&gt;Excellent Execution&lt;/h1&gt;
+
+&lt;p&gt;When you commit to a deliverable on a quarterly roadmap, those should be delivered on time 90% of the time. If a team has four or five main items on their roadmap, that means that one item 
+might slip every two quarters. The expectation that 9/10 items ship on time can surprise people; that is a higher bar than industry average for not slipping commitments.&lt;/p&gt;
+
+&lt;p&gt;I hold myself to the same bar for the roadmap delivery across all my teams, collectively. That doesn’t mean that I expect teams to kill themselves to hit unrealistic timelines. What I expect is that after a period of forming/storming/norming, a team gets proficient at estimates that include an 
+appropriate risk buffer.&lt;/p&gt;
+
+&lt;p&gt;The real secret sauce is when a team develops a working relationship with their product owner
+such that they can seamlessly trade off scope, time, and quality. In my experience, these
+teams can deliver on any timeline; because the scope is fluid.&lt;/p&gt;
+
+&lt;p&gt;At the end of the day, I expect the engineering manager and the product owner to agree on 
+whether something was delivered on time, and that it satisfies the deliverable. As long as 
+you agree, I’m happy on execution.&lt;/p&gt;
+
+&lt;p&gt;You can expect me to jump in and help identify and mitigate large risks that could derail us.&lt;/p&gt;
+
+&lt;p&gt;Also related to execution:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Commitment misses should be on the lowest priority items&lt;/li&gt;
+  &lt;li&gt;Be able to “do the math” to rationalize quarter level commits based on team velocity&lt;/li&gt;
+  &lt;li&gt;If you’re going to slip, communicate it early, for example 1/3 of the way in to a quarter&lt;/li&gt;
+  &lt;li&gt;There should not be confusion about the exact commitment, for example code complete versus shipping to production&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;product-partnership&quot;&gt;Product Partnership&lt;/h1&gt;
+
+&lt;p&gt;You and your product manager should be in sync. I expect the 360 feedback for each other to be 
+excellent. It’s unusual for there to be a dysfunctional relationship between an engineering 
+manager and their product partner. When it happens, you can expect that I will dive in and 
+try to debug that as a top priority. In this state, the team has a very low chance of success.&lt;/p&gt;
+
+&lt;p&gt;For a deep dive, see &lt;a href=&quot;/blog/2022/11/18/what-are-healthy-relationships.html&quot;&gt;What are Healthy Relationships?&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;impact-outside-your-team&quot;&gt;Impact Outside your Team&lt;/h1&gt;
+
+&lt;p&gt;You should have one major piece of impact a year, outside the scope of your team and mission.
+This could look like shipping an internal tool, revamping an interview question, or 
+updating the company career framework. I can help you identify opportunities. If you sign up to 
+take on something like this, I expect you to proactively drive it forward.&lt;/p&gt;
+
+&lt;h1 id=&quot;influence-the-roadmap&quot;&gt;Influence the Roadmap&lt;/h1&gt;
+
+&lt;p&gt;You should also come up with one major product or foundational initiative a year. These will mostly
+be in the scope of the team mission, but could be anything related to the overall product, or 
+internal processes. As you get more senior, this means understanding the business context almost
+as well as a product manager, and understanding the technical context almost as well as a senior
+engineer. Trust your own insights, and put a stake in the ground about something you would like to 
+see happen.&lt;/p&gt;
+
+&lt;p&gt;This doesn’t mean that it’s always going to get onto the roadmap. An ideal outcome is that it 
+influences the product org, and helps set strategy going forward. If this exact idea ships, 
+it’s a bonus. That will probably happen about 25% of the time.&lt;/p&gt;
+
+&lt;p&gt;You can expect ideas from me, as well. These are never directives, but I do expect you and your product partner to follow up and either validate or invalidate the idea.&lt;/p&gt;
+
+&lt;h1 id=&quot;be-comfortable-with-uncertainty&quot;&gt;Be Comfortable with Uncertainty&lt;/h1&gt;
+
+&lt;p&gt;Dealing with uncertainty and ambiguity is part of the job. This will only become more important, 
+the more senior you get. You should never let uncertainty become a blocker for the team, or an 
+impediment to healthy relationships.&lt;/p&gt;
+
+&lt;p&gt;You can expect a reasonable level of transparency from me about any given situation. I won’t
+necessarily commit to pushing to resolve any given uncertainty as soon as possible. That’s often 
+a premature optimization. But, I will tell you when I plan to sit with the uncertainty, and when
+I intend to resolve it.&lt;/p&gt;
+
+&lt;h1 id=&quot;grow-a-successor&quot;&gt;Grow a Successor&lt;/h1&gt;
+
+&lt;p&gt;It’s not always possible, but you should try to have a succession plan for both yourself, and the primary technical lead on your team. Pick one person, and create a growth plan for them. Document 
+where you think they are already ready for a next level opportunity, and where they still have to grow. This will come in handy, often on short notice, when an opportunity opens up. Ideally, we’ve already talked about this person, and have the beginnings of a transition plan in place.&lt;/p&gt;
+
+&lt;h1 id=&quot;deliver-business-impact&quot;&gt;Deliver Business Impact&lt;/h1&gt;
+
+&lt;p&gt;You’re primarily going to be judged on your track record of delivering business impact. This should not be a surprise; it’s the cornerstone of most written company expectations for any role.&lt;/p&gt;
+
+&lt;p&gt;As an engineering manager, we are going to primarily deliver impact through excellent execution. What if something is delivered on time, but does not result in the impact that we hoped for? I expect this to happen on individual projects maybe 50% of the time. I do hold engineering managers accountable for their portfolio of projects, and the total impact. Part of our job is to influence the roadmap towards high impact work, refine the scope so that it actually does have impact, and deliver quickly so that we can fail and learn fast.&lt;/p&gt;
+
+&lt;p&gt;Anything in the realm of execution is also fair game. Common blockers like cross-organization dependencies, alignment with leadership, and even a project being de-prioritized before shipping are things we are ultimately accountable for resolving.&lt;/p&gt;
+
+&lt;h1 id=&quot;do-the-best-thing-for-the-company&quot;&gt;Do the best thing for the company&lt;/h1&gt;
+
+&lt;p&gt;When in doubt, do the best thing for the company. I expect this from anyone in a leadership position. Often there is temptation to optimize for the local team. As you get more senior, I expect you to optimize for the company more.&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2022/12/21/my-expectations-for-managers.html </link>
+    <pubDate>2022-12-21T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2022/12/21/my-expectations-for-managers.html</guid>
+   </item>
+  
+   <item>
+    <title>What are Healthy Relationships?</title>
+    <description>&lt;p&gt;Five years into my career, I had gone from being one of the few engineers at the company, to being the expert on a medium-sized engineering team. If someone misunderstood how something worked, I could list all the ways there were wrong. If someone had a product idea, I could find all the ways it might not work. I even remember joking about this by saying, “if you need someone to poke holes in an idea, you know who to come to”. No one ever said anything directly, but my manager started getting feedback about how I was coming across. I got some formal 360 feedback that was filled with phrases describing me as “always needing to be right”, “thinks he knows everything”, and “too cocky”.&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/C6BYzLIqKB8&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;I wasn’t sure how to process the feedback at first, but eventually I realized that the biggest thing limiting my impact was my relationships with other people. This was a formative piece of feedback in my career, and marked the first time I started thinking about my “soft skills”.&lt;/p&gt;
+
+&lt;p&gt;Healthy relationships at work are not just about the people on your team, or even the people you interact with. They are also the way you interact over email, in a large Slack channel, or in a document. It’s OK to occasionally cross into curmudgeon territory, but don’t make a steady diet of it. If it’s too frequent, too visible, or inappropriate for the audience, it can cross the line. You can’t go wrong if you consistently take ownership, assume good intent, and radiate positivity.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-good-looks-like&quot;&gt;What Good Looks Like&lt;/h1&gt;
+
+&lt;p&gt;You always want 360 feedback from your relationships to be excellent. In terms of having healthy relationships, this looks like consistent positive comments about your professionalism, tone, and collaboration. Feedback that is specifically about you or your relationship should not be negative, even if there are challenging projects, or circumstances. You want feedback from others to be critical of outcomes, not of you personally.&lt;/p&gt;
+
+&lt;p&gt;For engineering managers, this means feedback from your direct reports as well as your peer product managers, designers, and engineering managers. Your manager probably gets feedback from these folks in one on ones, and from anonymous surveys. Feedback can also come from exit surveys when people leave the team.&lt;/p&gt;
+
+&lt;p&gt;As you get more senior, the pool of people who have visibility on you grows. At some point, you can reasonably expect feedback to potentially come from anywhere in the company. It starts to reflect not just on you, but also your whole team, and your leads.&lt;/p&gt;
+
+&lt;p&gt;Model the relationship that you want in your own interactions with folks. Demonstrate trust, always keep things professional, and criticize the work, not the person. Also, keep an eye out for common work stressors.&lt;/p&gt;
+
+&lt;h1 id=&quot;common-stressors-on-healthy-relationships&quot;&gt;Common Stressors on Healthy Relationships&lt;/h1&gt;
+
+&lt;p&gt;Having healthy relationships does not mean that nothing will ever go wrong. But when things do  go wrong, your relationships are not the cause, and your relationships are not burned resolving the issue.&lt;/p&gt;
+
+&lt;h2 id=&quot;blockers&quot;&gt;Blockers&lt;/h2&gt;
+
+&lt;p&gt;Whatever the issue is, you want to talk about it with your team, peers, and your boss. This happens in one on ones, and team check-ins. To some extent, it’s OK to vent or be frustrated in a one one one with your manager. That’s part of what they are there for. But in a team meeting, you want to quickly move forward constructively. You can do this by taking a lens of extreme ownership, where you take responsibility to solve the issue together.&lt;/p&gt;
+
+&lt;p&gt;If you have an idea for a solution, use your manager as a sounding board to help you work through it. It’s OK to come to them without a solution, but be prepared for ideas from them. You should expect that 80% of the time, your manager will propose a solution you can act on yourself, versus having them act.&lt;/p&gt;
+
+&lt;p&gt;What if the blocker is another person? Remind yourself that you need to assume good intent, ask open-ended questions, and frame things in a positive light. Don’t turn a non-people problem into a relationship problem.&lt;/p&gt;
+
+&lt;h2 id=&quot;uncertainty&quot;&gt;Uncertainty&lt;/h2&gt;
+
+&lt;p&gt;The level of uncertainty and ambiguity you deal with on a regular basis is only going to increase as your seniority and scope increases. At a certain level, no amount of uncertainty is anomalous or outside the range of expectations for your role. Uncertainty itself should not be an excuse for unhealthy relationships or interactions.&lt;/p&gt;
+
+&lt;p&gt;Sometimes, you need to live with the uncertainty for a bit. You may catch yourself making the  mistake of trying to resolve uncertainty too quickly, versus not quickly enough. Sometimes what is required is just to sit patiently with the uncertainty. In general, your best tools here are going to be perspective, curiosity, and reaching out to the right people.&lt;/p&gt;
+
+&lt;p&gt;If you need to escalate to resolve the uncertainty, be sure to follow &lt;a href=&quot;/blog/2021/04/05/escalations.html&quot;&gt;healthy escalation best practices&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;lack-of-confidence&quot;&gt;Lack of Confidence&lt;/h2&gt;
+
+&lt;p&gt;What if you think that a peer is not performing in their role? First, you should give them feedback. Then, try coaching them. Finally, give their manager feedback, either directly, or though your manager. Your working relationship with the person should never suffer. Even if the person is under-performing, you don’t want your relationship itself to become a contributor to blocking the team.&lt;/p&gt;
+
+&lt;p&gt;Be mindful that it’s not your decision whether a cross-functional peer, or anyone outside your org, is performing well in their role. You cannot make that determination unilaterally with the information you have. Don’t assume you know what is expected of them outside the context of your roles and responsibilities with each other. What you can do is make your respective roles and responsibilities clear, in writing.&lt;/p&gt;
+
+&lt;p&gt;Never balk at performing your own role based on a sense that someone else is not performing well. A specific case that you may see is when you are not happy with the level of detail in product specs. Do not refuse to estimate work, or put items on the roadmap. This can put your relationship with the product manager at risk. Instead, work with the whole team to refine and scope the work together.&lt;/p&gt;
+
+&lt;h2 id=&quot;all-hands-qa&quot;&gt;All Hands Q&amp;amp;A&lt;/h2&gt;
+
+&lt;p&gt;The larger the audience, the more potential risk there is to damage relationships. One of the larger forums that you may be a part of in your work is an All Hands Q&amp;amp;A session. You never want someone to be able to interpret a question you’re asking as having bad intent. Even if a question is anonymous, make sure it comes across in a healthy way. Avoid making unvalidated assumptions, and keep the tone positive. Ask yourself, how would you feel if this question was on the front page of the New York Times?&lt;/p&gt;
+
+&lt;p&gt;Asking provocative questions is valuable, but not if they negatively affect morale, or reflect poorly on your team. It doesn’t matter if you’re 100% right, if you don’t find an effective way to ask the question. The ratio also matters, you don’t want to be the person always throwing bombs.&lt;/p&gt;
+
+&lt;h1 id=&quot;how-to-optimize-for-health-relationships&quot;&gt;How to Optimize for Health Relationships&lt;/h1&gt;
+
+&lt;h2 id=&quot;communicate-with-ruthless-positivity&quot;&gt;Communicate with Ruthless Positivity&lt;/h2&gt;
+
+&lt;p&gt;It’s up to you to radiate the positivity that you would want to see in anyone. Relentlessly assume good intent. Psychological safety is a two-way street; in your interactions with peers and your manager, given them space to feel safe. Tailor your communication to leave the door open for constructive discussion. Take accountability for how you communicate, how it’s perceived by others, and it makes them feel.&lt;/p&gt;
+
+&lt;p&gt;If you find yourself communicating with a sense of frustration or entitlement, take a step back. If you can’t find a way to say something that does not pose a risk to healthy relationships, save it for a one on one with your manager. You might try explicitly labeling it as a “rant”. As always, praise in public, and criticize in private.&lt;/p&gt;
+
+&lt;h2 id=&quot;prioritize-relationships&quot;&gt;Prioritize Relationships&lt;/h2&gt;
+
+&lt;p&gt;How and whether you show up for people affects the relationship. You should make time for regular one on ones with your team, as well as key peer relationships. Communicate that the relationship is important to you by keeping the time on the calendar, and coming engaged with topics to discuss.&lt;/p&gt;
+
+&lt;p&gt;Get to know people on a personal level. Spend the first part of one on ones and smaller meetings asking folks what is going on outside of work. What are they excited about, right now? Smile and laugh with them. Make it genuine. Strong relationships built in the small moments will be what you lean on to get through tough times.&lt;/p&gt;
+
+&lt;p&gt;Don’t underestimate the concentrated power of sharing a meal with someone, in person.&lt;/p&gt;
+
+&lt;h1 id=&quot;more-story-time&quot;&gt;More Story Time&lt;/h1&gt;
+
+&lt;p&gt;Much later in my career, I was fired from a role due to unhealthy relationships. My results were great. My peer, team and direct lead relationships were great. But, I had pissed off my great grand boss, and I didn’t last long after that. There was no warning, and no feedback. I’m not even 100% sure what happened, but I can guess.&lt;/p&gt;
+
+&lt;p&gt;It came down to a refusal to engage my team, when I balked at moving forward with a project that didn’t have a product manager. I had given direct feedback, but my tone was “this is crazy”, “this is unreasonable”, and “YOU need to solve this”. That interaction put me on a knife’s edge. Later, there was a simple misunderstanding, but my credibility with this person was shot. I had burned the relationship, and it was unrecoverable.&lt;/p&gt;
+
+&lt;p&gt;Outside of layoffs, I have more often seen attitude and unhealthy relationships result in termination than actual performance issues. Sometimes you can do enough damage to your internal reputation that it’s impossible to recover. There is no PIP for that.&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2022/11/18/what-are-healthy-relationships.html </link>
+    <pubDate>2022-11-18T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2022/11/18/what-are-healthy-relationships.html</guid>
+   </item>
+  
+   <item>
+    <title>80 Percent is Done</title>
+    <description>&lt;p&gt;It was a meeting with my design and product partners. Just the day before, we had been brainstorming ideas for the strategy for the coming year. In the 24 hours between, I had written up a draft of a strategy. It was more to gather my thoughts than anything else. My design partner smiled, and I worried that maybe I had overstepped. But he wasn’t annoyed or surprised. Instead, he was complimentary. He said, &lt;strong&gt;“I’m always impressed by how quickly you get to an 80% draft, and how you’re OK with sharing that early work”.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s true. In a leadership role, we’re asked over and over again to produce clarity from ambiguity. At every level of an organization, leaders are synthesizing the all the information they have, and outputting new information. Neither the inputs nor the outputs resolve all or even most of the ambiguity. As leaders, we need to be comfortable with both receiving and emitting ambiguity — it’s never going to be perfect.&lt;/p&gt;
+
+&lt;p&gt;In many different situations, both large and small, I practice familiarity and comfort with ambiguity by striving to synthesize information, in writing, aiming to get to 80% fidelity in 20% of the time.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-8020-rule&quot;&gt;The 80/20 Rule&lt;/h1&gt;
+
+&lt;p&gt;This is a form of the Pareto Principle, also known as the 80/20 rule.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The Pareto principle states that for many outcomes, roughly 80% of consequences come from 20% of causes (the “vital few”). Other names for this principle are the 80/20 rule, the law of the vital few, or the principle of factor sparsity. — &lt;a href=&quot;https://en.wikipedia.org/wiki/Pareto_principle&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The principle applies in many contexts. 80% of land is owned by 20% of the people. 80% of sales come from 20% of clients. 80% of bugs come from 20% of the code. &lt;strong&gt;My corollary is that 80% of impact for anything comes from the &lt;em&gt;first&lt;/em&gt; 20% of the work.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In my experience, this is true of all kinds of different work. In the first 20% of a software project’s lifespan, you will get a prototype that is 80% indistinguishable from any form of that product that will ever exist. Maybe this corresponds to the initial MVP of the product, which required one quarter of work.&lt;/p&gt;
+
+&lt;p&gt;For pure information processing, i.e. reading and writing, the first 20% of the time can be as little as one hour.&lt;/p&gt;
+
+&lt;p&gt;Assuming you’re with me so far, a couple of insights follow naturally.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;It rarely makes sense to wait for more information; if you have an hour right now, start synthesizing (writing)&lt;/li&gt;
+  &lt;li&gt;Pass the information on quickly; by holding on to information to “perfect” it, you’re blocking downstream people from 80% of their immediate impact&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Together, these ideas are a powerful way to break through personal procrastination and paralyzation.&lt;/p&gt;
+
+&lt;h1 id=&quot;trust-your-professional-instincts&quot;&gt;Trust Your (Professional) Instincts&lt;/h1&gt;
+
+&lt;p&gt;Learn to think like a consultant. Companies pay consultants to synthesize information, and come up with recommendations. They have very little context in the actual business, maybe 20% of any leader on the inside. They have “business” training and experience — but this is not their primary value. Leaders use consultants to outsource creating clarity from ambiguity. In practice, very often their recommendation is something that the leader has already proposed, but which is now made into a compelling written artifact.&lt;/p&gt;
+
+&lt;p&gt;The 80/20 rule is your permission to resolve this ambiguity yourself. &lt;em&gt;You&lt;/em&gt; can create the written artifact, even without all the information you would like to have. It will be 80% as good as anything anyone could come up with, regardless of time. It’s faster than engaging any consultant.&lt;/p&gt;
+
+&lt;p&gt;This applies no matter what the context is. In my career, I can think of times when I did not trust my own instincts about things like the valuation of a start-up I was thinking of joining, or the fundamental product flaws in something we were building. In all cases, my first take was 80% correct. I’ve learned to not dismiss my own analysis, just because I’m “not an expert”.&lt;/p&gt;
+
+&lt;h1 id=&quot;dont-optimize-for-perfect-information&quot;&gt;Don’t Optimize for Perfect Information&lt;/h1&gt;
+
+&lt;p&gt;When faced with ambiguity (i.e. in every situation, ever), it’s tempting to wait to get all the information you think you need. Even in the best case, you’re making a sub-20% optimization at the cost of time. It’s not worth it. In the worst case, your conclusion will arrive too late to matter.&lt;/p&gt;
+
+&lt;p&gt;There is opportunity cost to waiting for more information, both in terms of other things you could be working to synthesize, and in terms of downstream leaders that you’re depriving of information. In these cases, do the 80% version and then send it out. Done is better than perfect.&lt;/p&gt;
+
+&lt;p&gt;As an added bonus, you often capture some outsized value for getting it done quickly, or being the one to get it done first. In a sea of potential ideas, the ones that take form first will invariably have outsized influence in the formation of the final, coalesced proposal. “Getting there first” is not-too-subtly anchoring the group’s thinking.&lt;/p&gt;
+
+&lt;h1 id=&quot;when-to-go-to-100&quot;&gt;When to Go to 100%?&lt;/h1&gt;
+
+&lt;p&gt;When does it make sense to continue to put effort into something past 80%? Maybe never. But, sometimes the goal posts move significantly. What was an 80% solution in a fixed space is now just part of a solution in a much, much larger space. What you can do is sprint to an 80% solution in the new problem space. It may take as little as an hour.&lt;/p&gt;
+
+&lt;p&gt;This may all sound like half-assing your way through everything. But, it’s actually very hard to send partially baked ideas out to your colleagues. It’s hard to take many different signals and synthesize them down into something coherent. Writing well is hard. Don’t confuse the number of minutes something takes with difficulty.&lt;/p&gt;
+
+&lt;p&gt;In high school and college, I used to feel guilty about doing this. If I wasn’t always pushing to 100% effort, was I wasting my potential? Eventually, I came to two realizations. First, I never fully stopped thinking about any problem that was still in progress. Even if the 20% effort had not started yet, I was invariably thinking about the problem in the background, whether it was while walking to class, eating, or taking a shower. That effort count too — especially in salaried employment, we’re never really not working.&lt;/p&gt;
+
+&lt;p&gt;Secondly, sprinting to 80% of the impact means you can then get started on the next thing. Now, I relish the prospect of checking off an item on my list at 80%, and looking down to see what I get started next.&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2022/10/21/80-percent-is-done.html </link>
+    <pubDate>2022-10-21T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2022/10/21/80-percent-is-done.html</guid>
+   </item>
+  
+   <item>
+    <title>Setting Direction: Create a Strategy</title>
+    <description>&lt;p&gt;What is strategy, versus vision or mission? Is a business goal a strategy? It’s hard to tell whether a strategy will be successful, up front. When you’re creating a strategy, it can seem impossible to achieve. In retrospect, a good strategy seems like it was obvious, even though it was anything but.&lt;/p&gt;
+
+&lt;p&gt;In this post, I’m going to use the rough outline of a case study, to root the conversation. Because this is such a well know case study, the strategy may seem obvious in retrospect. Having been alive and following this company during this period, I can attest to the fact that it was &lt;em&gt;not&lt;/em&gt; obvious what the strategy should be, or that it would be successful.&lt;/p&gt;
+
+&lt;h1 id=&quot;case-study-apple-in-1997&quot;&gt;Case Study: Apple in 1997&lt;/h1&gt;
+
+&lt;p&gt;In 1997, Apple was on the brink of bankruptcy – in fact they had about &lt;a href=&quot;https://www.nytimes.com/2018/08/02/technology/apple-stock-1-trillion-market-cap.html&quot;&gt;90 days of runway&lt;/a&gt; left. Expenses were high, revenue was flagging, and market share was down. These trailing indicators were not the &lt;em&gt;reason&lt;/em&gt; the company was under-performing, though. Steve Jobs came back, and had to decide how to turn the company around, starting with diagnosing &lt;em&gt;why&lt;/em&gt; the company was under-performing.&lt;/p&gt;
+
+&lt;p&gt;Jobs’ diagnosis was that the &lt;a href=&quot;https://www.macrumors.com/2011/09/19/steve-jobs-apple-almost-went-bankrupt-because-it-failed-to-innovate/&quot;&gt;company had stopped innovating&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When I left Apple ten years ago, we were ten years ahead of anybody else. It took Microsoft ten years to copy Windows. The problem was that Apple stood still. Even though it invested cumulatively billions in R&amp;amp;D, the output has not been there. People have caught up with it, and its differentiation has eroded, in particular with respect to Microsoft. And so the way out for Apple – and I think Apple still has a future; there are some awfully good people there and there is tremendous brand loyalty to that company – I think the way out is not to slash and burn, it’s to innovate. That’s how Apple got to its glory, and that’s how Apple could return to it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This seems obvious, in retrospect. It’s also deceptively simple – who does not want to be innovative? It &lt;em&gt;is&lt;/em&gt; simple, but it’s not easy. How did Apple under Jobs (again) turn this diagnosis into a strategy, and how did they execute on it?&lt;/p&gt;
+
+&lt;p&gt;I’m going to borrow a strategy format from &lt;a href=&quot;https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239&quot;&gt;Good Strategy Bad Strategy: The Difference and Why It Matters&lt;/a&gt; by Richard Rumelt, to illustrate.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Apple Strategy 1997
+
+Our primary business challenge is that was are failing to 
+innovate. Microsoft has caught up with MacOS, while we have 
+been standing still. We need to leverage our excellent people, 
+and our brand loyalty, and innovate our way back to 
+differentiated products. 
+
+Our current market share in personal computing is 3.8%, down 
+from 10% just 5 years ago. 
+
+Guiding Principles:
+1. Focus our efforts on fewer things
+2. Exploit our design and engineer excellence by creating 
+delightful products 
+3. Exploit our brand loyalty by focusing on high margins 
+
+Actions:
+1. Cut our workforce by 30% to increase cashflow 
+2. Cut current product roadmap by 70% to focus resources 
+on a few innovative investments 
+3. Buy NeXT to be the foundation of an innovating 
+next-generation operating system 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the following years, Apple released the G3 Mac (1998), which had a radically delightful design aesthetic. It was a hit with the market. It released the iPod (2001), which was the first product in the category to be successful, due to a combination of excellent design and brand loyalty. Apple also released Mac OSX (2001), a technically innovative and aesthetically beautiful operating system. None of these product decisions were obvious at the time, but together they comprised a series of market hits that continued though the iPhone (2007), and turned the company around. Apple was successful because they focused, and they executed.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-is-strategy&quot;&gt;What is Strategy?&lt;/h1&gt;
+
+&lt;p&gt;Let’s break down this strategy, using the format in the Rumelt book. The hypothetical Apple strategy is a short, written document that diagnosis the problem, defines how the company will focus efforts, and contains specific actions. This matches Rumelt’s definition of a good strategy:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The kernel of a strategy contains three elements: a diagnosis, a guiding policy, and coherent action. – &lt;a href=&quot;https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239&quot;&gt;Good Strategy Bad Strategy: The Difference and Why It Matters&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1&gt;&lt;img src=&quot;/blog/images/strategy1.png&quot; alt=&quot;&quot; /&gt;&lt;/h1&gt;
+
+&lt;p&gt;The hard parts are making the &lt;em&gt;correct&lt;/em&gt; diagnosis, making the difficult decisions to focus and then actually executing successfully. I love this format because it’s prescriptive about what a good strategy looks like. It allows you to get to the heart of the actual strategy work immediately.&lt;/p&gt;
+
+&lt;h2 id=&quot;diagnosis&quot;&gt;Diagnosis&lt;/h2&gt;
+
+&lt;p&gt;Steve Jobs’ diagnosis was that the company has failed to innovate. That did prove to be a decisive challenge to the business, that once solved, did lead to success. That’s not to say that it was the &lt;em&gt;only&lt;/em&gt; strategy that would have been successful. This diagnosis is a good example of what Rumelt calls a key insight.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The first step of making strategy real is figuring out the big ‘aha’ to gain sustainable competitive advantage—in other words, a significant, meaningful insight about how to win.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The book tackles strategy at the company level. The diagnosis should identify the most decisive challenge to the business, and also the cause of the challenge. It’s OK if the challenge is written in terms of the business, and not as a user problem. The diagnosis simplifies the problem space down to one critical factor.&lt;/p&gt;
+
+&lt;p&gt;There is no silver bullet to coming up with the right diagnosis. You might start by asking “five whys” about a few important business problems. Perhaps they will lead back to the same root issue. But in the end, picking correctly requires an intuitive leap.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;At the core, strategy is about focus, and most complex organizations don’t focus their resources. Instead, they pursue multiple goals at once, not concentrating enough resources to achieve a breakthrough in any of them.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;At the company level, there should be one diagnosis, not many. The ideal strategy focuses resources on a small set of actions, and those actions exploit a strength, or take advantage of a weakness.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Many bad strategies are just statements of desire rather than plans for overcoming obstacles.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You should gather data and see if it backs up the diagnosis. What is a single piece of data that makes the most compelling case for the diagnosis?&lt;/p&gt;
+
+&lt;p&gt;Don’t be tempted to use the data to set a goal at this stage; a goal itself is not a strategy.  The diagnosis should not read like a wish, or a hope.&lt;/p&gt;
+
+&lt;p&gt;Finally, the diagnosis needs to tell how the challenge will be overcome.&lt;/p&gt;
+
+&lt;h2 id=&quot;guiding-principles&quot;&gt;Guiding Principles&lt;/h2&gt;
+
+&lt;p&gt;Apple decided to focus on fewer things, and leverage some key strengths versus the competition. Focus itself may not need to be stated – focus is assumed as part of Rumelt’s definition of a good strategy.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Good strategy requires leaders who are willing and able to say no to a wide variety of actions and interests. Strategy is at least as much about what an organization does not do as it is about what it does.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Guiding principles inform how the business will make trade-offs. How will you choose between different actions? This helps make sure that the actions are coherent, together. It also allows the decision making to scale across the organization. Guiding principles are a good opportunity to maximize existing strengths.&lt;/p&gt;
+
+&lt;h2 id=&quot;actions&quot;&gt;Actions&lt;/h2&gt;
+
+&lt;p&gt;Apple took concrete action, some of them, like layoffs, being quite difficult. The actions were coherent with each other; they all followed a theme, and were mutually reinforcing.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A good strategy includes a set of coherent actions. They are not “implementation” details; they are the punch in the strategy. A strategy that fails to define a variety of plausible and feasible immediate actions is missing a critical component.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Actions need to be both specific and achievable. It’s notable that the actions were &lt;em&gt;not&lt;/em&gt; building the G3, the iPod, and OSX. That would be far too specific. These specific products were likely not envisioned for a year or two after the strategy was defined. However, you can imagine individual teams at Apple, like the desktop Mac hardware team, coming out of layoffs with a mandate to create innovative desktop computers, leveraging Apple’s design aesthetic strengths. This is how strategy flows down across the company.&lt;/p&gt;
+
+&lt;h1 id=&quot;multiple-levels-make-it-a-team-sport&quot;&gt;Multiple Levels: Make it a team sport&lt;/h1&gt;
+
+&lt;p&gt;The book is short on this topic. By focusing on company level strategy, it fails to address how strategy is distributed. Indeed, one of the main points is that company strategy should have a singular focus. At the same time, a large company will in fact do many things at once. It doesn’t actually make sense to focus 100% of a company on one thing. In the best case, this looks like local strategies that align to the company strategy, and being prescriptive without being specific about what bets the teams in the company should make.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Strategies focus resources, energy, and attention on some objectives rather than others. Unless collective ruin is imminent, a change in strategy will make some people worse off. Hence, there will be powerful forces opposed to almost any change in strategy. This is the fate of many strategy initiatives in large organizations.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Depending on whether the customer of the sub organization is internal or external, it starts to make more sense to phrase the local diagnosis in terms of the customer. In this way, each organization and sub-organization can have their own strategy that aligns to the company strategy. At the team level, the actions are going to be much more concrete than at the company level.&lt;/p&gt;
+
+&lt;p&gt;There are times of year that are naturally more strategy focused. But setting strategy is something you should be doing all the time, as a leader of an organization. Instead of thinking about it like a once-a-year waterfall process, think about it more like cyclical continuous refinement.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-is-the-difference-between-strategy-and-vision&quot;&gt;What is the difference between strategy and vision?&lt;/h1&gt;
+
+&lt;p&gt;There is a lot of stuff that comes &lt;em&gt;after&lt;/em&gt; the strategy. It’s common to refresh strategy yearly, and then do headcount planning and potentially reorganize teams. That’s a complex topic, on its own. Strategy is sometimes conflated with vision and mission, although they are actually separate. Roadmap planning in another common follow-on from strategy work.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Despite the roar of voices wanting to equate strategy with ambition, leadership, “vision,” planning, or the economic logic of competition, strategy is none of these. The core of strategy work is always the same: discovering the critical factors in a situation and designing a way of coordinating and focusing actions to deal with those factors.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Strategy is upwards facing. It’s about making a compelling case to your leadership that you have a plan which will lead to business success. For an executive, the leadership audience is the board of directors. For a director, it’s the executives, etc. Strategy also encompasses work from many teams, either an entire company, or an entire sub organization.&lt;/p&gt;
+
+&lt;p&gt;Vision is downwards facing. It’s about making a compelling case to the teams and individuals that they should be excited about the work. It’s about inspiring builders and creative workers. It’s about connecting the work to the user. The audience can be a single team.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/blog/2022/02/14/define-a-vision.html&quot;&gt;Defining a vision&lt;/a&gt; should be done after creating a strategy, for the simple reason that strategy informs what to focus on. It’s true that you can’t make sure a strategy is achievable without concrete actions, and eventually estimates. But, the greater risk is defining a vision and roadmap that do not address the critical business challenge. After creating a strategy and defining a vision, the next step is to start &lt;a href=&quot;/blog/2017/08/28/epic-story-estimation.html&quot;&gt;building a roadmap with high level estimates&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;example-template&quot;&gt;Example Template&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A hallmark of true expertise and insight is making a complex subject understandable. A hallmark of mediocrity and bad strategy is unnecessary complexity—a flurry of fluff masking an absence of substance.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[NAME] Strategy [YEAR]
+
+[LINK TO PARENT STRATEGY]
+
+Out primary business challenge is [THREE SENTENCES]
+
+[BACK IT UP WITH DATA]
+
+Guiding Principles:
+1. Exploit our [STRENGTH] by [DOING X] instead of [DOING Y]
+2. Exploit our [STRENGTH] by [DOING X] instead of [DOING Y]
+3. Exploit our [STRENGTH] by [DOING X] instead of [DOING Y]
+
+Actions:
+1. [THREE SENTENCES] [ACHIEVABLE GOAL]
+2. [THREE SENTENCES] [ACHIEVABLE GOAL]
+3. [THREE SENTENCES] [ACHIEVABLE GOAL]
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The key stages in drafting a strategy are all around feedback. First, get feedback from your peers. You all need to be on the same page about the primary business challenge, and the most important actions. At every review, you want to answer the question, “would I fund this initiative”?&lt;/p&gt;
+
+&lt;p&gt;Then, get feedback from your leadership team. Ask the to be brutal. Get feedback both 1:1 ahead of time, and in a group setting. Plan to do multiple rounds of edits. Ask how this relates to other strategies.&lt;/p&gt;
+
+&lt;p&gt;Finally, incorporate feedback from your organization itself. This often looks like the addition of actions that line up to the strategy. There is a danger in both communicating the strategy before you have upwards alignment, and also waiting until the strategy is locked to ask for additional actions. You need to find a balance. Give teams permission to go off and create their own strategies that line up to this.&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2022/09/27/create-a-strategy.html </link>
+    <pubDate>2022-09-27T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2022/09/27/create-a-strategy.html</guid>
+   </item>
+  
+   <item>
+    <title>How to Run a Zoom All Hands</title>
+    <description>&lt;p&gt;All Hands are a key tool for communicating big points, giving the audience the best chance to hear and internalize those ideas, and creating transparency. The ideal All Hands also generates enthusiasm, though this is easier said than done with Zoom. If you’re a leader of an organization, you should plan on doing an All Hands roughly once a quarter.&lt;/p&gt;
+
+&lt;h1 id=&quot;initial-setup&quot;&gt;Initial Setup&lt;/h1&gt;
+
+&lt;p&gt;Before doing anything else, lock down a date and time, and put it on the calendar. An All Hands has so many attendees, that you probably will not be able to find a time when everyone is free. Instead, make sure you’re clear of key conflicts like an all-team offsite, and otherwise let attendees schedule around you. Putting a date on the calendar 2-3 weeks ahead of time is also a good forcing function for actually nailing down an agenda, versus procrastinating.&lt;/p&gt;
+
+&lt;p&gt;As part of the calendar item, create the Zoom link. You should configure the Zoom meeting ahead of time to enable cloud recording, close captions, alternative hosts, and mute-by-default.&lt;/p&gt;
+
+&lt;p&gt;You can also add an optional Questions &amp;amp; Answers (Q&amp;amp;A) link to the calendar item. This could be just an empty doc, an anonymous Google Form, or you may have a fancy vendor tool for Q&amp;amp;A. Allowing people time to submit questions ahead of time generates more questions, and also gives you a chance to polish some of your answers.&lt;/p&gt;
+
+&lt;p&gt;Some people do not read every meeting invitation that flies by. In addition to sending the calendar item, you should also announce the All Hands over Slack, or email.&lt;/p&gt;
+
+&lt;h1 id=&quot;slides&quot;&gt;Slides&lt;/h1&gt;
+
+&lt;p&gt;You can use any software for this, as long as all presenters can access and edit the document. You should avoid switching between different software during the presentation, if at all possible. Look for a recently updated template for presentations at your company, and start with that. Add your co-presenters to the document right when you create it. Flesh out a basic agenda with empty slides, and go from there.&lt;/p&gt;
+
+&lt;p&gt;Once you have a rough draft you’re happy with, you should share the document with a subset of the leads from the org. This can help catch any mistakes in the content, and also gives you some heads up on likely reactions and feedback from the org.&lt;/p&gt;
+
+&lt;h2 id=&quot;self-serve-links&quot;&gt;Self-Serve Links&lt;/h2&gt;
+
+&lt;p&gt;Your first slides are probably going to be an intro slide that shows while people are still joining the Zoom and the agenda slide for the All Hands. You should also include an easy-to-type URL for the presentation itself, right on the screen. Attendees should be able to join the Zoom, and type in the URL for the document, if they want to follow along. This doubles as a way to access the presentation, later. You should also include this URL on the last slide. Individual slides can also have their own easy-to-type URLs, where appropriate.&lt;/p&gt;
+
+&lt;h2 id=&quot;slide-show&quot;&gt;Slide Show&lt;/h2&gt;
+
+&lt;p&gt;For the intro slide, I like to create a slideshow of recent team photos and pair it with some energizing music. Seeing themselves is a great way to get people engaged. An easy way to create this slideshow is to ask the entire team for photos up front, then use the &lt;a href=&quot;https://support.apple.com/guide/photos/create-slideshows-phtae8c6d40/mac&quot;&gt;Apple Photos slideshow feature&lt;/a&gt; to export a video file and embed it into the presentation document. If the video is relatively short, consider looping it and not embedding the music audio. Instead, you can play audio separately from Apple Music, or similar. Either way, you need to check off the box to “share computer audio” in Zoom, when you share your screen.&lt;/p&gt;
+
+&lt;h1 id=&quot;agenda&quot;&gt;Agenda&lt;/h1&gt;
+
+&lt;p&gt;For the agenda slide, a simple bulleted list of 4-5 topics will suffice. Typical agenda items include an ice breaker, new people who have joined the org, a reminder of the org mission, recent wins, and upcoming initiatives, and Q&amp;amp;A. An hour is a good amount of time to plan for an All Hands, with one-third of the time for Q&amp;amp;A — so plan for 40 minutes of content.&lt;/p&gt;
+
+&lt;h2 id=&quot;ice-breaker&quot;&gt;Ice Breaker&lt;/h2&gt;
+
+&lt;p&gt;You want to maximize the opportunity to get people engaged, right at the start. Nothing is engaging as participation. The easiest ice breaker for a large group is to use Zoom breakout rooms, and give people a prompt of something to talk about. Five people for five minutes is a good rule of thumb.&lt;/p&gt;
+
+&lt;p&gt;Easy conversation prompts:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;What did you have for dinner last night?&lt;/li&gt;
+  &lt;li&gt;What movie did you recently watch?&lt;/li&gt;
+  &lt;li&gt;What’s one surprising thing you learned recently?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Another easy ice breaker is to prompt people to share a recent photo from their phone, in Slack. There are also web apps that are specifically for ice breakers, like &lt;a href=&quot;https://gatheround.com/&quot;&gt;gatheround.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;new-faces&quot;&gt;New Faces&lt;/h2&gt;
+
+&lt;p&gt;Shouting out to new folks who joined the team is also a good way to get people engaged. Plus, it lets you highlight that the team is growing. This is one slide that you want to crowdsource, to make sure you don’t miss anyone. You should include new hires, anyone who has recently transferred onto the team, and any new cross-functional partners.&lt;/p&gt;
+
+&lt;p&gt;If one of the new faces is a leader for the organization, consider having a dedicated slide for them, and a few minutes set aside for them to introduce themselves.&lt;/p&gt;
+
+&lt;h2 id=&quot;mission&quot;&gt;Mission&lt;/h2&gt;
+
+&lt;p&gt;Key messages should be repeated over and over again so that everyone can internalize them. Having one slide here with the mission statement for your organization is one way to make sure everyone stays aligned.&lt;/p&gt;
+
+&lt;h2 id=&quot;org-chart&quot;&gt;Org Chart&lt;/h2&gt;
+
+&lt;p&gt;As a follow-on from the mission, a simple slide with “this is us” and “this is where we fit into the larger organization” can help orient new people.&lt;/p&gt;
+
+&lt;h2 id=&quot;recent-wins&quot;&gt;Recent Wins&lt;/h2&gt;
+
+&lt;p&gt;You should recap any big wins that have occurred since your last All Hands. These can be launches with business impact, new learnings, or social events that happened inside the org. A quick demo of a new product experience can be a good use of five minutes. In all cases, try to have the individual in org who led the effort present the win themselves. Make sure that the credit for each win goes to the right individuals and teams.&lt;/p&gt;
+
+&lt;h2 id=&quot;upcoming-initiatives&quot;&gt;Upcoming Initiatives&lt;/h2&gt;
+
+&lt;p&gt;This can cover any other things that are happening, which everyone should know about. Maybe you had a great Hack Week, or you just started doing org-wide demos, or off-sites. Again, have the individuals most responsible for the work speak to it.&lt;/p&gt;
+
+&lt;h2 id=&quot;product--strategy&quot;&gt;Product &amp;amp; Strategy&lt;/h2&gt;
+
+&lt;p&gt;All Hands are a great time to introduce anything new that everyone needs to be on the same page about. You should include any large product efforts coming up, or any changes to org strategy. If you have visuals, include those.&lt;/p&gt;
+
+&lt;p&gt;This can also be a good section to include a Zoom poll. Ask people before and after this section whether they understand the product strategy of the org. Usually, you will see an improvement. In any case, it’s a good way to keep people engaged.&lt;/p&gt;
+
+&lt;h2 id=&quot;swag&quot;&gt;Swag&lt;/h2&gt;
+
+&lt;p&gt;If you’re going to give away some company-branded merchandise, All Hands are a great time. Reward people who showed up and stuck around until the end of the presentation. This can look like a Google form where people sign up for the specific swag that they want, and enter their mailing address if needed.&lt;/p&gt;
+
+&lt;h2 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h2&gt;
+
+&lt;p&gt;This section is often the most valuable part of the All Hands. If you put out a call for questions ahead of time, start with those. But also take live questions from the audience. If you don’t have pre-submitted questions, you may want to “plant” a question asker in the audience, to get the ball rolling. Often people are hesitant to be the first one to ask a question. If all else fails, you can always “ask yourself” a question.&lt;/p&gt;
+
+&lt;p&gt;Make sure to set aside a lot of time for Q&amp;amp;A. It’s frustrating as an audience member when the regular presentation time runs over, and time for Q&amp;amp;A is short. A good rule of thumb for a one-hour All Hands is 40 minutes of content, and 20 minutes of Q&amp;amp;A. You should practice presenting your content as a group, to check whether it’s less than 40 minutes.&lt;/p&gt;
+
+&lt;h1 id=&quot;avoiding-technical-difficulties&quot;&gt;Avoiding Technical Difficulties&lt;/h1&gt;
+
+&lt;p&gt;You have probably been in All Hands where the presenters could not get their audio/video working, control the slides properly, play a video, etc. It’s harder than you think! What you don’t want to be doing is debugging any technical difficulties with a live audience.&lt;/p&gt;
+
+&lt;p&gt;You should schedule a dry run with all the presenters. Book this ahead of time to be immediately before the actual All Hands. This lets all the presenters use the same laptop and Zoom ID that they will use for the real deal. It also makes sure that none of the presenters are late to the All Hands, due to a prior meeting running over. Don’t skip the dry run! Even if you’ve done a thousand All Hands, I promise this will catch some snafu.&lt;/p&gt;
+
+&lt;p&gt;During the dry run, test that the actual Zoom ID for the All Hands is working. Sometimes these get deactivated, potentially if the owner of the Zoom or the calendar item has changed. Make sure all the presenters can join, and toggle their audio and video.&lt;/p&gt;
+
+&lt;p&gt;Plan to have all presenters join from their laptops. Don’t attempt to mix presenters on laptops with a conference room A/V setup — this is asking for disaster! Conference rooms, conference room cameras/mics, and specifically jacking a laptop via a cable into a projector are the primary sources of technical difficulties. People should use the tools they are most familiar with. Plus, if any attendee is on Zoom, having all the presenters be on Zoom is the most inclusive option.&lt;/p&gt;
+
+&lt;p&gt;During the dry run, decide whether you are going to have one person drive the slides, or whether you are going to pass around control during the presentation. I have yet to see either the Google Slide feature or the Zoom feature for this work. Even if it works — presenters usually get confused and mess it up. The safest option is to have one person drive, and use audio cues like “next slide please”. It’s not a big deal — the audience is used to it. The most important thing is not to get flustered.&lt;/p&gt;
+
+&lt;p&gt;To share the actual presentation, enable slideshow/presenter mode in the software, and use regular Zoom screen sharing. Keep in mind that if your presentation is full screen for you, you will not be able to see Slack/Zoom chat, etc. Having a second monitor is a good solution. Otherwise, you can share a dedicated browser window (remove the other tabs).&lt;/p&gt;
+
+&lt;p&gt;Right before the All Hands starts, remind folks in Slack that it’s about to begin.&lt;/p&gt;
+
+&lt;h1 id=&quot;presenting&quot;&gt;Presenting&lt;/h1&gt;
+
+&lt;p&gt;Hopefully, you’re relatively good at this, already. The most important things are to speak loudly and clearly and to be enthusiastic. Trust the content that you’ve put into slides to tell the story — don’t feel like you need to read each bullet point.&lt;/p&gt;
+
+&lt;p&gt;Enthusiasm is so important, that you should tailor your slides for it. Put something ridiculous on a slide, if it’s going to make you as the presenter smile. Jazz up the wording of a bullet point so that you’ll have an impish grin on your face when you say it. In general, have less text on the screen than you think you need, and also say less, and speak slower.&lt;/p&gt;
+
+&lt;p&gt;When you’re not presenting, give your co-presenters a boost by dropping encouraging emojis into Slack, or using Zoom reactions.&lt;/p&gt;
+
+&lt;h1 id=&quot;afterward&quot;&gt;Afterward&lt;/h1&gt;
+
+&lt;p&gt;Remember to send the presentation out to all attendees after the All Hands, along with a video of the Zoom. So many people forget to do this! Try setting a reminder for yourself ahead of time, so that you don’t forget.&lt;/p&gt;
+
+&lt;p&gt;If you promised to follow up on something, or answer a question, make sure to do it.&lt;/p&gt;
+
+&lt;h1 id=&quot;all-hands-checklist-&quot;&gt;All Hands Checklist 💯&lt;/h1&gt;
+
+&lt;p&gt;Here is a quick checklist for planning an All Hands, to make sure you don’t forget anything.&lt;/p&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Calendar item created for All Hands&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Calendar item created for dry run immediately before the All Hands&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Calendar item has Zoom ID&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Zoom has recording enabled&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Zoom recording is set to “cloud”, not “local”&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Zoom has close captioning enabled&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Zoom has mute by default enabled&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Zoom has alternative hosts set&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Calendar item has Q&amp;amp;A link&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Announce the All Hands a week ahead of time via email/Slack&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Set a reminder to send out the video recording after the All Hands&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Request for team photos for the intro slideshow sent&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Find an up-to-date template for presentation decks&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Deck created&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Deck shared with presenters (can just be an empty draft)&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Deck has an easy-to-type link to itself on the first + last slide&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Create an intro slideshow + pick an intro music track&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Pick an icebreaker&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Crowd-source “new faces” slide for the deck&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Share deck with key org members for feedback&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Dry run: test Zoom ID&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Dry run: have presenters join individually from their laptops&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Dry run: test sharing the intro video + music&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Dry run: test switching presenters&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Send out a reminder announcement just before the All Hands starts&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;After: send out a link to the deck + video recording&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;After: send separate communication for any big announcements, don’t assume everyone saw All Hands&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <link>https://chase-seibert.github.io/2022/07/22/how-to-run-a-zoom-all-hands.html </link>
+    <pubDate>2022-07-22T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2022/07/22/how-to-run-a-zoom-all-hands.html</guid>
+   </item>
+  
+   <item>
+    <title>How I use OmniFocus Get Things Done</title>
+    <description>&lt;p&gt;&lt;em&gt;Updated June, 2022.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Getting_Things_Done&quot;&gt;Getting Things Done&lt;/a&gt; is a personal organizational system for 
+keeping track of todo items, or tasks. Being a manager can mean being bombarded by asks, notes, ideas and action items
+all day. Not to mention emails, Slack messages, and even in-person requests. Sometimes, you have a great idea during a
+1:1, while walking the dog, or even taking a shower.&lt;/p&gt;
+
+&lt;p&gt;This could be overwhelming. Say you’re still thinking about that thing your boss said to you in a 1:1, and whether you
+need to take an action on it, and you get an emergency Slack from a direct report. How are you going to remember the 
+thing from your boss? How are you going to be &lt;em&gt;sure&lt;/em&gt; you remember, and take action if needed?&lt;/p&gt;
+
+&lt;p&gt;That’s the real power of Getting Things Done. With GTD, you capture the ideas and asks as soon as you hear them. The 
+real power of GTD is in helping you focus, and giving you “permission to forget” (for the moment). If you trust your
+system, you can be confident that if you capture it, you will take action on it. Paired with a daily practice of 
+process the “inbox” of captured tasks, and heads-down time to actually do some of these tasks, nothing will ever 
+slip through the cracks again.&lt;/p&gt;
+
+&lt;p&gt;For more on the theory of GTD, I recommend starting by reading the classic &lt;a href=&quot;http://gettingthingsdone.com/&quot;&gt;GTD book&lt;/a&gt;. 
+It’s 20 years old, but just as relevant today. The book was originally written for a pen and paper capture system,
+but here is one way to translate it to modern digital tools.&lt;/p&gt;
+
+&lt;h2 id=&quot;daily-inbox-processing-in-omnifocus&quot;&gt;Daily Inbox Processing in OmniFocus&lt;/h2&gt;
+
+&lt;p&gt;Personally, I use &lt;a href=&quot;https://www.omnigroup.com/omnifocus&quot;&gt;OmniFocus&lt;/a&gt; as my GTD tool. I prefer open source or free tools when possible, but this is one purchase that’s worth every penny. You can also expense it to work.&lt;/p&gt;
+
+&lt;p&gt;Here is an example combined daily inbox processing and truncated heads-down working session processing tasks. 
+&lt;a href=&quot;https://youtu.be/VT3r0OLRtSo&quot;&gt;https://youtu.be/VT3r0OLRtSo&lt;/a&gt;&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/VT3r0OLRtSo&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&quot;how-to-capture-tasks-in-omnifocus&quot;&gt;How to Capture Tasks in OmniFocus&lt;/h2&gt;
+
+&lt;p&gt;I enter tasks in my inbox whenever I think of them. This is most often during a 1:1 or meeting. I used to feel
+slightly self-conscious about taking notes like this while in the middle of talking to someone, but I did it 
+anyway. Otherwise, I would forget! These days, the meeting is often over Zoom anyway, and it feels more natural.&lt;/p&gt;
+
+&lt;p&gt;Just as often I’m capturing ideas on my phone, or totally outside work. One of the things I love about OmniFocus
+is that it’s so quick to capture ideas – there are no unnecessary steps or buttons, and no lag. I even have a 
+Shortcut set up so I can ask Siri to “add something to my work todo list” from my watch.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/omnifocus_add.png&quot; alt=&quot;omnifocus add&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once I’ve quickly captured the task or idea, that’s it. I give my attention back to something or someone else. 
+The following morning is usually the next time I will look at any given item. I typically process my inbox first 
+thing in the morning. If something will take less than two minutes, I do it right then. Otherwise, I assign it 
+to a project. If the task has a natural due date, I also schedule it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/omnifocus_inbox.png&quot; alt=&quot;inbox&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;During the day, in between meetings or during free time, I start completing items and checking them off. But that’s
+a nice-to-have. What is absolutely required is heads-down time to do real work. That’s when the bulk of the tasks
+on my list actually get completed. For me, it’s about 90 minutes a day, ideally in one big chunk. I block this off 
+on my calendar so that it’s free every day, and I defend that time aggressively.&lt;/p&gt;
+
+&lt;p&gt;You can organize tasks into projects, favorite them, and even use tags. The logistics are not important, my 
+personal organization tends to evolve over time. Completing a tasks often involves work like sending an email, 
+writing a doc, or talking to someone over Slack about a decision. But it can also be something simple like adding
+an item to the agenda for an upcoming 1:1, or meeting.&lt;/p&gt;
+
+&lt;p&gt;The last major piece of the system is the weekly review. For me, this is 30 minutes once a week. I look at all
+my projects, and brainstorm whether there are more actions in the form of tasks to add. This is also when I tend
+to realize that a project may be stuck, or actually isn’t that important anymore. For me, this time is usually the last
+thing on my calendar for the week.&lt;/p&gt;
+
+&lt;h2 id=&quot;recurring-task-hacks&quot;&gt;Recurring Task Hacks&lt;/h2&gt;
+
+&lt;p&gt;I make extensive use of recurring tasks. These as tasks that once you “complete” them, they spawn an identical 
+task at some configurable time in the future. I have a “Daily” project with a few of these tasks, such as 
+processing my inbox, or updating the agenda for the meetings coming up tomorrow.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/omnifocus_repeat.png&quot; alt=&quot;omnifocus_repeat&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I also use these repeating tasks as a “super power”, to very reliably execute small tasks consistently, over time.
+This is a type of work that many people are not capable of doing, at least over a long period of time. Without
+a very good system, there is a tendency to forget or get distracted by other things. With my system, I know I will
+keep doing something reliably, until I decide it’s no longer a priority. I’ve used this for things like doing a
+regular talent review for my area every 3 months, or keeping the headcount tracker up to date.&lt;/p&gt;
+
+&lt;p&gt;I’ve also used this system try to push small culture wins over time, almost imperceptibly. For example, I might 
+post to Slack every week something I’m excited about, or want to celebrate. Most people can do this once, or a 
+few times. I can do it every week for a year or more, no problem.&lt;/p&gt;
+
+&lt;p&gt;Finally, I’ve used recurring tasks to hack myself. If there is something I’m trying to learn to do better, or 
+just a mind shift I want to make, I often elevate it temporarily to a daily task. For example, at times I’ve had
+daily tasks that said “Smile more”, and “Remember to think about how other people feel”.&lt;/p&gt;
+
+&lt;h2 id=&quot;its-ok-to-delete&quot;&gt;It’s OK to Delete&lt;/h2&gt;
+
+&lt;p&gt;I capture everything. Even things that end up not being good idea, or are not actionable. Maybe it’s decent idea,
+it’s just not a high priority. Over time, I’ve developed confidence to delete these items. Whether it’s a project 
+that’s been languishing in my backlog for weeks with no actionable work, or a task that I’ve been procrastinating 
+on, almost 50% of the items I enter get deleted, not completed. What I’ve realized is that 
+these are not important. By virtue of not rising above other tasks or projects, over time they have settled into&lt;br /&gt;
+their naturally low priority spot. Often they are completed simply by telling someone else you’re not going to do
+them, after all.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-magic-is-the-practice&quot;&gt;The Magic is the Practice&lt;/h2&gt;
+
+&lt;p&gt;The practice of having a dedicated time to process your inbox is the key to GTD. 
+The magic happens when you start to trust that if you capture something, it will get done.
+For work to happen, you still need dedicated heads-down time. That time is precious – you 
+owe it to yourself to have a system that makes the best use of it.&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2022/06/06/how-i-get-things-done-with-omnifocus.html </link>
+    <pubDate>2022-06-06T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2022/06/06/how-i-get-things-done-with-omnifocus.html</guid>
+   </item>
+  
+   <item>
+    <title>How to run a Retrospective</title>
+    <description>&lt;p&gt;A retrospective is a team meeting following a sprint, a quarter, or a specific project. The team talks about what went well, what didn’t go well, and what they could do better. Everyone has a chance to voice their ideas on how to improve the team. Over time, the team builds a set
+of best practices that they truly feel ownership over. You may even surface some feedback that
+you never would save seen, otherwise.&lt;/p&gt;
+
+&lt;p&gt;As an engineering manager, my teams always did retrospectives every two weeks, at the end of a sprint. I’ve probably been in something like 250 retrospectives, and I’ve run about 80% of those. Running a retrospective is easy. If you’re looking to get started as a facilitator, this blog post should get you up and running quickly.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Note: the manager’s role in a retrospective is to facilitate the conversation, not steer it. You want to be cautious about offering your own ideas. Besides facilitating, the most useful thing you can do is make sure the action items get completed.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;basic-retrospective-format&quot;&gt;Basic Retrospective Format&lt;/h1&gt;
+
+&lt;p&gt;Your first job as a facilitator is to create psychological safety. I like to include this quote in the agenda doc, or on the calendar item itself.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Regardless of what we discover, we understand and truly believe that everyone did the best job they could, given what they knew at the time, their skills and abilities, the resources available, and the situation at hand.”
+– &lt;a href=&quot;http://retrospectivewiki.org/index.php?title=The_Prime_Directive&quot;&gt;Norm Kerth, Project Retrospectives: A Handbook for Team Review&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The most common retrospective format is brainstorming, voting, discussion, and action items. Here is a sample agenda for a 60 minute team retrospective:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Give the team a prompt, for example “How could we be moving faster?”. Write the categories Start, Stop, and Continue on the whiteboard.&lt;/li&gt;
+  &lt;li&gt;Silent brainstorming, team members write ideas down on sticky notes (10 minutes)&lt;/li&gt;
+  &lt;li&gt;Team members take turns putting their stickies on the whiteboard, quickly summarizing each one (10 minutes)&lt;/li&gt;
+  &lt;li&gt;Silent grouping into themes, for example “Testing” (5 minutes)&lt;/li&gt;
+  &lt;li&gt;Voting on top themes, everyone gets 3 votes, put stickers or use a whiteboard marker to vote on a theme (5 minutes)&lt;/li&gt;
+  &lt;li&gt;Discuss the top 3 themes, and generate one action item per theme (25 minutes)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/retro-start-stop.jpeg&quot; alt=&quot;Start, Stop, Continue Retrospective Whiteboard&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;variations-on-prompts&quot;&gt;Variations on Prompts&lt;/h2&gt;
+
+&lt;p&gt;This is the most effective way to steer the retrospective, as a manager. If they team is having issues reliably executing, the prompt should be some variation of that. Other prompts:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;How could we increase the quality of our work?&lt;/li&gt;
+  &lt;li&gt;How could we be working together as more of a team?&lt;/li&gt;
+  &lt;li&gt;How could we run more efficiently?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;variations-on-categories&quot;&gt;Variations on Categories&lt;/h2&gt;
+
+&lt;p&gt;Most retrospectives will follow this basic format. To keep things interesting, the facilitator can change up the brainstorm categories.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wishes, Complaints, and Puzzles&lt;/li&gt;
+  &lt;li&gt;Headwinds, Tailwinds, and Anchors&lt;/li&gt;
+  &lt;li&gt;Glad, Sad, and Mad&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;action-items&quot;&gt;Action Items&lt;/h2&gt;
+
+&lt;p&gt;As the facilitator, you want to steer the team away from having too many action items. 
+You want the team to commit to actually completing a small set of action items, versus 
+having an exhaustive list. Remind the team that they will be able to generate more action
+items next retrospective.&lt;/p&gt;
+
+&lt;p&gt;Common action items:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Update the team’s &lt;a href=&quot;https://medium.com/ideas-by-crema/how-to-create-an-agile-team-working-agreement-7bc98df008a1&quot;&gt;working agreement&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Update the team’s &lt;a href=&quot;https://www.leadingagile.com/2017/02/definition-of-done/&quot;&gt;definition of done&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Update the team’s user story, test plan, or deploy checklist template&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;alternative-retrospective-formats&quot;&gt;Alternative Retrospective Formats&lt;/h1&gt;
+
+&lt;p&gt;If you’re looking for additional ideas, I recommend the book &lt;a href=&quot;https://www.amazon.com/Agile-Retrospectives-Making-Teams-Great/dp/0977616649&quot;&gt;Agile Retrospectives: Making Good Teams Great&lt;/a&gt;. It covers not only many different brainstorming prompts, but also entirely different agendas and formats.&lt;/p&gt;
+
+&lt;h2 id=&quot;sailboat-retrospective&quot;&gt;Sailboat Retrospective&lt;/h2&gt;
+
+&lt;p&gt;In a “sail boat” retrospective, teams that find themselves in dangerous waters imagine challenges they face as anchors, headwinds, and treacherous rocks.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/retro-boat.jpeg&quot; alt=&quot;Boat Retrospective Whiteboard&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;timeline-retrospective&quot;&gt;Timeline Retrospective&lt;/h2&gt;
+
+&lt;p&gt;In a “timeline” retrospective, teams look back at a long term project that is wrapping up, 
+and try to recall what happened when, and how they felt about it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/retro-timeline.jpeg&quot; alt=&quot;Timeline Retrospective Whiteboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Looking for even more ideas? Check out &lt;a href=&quot;https://retromat.org/&quot;&gt;Retromat&lt;/a&gt; which can generate
+a random retrospective agenda for you.&lt;/p&gt;
+
+&lt;h1 id=&quot;agenda-add-ons&quot;&gt;Agenda Add-ons&lt;/h1&gt;
+
+&lt;p&gt;If the retrospective is your only reliable, frequent whole-team meeting, you might want to include some additional agenda items.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reviewing the previous sprint, what was shipped, and what slipped? This can help generate ideas for the brainstorm.&lt;/li&gt;
+  &lt;li&gt;Kudos! Go around the room and thank each other for something specific. This can help break the ice and prime individuals to share.&lt;/li&gt;
+  &lt;li&gt;Do a light anonymous team health survey. How are you feeling from 1-10 about a few key questions. Record the scores over time.&lt;/li&gt;
+  &lt;li&gt;Quick +/-/delta about the retrospective itself. What should we do differently next time?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;tooling-for-virtual-retrospectives&quot;&gt;Tooling for Virtual Retrospectives&lt;/h1&gt;
+
+&lt;p&gt;Most of the retrospectives I have been involved in were in-person, using sticky notes and a whiteboard. Virtually, you can replicate that experience with something like &lt;a href=&quot;https://stickies.io/&quot;&gt;stickies.io&lt;/a&gt;. You could also use Miro, Trello, or any collaborative text editor.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/images/retro-miro.png&quot; alt=&quot;Miro Retrospective Example&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;the-retrospective-scorecard-&quot;&gt;The Retrospective Scorecard 💯&lt;/h1&gt;
+
+&lt;p&gt;Is your team following best practices?&lt;/p&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Retrospectives happen every sprint&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;The whole team is present&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Generate a small number of action items&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Previous action items are completed&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <link>https://chase-seibert.github.io/2022/04/22/how-to-run-a-retrospective.html </link>
+    <pubDate>2022-04-22T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2022/04/22/how-to-run-a-retrospective.html</guid>
+   </item>
+  
+ </channel>
+</rss>

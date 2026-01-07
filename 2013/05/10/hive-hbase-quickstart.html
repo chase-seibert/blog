@@ -1,0 +1,487 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Hive with HBase Quickstart - Chase Seibert Blog</title>
+<meta name="description" content="Though there is some decent documentation, I found that setting up Hive with a HBase back-end to be somewhat fiddly. Hopefully this guide will help you get started quicker. This article presumes that you already have HBase set up. If not, see my HBase quickstart.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Hive with HBase Quickstart">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/05/10/hive-hbase-quickstart.html">
+
+
+  <meta property="og:description" content="Though there is some decent documentation, I found that setting up Hive with a HBase back-end to be somewhat fiddly. Hopefully this guide will help you get started quicker. This article presumes that you already have HBase set up. If not, see my HBase quickstart.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Hive with HBase Quickstart">
+  <meta name="twitter:description" content="Though there is some decent documentation, I found that setting up Hive with a HBase back-end to be somewhat fiddly. Hopefully this guide will help you get started quicker. This article presumes that you already have HBase set up. If not, see my HBase quickstart.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/05/10/hive-hbase-quickstart.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-05-10T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/05/10/hive-hbase-quickstart.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Hive with HBase Quickstart">
+    <meta itemprop="description" content="Though there is some decent documentation, I found that setting up Hive with a HBase back-end to be somewhat fiddly. Hopefully this guide will help you get started quicker. This article presumes that you already have HBase set up. If not, see my HBase quickstart.">
+    <meta itemprop="datePublished" content="2013-05-10T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/05/10/hive-hbase-quickstart.html" itemprop="url">Hive with HBase Quickstart
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Though there is some <a href="https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration">decent documentation</a>, I found that setting up Hive with a HBase back-end to be somewhat fiddly. Hopefully this guide will help you get started quicker. This article presumes that you already have HBase set up. If not, see my <a href="http://chase-seibert.github.io/blog/2013/02/01/getting-starting-with-hbase-and-pig.html">HBase quickstart</a>.</p>
+
+<p>Note: these directions are for development. They don’t use HDFS, for example. For a full guide on production deployment, see the excellent <a href="http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH4/latest/CDH4-Installation-Guide/cdh4ig_topic_18.html">CDH4 directions</a>.</p>
+
+<h2 id="linux">Linux</h2>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>apt-get <span class="nb">install </span>hive
+
+<span class="c"># create directory that Hive stores data in by default</span>
+<span class="nb">sudo mkdir</span> <span class="nt">-p</span> /user/hive/warehouse
+<span class="nb">sudo chown</span> <span class="nt">-R</span> myusername:myusername /user/hive/warehouse/
+
+<span class="c"># copy HBase JARs into the Hive lib</span>
+<span class="nb">sudo cp</span> /usr/share/hbase/hbase-0.92.1.jar /usr/lib/hive/lib
+<span class="nb">sudo cp</span> /usr/share/hadoop-zookeeper/zookeeper-3.4.3.jar /usr/lib/hive/lib</code></pre></figure>
+
+<h2 id="osx">OSX</h2>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">brew <span class="nb">install </span>hive</code></pre></figure>
+
+<h2 id="connect-to-hbase">Connect to HBase</h2>
+
+<p>Now, you can fire up hive with the <code class="language-plaintext highlighter-rouge">hive</code> command and create a table that’s backed by HBase. For this example, my HBase table is called <code class="language-plaintext highlighter-rouge">test</code>, and has a column family of integer values called <code class="language-plaintext highlighter-rouge">values</code>. Note that the dropping/creating of tables is just effecting Hive meta-data; no actual changes are made in HBase.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">DROP TABLE IF EXISTS <span class="nb">test</span><span class="p">;</span>
+
+CREATE EXTERNAL TABLE
+    <span class="nb">test</span><span class="o">(</span>key string, values map&lt;string, int&gt;<span class="o">)</span>
+STORED BY
+    <span class="s1">'org.apache.hadoop.hive.hbase.HBaseStorageHandler'</span>
+WITH SERDEPROPERTIES <span class="o">(</span>
+    <span class="s2">"hbase.columns.mapping"</span> <span class="o">=</span> <span class="s2">":key,values:"</span>
+    <span class="o">)</span>
+TBLPROPERTIES <span class="o">(</span>
+    <span class="s2">"hbase.table.name"</span> <span class="o">=</span> <span class="s2">"test"</span>
+    <span class="o">)</span><span class="p">;</span>
+
+SELECT <span class="k">*</span> FROM <span class="nb">test</span><span class="p">;</span>
+
+<span class="o">&gt;</span>c4ca4-0000001-79879483-000000000124-000000000000000000000000000025607621 <span class="o">{</span><span class="s1">'comments'</span>:0, <span class="s1">'likes'</span>:0<span class="o">}</span>
+<span class="o">&gt;</span>c4ca4-0000001-79879483-000000000124-000000000000000000000000000025607622 <span class="o">{</span><span class="s1">'comments'</span>:0, <span class="s1">'likes'</span>:0<span class="o">}</span></code></pre></figure>
+
+<h2 id="simple-map-reduce-example">Simple Map Reduce Example</h2>
+
+<p>Give the above raw data in the table, here is example GROUP/SUM map reduce where you sum up the various HBase columns in the values column family. This example creates a view to handle the blowing apart of the HBase rowkey. You can use an <code class="language-plaintext highlighter-rouge">INSERT OVERWRITE</code> statement at the end to write the results back into Hbase.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">CREATE VIEW
+    test_view AS
+SELECT
+    substr<span class="o">(</span>key, 0, 36<span class="o">)</span> as org_date_asset_prefix,
+    <span class="nb">split</span><span class="o">(</span>key, <span class="s1">'-'</span><span class="o">)[</span>2] as inverse_date_str,
+    stats[<span class="s1">'comments'</span><span class="o">]</span> as comments,
+    stats[<span class="s1">'likes'</span><span class="o">]</span> as likes
+FROM
+    <span class="nb">test</span><span class="p">;</span>
+
+SELECT
+    org_date_asset_prefix,
+    map<span class="o">(</span>
+      <span class="s1">'comments'</span>, SUM<span class="o">(</span>comments<span class="o">)</span>,
+      <span class="s1">'likes'</span>, SUM<span class="o">(</span>likes<span class="o">)</span>
+    <span class="o">)</span> as stats
+FROM
+    test_view
+GROUP BY
+    org_date_asset_prefix<span class="p">;</span></code></pre></figure>
+
+<h2 id="thrift-rest-api">Thrift REST API</h2>
+
+<p>If you want to connect to Hive via thrift, you can start the thrift service with <code class="language-plaintext highlighter-rouge">hive --service hiveserver</code>. <a href="https://github.com/tebeka/hiver">Hiver</a> is a nice little Python API wrapper.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">hiver</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">hiver</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'SHOW TABLES'</span><span class="p">)</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">fetchAll</span><span class="p">()</span></code></pre></figure>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#hbase" class="page__taxonomy-item p-category" rel="tag">hbase</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#hive" class="page__taxonomy-item p-category" rel="tag">hive</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-05-10-hive-hbase-quickstart.md">_posts/2013-05-10-hive-hbase-quickstart.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-05-10T00:00:00+00:00">May 10, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/05/03/happybase-connection-pooling.html" class="pagination--pager" title="Happybase Connection Pooling">Previous</a>
+    
+    
+      <a href="/blog/2013/05/17/hive-insert-and-dump-csv-with-map-datatype.html" class="pagination--pager" title="Write CSV data into Hive and Python">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

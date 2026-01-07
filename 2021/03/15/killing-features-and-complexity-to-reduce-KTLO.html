@@ -1,0 +1,511 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Killing Features and Complexity to Reduce “KTLO” - Chase Seibert Blog</title>
+<meta name="description" content="Deleting code is the highest return on investment activity for a software engineer">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Killing Features and Complexity to Reduce “KTLO”">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2021/03/15/killing-features-and-complexity-to-reduce-KTLO.html">
+
+
+  <meta property="og:description" content="Deleting code is the highest return on investment activity for a software engineer">
+
+
+
+  <meta property="og:image" content="https://chase-seibert.github.io/blog/images/header-ktlo.jpeg">
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Killing Features and Complexity to Reduce “KTLO”">
+  <meta name="twitter:description" content="Deleting code is the highest return on investment activity for a software engineer">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2021/03/15/killing-features-and-complexity-to-reduce-KTLO.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chase-seibert.github.io/blog/images/header-ktlo.jpeg">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2021-03-15T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2021/03/15/killing-features-and-complexity-to-reduce-KTLO.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/blog/images/header-ktlo.jpeg');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Killing Features and Complexity to Reduce “KTLO”
+
+        
+      </h1>
+      
+        <p class="page__lead">Deleting code is the highest return on investment activity for a software engineer
+</p>
+      
+      
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Killing Features and Complexity to Reduce “KTLO”">
+    <meta itemprop="description" content="Deleting code is the highest return on investment activity for a software engineer">
+    <meta itemprop="datePublished" content="2021-03-15T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#what-is-a-bad-level-of-ktlo">What is a “bad” level of KTLO?</a></li><li><a href="#why-it-gets-bad">Why it gets bad</a></li><li><a href="#fix-the-incentives">Fix the Incentives</a></li><li><a href="#how-to-fix-it">How to fix it</a></li><li><a href="#references">References</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p>In software, there is a term of art for work that’s required to “keep the lights on”, aka “KTLO”. It’s defined as work that’s NOT adding new product value. It includes traditional “on-call” activities, such as responding to pages, and remediating outages. It also includes fixing bugs, and resolving customer requests. A third subset of KTLO is doing required migrations to new versions of a platform, framework, or operating system.</p>
+
+<p>KTLO is not the same as technical debt. Technical debt is typically thought of as an existing backlog of stuff to fix. KTLO is the work that you’re actively doing all the time, just to tread water at your current technical debt level. KTLO is also distinct from refactoring work. Refactoring is certainly important, but I’m going to label that work “Foundational”, i.e. work to reduce KTLO. “Product” work is the final bucket of work. Together, these tree classifications of work account for all engineering velocity.</p>
+
+<p><img src="/blog/images/ktlo-pie-chart.png" alt="" /></p>
+
+<h1 id="what-is-a-bad-level-of-ktlo">What is a “bad” level of KTLO?</h1>
+
+<p>Getting to zero KTLO is not the goal. Some level of maintenance will always be required — think security patches, or even just migrating to new internal platforms in a medium sized company. The only way to have zero KTLO is to never change anything, including fixing the site if it’s down. In any case, zero KTLO would be the wrong trade-off between the amount of effort to “bullet proof” everything, versus adding more value.</p>
+
+<p>I’m going to arbitrarily throw out 20% as a healthy KTLO rate that most teams should aspire to. This comes from a general rule of thumb that I have seen many teams at many companies coalesce on. Namely that 80% of the roadmap should be product led and prioritized, and 20% should be engineering led and prioritized.</p>
+
+<p>At the same time, I’ve seen first-hand that 30% KTLO is around where a team starts getting stressed. 40% seems to be a breaking point, where it starts showing up as a top contributor to attrition. Just recognize that whatever the level of KTLO is, this is a tax you’re paying on engineer velocity for other stuff.</p>
+
+<h1 id="why-it-gets-bad">Why it gets bad</h1>
+
+<p>How do you get to the point where a product requires a high level of KTLO work? One prioritization decision at a time 😉</p>
+
+<p>It’s easy to blame product management for these incentives. “I would love to refactor this thing, but my product partner just wants to add more value!” But, that’s not fair. Let’s play five questions:</p>
+
+<ol>
+  <li>Why do I have to prioritize user value? Because product values it, and they own prioritization for the team.</li>
+  <li>Why does product prioritize user value? Because that’s what they are incentivized on.</li>
+  <li>Why does the company incentivize user value over other stuff? Because the market rewards growth.</li>
+  <li>Why does the market reward growth? That is literally how the stock market works.</li>
+  <li>Ok, but why are you beholden to the stock market? That’s the deal you make when you go IPO.</li>
+</ol>
+
+<p>This is also unfair. In practice, I see engineers themselves prioritize user value. No one (for functional equivalents of zero people) wants to work on code that they did not write. They want to re-write it, first. Otherwise, it’s not exciting. Company culture can exacerbate the problem, if it does in fact reward new development over maintenance or foundation work. You should fix that.</p>
+
+<h1 id="fix-the-incentives">Fix the Incentives</h1>
+
+<p>Personal finance analogy time. Adding new product value like like buying a stock. You’re taking a bet, hoping for top line growth. Refactoring something is like buying a bond. You’re more sure it will be valuable, but the upper bound of the magnitude is lower. Killing existing stuff is like paying down debt. You’re 100% certain it’s valuable, and it’s going to free up resourcing in the future to invest in other things.</p>
+
+<p>It’s relatively easy to measure the impact of delivering new product value. Users, and internal stakeholders, can see the working product. The company likely has people and an apparatus whose job it is to measure whether the product value is also generating revenue. For accounting purposes, your company classifies engineering salaries as R&amp;D. They actually get a <a href="https://www.mossadams.com/articles/2019/september/software-companies-r-and-d-credits">partial tax credit</a> for the portion of software engineer salaries that goes to new product development.</p>
+
+<p>It’s less common to be able to measure the value of KTLO, or Foundational work. When your team goes into hero mode and puts out some fires, they are adding value by keeping the product running smoothly. But, they are also costing the company time and money, namely their salaries. This “routine maintenance” does not count for tax credit purposes. Because your company is already separating salaries for new product development and KTLO into buckets, I recommend that you measure Foundational work as reducing the nondeductible portion of the pie.</p>
+
+<p>For accounting purposes, how many dollars your company spends on the “new user value” part of software development, divided by total revenue, is called R&amp;D efficiency. It’s another common business measure related to KTLO. Notice that you can more of less ignore the cost of KTLO, as long as you’re generating a lot of revenue. That has also been my anecdotal experience of various companies culture’s around KTLO — it only becomes a focus when you stop growing revenue.</p>
+
+<p>Eventually, every company will stop growing. You can’t hire your way out of KTLO, forever. The sooner you can start talking about the impact of reducing KTLO in terms that the business understands, the more you will be able to incentivize it properly.</p>
+
+<h1 id="how-to-fix-it">How to fix it</h1>
+
+<p>Beyond incentives, you really need to be able to measure KTLO load, in order to demonstrate the impact of reducing it. One way to measure it would be for everyone to track their time, and categorize time as KTLO vs not. But, virtually no one is going to do that. Also, any measurement could introduce its own perverse incentives, such as mis-reporting time spent to make it look like you’re reducing KTLO.</p>
+
+<p>For some sub-types of KTLO, you could measure things like number of pages, outages, or P0 bugs. You still have to be aware of the perverse incentives issue. You could also measure total time spent on non-KTLO stuff, such as total JIRA ticket volume, minus the KTLO specific tickets.</p>
+
+<p>In the end, I’ve found that simply asking folks what percent of their team’s time is spent on KTLO is fairly accurate. At least, people on the same team can roughly agree, and estimates separated by time tend to come back very similar.</p>
+
+<p>However you measure it, you then want to set a goal. What’s is a good level of KTLO? Again, 20% is a common rule of thumb. Once you have a goal, you want to identify work that can reduce KTLO.</p>
+
+<p>In general, fixing bugs will not reduce KTLO by itself. If you burn the bug backlog down to a point where you are spending less time than you otherwise would have fixing bugs, THEN you have reduced KTLO (at least until it builds back up). The key piece there is that you would otherwise be fixing a substantial number of bugs. If you rarely fix bugs anyway, reducing the bug count does not save KTLO, although it’s a good idea for quality reasons.</p>
+
+<p>This can be counter-intuitive, and can result in teams spending a lot of effort on something that does not actually reduce KTLO load. For that reason, I recommend killing things as the primary method of reducing KTLO. Fewer features, and less code, generally mean less KTLO. The highest value targets are going to be things with a lot of complexity, but relatively business value.</p>
+
+<p>Another clear win for KTLO is automating stuff that you would normally be doing manually. Again, you need to double-check that the team is actually doing the manual work today, versus ignoring it.</p>
+
+<p>No matter what Foundational work you end up doing, you should circle back afterwards and measure that it actually reduced KTLO.</p>
+
+<h1 id="references">References</h1>
+<ul>
+  <li><a href="https://news.ycombinator.com/item?id=21208947">Why Do People Neglect Maintenance?</a></li>
+  <li><a href="https://web.mit.edu/nelsonr/www/Repenning=Sterman_CMR_su01_.pdf">Nobody Ever Gets Credit for Fixing Problems that Never Happened</a></li>
+  <li><a href="https://themaintainers.org/blog/2019/7/30/why-do-people-neglect-maintenance">Why Do People Neglect Maintenance?</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Software_maintenance">Software maintenance</a> (wikipedia)</li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#ktlo" class="page__taxonomy-item p-category" rel="tag">ktlo</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#manager" class="page__taxonomy-item p-category" rel="tag">manager</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2021-03-15-killing-features-and-complexity-to-reduce-KTLO.md">_posts/2021-03-15-killing-features-and-complexity-to-reduce-KTLO.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-03-15T00:00:00+00:00">March 15, 2021</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2020/11/17/engineering-manager-going-fully-remote.html" class="pagination--pager" title="Going Fully Remote as an Engineering Manager">Previous</a>
+    
+    
+      <a href="/blog/2021/04/05/escalations.html" class="pagination--pager" title="How to Escalate">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

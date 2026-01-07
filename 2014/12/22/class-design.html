@@ -1,0 +1,464 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Thoughts on Object Oriented Class Design - Chase Seibert Blog</title>
+<meta name="description" content="The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle. - Joe Armstrong">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Thoughts on Object Oriented Class Design">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2014/12/22/class-design.html">
+
+
+  <meta property="og:description" content="The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle. - Joe Armstrong">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Thoughts on Object Oriented Class Design">
+  <meta name="twitter:description" content="The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle. - Joe Armstrong">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2014/12/22/class-design.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2014-12-22T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2014/12/22/class-design.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Thoughts on Object Oriented Class Design">
+    <meta itemprop="description" content="  The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle. - Joe Armstrong">
+    <meta itemprop="datePublished" content="2014-12-22T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2014/12/22/class-design.html" itemprop="url">Thoughts on Object Oriented Class Design
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <blockquote>
+  <p>The problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle. - Joe Armstrong</p>
+</blockquote>
+
+<p>In my experience, class design is an area where software engineers are prone to over-estimate their own abilities. This also happens with SQL and regular expressions. The concepts seem simple enough that it’s easy to fool yourself into thinking that knowing the basics is equivalent to being an expert. The reality is that most people could use a refresher on what makes a good object oriented abstraction.</p>
+
+<h2 id="encapsulation---hiding-implementation-details">Encapsulation - Hiding Implementation Details</h2>
+
+<blockquote>
+  <p>[Encapsulation is] the process of compartmentalizing the elements of an abstraction that constitute its structure and behavior; encapsulation serves to separate the contractual interface of an abstraction and its implementation. - Gary Brooch</p>
+</blockquote>
+
+<p>At the core, class design is about encapsulation. You want to make it easier to think about your problem space by limiting what you need to keep in your brain at any given time. You want classes that hide unnecessary implementation details from the outside world, are well tested, and are easy to use. That allows you to think about your problem space as the interaction of instance of these objects, versus the low level detail.</p>
+
+<p>For example, say you have a class that represents a zipped file. Internally, it uses a regular file descriptor to access the base file. That’s not something you want to expose to callers; it’s an implementation detail. Maybe you decide later that you want to be able to have the base file be an S3 URL. If you expose the internal file descriptor in the initial implementation, that may end up limiting your options down the road.</p>
+
+<p>In some languages like Python, it’s not possible to hide implementation details by marking methods and members as private. Even there, it’s well worth using standard conventions for communicating to other developers what should and should not be accessed.</p>
+
+<h2 id="cohesion---consistency-of-abstraction">Cohesion - Consistency of Abstraction</h2>
+
+<blockquote>
+  <p>Cohesion refers to the degree to which the elements of a module belong together. Thus, it is a measure of how strongly related each piece of functionality expressed by the source code of a software module is.</p>
+</blockquote>
+
+<p>I think of cohesion as the level of consistency in the abstraction. If you have a class that represent a web request, you could conceivably try to handle HTTP methods, URL parameters, headers in one large class with a hundred methods on it. But you’re probably better off breaking that down into separate more focussed classes. That way your URL parameters class has just a few methods on it, and they are all related to a small problem space.</p>
+
+<p>One tool I find helpful for writing cohesive classes is to start by thinking about the class API first. What are you going to call the class? What are the methods you are going to provide? By thinking first about how you would ideally like to use this hypothetical class, you can focus on making the API cohesive before getting bogged down in implementation details. Once you have started implementation, it’s very tempting to allow the scope of the class to grow.</p>
+
+<p>Good naming is one of the hardest parts of writing any code. It’s especially important for writing cohesive classes; if your class methods are becoming too awkward, it may be because your class is doing to much.</p>
+
+<h2 id="loose-coupling---swappable-components">Loose Coupling - Swappable Components</h2>
+
+<p><img src="http://i.stack.imgur.com/OJFhI.jpg" alt="loose coupling" /></p>
+
+<p>If your components are encapsulated and cohesive, it should be easy to compose them together. It should also be easy to swap out a particular component for another version that implements the same interface. The degree to which this is easy determines whether your system is loosely coupled.</p>
+
+<p>You can typically make components less coupled by reducing the number of things needed to construct them. Similarly, you can have your methods take standard primitives and collections versus custom objects.</p>
+
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+
+<blockquote>
+  <p>The phrase “object-oriented” means a lot of things. Half are obvious, and the other half are mistakes. - Paul Graham</p>
+</blockquote>
+
+<p>Here are some common mistakes in class design.</p>
+
+<ul>
+  <li>Large interfaces. Even small changes in the API may require many updates.</li>
+  <li>Subclass methods that are empty/pass. This may be a sign that the abstraction needs to be refactored.</li>
+  <li>Multiple inheritance. Often hard to reason about. Limit yourself to simple mixins if you must do it.</li>
+  <li>Tying the interface to the implementation. Example: persistent object that exposes underlying database functions directly.</li>
+  <li>Invalid method sequences. If you can’t call <code class="language-plaintext highlighter-rouge">process</code> until you call <code class="language-plaintext highlighter-rouge">open</code>, then <code class="language-plaintext highlighter-rouge">process</code> should do that for you.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#computer-science" class="page__taxonomy-item p-category" rel="tag">computer-science</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#object-oriented" class="page__taxonomy-item p-category" rel="tag">object-oriented</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2014-12-22-class-design.md">_posts/2014-12-22-class-design.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2014-12-22T00:00:00+00:00">December 22, 2014</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2014/11/30/pay-yourself-weekly.html" class="pagination--pager" title="Creating a Budget and Sticking to It">Previous</a>
+    
+    
+      <a href="/blog/2015/02/10/one-on-ones.html" class="pagination--pager" title="Topics for One on Ones">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,456 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Ruby on Rails - First Impressions - Chase Seibert Blog</title>
+<meta name="description" content="I&#39;ve started playing around with Ruby on Rails. Maybe it was my recent experience with Python, which has a similar syntax to Ruby. Perhaps it&#39;s because I keep hearing how you can get a fully working site up in just minutes. Maybe I&#39;m just bored.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Ruby on Rails - First Impressions">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2009/05/08/ruby-on-rails-first-impressions.html">
+
+
+  <meta property="og:description" content="I&#39;ve started playing around with Ruby on Rails. Maybe it was my recent experience with Python, which has a similar syntax to Ruby. Perhaps it&#39;s because I keep hearing how you can get a fully working site up in just minutes. Maybe I&#39;m just bored.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Ruby on Rails - First Impressions">
+  <meta name="twitter:description" content="I&#39;ve started playing around with Ruby on Rails. Maybe it was my recent experience with Python, which has a similar syntax to Ruby. Perhaps it&#39;s because I keep hearing how you can get a fully working site up in just minutes. Maybe I&#39;m just bored.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2009/05/08/ruby-on-rails-first-impressions.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2009-05-08T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2009/05/08/ruby-on-rails-first-impressions.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Ruby on Rails - First Impressions">
+    <meta itemprop="description" content="I&#39;ve started playing around with Ruby on Rails. Maybe it was my recent experience with Python, which has a similar syntax to Ruby. Perhaps it&#39;s because I keep hearing how you can get a fully working site up in just minutes. Maybe I&#39;m just bored.">
+    <meta itemprop="datePublished" content="2009-05-08T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2009/05/08/ruby-on-rails-first-impressions.html" itemprop="url">Ruby on Rails - First Impressions
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+I've started playing around with Ruby on Rails. Maybe it was my recent experience with Python, which has a similar syntax to Ruby. Perhaps it's because I keep hearing how you can get a fully working site up in just minutes. Maybe I'm just bored.
+</p>
+
+<p>
+Going into it, I had some preconceptions about Ruby on Rails above and beyond the <a href="http://www.loudthinking.com/posts/29-the-rails-myths">common myths</a>.
+ <ul>
+   <li>It's easy to get started, but gets complicated quickly.</li>
+   <li>It's hard to scale.</li>
+   <li>The documentation sucks.</li>
+ </ul>
+<p>
+
+<p>
+Installation was daunting at first. I had bought a copy of <a href="http://oreilly.com/catalog/9780596518776/">Learning Rails</a> (just $15 on the Kindle), which presented three different options. Having seen some screencast tutorials, I knew that Rails was very Mac centric. My first install via apt-get on Ubuntu was a breeze. Subsequent install on Windows using InstantRails was dead simple.
+</p>
+
+<p>
+At home, I first tried Eclipse (Ganymede) w/ the dynamic language plug-in. I also tried NetBeans (having never used it before), which I found to be far superior for Rails. The auto-completion just works, and it supports all the various files types that Rails uses. I wasn't able to get the debugger Firefox plug-in working, however. 
+</p>
+
+<p>
+The Ruby language itself is right up my alley. Being at one with the concept of <a href="http://steve-yegge.blogspot.com/2007/12/codes-worst-enemy.html">code is the enemy</a>, I appreciate the brevity of the syntax. Stylistically, it's a lot like Python, which I have recently come to adore. Having worked in jQuery/Prototype a lot recently, I absolutely love the support for <a href="http://en.wikipedia.org/wiki/Anonymous_function">lambdas</a> and the fact that hashes are primitives (and used a LOT in the APIs for parameter passing).
+</p>
+
+<p>
+Example:
+<pre name="code" class="ruby">
+    @chart = Gchart.line(
+      :format =&gt; 'image_tag',
+      :size =&gt; '500x300',
+      :title =&gt; 'Weight (lbs)',
+      #:bg =&gt; 'white',
+      #:legend =&gt; ['first data set label', 'second data set label'],
+      #:line_colors =&gt; '76A4FB',
+      :data =&gt; weights,
+      :axis_with_labels =&gt; ['x','r'],
+      :axis_labels =&gt; [dates.join('|'), "#{min}|#{max}" ]
+    )
+</pre>
+</p>
+
+<p>
+However, my absolute best discovery about Rails so far is the MVC model. Their implementation is simple, and easy to use. Providing a language level syntax for variables from the controller to automatically be in the scope of the view was brilliant. The model itself has class level declarations for input validation, which means that your methods don't get crowded with validation code. I'm not sure I'm crazy about the level of formatting logic that can be present in the view, but I suppose that's a necessary evil.
+</p>
+
+<p>
+The Rails concept of <a href="http://en.wikipedia.org/wiki/Convention_over_Configuration">configuration by convention</a> I find to be very powerful, while at times cryptic. But in the war against code size, it's a killer weapon. Somewhere down the line I may get frustrated with the fact that some level of naming discretion it taken away from the developer. On the other hand, I have come to love Python's "whitespace is not a style choice" approach. I sense this might be the case here, as well.
+</p>
+
+<p>
+Documentation, as promised, is spotty. While the <a href="http://railscasts.com/">plethora of video tutorials</a> are great for getting started, I'm not sure how useful they are for trouble-shooting specific issues. Various blogs seem to be the best bet, but very often the information there is out-dated, and may not even work in the current version of Rails. On the other hand, in NetBeans I find it fairly easy to discover the correct API calls/syntax, and being able to see the actual code behind the Rails API right in your IDE is always a huge help.
+</p>
+
+<p>
+Post-conceptions:
+ <ul>
+   <li>The Rails community is very mac heavy, but getting up and running on Linux/Windows was easy.</li>
+   <li>The language and framework are ultra-modern, in a good way.</li>
+   <li>The documentation sucks. Do yourself a favor a buy a book.</li>
+ </ul>
+<p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2009-05-08-ruby-on-rails-first-impressions.html">_posts/2009-05-08-ruby-on-rails-first-impressions.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2009-05-08T00:00:00+00:00">May 8, 2009</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2009/05/01/greasemonkey-blogger-html-encode-selection.html" class="pagination--pager" title="Greasemonkey + Blogger HTML encode selection">Previous</a>
+    
+    
+      <a href="/blog/2009/05/13/netbios-naming-service-lmhosts.html" class="pagination--pager" title="NetBIOS Naming Service + lmhosts">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

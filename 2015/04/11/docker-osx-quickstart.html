@@ -1,0 +1,541 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Docker/OSX Quickstart (not grokking docker yet? start here) - Chase Seibert Blog</title>
+<meta name="description" content="Docker has only been around since 2013, but it seems like it’s all over my Twitter feed and RSS reader. I’ve gone trough the “Hello world” example in the past, but never felt like I really understood either the value proposition, or exactly how it works. This week, I had some time to sit down and give it more of my attention. What I found was that it was neither as mysterious or as complicated as I anticipated.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Docker/OSX Quickstart (not grokking docker yet? start here)">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2015/04/11/docker-osx-quickstart.html">
+
+
+  <meta property="og:description" content="Docker has only been around since 2013, but it seems like it’s all over my Twitter feed and RSS reader. I’ve gone trough the “Hello world” example in the past, but never felt like I really understood either the value proposition, or exactly how it works. This week, I had some time to sit down and give it more of my attention. What I found was that it was neither as mysterious or as complicated as I anticipated.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Docker/OSX Quickstart (not grokking docker yet? start here)">
+  <meta name="twitter:description" content="Docker has only been around since 2013, but it seems like it’s all over my Twitter feed and RSS reader. I’ve gone trough the “Hello world” example in the past, but never felt like I really understood either the value proposition, or exactly how it works. This week, I had some time to sit down and give it more of my attention. What I found was that it was neither as mysterious or as complicated as I anticipated.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2015/04/11/docker-osx-quickstart.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2015-04-11T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2015/04/11/docker-osx-quickstart.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Docker/OSX Quickstart (not grokking docker yet? start here)">
+    <meta itemprop="description" content="Docker has only been around since 2013, but it seems like it’s all over my Twitter feed and RSS reader. I’ve gone trough the “Hello world” example in the past, but never felt like I really understood either the value proposition, or exactly how it works. This week, I had some time to sit down and give it more of my attention. What I found was that it was neither as mysterious or as complicated as I anticipated.">
+    <meta itemprop="datePublished" content="2015-04-11T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2015/04/11/docker-osx-quickstart.html" itemprop="url">Docker/OSX Quickstart (not grokking docker yet? start here)
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Docker has only been around since 2013, but it seems like it’s all over my Twitter feed and RSS reader. I’ve gone trough the “Hello world” example in the past, but never felt like I really understood either the value proposition, or exactly how it works. This week, I had some time to sit down and give it more of my attention. What I found was that it was neither as mysterious or as complicated as I anticipated.</p>
+
+<h2 id="installing-on-a-mac">Installing on a Mac</h2>
+
+<p>Docker was born on Linux and uses Linux internals like <a href="https://linuxcontainers.org/">LXC</a> to work its magic. There is a Windows native version in the works (not that anyone cares). But given that software engineering in the Bay Area is dominated by Macs, let’s start by looking at how to get this installed and running on OSX.</p>
+
+<p>First off, don’t try to install it via <code class="language-plaintext highlighter-rouge">brew</code>, or any other package manager. Docker is written in Go, which has the advantage of compiling down to dependency-less binaries. Plus, the project is moving so fast that the versions in package managers are out of date. So, suck it up and install it manually by <a href="https://github.com/boot2docker/osx-installer/releases/tag/v1.5.0">downloading the binary</a>.</p>
+
+<p>If you can open a terminal and run <code class="language-plaintext highlighter-rouge">docker --version</code>, you’re good to go. This tutorial is for version 1.5.0.</p>
+
+<h2 id="boot2docker">Boot2Docker</h2>
+
+<p>If you try to run a docker image now, you will get an cryptic error like <code class="language-plaintext highlighter-rouge">docker max dial unix /var/run/docker.sock: no such file or directory</code>. This is because the Docker daemon process is not running. Actually, it cannot run on a Mac! Instead, you <em>must</em> use <a href="http://boot2docker.io/">boot2docker</a>, which is a tiny virtual machine that runs in VirtualBox and has the Docker daemon. Again, use the binary installer (sorry!).</p>
+
+<p>To get up and running, open a terminal the run the following.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boot2docker init
+boot2docker up
+<span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>boot2docker shellinit<span class="si">)</span><span class="s2">"</span>
+docker run ubuntu:14.04 /bin/echo <span class="s1">'Hello world'</span>
+</code></pre></div></div>
+
+<p>That’s your hello world example. Let’s breakdown what’s happening here. <code class="language-plaintext highlighter-rouge">boot2docker init</code> creates a new virtual machine in VirtualBox.</p>
+
+<p><img src="/blog/images/boot2docker.png" alt="boot2docker" /></p>
+
+<p>The next step, <code class="language-plaintext highlighter-rouge">boot2docker up</code> runs the virtual machine. The <code class="language-plaintext highlighter-rouge">eval "$(boot2docker shellinit)"</code> step is setting some environment variables that tell Docker what container context you are currently in. If you run just <code class="language-plaintext highlighter-rouge">boot2docker shellinit</code> by itself, you can see the raw output:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Writing /Users/chase/.boot2docker/certs/boot2docker-vm/ca.pem
+Writing /Users/chase/.boot2docker/certs/boot2docker-vm/cert.pem
+Writing /Users/chase/.boot2docker/certs/boot2docker-vm/key.pem
+<span class="nb">export </span><span class="nv">DOCKER_HOST</span><span class="o">=</span>tcp://192.168.59.104:2376
+<span class="nb">export </span><span class="nv">DOCKER_CERT_PATH</span><span class="o">=</span>/Users/chase/.boot2docker/certs/boot2docker-vm
+<span class="nb">export </span><span class="nv">DOCKER_TLS_VERIFY</span><span class="o">=</span>1
+</code></pre></div></div>
+
+<p>The first three lines are just informational, only the last three lines are printed to stdout.</p>
+
+<p>The last line, <code class="language-plaintext highlighter-rouge">docker run ubuntu:14.04 /bin/echo 'Hello world'</code> actually instantiates a new Docker container (using Ubuntu 14.04), and runs a single command inside it.</p>
+
+<h3 id="a-note-about-containers">A Note about Containers</h3>
+
+<p>Containers are little sandboxed Linux instances. Images are the serialized file definition that containers are spun up from. The magic of Docker is that the images are completely portable. This concept escaped me at first. I was under the impression that you needed to build an image on your Mac to run it there, and then build a separate image on Amazon EC2 to run the same thing there.</p>
+
+<p>In fact, you can build an image on your Mac, and then essentially <code class="language-plaintext highlighter-rouge">scp</code> that file up to AWS and run it. In reality, you don’t even need to copy it manually, that’s what Docker Hub is for.</p>
+
+<p>Also, the Linux distribution used inside your Docker container does NOT have to match the distribution of the host operating system. You can run Ubuntu inside a CentOS host, and visa-versa.</p>
+
+<p>Finally, images have a built-in <a href="https://docs.docker.com/terms/layer/">layering mechanism</a>. Essentially, you can have a base image and then any number of small layers of diffs on top of that. This is a powerful optimization and abstraction, which we will talk about later.</p>
+
+<h2 id="example-python-flask-app">Example Python Flask App</h2>
+
+<p>This is the canonical tutorial for Python folks getting started with Docker, and yet I could not complete is successfully with any of the documentation I found. Here is my own special snowflake version.</p>
+
+<p>First, create a new directory called <code class="language-plaintext highlighter-rouge">flask</code>. Inside, you are going to create three files.</p>
+
+<p>The first file is called <code class="language-plaintext highlighter-rouge">app.py</code>, which is just a simple hello world Flask app.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">'Hello World!'</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">"0.0.0.0"</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then, create a <code class="language-plaintext highlighter-rouge">requirements.txt</code> file to list Flask as a dependency:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">Flask</span><span class="o">==</span>0.10.1
+</code></pre></div></div>
+
+<p>Finally, create your <code class="language-plaintext highlighter-rouge">Dockerfile</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM python:2.7
+ADD <span class="nb">.</span> /code
+WORKDIR /code
+RUN pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+EXPOSE 5000
+CMD python app.py
+</code></pre></div></div>
+
+<p>Let’s take a moment and breakdown this last file. The <code class="language-plaintext highlighter-rouge">FROM</code> line tells Docker to base this container off of a named image in the public repository called <code class="language-plaintext highlighter-rouge">python</code>, and to use the named tag of that image (kind of like a version) of <code class="language-plaintext highlighter-rouge">2.7</code>.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">ADD</code> line copies your code from the current directory <code class="language-plaintext highlighter-rouge">.</code> to <code class="language-plaintext highlighter-rouge">/code</code> inside the Docker container Linux instance. <code class="language-plaintext highlighter-rouge">WORKDIR</code> settings the working directory there as well.</p>
+
+<p><code class="language-plaintext highlighter-rouge">RUN</code> can be specified multiple times. It tells Docker to run these commands when building the container for the first time. Run steps are actually cached; changing one of them later will only result in that one being run again. This is possible due to the container layering we talked about earlier.</p>
+
+<p><code class="language-plaintext highlighter-rouge">EXPOSE</code> tells Docker that the container will be serving port 5000 externally. This is the port we will run the flask app on.</p>
+
+<p>Finally, the <code class="language-plaintext highlighter-rouge">CMD</code> line specifies the command that will run inside the container as your main daemon process. If you need multiple daemons, look into <a href="https://docs.docker.com/compose/">docker-compose</a>.</p>
+
+<h3 id="run-it">Run it</h3>
+
+<p>To run the example, execute the following commands:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="s2">"http://</span><span class="si">$(</span>boot2docker ip<span class="si">)</span><span class="s2">:5000"</span>
+docker build <span class="nt">-t</span> flask-example <span class="nb">.</span>
+docker run <span class="nt">-it</span> <span class="nt">-p</span> 5000:5000 <span class="nt">-v</span> <span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/code:ro flask-example
+</code></pre></div></div>
+
+<p>This should have opened a browser tab before spawning flask. That likely came up with a “This webpage is not available” error page, but if you refresh it now, you should see your “Hello World!” text.</p>
+
+<p>What you have done is create a named image called <code class="language-plaintext highlighter-rouge">flask-example</code> and run it. You can even edit the code on your local file system and it will sync over to Docker (thanks to <code class="language-plaintext highlighter-rouge">-v</code>) and flask will restart.</p>
+
+<h2 id="running-the-same-container-on-aws">Running the same container on AWS</h2>
+
+<p>Now, let’s look at how to run that same container on AWS. First, go sign up for <a href="https://hub.docker.com/">Docker Hub</a>. It’s free.</p>
+
+<p>Let’s assume your Docker Hub username is <code class="language-plaintext highlighter-rouge">foobar</code>. First, re-build and publish your image:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build <span class="nt">-t</span> foobar/flask-example <span class="nb">.</span>
+docker login
+docker push foobar/flask-example
+</code></pre></div></div>
+
+<p>Now, create a new EC2 instance. Make sure to use the “Amazon Linux” base image, which will make installing Docker easier. SSH into your instance and run the docker container:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> docker<span class="p">;</span> <span class="nb">sudo </span>service docker start
+<span class="nb">sudo </span>docker run <span class="nt">-it</span> <span class="nt">-p</span> 8000:5000 foobar/flask-example
+</code></pre></div></div>
+
+<p>The first line simply installs Docker and starts it. The second line pulls down your image from Docker Hub (note: no need to authenticate!), runs it in an interactive shell, and maps the external port 8000 on the host EC2 instance to port 5000 inside the container.</p>
+
+<p>If you have your security group setup to expose port <code class="language-plaintext highlighter-rouge">8000</code>, you should be able to open this EC2 public host name on port 8000 in a web browser.</p>
+
+<h1 id="more-stuff">More Stuff</h1>
+
+<p>When I was getting started with this, I made the mistake of reading about and trying to leverage <code class="language-plaintext highlighter-rouge">docker-compose</code> and <code class="language-plaintext highlighter-rouge">docker-machine</code> right away. These are official plugins, which ease the configuration of multi-service and multi-machine capabilities in Docker, respectively. I suggest NOT starting in with those until you have the above basics buttoned down. I found that they clouded my understanding of what was happening at first.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#docker" class="page__taxonomy-item p-category" rel="tag">docker</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2015-04-11-docker-osx-quickstart.md">_posts/2015-04-11-docker-osx-quickstart.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2015-04-11T00:00:00+00:00">April 11, 2015</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2015/04/06/lessons-learned-job.html" class="pagination--pager" title="Lessons Learned at My Most Recent Job">Previous</a>
+    
+    
+      <a href="/blog/2015/04/13/leadership-and-self-deception.html" class="pagination--pager" title="Book Review - Leadership and Self Deception">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

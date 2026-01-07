@@ -1,0 +1,517 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>My favorite coding interview question - Chase Seibert Blog</title>
+<meta name="description" content="Every software engineering interview I have ever participated in has involved a coding exercise. For one position, I would expect three two five separate coding tests. I’ve written previously about why every company asks these questions, and the best way to handle these as a candidate. But what makes a good coding question?">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="My favorite coding interview question">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2014/10/10/my-favorite-interview-question.html">
+
+
+  <meta property="og:description" content="Every software engineering interview I have ever participated in has involved a coding exercise. For one position, I would expect three two five separate coding tests. I’ve written previously about why every company asks these questions, and the best way to handle these as a candidate. But what makes a good coding question?">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="My favorite coding interview question">
+  <meta name="twitter:description" content="Every software engineering interview I have ever participated in has involved a coding exercise. For one position, I would expect three two five separate coding tests. I’ve written previously about why every company asks these questions, and the best way to handle these as a candidate. But what makes a good coding question?">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2014/10/10/my-favorite-interview-question.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2014-10-10T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2014/10/10/my-favorite-interview-question.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="My favorite coding interview question">
+    <meta itemprop="description" content="Every software engineering interview I have ever participated in has involved a coding exercise. For one position, Iwould expect three two five separate coding tests. I’ve written previouslyabout why every company asks these questions, and the best way to handle these as a candidate. But what makes a good coding question?">
+    <meta itemprop="datePublished" content="2014-10-10T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2014/10/10/my-favorite-interview-question.html" itemprop="url">My favorite coding interview question
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Every software engineering interview I have ever participated in has involved a coding exercise. For one position, I
+would expect three two five separate coding tests. I’ve <a href="/blog/2012/08/31/how-to-prepare-for-a-software-engineer-interview.html">written previously</a>
+about why every company asks these questions, and the best way to handle these as a candidate. But what makes a good coding question?</p>
+
+<p>There is very little data out there about effective interviewing. What data does exists seems to suggest interviews are
+only good for filtering out candidates that do not meet the minimum bar. According to one popular
+<a href="http://www.forbes.com/sites/quora/2013/06/28/is-there-a-link-between-job-interview-performance-and-job-performance/">Google internal study</a>,
+there is no correlation between interview results and on the job performance.</p>
+
+<p>With this in mind, the coding question I ask is simple. I have found that you can hardly ask a question that’s too
+simple; a substantial number of candidates will have no problem hanging themselves with the smallest amount of rope
+that you can give them.</p>
+
+<h2 id="the-question">The Question</h2>
+
+<blockquote>
+  <p>Write a function that takes two parameters, a string and an integer. The function will return another string that
+is similar to the input string, but with certain characters removed. It’s going to remove characters from consecutive
+runs of the same character, where the length of the run is greater than the input parameter.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ex: "aaab", 2 =&gt; "aab"
+Ex: "aabb", 1 =&gt; "ab"
+Ex: "aabbaa", 1 =&gt; "aba"
+</code></pre></div></div>
+
+<p><em>Note: I’m evaluating your answer on the simplicity of your code. The goal is for it to be readable; someone new
+should be able to walk into this room afterwards and instantly understand what your function is doing.</em></p>
+
+<h2 id="the-evaluation">The Evaluation</h2>
+
+<p>I explicitly state the part about what I’m looking for with the candidate. I tell them to use the language they are
+most comfortable with. Here is what I consider an ideal solution, in Python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">remove_extra_consecutive</span><span class="p">(</span><span class="n">input_str</span><span class="p">,</span> <span class="n">max_consecutive_chars</span><span class="p">):</span>
+    <span class="n">output</span><span class="p">,</span> <span class="n">prev_char</span><span class="p">,</span> <span class="n">current_char_seen</span> <span class="o">=</span> <span class="s">''</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">current_char</span> <span class="ow">in</span> <span class="n">input_str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current_char</span> <span class="o">==</span> <span class="n">prev_char</span><span class="p">:</span>
+            <span class="n">current_char_seen</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_char_seen</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">prev_char</span> <span class="o">=</span> <span class="n">current_char</span>
+        <span class="k">if</span> <span class="n">current_char_seen</span> <span class="o">&lt;</span> <span class="n">max_consecutive_chars</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">current_char</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div></div>
+
+<p>While the candidate is writing code, I focus on the following.</p>
+
+<ul>
+  <li>Thought process. How do they get to a solution? Did they talk about their strategy?</li>
+  <li>It needs to work. If it doesn’t, I will keep pushing them until it does.</li>
+  <li>Are the function and the variables well named?</li>
+  <li>Is the code as simple as possible, but not more simple?</li>
+  <li>Is the candidate struggling to remember standard library functions? Help them out.</li>
+</ul>
+
+<h2 id="other-solutions">Other Solutions</h2>
+
+<p>The most common variant answer I see is conflating the clauses that count the character and append to the output. Typically this results in a bug where the last character in a run is omitted.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">remove_extra_consecutive</span><span class="p">(</span><span class="n">input_str</span><span class="p">,</span> <span class="n">max_consecutive_chars</span><span class="p">):</span>
+    <span class="n">output</span><span class="p">,</span> <span class="n">prev_char</span><span class="p">,</span> <span class="n">current_char_seen</span> <span class="o">=</span> <span class="s">''</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">current_char</span> <span class="ow">in</span> <span class="n">input_str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current_char</span> <span class="o">==</span> <span class="n">prev_char</span> <span class="ow">and</span> <span class="n">current_char_seen</span> <span class="o">&lt;</span> <span class="n">max_consecutive_chars</span><span class="p">:</span>
+            <span class="n">current_char_seen</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">current_char</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_char</span> <span class="o">!=</span> <span class="n">prev_char</span><span class="p">:</span>
+                <span class="n">current_char_seen</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">output</span> <span class="o">+=</span> <span class="n">current_char</span>
+        <span class="n">prev_char</span> <span class="o">=</span> <span class="n">current_char</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div></div>
+
+<p>Another variant is using indexes instead of a named variable for the previous character. This can often lead to an index out of bounds bug. It’s also common to forget to add the last character.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">remove_extra_consecutive</span><span class="p">(</span><span class="n">input_str</span><span class="p">,</span> <span class="n">max_consecutive_chars</span><span class="p">):</span>
+    <span class="n">output</span><span class="p">,</span> <span class="n">current_char_seen</span> <span class="o">=</span> <span class="s">''</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_str</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">input_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">input_str</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">current_char_seen</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_char_seen</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">current_char_seen</span> <span class="o">&lt;</span> <span class="n">max_consecutive_chars</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">input_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">current_char_seen</span> <span class="o">&lt;=</span> <span class="n">max_consecutive_chars</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="n">input_str</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div></div>
+
+<p>Finally some candidates try to alter the input string itself, or sometimes loop indexes, which can lead of off by one errors.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">remove_extra_consecutive</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">max_consecutive_chars</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">-</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">max_consecutive_chars</span><span class="p">:</span>
+                <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="nb">str</span>
+</code></pre></div></div>
+
+<h2 id="summary">Summary</h2>
+
+<p>I like this problem because it has one simple and robust solution, and a number of more complicated and brittle solutions. If a candidate gets through it quickly and correctly, I follow up by asking them about which edge cases they would want to create unit tests for. If it’s in a dynamic language, I ask about how to make the function operate on any iterable.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#interview" class="page__taxonomy-item p-category" rel="tag">interview</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2014-10-10-my-favorite-interview-question.md">_posts/2014-10-10-my-favorite-interview-question.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2014-10-10T00:00:00+00:00">October 10, 2014</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2014/09/06/picking-a-place-to-live-east-bay.html" class="pagination--pager" title="Picking a place to live in the East Bay">Previous</a>
+    
+    
+      <a href="/blog/2014/11/23/dotfiles.html" class="pagination--pager" title="Sync dotfiles with GitHub">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

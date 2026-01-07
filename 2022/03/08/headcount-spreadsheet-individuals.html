@@ -1,0 +1,486 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Headcount Tracking for a Medium Sized Org using a Spreadsheet - Chase Seibert Blog</title>
+<meta name="description" content="Don’t do what I did, and spend 10 years headcount tracking in text documents">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Headcount Tracking for a Medium Sized Org using a Spreadsheet">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2022/03/08/headcount-spreadsheet-individuals.html">
+
+
+  <meta property="og:description" content="Don’t do what I did, and spend 10 years headcount tracking in text documents">
+
+
+
+  <meta property="og:image" content="https://chase-seibert.github.io/blog/images/header-crowd.png">
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Headcount Tracking for a Medium Sized Org using a Spreadsheet">
+  <meta name="twitter:description" content="Don’t do what I did, and spend 10 years headcount tracking in text documents">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2022/03/08/headcount-spreadsheet-individuals.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chase-seibert.github.io/blog/images/header-crowd.png">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2022-03-08T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2022/03/08/headcount-spreadsheet-individuals.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.01)), url('/blog/images/header-crowd.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Headcount Tracking for a Medium Sized Org using a Spreadsheet
+
+        
+      </h1>
+      
+        <p class="page__lead">Don’t do what I did, and spend 10 years headcount tracking in text documents
+</p>
+      
+      
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Headcount Tracking for a Medium Sized Org using a Spreadsheet">
+    <meta itemprop="description" content="Don’t do what I did, and spend 10 years headcount tracking in text documents">
+    <meta itemprop="datePublished" content="2022-03-08T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#why-use-a-spreadsheet">Why use a spreadsheet?</a></li><li><a href="#creating-the-spreadsheet">Creating the Spreadsheet</a><ul><li><a href="#example-template">Example Template</a></li><li><a href="#columns">Columns</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p>While the simple question of “how many people work here?” should be easy to answer, even slightly more nuanced questions like “who is on which team?”, or “how many people have we hired that have not started yet on these three teams?” can quickly turn into one-off manual fact finding and counting exercises. But, if you build a practice of documenting employees, new hires and open headcount in a spreadsheet, you can quickly answer such questions with accuracy.</p>
+
+<p>This is probably most useful for organizations between 20 and 100 people. For smaller organizations, you can keep track of this all in your head and not miss anything. For larger organizations, you may run into problems keeping the data updated across many different teams and managers.</p>
+
+<h1 id="why-use-a-spreadsheet">Why use a spreadsheet?</h1>
+
+<p>Like any form of accounting, you need to start with raw row level data. In dual-entry accounting for finances, you track individual transactions, tally those into account balances, and double-check the balances against reality. If you <strong>just</strong> maintain a dollar balance figure, and you add/subtract from that directly, you will very quickly get to a spot where your balance is incorrect, but you are not sure why. For headcount tracking, this means tracking individual people. If you add up all the people rows, you can double-check the total count against another source of truth like Workday.</p>
+
+<p>Once you have an spreadsheet of current employees (aka “butts-in-seats” or BiS), it’s natural to layer in future employees you know about (“accepted-not-started”, or ANS) and also open headcount (“Open HC”). That way, you can get a wholistic view of total staffing. A spreadsheet will also give you collaborative editing/sharing with other managers, arbitrary pivot tables to visualize things like headcount per team/sub-team/manager/role, and you can even fork off new copies of the spreadsheet for use cases like reorg planning or layoffs.</p>
+
+<p>You can start to see why it’s useful to maintain a separate, custom source of truth. For some of the use cases above, you’re not just looking at reporting structure information, i.e. who reports to who. For example, you may want to slice by team, and teams can have individuals on them reporting into different managers. This is one of many use cases where popular tools like Workday do not give you a complete picture, of even the full set of individuals. Instead, I recommend compiling this spreadsheet once, and then regularly updating it with managers in you organization.</p>
+
+<h1 id="creating-the-spreadsheet">Creating the Spreadsheet</h1>
+
+<p>Hopefully, you have some source-of-truth system that you feel confident will give you an export with the full, correct set of individuals. Maybe you need to export several data sets and merge them. Either way, this is worth doing if you’re talking about an organization with more than a few teams worth of people. It’s better to start with a complete dataset and massage it, than to start with an incomplete dataset and be missing people. Eventually, you will also want to add ANS and Open HC rows, which will often come from other systems, or be manually entered.</p>
+
+<p>You will likely be able to copy &amp; paste rows of email and name. Much of the rest will need to be hand-entered. The “fill” feature of your spreadsheet can be useful here, for repetitive data entry. This is another reason why this system probably will not work with 500+ employee organizations; you likely do not even know the team/role of each person! Granted, you could crowd source that, once. Either way, future incremental updates will be much more lightweight.</p>
+
+<h2 id="example-template">Example Template</h2>
+
+<p>Here is an example template in Google Sheets: 
+<a href="https://docs.google.com/spreadsheets/d/1vpIOK44wH6oJxlnl6Owqvu1brzztuH8G2syyLdGRGYk/edit?usp=sharing">Headcount Tracking for a Medium Sized Org</a>. You can fork a copy with File -&gt; Make a copy. <em>Note: these names are from a <a href="http://www.randat.com/">random data generator</a></em>.</p>
+
+<p><img src="/blog/images/headcount-spreadsheet-individuals.png" alt="Screenshot individuals sheet" /></p>
+
+<p><img src="/blog/images/headcount-spreadsheet-pivot.png" alt="Screenshot pivot sheet" /></p>
+
+<h2 id="columns">Columns</h2>
+
+<p>You can add any columns you want of course, as long as you’re willing to do the data entry. These are some fields which I have found useful.</p>
+
+<ul>
+  <li>Email address gives you a unique identifier, and allows for copying/pasting the entire column for use cases like sending an email, creating a Google Group, or creating a Slack channel</li>
+  <li>Full name for the sake of humans reading the spreadsheet</li>
+  <li>The name or email of the person’s manager, for filtering, especially when you ask individual managers to make sure their rows are complete and up to date</li>
+  <li>Team, which may not be a 1:1 mapping by manager, and is the grouping you will most often want to visualize by</li>
+  <li>Team+1, Team+2, etc, can be added to support arbitrary levels of groups in your org structure. Team+1 is the parent organization that a Team is in, if you have such named structures.</li>
+  <li>Role is useful for making sure that you’re not missing a cross-functional team member like a product manager or a designer, and also for the case when headcount is allocated separately by role</li>
+  <li>Optional: Start and end dates for tracking ANS and attrition</li>
+  <li>Optional: Req ID/Link for linking open headcount to external applicant tracking systems</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#managers" class="page__taxonomy-item p-category" rel="tag">managers</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#process" class="page__taxonomy-item p-category" rel="tag">process</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#template" class="page__taxonomy-item p-category" rel="tag">template</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2022-03-08-headcount-spreadsheet-individuals.md">_posts/2022-03-08-headcount-spreadsheet-individuals.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2022-03-08T00:00:00+00:00">March 8, 2022</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2022/02/14/define-a-vision.html" class="pagination--pager" title="Setting Direction: Define a Vision">Previous</a>
+    
+    
+      <a href="/blog/2022/03/16/easy-mode-guide-to-us-tax-withholdings.html" class="pagination--pager" title="The Software Engineer’s Easy Mode Guide to US Tax Withholdings">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

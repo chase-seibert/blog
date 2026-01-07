@@ -1,0 +1,510 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Per-request Query Caching in Django - Chase Seibert Blog</title>
+<meta name="description" content="The Django ORM is a wonderful thing. It makes it so easy to access the database, that sometimes you forget that it’s even happening. That is, until you open django-debug-toolbar and see that you’re suddenly running hundreds of queries! Not only that, but looking at the actual queries, many of them are duplicates! You think “Where did all these queries come from? Stupid coworkers, not writing efficient code!” Then you inevitably realize that half of the extra queries were ones you wrote yourself. How does this happen?">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Per-request Query Caching in Django">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/01/17/caching-selects-per-request-django.html">
+
+
+  <meta property="og:description" content="The Django ORM is a wonderful thing. It makes it so easy to access the database, that sometimes you forget that it’s even happening. That is, until you open django-debug-toolbar and see that you’re suddenly running hundreds of queries! Not only that, but looking at the actual queries, many of them are duplicates! You think “Where did all these queries come from? Stupid coworkers, not writing efficient code!” Then you inevitably realize that half of the extra queries were ones you wrote yourself. How does this happen?">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Per-request Query Caching in Django">
+  <meta name="twitter:description" content="The Django ORM is a wonderful thing. It makes it so easy to access the database, that sometimes you forget that it’s even happening. That is, until you open django-debug-toolbar and see that you’re suddenly running hundreds of queries! Not only that, but looking at the actual queries, many of them are duplicates! You think “Where did all these queries come from? Stupid coworkers, not writing efficient code!” Then you inevitably realize that half of the extra queries were ones you wrote yourself. How does this happen?">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/01/17/caching-selects-per-request-django.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-01-17T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/01/17/caching-selects-per-request-django.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Per-request Query Caching in Django">
+    <meta itemprop="description" content="The Django ORM is a wonderful thing. It makes it so easy to access the database, that sometimes you forget that it’s even happening. That is, until you open django-debug-toolbar and see that you’re suddenly running hundreds of queries! Not only that, but looking at the actual queries, many of them are duplicates! You think “Where did all these queries come from? Stupid coworkers, not writing efficient code!” Then you inevitably realize that half of the extra queries were ones you wrote yourself. How does this happen?">
+    <meta itemprop="datePublished" content="2013-01-17T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/01/17/caching-selects-per-request-django.html" itemprop="url">Per-request Query Caching in Django
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The Django ORM is a wonderful thing. It makes it so easy to access the database, that sometimes you forget that it’s even happening. That is, until you open <a href="https://github.com/django-debug-toolbar/django-debug-toolbar">django-debug-toolbar</a> and see that you’re suddenly running hundreds of queries! Not only that, but looking at the actual queries, many of them are duplicates! You think “Where did all these queries come from? Stupid coworkers, not writing efficient code!” Then you inevitably realize that half of the extra queries were ones you wrote yourself. How does this happen?</p>
+
+<p>It’s all too easy. Maybe you have a <code class="language-plaintext highlighter-rouge">User</code> object with a helper method on it that performs a join to get their recent activity. You’re passing <code class="language-plaintext highlighter-rouge">user</code> instances around in many of your method calls. So as not to assume a wider contract than necessary with the caller, utility methods all over the place are calling this helper method. Your code is nice and tight; you’re not repeating yourself anywhere, but some page requests are calling this function from various places in the stack half a dozen times!</p>
+
+<p>Why is this a big deal? After the first query, the database will probably have a nice warm version in its cache. What you will likely see in the debug toolbar is that many of your duplicate queries will return in less than 2 milliseconds. However, any latency to the database server <a href="http://chase-seibert.github.com/blog/2011/10/07/django-performance-latency-kills.html">can still kill you</a>. Plus, even tiny queries are still causing some contention and load on the database.</p>
+
+<p>There are <a href="http://packages.python.org/johnny-cache/">various</a> <a href="https://github.com/dziegler/django-cachebot">existing</a> <a href="http://pypi.python.org/pypi/django-cache-machine">solutions</a> for query caching in Django. In general, they all require that you expire cache results manually if you have edge cases like writing data to your database. In other words, they are likely to introduce bugs.</p>
+
+<p>What I have come up with is a monkey-patch for some Django internals to cache the results of individual SQL statements, but only inside the life cycle of a single request. This will take zero load off of your database if you have perfect code. For mere mortals, it could likely reduce your database calls significantly.</p>
+
+<p>You start by adding a piece of middlware:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">myapp.utils</span> <span class="kn">import</span> <span class="n">query_cache</span>
+
+
+<span class="k">class</span> <span class="nc">QueryCacheMiddleware</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">process_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">query_cache</span><span class="p">.</span><span class="n">patch</span><span class="p">()</span></code></pre></figure>
+
+<p>Then, you have to enable that middleware in <code class="language-plaintext highlighter-rouge">settings.py</code>:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"> <span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">...</span>
+    <span class="s">'myapp.middleware.QueryCacheMiddleware'</span><span class="p">,</span></code></pre></figure>
+
+<p>Finally, here is the <code class="language-plaintext highlighter-rouge">query_cache</code> patch itself.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">'''
+Hack to cache SELECT statements inside a single Django request. The patch() method replaces
+the Django internal execute_sql method with a stand-in called execute_sql_cache. That method
+looks at the sql to be run, and if it's a select statement, it checks a thread-local cache first.
+Only if it's not found in the cache does it proceed to execute the SQL. On any other type of
+sql statement, it blows away the cache. There is some logic to not cache large result sets,
+meaning anything over 100 records. This is to preserve Django's lazy query set evaluation.
+'''</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">local</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">django.db.models.sql.constants</span> <span class="kn">import</span> <span class="n">MULTI</span>
+<span class="kn">from</span> <span class="nn">django.db.models.sql.compiler</span> <span class="kn">import</span> <span class="n">SQLCompiler</span>
+<span class="kn">from</span> <span class="nn">django.db.models.sql.datastructures</span> <span class="kn">import</span> <span class="n">EmptyResultSet</span>
+<span class="kn">from</span> <span class="nn">django.db.models.sql.constants</span> <span class="kn">import</span> <span class="n">GET_ITERATOR_CHUNK_SIZE</span>
+
+
+<span class="n">_thread_locals</span> <span class="o">=</span> <span class="n">local</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">get_sql</span><span class="p">(</span><span class="n">compiler</span><span class="p">):</span>
+    <span class="s">''' get a tuple of the SQL query and the arguments '''</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">compiler</span><span class="p">.</span><span class="n">as_sql</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">EmptyResultSet</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="p">[])</span>
+
+
+<span class="k">def</span> <span class="nf">execute_sql_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result_type</span><span class="o">=</span><span class="n">MULTI</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_thread_locals</span><span class="p">,</span> <span class="s">'query_cache'</span><span class="p">):</span>
+
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">get_sql</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># ('SELECT * FROM ...', (50)) &lt;= sql string, args tuple
+</span>        <span class="k">if</span> <span class="n">sql</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">6</span><span class="p">].</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">'SELECT'</span><span class="p">:</span>
+
+            <span class="c1"># uses the tuple of sql + args as the cache key
+</span>            <span class="k">if</span> <span class="n">sql</span> <span class="ow">in</span> <span class="n">_thread_locals</span><span class="p">.</span><span class="n">query_cache</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">_thread_locals</span><span class="p">.</span><span class="n">query_cache</span><span class="p">[</span><span class="n">sql</span><span class="p">]</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_execute_sql</span><span class="p">(</span><span class="n">result_type</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s">'next'</span><span class="p">):</span>
+
+                <span class="c1"># only cache if this is not a full first page of a chunked set
+</span>                <span class="n">peek</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nb">next</span><span class="p">()</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="p">.</span><span class="n">chain</span><span class="p">([</span><span class="n">peek</span><span class="p">],</span> <span class="n">result</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">peek</span><span class="p">)</span> <span class="o">==</span> <span class="n">GET_ITERATOR_CHUNK_SIZE</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">result</span>
+
+            <span class="n">_thread_locals</span><span class="p">.</span><span class="n">query_cache</span><span class="p">[</span><span class="n">sql</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># the database has been updated; throw away the cache
+</span>            <span class="n">_thread_locals</span><span class="p">.</span><span class="n">query_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">_execute_sql</span><span class="p">(</span><span class="n">result_type</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">patch</span><span class="p">():</span>
+    <span class="s">''' patch the django query runner to use our own method to execute sql '''</span>
+    <span class="n">_thread_locals</span><span class="p">.</span><span class="n">query_cache</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">SQLCompiler</span><span class="p">,</span> <span class="s">'_execute_sql'</span><span class="p">):</span>
+        <span class="n">SQLCompiler</span><span class="p">.</span><span class="n">_execute_sql</span> <span class="o">=</span> <span class="n">SQLCompiler</span><span class="p">.</span><span class="n">execute_sql</span>
+        <span class="n">SQLCompiler</span><span class="p">.</span><span class="n">execute_sql</span> <span class="o">=</span> <span class="n">execute_sql_cache</span></code></pre></figure>
+
+<p>What’s going on here is that I’m replacing the Django internal <code class="language-plaintext highlighter-rouge">execute_sql</code> method with a wrapper that caches results in a thread local dictionary. It only caches small result sets. For any result more that 100 rows, Django will fire up a database cursor and a generator. Caching those without eagerly querying for the entire dataset would be <a href="http://jeffelmore.org/2010/09/25/smarter-caching-of-django-querysets/">quite tricky</a>, so I bail in that case. I have noticed that in my codebase, the majority of repeated calls are for a single record, or a small set of records.</p>
+
+<p>So as not to have to deal with any tricky invalidation cases, I simply delete the cache if any UPDATE, INSERT or DELETE statement is run.</p>
+
+<p>Of course, this will not work if you have long running page requests that purposely make the same request over and over, waiting for a particular result.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#cache" class="page__taxonomy-item p-category" rel="tag">cache</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-01-17-caching-selects-per-request-django.md">_posts/2013-01-17-caching-selects-per-request-django.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-01-17T00:00:00+00:00">January 17, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/01/11/bypass_pyflakes.html" class="pagination--pager" title="Ignore pyflakes warnings with bypass_pyflakes">Previous</a>
+    
+    
+      <a href="/blog/2013/01/26/mock-http-calls-python.html" class="pagination--pager" title="Mocking HTTP calls in Python tests">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

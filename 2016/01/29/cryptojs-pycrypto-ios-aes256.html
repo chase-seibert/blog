@@ -1,0 +1,588 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Interoperable AES256 encryption between CryptoJS, PyCrypto and CryptoSwift - Chase Seibert Blog</title>
+<meta name="description" content="Even though AES256 is a standard, there are enough choices left to implementing libraries to make cross platform encrypting and decrypting tricky. In particular, getting Javascript, Python and Swift code that could all encrypt to the same ciphertext using the same plaintext and keys, and then successfully decrypt back to the plaintext proved to be a multiple day adventure for three engineers.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Interoperable AES256 encryption between CryptoJS, PyCrypto and CryptoSwift">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2016/01/29/cryptojs-pycrypto-ios-aes256.html">
+
+
+  <meta property="og:description" content="Even though AES256 is a standard, there are enough choices left to implementing libraries to make cross platform encrypting and decrypting tricky. In particular, getting Javascript, Python and Swift code that could all encrypt to the same ciphertext using the same plaintext and keys, and then successfully decrypt back to the plaintext proved to be a multiple day adventure for three engineers.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Interoperable AES256 encryption between CryptoJS, PyCrypto and CryptoSwift">
+  <meta name="twitter:description" content="Even though AES256 is a standard, there are enough choices left to implementing libraries to make cross platform encrypting and decrypting tricky. In particular, getting Javascript, Python and Swift code that could all encrypt to the same ciphertext using the same plaintext and keys, and then successfully decrypt back to the plaintext proved to be a multiple day adventure for three engineers.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2016/01/29/cryptojs-pycrypto-ios-aes256.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2016-01-29T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2016/01/29/cryptojs-pycrypto-ios-aes256.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Interoperable AES256 encryption between CryptoJS, PyCrypto and CryptoSwift">
+    <meta itemprop="description" content="Even though AES256 is a standard, there are enough choices left to implementing libraries to makecross platform encrypting and decrypting tricky. In particular, getting Javascript, Python andSwift code that could all encrypt to the same ciphertext using the same plaintext and keys, andthen successfully decrypt back to the plaintext proved to be a multiple day adventure for threeengineers.">
+    <meta itemprop="datePublished" content="2016-01-29T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2016/01/29/cryptojs-pycrypto-ios-aes256.html" itemprop="url">Interoperable AES256 encryption between CryptoJS, PyCrypto and CryptoSwift
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Even though AES256 is a standard, there are enough choices left to implementing libraries to make
+cross platform encrypting and decrypting tricky. In particular, getting Javascript, Python and
+Swift code that could all encrypt to the same ciphertext using the same plaintext and keys, and
+then successfully decrypt back to the plaintext proved to be a multiple day adventure for three
+engineers.</p>
+
+<p>Thanks to <a href="https://gist.github.com/marcoslin/8026990">marcoslin</a> for getting us started!</p>
+
+<p>Also, thanks to my co-workers Chris Boyle and Yair Loeza, who assure me that they do not have
+Twitter accounts worth linking to ;)</p>
+
+<h1 id="cryptojs">CryptoJS</h1>
+
+<p>This library makes some implementation decisions that required diving into the source code to
+even find out about.</p>
+
+<ul>
+  <li>In the canonical usage <code class="language-plaintext highlighter-rouge">Crypto.AES.encrypt(plaintext, key, options)</code>, the second parameter is not actually
+the AES key. It’s the “passphrase”, which is used to randomly generate <code class="language-plaintext highlighter-rouge">key</code>, <code class="language-plaintext highlighter-rouge">iv</code> AND <code class="language-plaintext highlighter-rouge">salt</code> values.</li>
+  <li>However, if you pass a byte array instead of a string, it WILL use that value as the <code class="language-plaintext highlighter-rouge">key</code> directly.</li>
+  <li>We also found it expedient to set an <code class="language-plaintext highlighter-rouge">iv</code> value explicitly via the third <code class="language-plaintext highlighter-rouge">options</code> parameter.</li>
+  <li>The default AES mode and padding scheme are also defaulted differently than other libraries, but
+can easily be over-ridden in the constructor. We chose zero byte padding knowing that it’s simple and
+that we would need to implement pad/unpad ourselves on the other platforms.</li>
+  <li>Finally, we chose a serialization method of hex over the wire, to reduce the change that a character
+encoding issue make our ciphertext invalid in transit.</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Crypto</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cryptojs</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">Crypto</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">Crypto</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">KEY</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">This is a key123</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">IV</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">This is an IV456</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">MODE</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">mode</span><span class="p">.</span><span class="nx">CFB</span><span class="p">(</span><span class="nx">Crypto</span><span class="p">.</span><span class="nx">pad</span><span class="p">.</span><span class="nx">ZeroPadding</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">plaintext</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">The answer is no</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">input_bytes</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">charenc</span><span class="p">.</span><span class="nx">UTF8</span><span class="p">.</span><span class="nx">stringToBytes</span><span class="p">(</span><span class="nx">plaintext</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">charenc</span><span class="p">.</span><span class="nx">UTF8</span><span class="p">.</span><span class="nx">stringToBytes</span><span class="p">(</span><span class="nx">KEY</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span><span class="na">iv</span><span class="p">:</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">charenc</span><span class="p">.</span><span class="nx">UTF8</span><span class="p">.</span><span class="nx">stringToBytes</span><span class="p">(</span><span class="nx">IV</span><span class="p">),</span> <span class="na">asBytes</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">mode</span><span class="p">:</span> <span class="nx">MODE</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">encrypted</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">AES</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="nx">input_bytes</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">encrypted_hex</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">bytesToHex</span><span class="p">(</span><span class="nx">encrypted</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">encrypted_hex</span><span class="p">);</span> <span class="c1">// this is the value you send over the wire</span>
+
+<span class="nx">output_bytes</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">hexToBytes</span><span class="p">(</span><span class="nx">encrypted_hex</span><span class="p">);</span>
+<span class="nx">output_plaintext_bytes</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">AES</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">(</span><span class="nx">output_bytes</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="nx">output_plaintext</span> <span class="o">=</span> <span class="nx">Crypto</span><span class="p">.</span><span class="nx">charenc</span><span class="p">.</span><span class="nx">UTF8</span><span class="p">.</span><span class="nx">bytesToString</span><span class="p">(</span><span class="nx">output_plaintext_bytes</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">output_plaintext</span><span class="p">);</span> <span class="c1">// result: 'The answer is no'</span>
+</code></pre></div></div>
+
+<h1 id="pycrypto">PyCrypto</h1>
+
+<p>We actually started with this implementation, but ended up having to tweak it more to be compatible
+with what we were doing in CryptoJS. Nothing weird here, but we did need to set the mode correctly,
+and we needed to implement the padding ourselves. PyCrypto does not require that plaintext be a
+multiple of BLOCK_SIZE the way PyCrypto does, but we needed to ensure that it could encrypt and
+decrypt to the same outputs as PyCrypto.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+
+
+<span class="n">KEY</span> <span class="o">=</span> <span class="s">'This is a key123'</span>
+<span class="n">IV</span> <span class="o">=</span> <span class="s">'This is an IV456'</span>
+<span class="n">MODE</span> <span class="o">=</span> <span class="n">AES</span><span class="p">.</span><span class="n">MODE_CFB</span>
+<span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">SEGMENT_SIZE</span> <span class="o">=</span> <span class="mi">128</span>
+
+
+<span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">plaintext</span><span class="p">):</span>
+    <span class="n">aes</span> <span class="o">=</span> <span class="n">AES</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">MODE</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">segment_size</span><span class="o">=</span><span class="n">SEGMENT_SIZE</span><span class="p">)</span>
+    <span class="n">plaintext</span> <span class="o">=</span> <span class="n">_pad_string</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
+    <span class="n">encrypted_text</span> <span class="o">=</span> <span class="n">aes</span><span class="p">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">binascii</span><span class="p">.</span><span class="n">b2a_hex</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">).</span><span class="n">rstrip</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">encrypted_text</span><span class="p">):</span>
+    <span class="n">aes</span> <span class="o">=</span> <span class="n">AES</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">MODE</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">segment_size</span><span class="o">=</span><span class="n">SEGMENT_SIZE</span><span class="p">)</span>
+    <span class="n">encrypted_text_bytes</span> <span class="o">=</span> <span class="n">binascii</span><span class="p">.</span><span class="n">a2b_hex</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">)</span>
+    <span class="n">decrypted_text</span> <span class="o">=</span> <span class="n">aes</span><span class="p">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">encrypted_text_bytes</span><span class="p">)</span>
+    <span class="n">decrypted_text</span> <span class="o">=</span> <span class="n">_unpad_string</span><span class="p">(</span><span class="n">decrypted_text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">decrypted_text</span>
+
+
+<span class="k">def</span> <span class="nf">_pad_string</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">pad_size</span> <span class="o">=</span> <span class="n">BLOCK_SIZE</span> <span class="o">-</span> <span class="p">(</span><span class="n">length</span> <span class="o">%</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span><span class="p">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">length</span> <span class="o">+</span> <span class="n">pad_size</span><span class="p">,</span> <span class="s">'</span><span class="se">\x00</span><span class="s">'</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_unpad_string</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">value</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">'</span><span class="se">\x00</span><span class="s">'</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">input_plaintext</span> <span class="o">=</span> <span class="s">'The answer is no'</span>
+    <span class="n">encrypted_text</span> <span class="o">=</span> <span class="n">encrypt</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">IV</span><span class="p">,</span> <span class="n">input_plaintext</span><span class="p">)</span>
+    <span class="n">decrypted_text</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span> <span class="n">IV</span><span class="p">,</span> <span class="n">encrypted_text</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">decrypted_text</span> <span class="o">==</span> <span class="n">input_plaintext</span>
+</code></pre></div></div>
+
+<h1 id="cryptoswift">CryptoSwift</h1>
+
+<p>Only weird thing here is that we needed to implement our own conversion of a hex to NSData.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">AESHelper</span> <span class="p">{</span>
+
+
+    <span class="k">var</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">var</span> <span class="nv">iv</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">16</span>
+
+    <span class="nf">init</span> <span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">iv</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">iv</span> <span class="o">=</span> <span class="n">iv</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">encrypt</span> <span class="p">(</span><span class="nv">stringToEncrypt</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">messageData</span> <span class="o">=</span> <span class="n">stringToEncrypt</span><span class="o">.</span><span class="nf">dataUsingEncoding</span><span class="p">(</span><span class="kt">NSUTF8StringEncoding</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">byteArray</span> <span class="o">=</span> <span class="nf">pad</span><span class="p">(</span><span class="n">messageData</span><span class="o">!.</span><span class="nf">arrayOfBytes</span><span class="p">())</span>
+        <span class="k">let</span> <span class="nv">encryptedBytes</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">AES</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="nv">iv</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">iv</span><span class="p">,</span> <span class="nv">blockMode</span><span class="p">:</span> <span class="o">.</span><span class="kt">CFB</span><span class="p">)</span><span class="o">.</span><span class="nf">encrypt</span><span class="p">(</span><span class="n">byteArray</span><span class="p">,</span> <span class="nv">padding</span><span class="p">:</span> <span class="o">.</span><span class="kt">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">encryptedBytes</span><span class="o">.</span><span class="nf">toHexString</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">decrypt</span> <span class="p">(</span><span class="k">var</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">messageData</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="nf">dataFromHexadecimalString</span><span class="p">()</span>
+        <span class="k">let</span> <span class="nv">byteArray</span> <span class="o">=</span> <span class="n">messageData</span><span class="p">?</span><span class="o">.</span><span class="nf">arrayOfBytes</span><span class="p">()</span>
+        <span class="k">let</span> <span class="nv">decryptedBytes</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">]</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">AES</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="nv">iv</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">iv</span><span class="p">,</span> <span class="nv">blockMode</span><span class="p">:</span> <span class="o">.</span><span class="kt">CFB</span><span class="p">)</span><span class="o">.</span><span class="nf">decrypt</span><span class="p">(</span><span class="n">byteArray</span><span class="o">!</span><span class="p">,</span> <span class="nv">padding</span><span class="p">:</span> <span class="o">.</span><span class="kt">None</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">unpaddedBytes</span> <span class="o">=</span> <span class="nf">unpad</span><span class="p">(</span><span class="n">decryptedBytes</span><span class="p">)</span>
+        <span class="k">var</span> <span class="nv">unencryptedString</span> <span class="o">=</span> <span class="kt">NSString</span><span class="p">(</span><span class="nv">bytes</span><span class="p">:</span> <span class="n">unpaddedBytes</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="n">unpaddedBytes</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="nv">encoding</span><span class="p">:</span> <span class="kt">NSUTF8StringEncoding</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kt">String</span><span class="p">(</span><span class="n">unencryptedString</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">pad</span><span class="p">(</span><span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">]</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">length</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">count</span>
+        <span class="k">let</span> <span class="nv">padSize</span> <span class="o">=</span> <span class="kt">BLOCK_SIZE</span> <span class="o">-</span> <span class="p">(</span><span class="n">length</span> <span class="o">%</span> <span class="kt">BLOCK_SIZE</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">padArray</span> <span class="o">=</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">](</span><span class="nv">count</span><span class="p">:</span> <span class="n">padSize</span><span class="p">,</span> <span class="nv">repeatedValue</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">value</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">(</span><span class="n">padArray</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">unpad</span><span class="p">(</span><span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">]</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="k">var</span> <span class="nv">index</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">index</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="n">value</span><span class="o">.</span><span class="nf">removeAtIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">else</span>  <span class="p">{</span>
+                <span class="k">break</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">String</span> <span class="p">{</span>
+
+    <span class="c1">/// http://stackoverflow.com/questions/26501276/converting-hex-string-to-nsdata-in-swift</span>
+    <span class="c1">///</span>
+    <span class="c1">/// Create NSData from hexadecimal string representation</span>
+    <span class="c1">///</span>
+    <span class="c1">/// This takes a hexadecimal representation and creates a NSData object. Note, if the string has any spaces, those are removed. Also if the string started with a '&lt;' or ended with a '&gt;', those are removed, too. This does no validation of the string to ensure it's a valid hexadecimal string</span>
+    <span class="c1">///</span>
+    <span class="c1">/// The use of `strtoul` inspired by Martin R at http://stackoverflow.com/a/26284562/1271826</span>
+    <span class="c1">///</span>
+    <span class="c1">/// - returns: NSData represented by this hexadecimal string. Returns nil if string contains characters outside the 0-9 and a-f range.</span>
+
+    <span class="kd">func</span> <span class="nf">dataFromHexadecimalString</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">NSData</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">trimmedString</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="nf">stringByTrimmingCharactersInSet</span><span class="p">(</span><span class="kt">NSCharacterSet</span><span class="p">(</span><span class="nv">charactersInString</span><span class="p">:</span> <span class="s">"&lt;&gt; "</span><span class="p">))</span><span class="o">.</span><span class="nf">stringByReplacingOccurrencesOfString</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="nv">withString</span><span class="p">:</span> <span class="s">""</span><span class="p">)</span>
+
+        <span class="c1">// make sure the cleaned up string consists solely of hex digits, and that we have even number of them</span>
+
+        <span class="k">let</span> <span class="nv">regex</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">NSRegularExpression</span><span class="p">(</span><span class="nv">pattern</span><span class="p">:</span> <span class="s">"^[0-9a-f]*$"</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="o">.</span><span class="kt">CaseInsensitive</span><span class="p">)</span>
+
+        <span class="k">let</span> <span class="nv">found</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="nf">firstMatchInString</span><span class="p">(</span><span class="n">trimmedString</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[],</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSMakeRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">trimmedString</span><span class="o">.</span><span class="n">characters</span><span class="o">.</span><span class="n">count</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">found</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="n">found</span><span class="p">?</span><span class="o">.</span><span class="n">range</span><span class="o">.</span><span class="n">location</span> <span class="o">==</span> <span class="kt">NSNotFound</span> <span class="o">||</span> <span class="n">trimmedString</span><span class="o">.</span><span class="n">characters</span><span class="o">.</span><span class="n">count</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+        <span class="p">}</span>
+
+        <span class="c1">// everything ok, so now let's build NSData</span>
+
+        <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="kt">NSMutableData</span><span class="p">(</span><span class="nv">capacity</span><span class="p">:</span> <span class="n">trimmedString</span><span class="o">.</span><span class="n">characters</span><span class="o">.</span><span class="n">count</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="k">var</span> <span class="nv">index</span> <span class="o">=</span> <span class="n">trimmedString</span><span class="o">.</span><span class="n">startIndex</span><span class="p">;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">trimmedString</span><span class="o">.</span><span class="n">endIndex</span><span class="p">;</span> <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="nf">successor</span><span class="p">()</span><span class="o">.</span><span class="nf">successor</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">byteString</span> <span class="o">=</span> <span class="n">trimmedString</span><span class="o">.</span><span class="nf">substringWithRange</span><span class="p">(</span><span class="kt">Range</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span> <span class="nv">end</span><span class="p">:</span> <span class="n">index</span><span class="o">.</span><span class="nf">successor</span><span class="p">()</span><span class="o">.</span><span class="nf">successor</span><span class="p">()))</span>
+            <span class="k">let</span> <span class="nv">num</span> <span class="o">=</span> <span class="kt">UInt8</span><span class="p">(</span><span class="n">byteString</span><span class="o">.</span><span class="n">withCString</span> <span class="p">{</span> <span class="nf">strtoul</span><span class="p">(</span><span class="nv">$0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span> <span class="p">})</span>
+            <span class="n">data</span><span class="p">?</span><span class="o">.</span><span class="nf">appendBytes</span><span class="p">([</span><span class="n">num</span><span class="p">]</span> <span class="k">as</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">],</span> <span class="nv">length</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Happy encrypting!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2016-01-29-cryptojs-pycrypto-ios-aes256.md">_posts/2016-01-29-cryptojs-pycrypto-ios-aes256.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2016-01-29T00:00:00+00:00">January 29, 2016</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2015/12/04/chat-message-platforms.html" class="pagination--pager" title="Comparison of Chat Message Platforms">Previous</a>
+    
+    
+      <a href="/blog/2016/02/26/QA-101-How-to-write-a-bug-report.html" class="pagination--pager" title="QA 101 - How to Write a Bug Report">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

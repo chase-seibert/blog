@@ -1,0 +1,521 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Hacking Django runserver to run multiple Django instances - Chase Seibert Blog</title>
+<meta name="description" content="Recently at work we’ve been on a “servicifying” kick, meaning we’re slowly converting our monolithic Django app into separate services. To start, this just means breaking up the existing runtime into pieces. Instead of one logical web process, we now have different ones for the web app, admin, login, apis, etc.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Hacking Django runserver to run multiple Django instances">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/11/03/django-runserver-launch-multiple-screen.html">
+
+
+  <meta property="og:description" content="Recently at work we’ve been on a “servicifying” kick, meaning we’re slowly converting our monolithic Django app into separate services. To start, this just means breaking up the existing runtime into pieces. Instead of one logical web process, we now have different ones for the web app, admin, login, apis, etc.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Hacking Django runserver to run multiple Django instances">
+  <meta name="twitter:description" content="Recently at work we’ve been on a “servicifying” kick, meaning we’re slowly converting our monolithic Django app into separate services. To start, this just means breaking up the existing runtime into pieces. Instead of one logical web process, we now have different ones for the web app, admin, login, apis, etc.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/11/03/django-runserver-launch-multiple-screen.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-11-03T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/11/03/django-runserver-launch-multiple-screen.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Hacking Django runserver to run multiple Django instances">
+    <meta itemprop="description" content="Recently at work we’ve been on a “servicifying” kick, meaning we’re slowly converting our monolithic Django app into separate services. To start, this just means breaking up the existing runtime into pieces. Instead of one logical web process, we now have different ones for the web app, admin, login, apis, etc.">
+    <meta itemprop="datePublished" content="2013-11-03T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/11/03/django-runserver-launch-multiple-screen.html" itemprop="url">Hacking Django runserver to run multiple Django instances
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Recently at work we’ve been on a “servicifying” kick, meaning we’re slowly converting our monolithic Django app into separate services. To start, this just means breaking up the existing runtime into pieces. Instead of one logical web process, we now have different ones for the web app, admin, login, apis, etc.</p>
+
+<p>For production, this doesn’t change the deployment model all that much. We just have separate servers for various roles. For development, we still want to be able to easily run all the services at once on your local machine.</p>
+
+<p>Enter <code class="language-plaintext highlighter-rouge">runservices</code>, an extension of the Django <code class="language-plaintext highlighter-rouge">runserver</code> command that just launches a bunch of processes in a <code class="language-plaintext highlighter-rouge">screen</code> session (a natural choices for us, as we’re already using <code class="language-plaintext highlighter-rouge">screen</code> intensively). It turns out that screen has the ability to <a href="http://superuser.com/questions/386059/how-can-i-start-multiple-screen-sessions-automatically">launch multiple windows on startup</a> using a custom <code class="language-plaintext highlighter-rouge">.screenrc</code> file, passed on the command-line with <code class="language-plaintext highlighter-rouge">-c my.screenrc</code>. The format needed inside the <code class="language-plaintext highlighter-rouge">.screenrc</code> file is as follows:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># create two windows, called "TODO" and "coding" in vim</span>
+screen <span class="nt">-t</span> TODO vim TODO.txt
+screen <span class="nt">-t</span> coding vim ~/code</code></pre></figure>
+
+<p>When I first saw this, I thought we could use it to launch our various services. What I did was write a custom Django management command that dynamically writes a <code class="language-plaintext highlighter-rouge">.screenrc</code> file and executes it. You can run all the services, or specify just a few. Our services are launched by settings corresponding environment variables, which can be done on the command line itself.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">django.template.base</span> <span class="kn">import</span> <span class="n">Template</span>
+<span class="kn">from</span> <span class="nn">django.template.base</span> <span class="kn">import</span> <span class="n">Context</span>
+<span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span>
+
+
+<span class="n">SERVICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c1"># nothreading == to help with sqlite locking issues
+</span>    <span class="p">(</span><span class="s">'web'</span><span class="p">,</span> <span class="s">'./manage.py runserver 0:8000 --nothreading'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">'admin'</span><span class="p">,</span> <span class="s">'ADMIN=True ./manage.py runserver 0:8001 --nothreading'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">'login'</span><span class="p">,</span> <span class="s">'LOGIN=True ./manage.py runserver 0:8002 --nothreading'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">'celery'</span><span class="p">,</span> <span class="s">'./manage.py celery beat'</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">ACTIVATE_REL_PATH</span> <span class="o">=</span> <span class="s">'../virtualenv/bin/activate'</span>
+
+<span class="n">DEFAULT_SERVICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">'web'</span><span class="p">,</span>
+    <span class="s">'admin'</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+
+    <span class="n">help</span> <span class="o">=</span> <span class="s">'Runs all the services'</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="s">'appname appname'</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="n">allowed_services</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">DEFAULT_SERVICES</span> <span class="o">+</span> <span class="n">args</span><span class="p">))</span>
+        <span class="n">services</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">SERVICES</span> <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">allowed_services</span><span class="p">]</span>
+        <span class="n">multiplexer</span> <span class="o">=</span> <span class="n">ScreenMultiplexer</span><span class="p">(</span><span class="n">services</span><span class="p">)</span>
+        <span class="n">multiplexer</span><span class="p">.</span><span class="n">write_rc_file</span><span class="p">()</span>
+        <span class="n">multiplexer</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">render_template</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">context_dict</span><span class="p">):</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">(</span><span class="n">context_dict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">template</span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ScreenMultiplexer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">services</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">services</span> <span class="o">=</span> <span class="n">services</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">rc_file</span> <span class="o">=</span> <span class="s">'.screenrc'</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">rc_template</span> <span class="o">=</span> <span class="s">'''
+caption always "%{= kw}%-w%{= BW}%n %t%{-}%+w %-= Exit: C-a \ %c"
+{% for name, command in services %}
+screen -t {{ name }} bash -c "{{ venv }}; {{ command }}"
+{% endfor %}
+select 0
+'''</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">venv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">activate</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">ACTIVATE_REL_PATH</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">activate</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"Could not locate virtualenv script %s"</span> <span class="o">%</span> <span class="n">activate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">'source %s'</span> <span class="o">%</span> <span class="n">activate</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">rc_template</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s">'venv'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">venv</span><span class="p">,</span>
+            <span class="s">'services'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">services</span><span class="p">,</span>
+        <span class="p">})</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">rc_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="bp">self</span><span class="p">.</span><span class="n">rc_file</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">write_rc_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">rc_path</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">render</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">execlp</span><span class="p">(</span><span class="s">'screen'</span><span class="p">,</span> <span class="s">'screen'</span><span class="p">,</span> <span class="s">'-c'</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">rc_path</span><span class="p">)</span></code></pre></figure>
+
+<p>The resulting <code class="language-plaintext highlighter-rouge">.screenrc</code> files ends up looking like (added comments):</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># set a nice screen footer</span>
+caption always <span class="s2">"%{= kw}%-w%{= BW}%n %t%{-}%+w %-= Exit: C-a </span><span class="se">\ </span><span class="s2">%c"</span>
+
+<span class="c"># run web</span>
+screen <span class="nt">-t</span> web bash <span class="nt">-c</span> <span class="s2">"source /Users/myuser/code/myproject/virtualenv/bin/activate; ./manage.py runserver 0:8000 --nothreading"</span>
+
+<span class="c"># run admin</span>
+screen <span class="nt">-t</span> admin bash <span class="nt">-c</span> <span class="s2">"source /Users/myuser/code/myproject/virtualenv/bin/activate; ADMIN=True ./manage.py runserver 0:8000 --nothreading"</span>
+
+<span class="c"># select the first window (web) by default</span>
+<span class="k">select </span>0</code></pre></figure>
+
+<p>The only tricky bit was getting <code class="language-plaintext highlighter-rouge">virtualenv</code> to activate properly inside the screen session. Because it uses the bash <code class="language-plaintext highlighter-rouge">source</code> command, I needed to have <code class="language-plaintext highlighter-rouge">screen</code> actually execute bash directly, and pass the source command.</p>
+
+<p>The result is a single session of multiple windows that you can toggle through with the standard screen commans like <code class="language-plaintext highlighter-rouge">C-a</code>.</p>
+
+<p><img src="/blog/images/screen.png" alt="screen django" /></p>
+
+<p><em>Note</em>: I’m also running into intermittent issues with <code class="language-plaintext highlighter-rouge">sqlite3</code> locking the database, due to many processes trying to access it. Running with <code class="language-plaintext highlighter-rouge">--nothreading</code> and reducing celery to one worker seems to have helped, but we may need to move to <code class="language-plaintext highlighter-rouge">mysql</code> for development.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-11-03-django-runserver-launch-multiple-screen.md">_posts/2013-11-03-django-runserver-launch-multiple-screen.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-11-03T00:00:00+00:00">November 3, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/10/24/django-subclass-runserver.html" class="pagination--pager" title="Subclassing Django’s runserver causes command to be run twice">Previous</a>
+    
+    
+      <a href="/blog/2013/11/15/linux-shm-faster-sqlite.html" class="pagination--pager" title="Faster Django/sqlite runserver with /dev/shm">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

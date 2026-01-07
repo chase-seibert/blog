@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://chase-seibert.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chase-seibert.github.io/blog/" rel="alternate" type="text/html" /><updated>2026-01-07T18:58:58+00:00</updated><id>https://chase-seibert.github.io/blog/feed.xml</id><title type="html">Chase Seibert Blog</title><subtitle>Facts, hacks and attacks from my life as a web application developer</subtitle><author><name>Chase Seibert</name></author><entry><title type="html">Beyond Google Sheets, Practical Airtable Workflows for Managers</title><link href="https://chase-seibert.github.io/blog/2026/01/07/airtable-for-managers.html" rel="alternate" type="text/html" title="Beyond Google Sheets, Practical Airtable Workflows for Managers" /><published>2026-01-07T00:00:00+00:00</published><updated>2026-01-07T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2026/01/07/airtable-for-managers</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2026/01/07/airtable-for-managers.html"><![CDATA[<p>This post is a quick start guide for Airtable, focused on use cases of spreadsheets of people. It will cover row level access permissions, Interfaces, scripting, and pivot table dashboards. If you’re coming from Google Sheets, and want to up-level your spreadsheet game for some common manager tasks, this post is for you.</p>
+
+<h1 id="why-use-airtable">Why use Airtable?</h1>
+
+<p>I’m a <a href="/blog/2021/04/26/google-sheets-for-managers.html">Google Sheets power user</a>. Even so, I recognize there are some things that are easier or better in Airtable. The sheet itself is prettier. That matters if you’re presenting this content as part of your work! Forms are natively supported, meaning submissions can edit your sheet content directly (and in the format you want) versus feeding into a new sheet. It’s more intuitive to link a bunch of tables together with a foreign key, as opposed to using <code class="language-plaintext highlighter-rouge">VLOOKUP</code>. You can control visibility at the row level with Interfaces. Finally, there are more options for data visualization.</p>
+
+<p>That being said, I still turn to Google Sheets when I want to do something quickly, especially if it’s just for me.</p>
+
+<h1 id="scenario-calibrations">Scenario: Calibrations</h1>
+
+<p><a href="/blog/2023/03/28/calibrations.html">Calibrations</a> happen during performance review season. It’s a useful example for managers because it’s familiar, and involves the most common data type for managers, people! It also provides natural use cases for forms to collect data, and access control so that other managers only see people they are calibrating on.</p>
+
+<h1 id="create-simple-tables">Create simple Tables</h1>
+
+<p>First, create a new Table with a list of managers. You want the first column to be the primary key, meaning it should be unique. Generally email addresses or IDs are better than names, for tables of people.</p>
+
+<p>Add a column to the same Table for calibration panels. These are the names of one or more panels that the manager will review calibration cases for. Use the “Multiple select” column type to normalize the data.</p>
+
+<p>Also add a column with type User to tie to an Airtable user. This will come in handy later.</p>
+
+<p><img src="/blog/images/airtable1.png" alt="img" /></p>
+
+<p>Next, create a list of cases to calibrate on. These rows are people. Each one is assigned to a cohort. Note that this Panel column is a new “Single select” column, which must have the same options as the column in the Managers Table. Alternatively, you can create a normalized Table just for panels, and link both Managers and Cases to those.</p>
+
+<p>I’ve also added a blank column for the link to the calibration document.</p>
+
+<p><img src="/blog/images/airtable2.png" alt="img" /></p>
+
+<h1 id="create-an-interface">Create an Interface</h1>
+
+<p>Ok, now we get to create a view for managers to enter the link to the calibration document for their cases.</p>
+
+<p>Create an Interface called “Calibrations”. Make it type “List”, and point it to the Table of cases. To start, this just gives you back the full list of cases. Notice that it’s not editable by default. To make it editable, go back to the data view, click on the Table name, and select “Edit table permissions”.</p>
+
+<p>Now, go back to editing the Interface, select the field Calibration Doc, and make it editable. Make the other fields view only. Note that some field types are editable in the list view itself, and some are not. The URL type is not editable in the list view; users need to open the record and edit it in the preview.</p>
+
+<p><img src="/blog/images/airtable5.png" alt="img" /></p>
+
+<h1 id="filter-to-the-current-user">Filter to the current user</h1>
+
+<p>Notice that users can filter this view. For example, they can filter down to rows that they are the manager for. What if you wanted to make this the default for this Interface?</p>
+
+<p>First, we need rows to be associated with an Airtable User record, not just the name of the manager. Go back to the Cases Table, and add a column of type User. You need to manually select the right User for each row.</p>
+
+<p>Now edit the Interface again, and you can define a default filter for the Manager to be “Current User”.</p>
+
+<p><img src="/blog/images/airtable6.png" alt="img" /></p>
+
+<h1 id="calibration-feedback">Calibration Feedback</h1>
+
+<p>Now, we are going to add a Table and an Interface to collect calibration feedback from panel members on every case in that panel. We’re going to work backwards from what we want, which is a Table where each row is feedback from a manager on a specific case. There will be multiple rows in this Table from any given manager.</p>
+
+<p>Create a Table “Feedback”, with columns:</p>
+<ul>
+  <li>Primary Key: ID (type Autonumber)</li>
+  <li>Manager (type Link to Managers)</li>
+  <li>Case (type Link to Cases)</li>
+  <li>Rating</li>
+  <li>Comments</li>
+</ul>
+
+<p>These should not allow linking to multiple records, just one record. But, how can we populate this Table with one row for every combination of case and panelist for that case?</p>
+
+<h1 id="scripting">Scripting</h1>
+
+<p>Create an Automation where when you press a Button, it runs a script. I wish the Airtable AI supported helping you write this code, but here is what I came up with using ChatGPT and some iteration.</p>
+
+<p><strong>Warning: this script deletes all existing Feedback records.</strong></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">managers</span> <span class="o">=</span> <span class="nx">base</span><span class="p">.</span><span class="nx">getTable</span><span class="p">(</span><span class="dl">"</span><span class="s2">Managers</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">cases</span> <span class="o">=</span> <span class="nx">base</span><span class="p">.</span><span class="nx">getTable</span><span class="p">(</span><span class="dl">"</span><span class="s2">Cases</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">feedback</span> <span class="o">=</span> <span class="nx">base</span><span class="p">.</span><span class="nx">getTable</span><span class="p">(</span><span class="dl">"</span><span class="s2">Feedback</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// delete all feedback records; you could also do this manually instead </span>
+<span class="kd">let</span> <span class="nx">query</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">feedback</span><span class="p">.</span><span class="nx">selectRecordsAsync</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">recordIds</span> <span class="o">=</span> <span class="nx">query</span><span class="p">.</span><span class="nx">records</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">recordIds</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">feedback</span><span class="p">.</span><span class="nx">deleteRecordsAsync</span><span class="p">(</span><span class="nx">recordIds</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">));</span>
+    <span class="nx">recordIds</span> <span class="o">=</span> <span class="nx">recordIds</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">allManagers</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">managers</span><span class="p">.</span><span class="nx">selectRecordsAsync</span><span class="p">({</span><span class="na">fields</span><span class="p">:</span> <span class="nx">managers</span><span class="p">.</span><span class="nx">fields</span><span class="p">});</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">manager</span> <span class="k">of</span> <span class="nx">allManagers</span><span class="p">.</span><span class="nx">records</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">manager</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panels</span><span class="dl">"</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span> 
+    <span class="kd">let</span> <span class="nx">managerPanels</span> <span class="o">=</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panels</span><span class="dl">"</span><span class="p">);</span>
+
+    <span class="kd">let</span> <span class="nx">allCases</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">cases</span><span class="p">.</span><span class="nx">selectRecordsAsync</span><span class="p">({</span><span class="na">fields</span><span class="p">:</span> <span class="nx">cases</span><span class="p">.</span><span class="nx">fields</span><span class="p">});</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">thisCase</span> <span class="k">of</span> <span class="nx">allCases</span><span class="p">.</span><span class="nx">records</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panel</span><span class="dl">"</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span> 
+
+        <span class="kd">let</span> <span class="nx">casePanelName</span> <span class="o">=</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panel</span><span class="dl">"</span><span class="p">).</span><span class="nx">name</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">managerPanels</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span>
+                <span class="nx">panel</span> <span class="o">=&gt;</span> <span class="nx">panel</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="nx">casePanelName</span>
+            <span class="p">)</span>
+        <span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Creating empty Feedback record:</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>                
+                <span class="na">manager</span><span class="p">:</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Name</span><span class="dl">"</span><span class="p">),</span>
+                <span class="na">caseName</span><span class="p">:</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Name</span><span class="dl">"</span><span class="p">),</span>
+                <span class="na">panel</span><span class="p">:</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">getCellValue</span><span class="p">(</span><span class="dl">"</span><span class="s2">Panel</span><span class="dl">"</span><span class="p">).</span><span class="nx">name</span><span class="p">,</span>
+            <span class="p">});</span>
+
+            <span class="k">await</span> <span class="nx">feedback</span><span class="p">.</span><span class="nx">createRecordAsync</span><span class="p">({</span>
+                <span class="dl">"</span><span class="s2">Manager</span><span class="dl">"</span><span class="p">:</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">id</span> <span class="p">}],</span>
+                <span class="dl">"</span><span class="s2">Case</span><span class="dl">"</span><span class="p">:</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="nx">thisCase</span><span class="p">.</span><span class="nx">id</span> <span class="p">}],</span>
+            <span class="p">});</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You don’t have to attach this automation to anything. Instead, you can come back to this Automation tab anytime, and run the automation manually.</p>
+
+<p>Running it will yield something like this:</p>
+
+<p><img src="/blog/images/airtable7.png" alt="img" /></p>
+
+<p>Using our techniques before, it’s simple to add a second Interface to expose just the Feedback rows for the currently logged-in user.</p>
+
+<p><img src="/blog/images/airtable8.png" alt="img" /></p>
+
+<h1 id="analysis--dashboards">Analysis &amp; Dashboards</h1>
+
+<p>In order to build an example of analyzing the feedback results, first fabricate some dummy data.</p>
+
+<p><img src="/blog/images/airtable9.png" alt="img" /></p>
+
+<p>Now, we need to aggregate ratings and comments per case. You can do this by creating a new Interface using the type “Dashboard” based on the Feedback Table. Once inside the Interface builder, select the option to add a “Pivot Table”.</p>
+
+<p>It’s straightforward to create both a bar chart of average rating per case. You can also create a list of counts of comments, where the user can click into each case to view the various comment text.</p>
+
+<p><img src="/blog/images/airtable10.png" alt="img" /></p>
+
+<p><img src="/blog/images/airtable11.png" alt="img" /></p>
+
+<h1 id="exporting-to-google-sheets">Exporting to Google Sheets</h1>
+
+<p>The Airtable pivot table and list views are limited. Compared to Google Sheets pivot tables, they are missing one piece of critical functionality. That’s the ability to have multiple value columns in a pivot table. That enables you to do things like have one table with the average rating, the count of ratings and even the concatenated comments.</p>
+
+<p>It’s easy to export one or more Airtable Tables to Google Sheets. For a small Table, you can simply select all the rows in the data view, and copy and paste into Google Sheets. You can also download to CSV from Airtable. Finally, there are third party extensions that can sync live to Google Sheets, though I would not recommend that.</p>
+
+<p><img src="/blog/images/airtable12.png" alt="img" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Airtable is basically a database builder that also lets you build mini applications on top. It excels at having tables with enforced data type schemas, defined relationships between tables, and defining Interfaces to both enter and report on data.</p>
+
+<p>Google Sheets excels at manipulating data, and also analyzing data.</p>
+
+<p>You can easily combine the two tools, and leverage the strengths of each one. My recommendation is to use Airtable for gathering data in a consistent format with easy to use interfaces, and then export the results to Google Sheets if you need to do serious analysis.</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><summary type="html"><![CDATA[A practical guide to using Airtable for people data, permissions, forms, and lightweight dashboards]]></summary></entry><entry><title type="html">Let’s Work Together</title><link href="https://chase-seibert.github.io/blog/2025/02/28/lets-work-together.html" rel="alternate" type="text/html" title="Let’s Work Together" /><published>2025-02-28T00:00:00+00:00</published><updated>2025-02-28T11:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2025/02/28/lets-work-together</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2025/02/28/lets-work-together.html"><![CDATA[<h1 id="my-journey-in-tech-and-beyond">My Journey in Tech and Beyond</h1>
+
+<p>I started coding in middle school, messing around with BASIC and writing simple programs just for fun. But things really clicked for me after <strong>Apple World 1996</strong>, where I got into web development. Something about the web—its immediacy, its interactivity—pulled me in, and I never really looked back.</p>
+
+<p>During college at <strong>Boston University</strong>, where I majored in <strong>Computer Science</strong>, I took on freelance projects, which turned out to be my first real exposure to building software for actual users. After graduation, I joined a tiny startup called <a href="https://www.bullhorn.com/">Bullhorn</a>—just <strong>10 people</strong> at the time. By the time I left, it had grown into a <strong>300+ person company</strong>. I wore just about every hat imaginable, from coding a <strong>custom email server</strong> to racking physical machines in a <strong>data center</strong>.</p>
+
+<p>I took inbound customer support phone calls, troubleshooting issues and learning firsthand how users interacted with our software. I created visual design mockups, ensuring a polished and user-friendly interface. On the engineering side, I wrote full-stack features—from styling the UI with CSS to designing and implementing database schemas. I also worked with then-cutting-edge Ajax in JavaScript to create dynamic, responsive user experiences. This experience shaped my approach to problem-solving, product thinking, and building systems that balance usability with technical efficiency. That kind of early-stage chaos taught me how to build things from scratch, solve problems with whatever was on hand, and work across disciplines.</p>
+
+<p>After Bullhorn, I moved into backend engineering, focusing on <strong>Python</strong> at two different companies. Somewhere along the way, I transitioned into <strong>full-time management</strong>, realizing that my biggest impact wasn’t just in the code I wrote—it was in <strong>helping teams function at a higher level</strong>. Managing people let me shape <strong>healthy team dynamics, excellent communication, and high-leverage work</strong>.</p>
+
+<p>I fell in love with mentoring <strong>new engineers</strong> and <strong>first-time managers</strong>. I geeked out on things like <strong>hiring processes, promotion frameworks, tech talks, and internal blogging</strong>. As I moved into senior leadership roles, I found myself drawn to the big, messy, ambiguous problems—the ones where there’s no clear solution. Things like <strong>shifting team culture, rolling out a new process across hundreds of people, or even navigating major layoffs</strong>. Those were some of the hardest things I’ve ever had to do, but they were also deeply <strong>engaging learning experiences</strong>. The irony is, the bigger the problem, the less I can write about it!</p>
+
+<h2 id="beyond-work">Beyond Work</h2>
+
+<p>Outside of work, I’m into <strong>basketball</strong>, <strong>ultimate frisbee</strong>, and the occasional <strong>RPG video game</strong> binge. I’ve also developed a love for <strong>photography</strong>, <strong>gardening</strong>, <strong>personal finance</strong>, and <strong>cooking</strong>. When I’m not diving into leadership challenges, you’ll probably find me coaching Little league, reading <strong>science fiction</strong> (<a href="https://www.goodreads.com/user/show/9297327-chase-seibert">Goodreads profile</a>) or experimenting with a new recipe (<a href="https://chase-cookbook.s3.us-west-2.amazonaws.com/cookbook.pdf">cookbook link</a>).</p>
+
+<p>At the end of the day, I like solving problems—whether it’s in code, teams, or life in general.</p>
+
+<h1 id="my-working-style-profile">My Working Style Profile</h1>
+
+<ul>
+  <li><strong>Myers-Briggs (ISTJ):</strong> Logical, structured, and detail-oriented; values stability, planning, and accuracy over spontaneity.</li>
+  <li><strong>Strengths Finder (Analytical, Focus, Discipline, Futuristic, Relator):</strong> Data-driven problem solver who thrives on long-term planning, structured execution, and deep connections.</li>
+  <li><strong>Enneagram (Type 8 - The Challenger):</strong> Independent and direct; challenges ideas, values autonomy, and resists control or rigid authority.</li>
+  <li><strong>Insights Discovery (BRGY - Logical &amp; Independent):</strong> Strategic and objective thinker who prefers working independently and values precision.</li>
+  <li><strong>BlueEQ (High Self-Confidence &amp; Resilience):</strong> Accountable, disciplined, and motivated; comfortable making tough decisions with a long-term focus.</li>
+  <li><strong>My Worldview (Redefining):</strong> Challenges norms, seeks deeper understanding, and values intellectual curiosity and alternative perspectives.</li>
+</ul>
+
+<h1 id="working-with-me-a-guide-to-navigating-my-precise-analytical-and-independent-thinking">Working with Me: A Guide to Navigating My Precise, Analytical, and Independent Thinking</h1>
+
+<p>If you work with me, you’ll quickly notice a few things: I value precision, thrive on logic, and am relentless in my pursuit of clearly defining the principles behind a decision or creating a structured framework for thinking about a problem. I enjoy breaking down complex challenges into organized solutions, and I don’t make decisions based on gut feelings or emotions. Instead, I gather data, assess the facts, and execute with a methodical approach. My closest team describes me as a <em>“teddy bear wrapped in barbed wire”</em>—I can come off as intense or intimidating, but at my core, I care deeply about getting things right and supporting the people around me. If you’re looking for someone who brings stability, organization, and follow-through, I’m the person you want in your corner.</p>
+
+<h2 id="strengths-a-strategic-no-nonsense-problem-solver">Strengths: A Strategic, No-Nonsense Problem Solver</h2>
+
+<p>I operate with a long-term vision and high personal standards. I’m analytical, systematic, and disciplined—someone who enjoys assembling facts, structuring information, and identifying patterns. I don’t need constant check-ins to stay on track; if you give me a problem to solve, I’ll take it seriously, dig into every possible angle, and provide a well-reasoned path forward. I don’t get overly swayed by sentiment—my decision-making process is rooted in logic and practicality.</p>
+
+<p>As a leader, I set clear expectations, delegate heavily, and take a hands-off approach, trusting my team to take ownership and drive outcomes. I value efficiency and accuracy, and I have little patience for unnecessary bureaucracy or inefficiency. My expectation is that my team always does what’s best for the company, takes full responsibility for their work, and embraces a certain level of scrappy, non-scalable effort when needed to meet leadership where they are and assume good intent. If you need honest, critical feedback, I won’t sugarcoat it—but it will always be geared toward achieving the best possible outcome. I appreciate regular 1:1s where we share notes in writing, including feedback, materials to align on, and as an external brain/memory for future reference.</p>
+
+<p>I can count the number of people I haven’t gotten along with in a work context on fewer than five fingers. I prioritize building strong professional relationships and fostering trust and psychological safety with my peers and closest teams, which has consistently led to productive and collaborative working environments.</p>
+
+<h2 id="how-to-work-best-with-me">How to Work Best with Me</h2>
+
+<ul>
+  <li><strong>Be clear and factual.</strong> I respect logic and objectivity, so the best way to work with me is to present well-reasoned arguments supported by data.</li>
+  <li><strong>Don’t take my directness personally.</strong> My feedback is about improving the work, not a personal critique. If I challenge an idea, it’s because I want the best possible outcome.</li>
+  <li><strong>Give me space to think.</strong> I’m not a fan of extemporaneous discussion—I prefer time to process before making a decision. If you need a fast response, providing key details upfront will help.</li>
+  <li><strong>Be prepared to adjust plans.</strong> While I value structure and planning, projects inevitably evolve. Helping me see the strategic benefits of a shift in direction will make the transition smoother.</li>
+  <li><strong>Build a working relationship over time.</strong> I work best with people I know well and trust. If we haven’t worked together before, expect to invest if really getting to know each other before we hit full stride.</li>
+</ul>
+
+<p>In short, I’m the kind of person you want leading a critical project, managing complex problems, and ensuring follow-through on key initiatives. I’m analytical, disciplined, and strategic—but also independent and structured in ways that may require adaptation from teammates who operate with a more fluid, emotionally driven approach. If we align on expectations and approach work with clarity and purpose, I’ll be a reliable and effective collaborator.</p>
+
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+
+<h3 id="what-are-your-expectations-for-your-direct-reports"><strong>What are your expectations for your direct reports?</strong></h3>
+
+<ul>
+  <li>Build strong relationships with your product and design partners, as well as your direct reports.</li>
+  <li>Deliver on sprint and quarterly commitments at least 90% of the time.</li>
+  <li>Take ownership of one or two impactful initiatives per year.</li>
+  <li>Come to 1:1s engaged, ideally with a written agenda.</li>
+  <li>Proactively follow up on action items.</li>
+  <li>Communicate effectively in writing.</li>
+</ul>
+
+<p>See also <a href="/blog/2022/12/21/my-expectations-for-managers.html">My Expectations for Managers</a></p>
+
+<h3 id="what-can-you-expect-from-me-as-a-manager"><strong>What can you expect from me, as a manager?</strong></h3>
+
+<ul>
+  <li>Dedicated and reliable weekly 1:1 time, where I’ll bring topics to discuss.</li>
+  <li>Transparent and timely information sharing, when appropriate.</li>
+  <li>If I ask you to attend a meeting, I’ll ensure it’s well-run and valuable.</li>
+  <li>High autonomy—most decisions will be yours to make.</li>
+  <li>Flexible work hours, location, and vacation policies.</li>
+  <li>I almost never ping people outside of business hours.</li>
+</ul>
+
+<h3 id="what-do-you-need-from-your-manager"><strong>What do you need from your manager?</strong></h3>
+
+<ul>
+  <li>Weekly 1:1s with my boss, ideally with written notes.</li>
+  <li>Maximum transparency, especially on context from executive leadership.</li>
+  <li>Meetings that start on time, follow an agenda, and have clear written takeaways.</li>
+  <li>Dedicated focus time for deep work, with the flexibility to decline meetings when needed.</li>
+</ul>
+
+<h3 id="what-motivates-you"><strong>What motivates you?</strong></h3>
+
+<p>I thrive on projects and initiatives where I can:</p>
+
+<ul>
+  <li>Set and execute against long-term goals.</li>
+  <li>Think deeply and refine ideas before making decisions.</li>
+  <li>Collect data and evidence to guide strategy.</li>
+  <li>Improve processes through iteration.</li>
+  <li>Provide guidance and mentorship to others.</li>
+</ul>
+
+<h3 id="how-would-your-team-describe-you"><strong>How would your team describe you?</strong></h3>
+
+<p>Unflappable, practical, informal, and disciplined.</p>
+
+<h3 id="what-is-your-biggest-weakness"><strong>What is your biggest weakness?</strong></h3>
+
+<p>If I don’t write something down, I’ll likely forget it.</p>
+
+<h3 id="whats-the-most-surprising-thing-youve-learned-about-yourself"><strong>What’s the most surprising thing you’ve learned about yourself?</strong></h3>
+
+<p>I’m introverted, but I gain energy from spending time with people I know well. It takes me a few months to feel fully comfortable with a new team or business partner and about six months to build deep trust.</p>]]></content><author><name>Chase Seibert</name></author><category term="newboss" /><summary type="html"><![CDATA[The first step is getting to know each other]]></summary></entry><entry><title type="html">What are the less obvious downsides of a Health Savings Plan?</title><link href="https://chase-seibert.github.io/blog/2023/11/01/hsa-less-obvious-downsides.html" rel="alternate" type="text/html" title="What are the less obvious downsides of a Health Savings Plan?" /><published>2023-11-01T00:00:00+00:00</published><updated>2023-11-01T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2023/11/01/hsa-less-obvious-downsides</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2023/11/01/hsa-less-obvious-downsides.html"><![CDATA[<p>A Health Savings Accounts (HSA) lets you save money pre-tax to use for medical expenses at any time in the future. You can also invest the money if you plan to use it in the distant future, such as in retirement. It’s one of only a handful of vehicles for pre-tax investing, which makes it very attractive. HSAs exist in large part to get people to enroll in a High Deductible Health Plan (HDHP). Even though HSAs look attractive financially, they are non-financial drawbacks that are not obvious at first.</p>
+
+<h1 id="benefits-of-hdhp--hsa">Benefits of HDHP + HSA</h1>
+
+<p>The premium — the amount of money coming out of your paycheck automatically — for an HDHP will be lower than an PPO or HMO. How much lower will depend on your employer’s contribution, but it could be a low as a $500 a year. By itself, this is probably not motivating enough to switch. The main benefit is the pre-tax savings. In 2023, the limit on HSA contributions is $7,750 for a family. That comes off of your taxable income for the year. If you are paying close to the marginal tax rate of 37%, that would save you about $2,800 in taxes. Many employers will make their own contribution to the HSA, which could be thousands of dollars. This is extra free money.</p>
+
+<p>The real incentive is investing that money. If you invested the whole $7,750 in an index fund that returns 7% a year for 15 years, you would contribute $116,000 and it would grow to $194,000 in those 15 years. That return gets larger over long time horizons. If you did the same thing for 30 years, you would contribute $232,000 and it would grow to $731,000. This is the primary attraction to an HSA for people already maxing out their other pre-tax investment vehicles.</p>
+
+<p><em>Note: leaving contributions to grow requires that you don’t use the HSA money to pay for in-year medical expenses. This means that your post-tax expenses in the current year would increase up to your HDHP deductible, typically something like $6,000 for a family. On paper, the pre-tax benefit of the HSA is still worth it.</em></p>
+
+<h1 id="how-hdhp--hsa-works">How HDHP + HSA Works</h1>
+
+<p>When you’re on an Health Medical Organization (HMO) medical insurance plan, you do not get billed directly for most medical expenses. You may receive a statement in the mail that says “this is not a bill”, as a cost transparency mechanism. But, you only have to pay the premium — deducted from your paycheck — and small per-visit copays. When you’re on an HDHP, you get billed for medical expenses from the service provider, and you need to pay those bills until you hit the deductible limit on your plan. After that, you will mostly not get billed and the insurance covers the additional expenses, with the exception of copays and potentially a small percentage-based co-insurance payment. You should keep receipts for any medical expenses you want to get reimbursed for.</p>
+
+<p>The HSA is designed for you to tap into your pre-tax HSA contributions to pay for these expenses before you hit your deductible. For small expenses, you can use a debit card they issue you. For larger expenses you do this by logging in to their website and telling them how much of the funds to send back to you. This can be either a check in the mail or a direct deposit. The HSA provider will not ask you for a receipt for your expenses. When you file your taxes for the year, you will declare how much you contributed to your HSA and how much you were reimbursed from your HSA. You will not need to submit receipts, but you should keep them for seven years in case you are audited.</p>
+
+<p>You invest HSA funds through the HSA provider’s website. Similar to a 401k provider, you select contributions amounts and which funds you want to invest it. With an HSA, you are selecting one contribution amount for how much additional money you want to deduct from your paycheck to put into the HSA, plus a second amount that you want to be moved from your HSA cash balance to your investments.</p>
+
+<h1 id="downsides-of-hdhp--hsa">Downsides of HDHP + HSA</h1>
+
+<p>The downside of an HDHP + HSA that everyone knows about is the contribution amount. There is more money coming out of your paycheck. Assuming you contribute pre-tax to the HSA, that will more than offset the savings in premiums. People who are already maxing out their other pre-tax savings vehicles see this as a benefit; it’s reducing their taxable income and increasing pre-tax investments. But, the short-term negative cash impact is nonetheless a downside — and the most well-known one.</p>
+
+<h2 id="billing-errors">Billing Errors</h2>
+
+<p>Increased paperwork and exposure to medical bureaucracy are less well-known downsides. When you’re on an HDHP you need to keep track of and pay medical bills. When you’re on an HSA, you need to keep receipts for medical expenses. If you’re on an HMO you may never have looked closely at a medical statement. It’s common for various doctors and specialists involved in something like a visit to the emergency room to all send you different bills. There are often mistakes on the bills, such as being double-billed for something. There is not a lot of clarity on exactly what an item on the bill represents. If you’re on an HMO you don’t really care. If you’re on an HDHP, you may very well find yourself calling your insurance company to figure this stuff out. They will often need to bring someone from the service provider (hospital) into the loop to sort it 
+out. All this takes time, and is frustrating.</p>
+
+<h2 id="unreasonable-medical-costs">Unreasonable Medical Costs</h2>
+
+<p>Exposure to absolutely insane, detached-from-all-reality, inside-baseball itemized medical costs are the next downside. On an HDHP, you are incentivized to spend less on medical expenses, until you hit your deductible. Did you know that something like a 1-hour speech therapy session for a child can cost $700? You will get bills like this from the provider. You may very well not be able to find out how much it costs until <em>after</em> the service. It doesn’t matter that the going rate for this service outside of insurance is $150. When they bill you this amount, it’s not negotiable. If you’re on an HMO, you don’t care what inflated price the provider is changing themselves.</p>
+
+<h2 id="tax-paperwork">Tax Paperwork</h2>
+
+<p>The next downside is tax complexity and audit risk. When you file your taxes, you will submit a form 8889 for your HSA. You report contributions and distributions. This is not a big deal, it’s just one more thing to keep track of. HSA providers do not send this form to you, like 401k providers do. You need to fill it out manually. You don’t need receipts for medical expenses either when you request a distribution from the HSA provider, or when you file your taxes. You will need your receipts if you even get audited, however.</p>
+
+<h2 id="bad-hsa-providers">Bad HSA Providers</h2>
+
+<p>You are locked in to the HSA provider that your company chooses. Like 401k providers, there is a wide range of quality here. The company has an incentive to pick the lowest cost provider, not the one with the best website or customer support. In short, there is a good chance the only provider you can use will be terrible. Websites may be poorly implemented. There may be no phone number of call for customer support — instead you may be directed to your internal benefits team. There may be limitations on the number of transactions you can make. There may be annual fees.</p>
+
+<p>Your company may also change providers. Your cash funds may or may not be rolled over to the new provider automatically. Even if cash funds are moved, investment funds may not be. There is the added complexity of special “in-kind” transfers that are necessary for avoiding tax implications of moving to a new HSA provider. You may or may not be able to do an in-plan (i.e. without leaving the company) transfer to your own third-party HSA provider. But, you will not be able to use a third-party provider for automatic contributions from your paycheck and your employer. Over the course of a long career, you may end up with many different HSA accounts at many different providers, unless you spend time to consolidate them.</p>
+
+<h2 id="psychological-cost">Psychological Cost</h2>
+
+<p>Don’t underestimate the added element of decision making on top of all medical decisions, especially when there are family members and spouses involved. Even if the cost of medical treatment up to your deductible is a negligible expense in your overall budget, you may be surprised to find yourself in protracted conversations about whether it’s “worth” getting various medical treatments. Maybe your knee is bothering you, but it’s not a show stopper. Do you get an MRI, even if that might cost you $1500 dollars out of pocket? This is one of the <em>points</em> of a HDHP, from the perspective of the insurance company — to make consumers more aware of medical expenses. They know that this will reduce unnecessary medical expenses. But, it will also reduce necessary preventative expenses.</p>
+
+<h2 id="identity-theft">Identity Theft</h2>
+
+<p>One of the primary use cases for an HSA is paying for medical expenses. You will get a debit card sent to you for this purpose, whether you want one or not. You will be required to create a username and password for the website of the HSA provider. This website is like small bank account, where anyone with your password can make a deduction. Both the debit card and the website are vectors for identity theft and potential financial loss. Neither of these are purely theoretical threats — there are news articles about fraud happening in the wild.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Enrolling in an HSA is not a one-way door. You can typically make a different election once a year, or when you change employers or at certain qualifying life events. If you save a large amount of money in an HSA and then switch back to an HMO, you may have trouble spending that money. It’s not clear what expenses are eligible when you’re no longer on an HDHP. It’s difficult to research, but you are probably fine to expense copays and any services or medications purchased outside your insurance. Plus, you can still save the money for medical expenses in retirement.</p>
+
+<p>What would it take to “fix” these risks to HSA programs? Medical costs would need to become both understandable and reasonable. You would need to be allowed to choose your own HSA provider. Neither of these are likely to happen.</p>
+
+<p>In the meantime — as with many aspects of finances — you can’t go wrong with keeping it simple. For medical insurance, it doesn’t get any simpler than an HMO.</p>]]></content><author><name>Chase Seibert</name></author><category term="personal-finance" /><summary type="html"><![CDATA[As someone with a young family and who is generally on track for retirement savings, I switched to an HSA and HDHP for two years, but then switched back]]></summary></entry><entry><title type="html">Burnout Playbook</title><link href="https://chase-seibert.github.io/blog/2023/07/21/burnout-playbook.html" rel="alternate" type="text/html" title="Burnout Playbook" /><published>2023-07-21T00:00:00+00:00</published><updated>2023-07-21T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2023/07/21/burnout-playbook</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2023/07/21/burnout-playbook.html"><![CDATA[<h1 id="what-is-burnout">What is Burnout?</h1>
+
+<p>Burnout is a state of poor professional mental health, where the feeling of being overwhelmed or a lack of enthusiasm impacts your effectiveness. It can be caused by a mixture of mental or physical exhaustion, lack of belief in the work, and lack of belief in yourself. Each individual has a personal expectation about an ideal work environment on these dimensions. When reality becomes too far detached from this ideal, the result is burnout.</p>
+
+<p>If you are currently burned out, you probably already know it. It feels like a crippling inability to get things done or to even care. It’s hard to ignore. But it’s also common to slowly be trending towards burnout without realizing it until it’s too late. If you think you might be at risk of burnout, ask yourself the questions in the <a href="#burnout-risk-checklist">Burnout Risk Checklist</a>.</p>
+
+<p>Burnout can severely impact your attitude, professionalism and performance at work. It’s also one of the leading causes of attrition.</p>
+
+<h1 id="well-being-and-performance">Well-being and Performance</h1>
+
+<p>Personal well-being is the best leading indicator of professional success. Think about all the people in your career that have left a company, whether it was their individual choice or they were actively managed out. If that person chose to leave, they were likely unhappy in their work situation. If they were managed out, they were likely unhappy in their work situation, and that resulted in poor performance. It’s relatively rare for someone happy and engaged to have severe performance issues.</p>
+
+<p>Now think about high performers you have seen over your career. They were likely universally enthusiastic, and engaged in their work. They were happy in their work situation.</p>
+
+<p>This is especially true for a leader. Your well-being is highly visible. It also directly informs the well-being of others and the performance of the larger organization.</p>
+
+<h1 id="own-your-mental-health">Own Your Mental Health</h1>
+
+<p>The more senior you get, the more you will need to manage yourself. It’s true for career growth, but also for well-being. You won’t always be maximizing growth, impact, and well-being at the same time. You may have periods where you are trading off one for another. There will be well-being fallow periods. Part of your role as a leader is navigating yourself — and others — through those periods.</p>
+
+<p>Everyone is responsible for their personal expectations about an ideal work environment. But leaders have a greater effect on both the expectations and reality of the work environment for others. Part of your role is taking ownership of the well-being of everyone.</p>
+
+<p>You can do this by providing a narrative that ties short-term goals to long-term strategy and impact. That’s critical for your well-being too, as more senior roles have longer cycles for impact. By owning your well-being, you are taking control of your performance, longevity in the role, and ultimately the impact of the organization. Doing what’s necessary for your well-being <strong>is</strong> doing the best thing for the company.</p>
+
+<p>To be alert for personal burnout, you need to learn to identify the warning signs. You need to be able to diagnose burnout signals in yourself and others.</p>
+
+<h1 id="diagnosing-burnout">Diagnosing Burnout</h1>
+
+<p>Lack of action is the number one leading indicator of burnout. If you notice in yourself a distinct lack of activity relative to your baseline norm, it’s worth digging in to see if you may be on the path to burning out. If you manifest any of the overt warning signs of burnout, then move on to trying to figure out which flavors of burnout you are experiencing.</p>
+
+<p>You may be experiencing poor mental well-being due to a mix of exhaustion, depersonalization, or ineffectiveness.</p>
+
+<h2 id="exhaustion">Exhaustion</h2>
+
+<p>Exhaustion means that you feel mentally or physically tired, consistently, over a period of weeks.</p>
+
+<p>Taking an extended vacation may help. Utilize general stress management techniques. That means sleeping well, exercising, focusing on a healthy diet, seeing family, and engaging in hobbies.</p>
+
+<p>Making lists can also help. What things in your personal life do you find the most engaging? What things are you grateful for? Try tracking your mood over time with a journal or app.</p>
+
+<p>If you get energy from spending time with other people, make room for that in your work week. Traveling to a shared working space or social event can be time well spent if it’s combating mental fatigue and re-igniting well-being.</p>
+
+<h2 id="depersonalization">Depersonalization</h2>
+
+<p>Depersonalization is a lack of belief in the impact of your projects or the lack of alignment with your values and well-being.</p>
+
+<p>Actively connecting the reality of your work to your ideals is the general mechanism for addressing depersonalization. Make and update lists of your accomplishments. Think of it as preparation for your next self review. This will serve as a forcing function to articulate what you are doing, and what the impact is.</p>
+
+<p>You might find that work that you previously thought was not valuable did deliver impact. Format your notes to briefly describe the situation you were in, the behavior you demonstrated, and the impact on the business. If you feel stuck, you may need to force yourself to document even the smallest impact. After doing this, you may find that some projects did not have impact. Use that to inform what you choose to work on in the future.</p>
+
+<p>Make a list of all the places you have worked. For each one, write down four or five projects that stick out as the most memorable. These are likely to be the projects that align most closely with your values. What did you enjoy about them? Translate these into generic themes like “mentorship”, or “hiring”. Brainstorm some side projects that you could be doing now for each theme.</p>
+
+<p>It’s OK to take on new projects, if it’s something you are going to be excited about, or you feel confident it will have an impact. If needed, make space for this by punting — or delegating — items that you are not as enthusiastic about. Just make sure to inform any stakeholders that may be counting on you to complete a project. A good source of project ideas are items that you have heard other folks propose and own, but which are stalled out. Ask them if you can take it off their plate!</p>
+
+<p>Start small, and pile up quick wins. Making forward progress on items that naturally engage you is the more surefire way to build back up your sense of making a difference.</p>
+
+<h2 id="ineffectiveness">Ineffectiveness</h2>
+
+<p>Ineffectiveness is burnout stemming from a belief that a project cannot be completed, either because they are generally infeasible, or because of your lack of ability.</p>
+
+<p>Remind yourself of projects that are being completed, no matter how small. Try tracking and celebrating wins that are happening. As a manager, it’s common to focus your conversations with others on things that are not going well. Try to intentionally do the opposite. Talk to folks in 1:1s about what projects are succeeding. Compile and send an update on recent successes. Intentionally spend extra time giving others public kudos or otherwise show your appreciation.</p>
+
+<p>You also need to keep in mind that your ability can change over time. Focus on what you are learning. This is known as a growth mindset. Try keeping a list of things that didn’t go well, and what you learned from them.</p>
+
+<h1 id="talking-about-burnout">Talking about Burnout</h1>
+
+<p>You should talk about burnout with significant others, family, and friends. You should talk about it with your boss and other coworkers, provided that you have the necessary psychological safety. If your boss has already proactively raised the topic with you, talk about your plan to reestablish well-being.</p>
+
+<p>Like a midlife crisis, burnout at work is ultimately caused by the gap between your ideals and reality. Both are likely to be most accurate after major changes. If that’s the case, give yourself time; this isn’t something that will be fixed quickly. Self-reflection will be important. If talking to friends and family is not enough, then seek professional therapy.</p>
+
+<p>Acceptance is the other half of the equation. Increasing self-engagement will be very helpful. Take the opportunity to reexamine your ideals about your work environment. Whether your self-worth is too tied to your engagement in your professional life is a question only you can answer.</p>
+
+<h1 id="dont-give-away-all-your-toys">Don’t Give Away (All) Your Toys</h1>
+
+<p>Especially when you are digging out of a burnout hole — but anytime — it’s OK to spend time on some things just because they boost your well-being. Sometimes senior leaders delegate too many things, including their favorite work. You may have gotten the advice to stop coding altogether. But, if you find it engaging, and the code will have an impact, give yourself permission to continue doing it. Everything is in moderation. Just don’t neglect your core responsibilities.</p>
+
+<p>Never sit around with nothing to do. You can always invent impactful work. If all else fails, read an article or a book for professional development. Take ideas from that and implement them.</p>
+
+<p>Don’t wait for an exciting project to come down the pipe before you re-engage. You need to proactively be fixing your engagement, first. You are ultimately accountable for staying engaged and managing your own burnout risk.</p>
+
+<h1 id="burnout-risk-checklist">Burnout Risk Checklist</h1>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you been “bored” at work?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you caught yourself being overly cynical?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you been unable to stop thinking about a work event that happened a while ago?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you been dreading starting your work day?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you experienced a perceived lack of work to engage with?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you experienced regret about projects other people are doing, instead of you?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you noticed a decrease in enthusiasm in your personal life?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you gone through a major change at work?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you suffered a major professional setback or failure?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you projects you completed not had the expected impact?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you said something in a professional setting that you wish you could take back?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you let projects languish on your TODO list?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you been unable to do something that you used to do regularly?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you gotten feedback about your attitude or engagement?</li>
+</ul>
+
+<h1 id="burnout-playbook">Burnout Playbook</h1>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Keep a journal of how you’re feeling</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Talk to a significant other</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Talk to a family member</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Talk to a professional peer</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Take some time off</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Improve your exercise and diet</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />List things that you are grateful for</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Make an effort to connect with coworkers in person</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Celebrate the impact of others with public kudos</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />List things that you would be excited to learn professionally</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />List recent successes in situation, behavior, impact format</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />List things that you are grateful for</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Brainstorm past work projects that have been the most engaging</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Generate a couple of projects that you will be enthusiastic about</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Make time to work on enthusiasm projects</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Delegate current projects that you are not enthusiastic about</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Identify some small wins you can achieve</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />List what you have learned from challenging situations</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Write down how your professional life relates to your self-worth</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Write down what is most important to you in life</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Write down what you are giving yourself permission to do in the name of mental health</li>
+</ul>]]></content><author><name>Chase Seibert</name></author><category term="management" /><summary type="html"><![CDATA[Leaders need to be actively managing their own mental well-being at work]]></summary></entry><entry><title type="html">How to Run Calibrations</title><link href="https://chase-seibert.github.io/blog/2023/03/28/calibrations.html" rel="alternate" type="text/html" title="How to Run Calibrations" /><published>2023-03-28T00:00:00+00:00</published><updated>2023-03-28T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2023/03/28/calibrations</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2023/03/28/calibrations.html"><![CDATA[<p>When there are many managers in a large organization, how do you make sure that any performance ratings, promotions, and subsequent compensation changes are fair, relative to each other? A common mechanism is for all the managers to get together, and compare notes — or “calibrate” — on their team’s ratings and promotions.</p>
+
+<h1 id="why-calibrations">Why Calibrations?</h1>
+
+<p>Calibrations are primarily about reducing the bias of ratings from individual managers, and increasing equity between managers. Secondarily, they are a great way to train managers on how the company thinks about performance. They also give senior managers data on the highest potential folks in a large organization, for strategic organization design.</p>
+
+<p>In most companies, there is a fixed budget in dollars for things like compensation changes and promotions. Calibrations distribute this budget as fairly as possible. This post will not explicitly cover compensation, but know that most companies will want to link compensation to some combination of company, business unit and individual performance.</p>
+
+<p>In a “pay for performance” system, you want to have outsized rewards for outsized impact. But the budget is still fixed. If you put twice as many people in the exceeding expectations category, then those people will get half the compensation increase they would have otherwise gotten. In order to maximize the impact of rewards, you do need to make decisions between cases.</p>
+
+<h2 id="elephant-in-the-room-stack-ranking">Elephant in the Room: Stack Ranking</h2>
+
+<p>Stack ranking means that you create an ordered list of individuals, according to their performance. It’s a mechanism to force the discussion about how to allocate rewards for greatest impact. The version that most people object to is if you are forced to label some people as low performers. Don’t do that.</p>
+
+<p>If you have a large organization, it’s reasonable for there to be a bell curve of performance. In practice, I have seen that for cohorts of 50 people or more — at both large companies and start-ups — performance will roughly fit a curve. This comports with the central limit theorem, which says that a sample size of at least 30 will approach a normal distribution. But that does not mean that the low end of the curve are necessarily low performers. I do not think it’s acceptable to mandate a fixed percentage here.</p>
+
+<p>You can keep yourselves honest by pressure testing people in the “meeting expectations” bucket. This is less of a budget issue, and more about holding managers and individuals accountable for real performance problems. While it’s not fair to absolutely require a fixed number of people to be labeled underperforming, there is a definite tendency for managers to avoid these difficult conversations by giving someone an unwarranted “pass”.</p>
+
+<p>Stack ranking gets a bad name from being forced on too-small cohorts, and for forcing low performance ratings. Companies that had a bad reputation for doing this in the past commonly still do have ratings and curves, but have substantially changed their process for how the ratings are generated and reconciled. Some do away with ratings, but still have differentiated compensation changes that could be reverse engineered into ratings. Some move the reconciliation to the Director level, and give them more discretion on fitting the curve.</p>
+
+<h1 id="how-to-run-calibrations">How to Run Calibrations</h1>
+
+<p>I’m going to outline a process that works well for cohorts of about 50 individuals, and can scale up to any size by layering on multiple calibration rounds. The goal of calibrations is to have fair and consistent performance ratings across organizations, roles, and levels. You want to reward high performance, and make sure that appropriate poor performance conversations are happening.</p>
+
+<p>This process can also be scaled up and down, in terms of how much time it takes. You can cap write-ups in length. You could potentially do the entire thing asynchronous ,with no meeting. Reducing the size of the cohort will also save time. There are all trade-offs against how much to want ratings to be equitable across teams.</p>
+
+<h2 id="pre-work-before-calibrations">Pre-work Before Calibrations</h2>
+
+<p>Before you can calibrate, you need initial ratings and write ups. You need to gather data. This is where self reviews and 360 reviews come in.</p>
+
+<p>Self reviews should use the same format as the eventual manager review. You should have a defined template for this up front. They should reference your existing framework for expectations per role and level. You should ask people to provide a rating for themselves. Any training you can do here to help folks write good self reviews will pay off.</p>
+
+<p>Individuals and their manager should determine a set of three to five 360 reviewers per person. The format of a 360 should be short. Ask reviewers to timebox their effort, skip pleasantries and platitudes, and focus on situation, behavior, and impact. 360s can be anonymous or not, as long as it’s clear to the reviewer.</p>
+
+<p>Managers should draft their reviews in parallel with self reviews and 360s, and then incorporate any new information prior to calibrations. It’s at this point that managers should document initial ratings and promotion candidates. You are going to want to gather these in some central system, even if it’s just a spreadsheet.</p>
+
+<h2 id="the-calibration-meeting">The Calibration Meeting</h2>
+
+<p>For the actual calibrations, you should pick one facilitator. It’s this person’s responsibility to set an agenda, set a timebox for each individual, and manage time during the meeting. The facilitator will need to have access to the preliminary ratings and promotions for every person to be discussed. They should create an agenda that has the name of each individual, the order they will be discussed, and a link to the manager write-up. It may help to give the attendees basic guidance about how many people would need to receive each rating in order to hit the budget.</p>
+
+<p>Calibration meetings have a reputation of taking forever. A six or more hour meeting to decide the ratings for 50 individuals is not uncommon. It’s also common for certain managers to dominate the airtime, which can result in bias. How can these be run more efficiently, and result in equitable outcomes?</p>
+
+<p>After several iterations, I’ve arrived at a format that I love. It’s pretty simple:</p>
+
+<ol>
+  <li>Send out a pre-read with the links to each write-up ahead of time. Group by level, and then by proposed rating. For example, all people at a certain level who are up for an exceeding expectations rating should be calibrated on in a block.</li>
+  <li>Solicit Q&amp;A about each individual right in the agenda doc. This is the most valuable feedback the manager will ever get about how well they are calibrated.</li>
+  <li>In the calibration meeting, each candidate starts with 5 minutes of silent reading. Managers do not “present”. Attendees can write additional questions during this time.</li>
+  <li>The manager answers the written questions live for the rest of the time, someone else takes notes.</li>
+  <li>At the end of time, everyone submits a “confidence vote” on the candidate</li>
+</ol>
+
+<p>The confidence voting is the real secret sauce here. The idea is that every person present at calibrations submits a “blind” score for how confident they are in this individual being “at the bar” for the proposed rating or promotion. Blind means that scores are submitted without seeing anyone else’s score, to avoid bias. You can use any scale, but I like a star system with options for:</p>
+
+<ul>
+  <li>Not Ready</li>
+  <li>Stretch Case</li>
+  <li>Solid Case</li>
+  <li>Slam Dunk</li>
+</ul>
+
+<p>You can also include a free-text field for comments. If not, encourage folks to leave any comments about why this case was not a “Slam Dunk” in the Q&amp;A notes.</p>
+
+<p>The confidence voting system can also be used to pressure test low performers. Typically, managers are somewhat reluctant to put individuals up for discussion as potential low performers. Assuming you do not have time to calibrate on every single individual in the organization, it helps if you have some proxy data you can use to identify people to talk about here. For example, you could identify individuals who have missed delivery milestones, or who have not done the expected volume of candidate interviews. Group these folks together, and vote on confidence at a “meeting expectations” rating. This is how the group can come up with calibrated ratings for potential low performers.</p>
+
+<h2 id="post-calibrations">Post Calibrations</h2>
+
+<p>The confidence votes are tallied and revealed after calibrations. Scores are averaged together per case, and the results are made available for all calibration attendees. It’s at this point that the overall decision maker for the organization can make final decisions by defining a “cut line” in the graph. It’s up to them to figure out how closely to hew to any distribution guidance.</p>
+
+<p>Calibrations need one decision maker. Typically this would be the manager that all of the calibration attendees report into, with the same being true for the individuals whose performance is being calibrated on. Alternatively, you could randomize cohorts across an organization to further mitigate bias, and the cost of the calibrators having less context.</p>
+
+<p>With the voting system, the decision maker does not need to make the final decisions live during the meeting. Instead, they can look at the results after the fact, and decide. Just because an average score is under the “Solid Case” line, does not mean that the rating or promotion does not get approved. It may, but much more important is the scores relative to other individuals up for the same rating or promotion.</p>
+
+<p>I’ve been surprised in that decision making role just how close the ranges of scores on any given individual are in practice, and also how much differentiation there is between cases. When this happens, it’s a sign that the managers in those calibrations are indeed thinking about performance and expectations in a way that is aligned. In that case, the decision maker knows that they are not unilaterally making decisions that may be biased.</p>
+
+<h1 id="large-organizations--multiple-calibration-rounds">Large Organizations &amp; Multiple Calibration Rounds</h1>
+
+<p>A single calibration session can only scale up to cover 50 individuals. Assume that you only discuss people who are not solidly “meeting expectations”, and that those folks will be roughly 50% of the total. If you need a minimum of eight minutes per person, this would mean a three hour meeting. The total number of managers, or meeting attendees, would be between 6 and 12.</p>
+
+<p>You will most likely have multiple calibrations, due to visibility issues. It’s typical for managers at level N to only sit in on calibrations discussing individual contributors at N-1 and below, or similar. That means that higher level individuals are likely to be discussed by managers that control more scope, which means managing larger orgs, which means that there are probably hundreds of individuals under those managers, way too many for a single session.</p>
+
+<p>There should be one overall facilitator to create the timeline and define the cohorts for how these multiple calibrations will be scheduled, so that no cohort is over about 50 individuals, and individuals are not discussed multiple times.</p>
+
+<p>Sometimes, you may choose to intentionally discuss individuals multiple times. This can be when you want to give managers practice writing their cases, and provide feedback in time to affect the final decisions. It can also be when you want to gather data from managers who work with a high-level individual regularly, before presenting the case in a higher level calibration.</p>
+
+<p>In all these calibrations, you should strive (or require) cohorts to individually meet their budget guidance. This is how you scale to any organization size without having to directly compare every individual with every other individual. It will not be possible to draw cut lines across cohorts later, because the relative confidence scoring between cohorts is not directly comparable.</p>
+
+<h1 id="last-word-on-confidence-voting">Last Word on Confidence Voting</h1>
+
+<p>The confidence voting system in particular delivers some key benefits that most calibrations struggle to achieve. The meeting time and conversations about individuals can be timeboxed. You can choose to not discuss up to 50% of people who are solidly in the “meeting expectations” camp, if time does not allow. The final results can be justified with data, and we can reason about exactly how “calibrated” the group was. We can choose how closely to follow any given budget guidance. We can also pressure test low performers.</p>]]></content><author><name>Chase Seibert</name></author><category term="process" /><category term="performance" /><summary type="html"><![CDATA[Calibrations are a group-based process for an organization to increase the equity of individual performance reviews across a large set of teams]]></summary></entry><entry><title type="html">Dependency Management Playbook</title><link href="https://chase-seibert.github.io/blog/2023/02/17/dependency-management-playbook.html" rel="alternate" type="text/html" title="Dependency Management Playbook" /><published>2023-02-17T00:00:00+00:00</published><updated>2023-02-17T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2023/02/17/dependency-management-playbook</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2023/02/17/dependency-management-playbook.html"><![CDATA[<p>For engineering managers, delivering projects reliably and on time is a critical part of the job. Even if everything is estimated and executed well on your team, dependencies can derail you. If you poll a group of managers on their top risks — and I have — they will come back with a list that’s 80% dependencies on other teams. But many will feel helpless to resolve those dependencies. If your project requires another team to prioritize your dependency, what can you actually do to mitigate that risk?</p>
+
+<p>Not needing dependencies is a luxury afforded to teams in small companies, or those running very high priority projects. I once ran a tiger team that was both. We moved experts from across the company onto the team so that we could own every piece of the execution. In large companies where a single product spans many teams, most projects will require one or more dependencies. You need to have a playbook for managing dependency risk.</p>
+
+<h1 id="list-the-dependencies">List the Dependencies</h1>
+
+<p>First, you need to know what the dependencies are. One of your core competencies as an engineering manager is “asking the right questions”. Hold a brainstorm and help the team see dependencies that they might not know exist. Cross-functional dependencies like security, legal and compliance can be particular blind spots for engineers. For actual software engineering, the team can almost certainly identify the big dependencies off the top of their heads. Doing a pre-mortem exercise can be one way to enumerate them and quantify the risk for each. You want to do this early in the project, as part of project estimation.</p>
+
+<p>Create a list of all the dependencies for the team, for the year. Each one should have a project name, a short description of the dependency, the risk or priority of the dependency, the name of the remote team that you are dependent on, and a specific team member who owns it. Try stack ranking them, with the highest risk/impact dependencies first. Share this list with your manager.</p>
+
+<p>Having a prioritized list of dependencies is useful for more than just your team. Suggest that your manager ask all their teams for this, and that they create a combined list. How they prioritize the list across teams will tell you a lot about how well aligned you are, how they are going to present these priorities to their own peers and stakeholders, and may also give you early signals on when a dependency is a non-starter.</p>
+
+<p>Show your list to the engineering managers you are asking for dependencies from. Ask them to share their full roadmap, and share yours. Include not just the engineering managers, but tech leads and product managers on both sides, as well. Make sure you have a solid business case for your project. These stakeholders, artifacts, and visibility are how dependency problems are turned into creative solutions.</p>
+
+<p>For any given dependency, you should first try to remove it, and then you should secondarily try to push it back. Removing a dependency typically looks like changing scope, so that the dependency is not required. Pushing it back looks like structuring milestones – provided that early milestones deliver user value – so that it is not required until later. This is basic execution management that should happen for all your projects, and should be old hat for yourself, your tech lead, and your product manager.</p>
+
+<h1 id="get-engineers-engaged">Get Engineers Engaged</h1>
+
+<p>If the dependency cannot be resolved with a creative solution, the next step is to get the right people to bring the right expertise to bear on the problem, and to get work started right away. A dependency that is not being actively worked on by engineers is an at-risk dependency. As an engineering manager, allocating these resources appropriately for the business is another core competency. That’s not to say that it will be easy! Managers sometimes confuse accountability for allocating resources with having authority to dictate those decisions. Given that we know that we will mostly not be unilaterally allocating people across disparate teams, what staffing levers do we have at our disposal?</p>
+
+<p>Use your knowledge about the organization and other teams to identify the correct team for the dependency, and also the most likely points of contact on that team — the experts — who can help the most. Start by asking for a consultation with that expert. This could start as one-time, and then you can collectively evaluate if consultation alone can satisfy the dependency. Identify your own experts, and get them involved. If you respect the remote team’s time, create a pre-read, and get aligned ahead of time with their manager, this should be a slam dunk. Even if the work turns out to be too large for a consult, you will have cemented a clear point of contact on the remote team.</p>
+
+<p>Next, create a dialog with the right points of contact on both sides. This could be a simple Slack channel dedicated to the consultation. Eventually, this may be the rally point for a full on roadmap dependency. Your goal is to create and nurture a relationship between the teams, to facilitate a conversation. If you make it transactional, that is how it will feel to the other team. Try to set ground rule expectations. Can the other team agree to provide support for things like technical spec reviews, and code reviews?</p>
+
+<p>Another staffing mechanism available to all managers is embedding, also known as tours of duty. This means offering to loan one of your engineers to another team for a specific period of time. Alternatively, they could loan you an engineer. It’s easier than a roadmap commitment, because it’s timeboxed. The receiving team agrees to return the engineer on a specific date, based on the initiating team’s estimates of the work. The engineer(s) exclusively work on the dependency. If it’s not resolved in time, that is the responsibility of the initiating team. The embedding should end on time regardless. Managers should write down expectations for things like how specs and code get reviewed, what needs to happen to merge a code change, and whether the person is expected to improve the state of the surrounding code. If folks are willing to cross-train, this can work even if there is a skills or domain knowledge gap in the person being embedded.</p>
+
+<p>Other staffing solutions may or may not be available to you. Most dependencies that get to this stage require domain knowledge. If the dependency is primarily about raw staffing, you can of course hire. Even if this is not the case, if you are in charge of a headcount budget, reserving some budget for dependencies like this can be effective, to facilitate potential internal transfers, both to be able to receive an internal transfer, or to offer as compensation to another team for a transfer.</p>
+
+<p>Depending on your scope, other options like moving people between teams, or moving entire teams, may be available. During a regular reorganization of teams, you should be actively managing your dependency risk.</p>
+
+<h1 id="mitigate-risk-with-milestones">Mitigate Risk with Milestones</h1>
+
+<p>Once you know what your dependencies are, and the right people are working on them, the next step is to structure the work. How you structure the work greatly affects how much risk you are taking on. Your goals are to shorten the window before work begins, bring forward the first increment that delivers user value, and shorten the cycle time between further iterations.</p>
+
+<p>Creating a prototype is a critical early milestone. This should be a quick and dirty development environment only implementation of just the very core of the product. This gives you some real code to discuss, some real experience to demo, and will also uncover some of the primary unknowns and decisions that need to be resolved. Concurrently, you can also do “spike” sprints to try to resolve specific unknown and technical risks.</p>
+
+<p>After that, you want to move to an in-production implementation, behind a feature flag, as soon as possible. This is Milestone 0, a foothold that you can continue to expand, refine, and polish for the rest of the project lifecycle. After that, milestones should be “theoretically shippable”, i.e. a user could get some value out of this, no matter how small. Don’t break things down into milestones like backend, front-end, release testing, etc. Instead, think of thin vertical slices. Each slice should deliver some user value, end to end. The slice itself should accomplish part of the overall job to be done. It should be just polished enough that you could release to wider and wider audiences, such as team-only, internal-only, early access customers, etc.</p>
+
+<p>When planning the scope of the milestones, think about whether certain dependencies are only required for some of the scope. Pushing that scope back into future milestones will reduce the risk associated with delivering earlier milestones, at the cost of non resolving unknown technical risk inside those dependencies early. If possible, try to de-risk those separately with their own prototypes, potentially on another team’s roadmap.</p>
+
+<p>For any cross-team dependencies, agree on a code interface for the dependency. This can greatly clarify what each team needs. You may also want to create failing unit tests for those code interfaces. You could go as far as to mock the dependency with basic behavior, which will be useful in your own development and testing. Any performance or scalability requirements can also be part of your interface definition.</p>
+
+<p>Finally, come up with a Plan B for each dependency. This will not always be possible. Examples include planning to build and ship a heuristic solution to a machine learning model dependency, or hard-coding something that will eventually be configurable. Other examples could be shipping a mock implementation of a back-end system, or further dropping scope so that it’s not necessary.</p>
+
+<h1 id="escalate-unless-development-starts">Escalate Unless Development Starts</h1>
+
+<p>If dependencies cannot be eliminated or committed to such that they are beginning work soon, you should escalate. This is a last resort, only because you need to attempt other methods first. But don’t let dependency conversations linger too long without making forward progress. If progress has plateaued for two or three weeks, it’s time to start the escalation process. Much of the time, you will not end up having to escalate at all, but that’s part of the magic!</p>
+
+<blockquote>
+  <p>Often the mere act of sitting down and trying to write up a proposal will lead to Frank and Faythe to come to a compromise. Partially this is because writing down details forces clarity on the situation. It also reveals options that neither party had thought of independently. A big part of last-minute compromises is that everyone is reluctant to involve their manager, asking for a decision. This makes it more likely that each side will accept a compromise that they would not otherwise have accepted, simply to avoid escalating. — <a href="https://chase-seibert.github.io/blog/2021/04/05/escalations.html#clean-escalations-the-one-pager">How to Escalate</a></p>
+</blockquote>
+
+<p>The short version of how to escalate is:</p>
+<ol>
+  <li>Create a doc collaboratively with the other engineering manager, and include cross-functional peers</li>
+  <li>Pair down to two or three potential outcomes</li>
+  <li>CC both of your leads at the same time, plus any cross-functional partners, via email</li>
+</ol>
+
+<p>If the escalation results in a roadmap commitment, you should have a record in the above email. If not, create one. This is critical for clarity and accountability.</p>
+
+<p>Done correctly, most escalations will be resolved by a compromise before your leads are included. This is what healthy cross-team collaboration looks like; identifying problems and finding solutions. Don’t treat an escalation as a threat, your goal is to share context and exercise empathy, and iterate to a solution that is best for the entire company. The biggest failure mode in escalations is not doing them, or not doing them early enough.</p>
+
+<h1 id="checklists">Checklists</h1>
+
+<h2 id="dependency-risk-level-scorecard">Dependency Risk Level Scorecard</h2>
+
+<p>How high risk is your dependency? If you cannot answer “Yes” to three or more of these, your dependency is at high risk.</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Has work started?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Is work starting in the next quarter?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Is there a working prototype of the solution?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Is the team confident that they know what the technical solution is, exactly?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Do you have an API interface definition agreed on by both teams?</li>
+</ul>
+
+<h2 id="team-lead-dependency-mitigation-checklist">Team Lead Dependency Mitigation Checklist</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you asked critical questions about the product and the technical plan?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you identified the right stakeholders?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you written and communicated a compelling business case for this work?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you brainstormed potential dependencies and risks with the team?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you held a pre-mortem about what could go wrong, worst case?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you listed all of your dependencies and risks somewhere?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you prioritized your dependencies by negative impact?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you documented your full team roadmap, and shared it?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you defined milestones that are thin vertical slices of potentially shippable product increment?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you cut scope from early milestones to de-risk dependencies?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you set up an ongoing consultation with your primary dependencies for questions, design review, and code review?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you created a safe space where you can engage in dialog with each dependency?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you built a working prototype of the solution?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you mocked up a code interface for each dependency, with example inputs and output?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you documented the dependency and the commitment in an email?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you identified specific people as points of contact for the dependency?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you put together an escalation doc for this dependency?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you sent the escalation doc to leads on both sides?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you created a Plan B for if this dependency is not satisfied?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you determined whether there is a relationship or trust issue between these teams? (manager of managers)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you brought in the right experts from outside the teams to consult on this dependency? (manager of managers)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you considered moving people around for this dependency? (manager of managers)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you considered embedding engineers across teams? (manager of managers)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you reserved headcount to facilitate this dependency? (director)</li>
+</ul>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><category term="checklist" /><category term="scorecard" /><category term="playbook" /><summary type="html"><![CDATA[How to manage risk for your project dependencies, i.e. when you need another team to put something on their roadmap.]]></summary></entry><entry><title type="html">Organizational Design</title><link href="https://chase-seibert.github.io/blog/2023/01/30/organizational-design.html" rel="alternate" type="text/html" title="Organizational Design" /><published>2023-01-30T00:00:00+00:00</published><updated>2023-01-30T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2023/01/30/organizational-design</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2023/01/30/organizational-design.html"><![CDATA[<p>Organizational Design is how you group teams together in order to optimize for various constraints. There is no perfect organization design, only a series of trade-offs. Unless you’re a small company, how you group teams together will optimize for some dimensions and constraints over others. No organization design you choose will remain stable any longer than a few years. But you can mix and match different design strategies for different parts of the organization.</p>
+
+<h1 id="what-is-an-organization">What is an Organization?</h1>
+
+<p>An organization is a set of teams with one name. Your company is one organization. A large company includes many nested sets of organizations. How you group sets of teams together, and what type of shared mission you give them, is the result of trade-offs you make between competing factors like coordination and dependencies.</p>
+
+<h1 id="what-is-organizational-design">What is Organizational Design?</h1>
+
+<p>Organization design is how you choose to group the teams together, and what name you give them. Mission scope, coordination cost, and dependency management are the primary factors in any organization design.</p>
+
+<p>Mission scope simple means the job of the team. What is their primary goal, and what problem are they trying to solve? The mission should be compelling, distinct from the missions of other organizations, and meaty enough to have impact commensurate with the expectations of the larger company.</p>
+
+<p>Coordination cost is incurred in the form of communication overhead for any two teams that have a dependency between them. If possible, you want to remove the dependency altogether. If you cannot remove it, you want two teams involved in the same work to share the shallowest common “branches”. As the distance increases, so does the risk of misalignment and prioritization conflict, which can lead to the dependency blocking the project.</p>
+
+<p>The reporting structure of the organization, literally who reports to whom, determines the distance and number of people in the decision-making loop. In terms of risk, there is a natural incentive to make sets of teams in an organization as small as possible. But there is a competing factor called the “span of control”—giving teams a sufficient number of people to realize impact—that incentivizes larger sets of teams. For any given manager, most companies ideally want somewhere between five and eight direct reports, for cost efficiency and to give each direct report the right amount of attention and support for their personal development.</p>
+
+<p>Making trade-offs between these factors are the primary driving force informing organization structure.</p>
+
+<h1 id="small-organizations-dont-need-structure">Small Organizations Don’t Need Structure</h1>
+
+<p>My first job was in a start-up with one and a half other software engineers, and no product managers or designers. There were no teams, or rather we were one big team of 12 including sales, finance, and customer support. There was a reporting structure, where sales people reported to the head of sales, etc. But there wasn’t an organization structure. We didn’t need one.</p>
+
+<p>In a small company, communication and coordination overhead is negligible. When you’re coding a feature, there are probably no dependencies. If there are, you can literally turn to the person next to you to resolve it with a quick conversation. Engineers are able to deliver almost all their work by themselves.</p>
+
+<h1 id="medium-sized-organizations">Medium-Sized Organizations</h1>
+
+<p>As a company gets larger, there will be many teams. You’re all working on one product, but no matter how you organize, you will start to see more and more dependencies.</p>
+
+<p>Teams can be grouped by technology, feature, business goal, or customer. We are going to ignore grouping by customer, because it tends not to scale past a few types of customer.</p>
+
+<h2 id="grouping-teams-by-technology">Grouping Teams by Technology</h2>
+
+<p>Codebases are broken up into repositories, services, modules, and files. They are naturally categorized by theme, i.e. what can I include in this set that’s cohesive as a unit, and has minimal dependencies on other things?</p>
+
+<p>Engineers have a tendency to first think of organizational structures that match these themes. This makes sense! You know this will minimize dependencies, and you know that assigning code ownership will be straightforward. Using an organization structure like this for a set of teams will tend to incentivize quality, which is also a classic engineering value.</p>
+
+<p>Organizations structured this way will excel at keeping things running, and running well. They will maximize uptime, performance, and correctness. They will tend to be more stable over time, as the basic thematic groupings of code do not change often. They are great for knowledge sharing across engineering teams. This structure is often used in Platform organizations.</p>
+
+<p>On the other hand, these organizations will bias towards investment in existing use cases vs new use cases. Innovation will often look like rewriting an existing component. Engineers may gravitate towards this work, even when the business thinks it’s low value. It may be difficult to get engineers to work on higher impact stuff. Work on new initiatives may be diffused across more teams, increasing overhead and risk, and reducing accountability.</p>
+
+<h2 id="group-teams-by-feature">Group Teams by Feature</h2>
+
+<p>If you need to make significant progress on a relatively well-known new or existing feature, consider grouping all the teams who need to deliver work for that feature together. This may make sense, especially for a handful of top priority initiatives. By having every skillset the teams need to deliver their roadmap, you are minimizing coordination cost and dependency risk.</p>
+
+<p>This could look like front-end, back-end, mobile, database, and devops engineers all working directly together on cross-functional teams, separate from other engineers of the same horizontal discipline. One manager may have direct reports from each discipline, and together with their peer managers report to one organization manager, who can easily resolve prioritization issues.</p>
+
+<p>This organization structure maximizes execution, assuming that the solution is relatively well known. It may be ideal for large cannot-fail mega-projects. Of course, projects can always fail, but this structure greatly decreases execution risk.</p>
+
+<p>With this organization design, you are incurring maximum churn on team missions and superstructure, as missions revolving around features will naturally change more often as the features ship. When that churn happens, more people will change managers, and it will take time to reestablish processes on affected teams. Plus, there is a high likelihood that this churn will be incurred again, as the project is completed and teams align to the next feature.</p>
+
+<p>In the initial move to feature organization, there may be resistance to decoupling teams from their previous groupings, especially if they have formed a sense of identity around being a “platform”, or “mobile” organization.</p>
+
+<p>These organizations are sometimes over-staffed. It’s a fine balance on the continuum between creating an organization for a solution that’s fairly well known, versus creating the organization in order to define the solution. Too much of the latter, and you run the risk of having people and teams roped in without a lot of actual work to do. Worst case scenario, this can lead to scope creep and unneeded complexity as teams “invent” work to do.</p>
+
+<h1 id="large-organizations">Large Organizations</h1>
+
+<p>As the company gets even larger, you are likely to be working on many more totally different things, even multiple different products. The number of dependencies grows exponentially. You cannot truly minimize dependencies, instead you need to pick which ones to derisk.</p>
+
+<p>Large companies contain many organizations. Each organization may be responsible for one product, or one sub-goal. Inside each organization, you can mix and match grouping sets of teams by technology, features, or customer.</p>
+
+<h2 id="grouping-teams-by-business-goals">Grouping Teams by Business Goals</h2>
+
+<p>Like the feature grouping, grouping by business goal puts a sufficient number of people under one overall accountable person to achieve the goal self-sufficiently. Unlike feature grouping, the solution is often undefined. Instead of being about estimates to build a specific feature, the number of people allocated to this type of organization is based on how much of a “bet” the company is willing to make on this goal. Sub organizations can be created for sub goals, which should have their own single accountable person.</p>
+
+<p>This type of structure prioritizes innovation. Doing this well requires clear goals and metrics. The strategic vision must be compelling. With unknown solutions, there is a tendency to give each product leader similar resources. This option is often used for product-led organizations, i.e. organizations where everyone ultimate reports to a head of product.</p>
+
+<p>Teams and individuals in this model may need to exercise more of their cross-functional skills, versus organizing by technology or feature. You may need to repurpose an engineer for something that does not 100% match their skillset, or you may discover that you need a new skillset as you uncover solutions in the space. You may also need to unblock dependencies by changing the working agreement so that teams inside your organization can do work in codebases that other teams own. These both have real costs. Swim lanes inside the organization may be unclear, especially as you uncover new solutions that don’t match the initial structure.</p>
+
+<h2 id="hybrid-grouping">Hybrid Grouping</h2>
+
+<p>You don’t have to choose just one organizational strategy for your entire company. A mature product may be organized by goal, while a new product has no organization, and a shared platform organization is structured by technology. Structures will also change over time, as the situation changes. Knowing when to use which structure is important, even if there is no “right” answer.</p>
+
+<p>A common tool when mixing structures is the “matrixed organization”. This means that the reporting structure does not match the sets of teams structure. For example, an engineering manager may have direct reports in various squads, working on different things, and working with different product managers. This increases coordination cost. It also reduces the context between a manager and their direct reports, which can make performance evaluation more difficult. Watch out for negative impact on cross-functional alignment.</p>
+
+<h2 id="other-factors-to-consider">Other Factors to Consider</h2>
+
+<p>Inertia is a force that is actively fighting your organizational design. All else being equal, change is hard, and people will be naturally resistant to it. Assuming you overcome that, enacting change is a lot of work. You need to communicate the changes, move people around, and change the names of teams in hundreds of places. Teams with personnel or mission changes will be starting further back on the forming/norming/storming curve.</p>
+
+<p>Changes in code ownership have their own cost. There should be a very good reason for moving ownership between teams. “Keep the Lights On” (KTLO) type work should be as uniform as possible across teams, which may involve additional ownership changes.</p>
+
+<p>Teams and organization names are a powerful tool for autonomy, i.e. “You’re the Activation team, you’re empowered to own anything that involves user activation across the entire company”. But names can also be burdens, as in “every team with something they can squint at and call activation work is going to try to get you to own that”.</p>
+
+<p>You should also consider whether to group specialized skill sets together (i.e. Mobile, Devops, etc). You may also want to think about giving teams the largest possible “swim lane” to an organization, where they can have autonomy, cohesion, and separation of concerns from others.</p>
+
+<p>There is no perfect solution that will solve all factors. The best you can do is pick a set of dimensions to optimize for, and be aware of the trade-offs you’re making.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>As an organizational design changes over time, you will make different trade-offs. This is fine, because there is no perfect organization structure. If you stay at a company long enough, you may see a particular pendulum swing back and forth more than once. Each time is a response to a current problem.</p>
+
+<p>Organizational design is not something you can solve permanently. It will need to be solved again as strategies change, and projects come and go. You can only design an organization for about 12 months, the typical macrocycle where both company and team roadmaps are most stable.</p>
+
+<p>Remember to not create dependencies if you don’t have to. Definitely don’t architect in more dependencies than absolutely necessary. Make the best trade-offs you can, for today. You can always make different trade-offs in the next reorg!</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><category term="director" /><category term="playbook" /><summary type="html"><![CDATA[You don’t have to choose just one organizational strategy for your entire company. A mature product org may be organized by goal, while a new product org has no structure, and a shared platform organization is structured by technology.]]></summary></entry><entry><title type="html">My Expectations for Managers</title><link href="https://chase-seibert.github.io/blog/2022/12/21/my-expectations-for-managers.html" rel="alternate" type="text/html" title="My Expectations for Managers" /><published>2022-12-21T00:00:00+00:00</published><updated>2022-12-21T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2022/12/21/my-expectations-for-managers</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2022/12/21/my-expectations-for-managers.html"><![CDATA[<p>When working with a new manager that’s reporting to me for the first time, I like to 
+share this document. Hopefully, it helps us get on the same page about our shared 
+expectations for your role. I hold myself to the same bar on all of
+these – you can expect the same things from me that I expect from you.</p>
+
+<p>These are probably not controversial. If they are, let’s talk about it!</p>
+
+<h1 id="weekly-11s">Weekly 1:1s</h1>
+
+<p>You should have weekly, regularly scheduled 1:1s with your direct reports. For most roles,
+this will be somewhere between five and eight 1:1s a week. For product teams, you should also have weekly 1:1s with your direct product manager and design partner. Let people reschedule as needed, but
+don’t skip too often.</p>
+
+<p>You can expect the same from me. You can also expect that I will have monthly skip level 1:1s
+with your more senior individual contributors, and any managers that report to you. These are 
+mostly for feedback, which I will share with you as appropriate. I also use them to develop
+bench talent.</p>
+
+<p>How you run the 1:1s is up to you. You will find that I tend to run mine with written agendas, 
+and lots of transparency.</p>
+
+<h1 id="tight-meetings">Tight Meetings</h1>
+
+<p>If we’re in a meeting together, it should be well run! As an engineering manager, either you, 
+me, or my manager will probably run 80% of the meetings we’re in together. Even if it’s a meeting 
+hosted by a cross-functional partner, you should take responsibility for making sure it’s well run.</p>
+
+<p>You can expect that if I invite you to a meeting, that it will have an agenda ahead of time. I will 
+make sure that we stay on topic, take notes, and end on time.</p>
+
+<p>If I take an action item in a meeting, I will resolve those 100% of the time (or get back to you 
+and say I won’t be doing it after all).</p>
+
+<h1 id="excellent-execution">Excellent Execution</h1>
+
+<p>When you commit to a deliverable on a quarterly roadmap, those should be delivered on time 90% of the time. If a team has four or five main items on their roadmap, that means that one item 
+might slip every two quarters. The expectation that 9/10 items ship on time can surprise people; that is a higher bar than industry average for not slipping commitments.</p>
+
+<p>I hold myself to the same bar for the roadmap delivery across all my teams, collectively. That doesn’t mean that I expect teams to kill themselves to hit unrealistic timelines. What I expect is that after a period of forming/storming/norming, a team gets proficient at estimates that include an 
+appropriate risk buffer.</p>
+
+<p>The real secret sauce is when a team develops a working relationship with their product owner
+such that they can seamlessly trade off scope, time, and quality. In my experience, these
+teams can deliver on any timeline; because the scope is fluid.</p>
+
+<p>At the end of the day, I expect the engineering manager and the product owner to agree on 
+whether something was delivered on time, and that it satisfies the deliverable. As long as 
+you agree, I’m happy on execution.</p>
+
+<p>You can expect me to jump in and help identify and mitigate large risks that could derail us.</p>
+
+<p>Also related to execution:</p>
+
+<ul>
+  <li>Commitment misses should be on the lowest priority items</li>
+  <li>Be able to “do the math” to rationalize quarter level commits based on team velocity</li>
+  <li>If you’re going to slip, communicate it early, for example 1/3 of the way in to a quarter</li>
+  <li>There should not be confusion about the exact commitment, for example code complete versus shipping to production</li>
+</ul>
+
+<h1 id="product-partnership">Product Partnership</h1>
+
+<p>You and your product manager should be in sync. I expect the 360 feedback for each other to be 
+excellent. It’s unusual for there to be a dysfunctional relationship between an engineering 
+manager and their product partner. When it happens, you can expect that I will dive in and 
+try to debug that as a top priority. In this state, the team has a very low chance of success.</p>
+
+<p>For a deep dive, see <a href="/blog/2022/11/18/what-are-healthy-relationships.html">What are Healthy Relationships?</a>.</p>
+
+<h1 id="impact-outside-your-team">Impact Outside your Team</h1>
+
+<p>You should have one major piece of impact a year, outside the scope of your team and mission.
+This could look like shipping an internal tool, revamping an interview question, or 
+updating the company career framework. I can help you identify opportunities. If you sign up to 
+take on something like this, I expect you to proactively drive it forward.</p>
+
+<h1 id="influence-the-roadmap">Influence the Roadmap</h1>
+
+<p>You should also come up with one major product or foundational initiative a year. These will mostly
+be in the scope of the team mission, but could be anything related to the overall product, or 
+internal processes. As you get more senior, this means understanding the business context almost
+as well as a product manager, and understanding the technical context almost as well as a senior
+engineer. Trust your own insights, and put a stake in the ground about something you would like to 
+see happen.</p>
+
+<p>This doesn’t mean that it’s always going to get onto the roadmap. An ideal outcome is that it 
+influences the product org, and helps set strategy going forward. If this exact idea ships, 
+it’s a bonus. That will probably happen about 25% of the time.</p>
+
+<p>You can expect ideas from me, as well. These are never directives, but I do expect you and your product partner to follow up and either validate or invalidate the idea.</p>
+
+<h1 id="be-comfortable-with-uncertainty">Be Comfortable with Uncertainty</h1>
+
+<p>Dealing with uncertainty and ambiguity is part of the job. This will only become more important, 
+the more senior you get. You should never let uncertainty become a blocker for the team, or an 
+impediment to healthy relationships.</p>
+
+<p>You can expect a reasonable level of transparency from me about any given situation. I won’t
+necessarily commit to pushing to resolve any given uncertainty as soon as possible. That’s often 
+a premature optimization. But, I will tell you when I plan to sit with the uncertainty, and when
+I intend to resolve it.</p>
+
+<h1 id="grow-a-successor">Grow a Successor</h1>
+
+<p>It’s not always possible, but you should try to have a succession plan for both yourself, and the primary technical lead on your team. Pick one person, and create a growth plan for them. Document 
+where you think they are already ready for a next level opportunity, and where they still have to grow. This will come in handy, often on short notice, when an opportunity opens up. Ideally, we’ve already talked about this person, and have the beginnings of a transition plan in place.</p>
+
+<h1 id="deliver-business-impact">Deliver Business Impact</h1>
+
+<p>You’re primarily going to be judged on your track record of delivering business impact. This should not be a surprise; it’s the cornerstone of most written company expectations for any role.</p>
+
+<p>As an engineering manager, we are going to primarily deliver impact through excellent execution. What if something is delivered on time, but does not result in the impact that we hoped for? I expect this to happen on individual projects maybe 50% of the time. I do hold engineering managers accountable for their portfolio of projects, and the total impact. Part of our job is to influence the roadmap towards high impact work, refine the scope so that it actually does have impact, and deliver quickly so that we can fail and learn fast.</p>
+
+<p>Anything in the realm of execution is also fair game. Common blockers like cross-organization dependencies, alignment with leadership, and even a project being de-prioritized before shipping are things we are ultimately accountable for resolving.</p>
+
+<h1 id="do-the-best-thing-for-the-company">Do the best thing for the company</h1>
+
+<p>When in doubt, do the best thing for the company. I expect this from anyone in a leadership position. Often there is temptation to optimize for the local team. As you get more senior, I expect you to optimize for the company more.</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><category term="newboss" /><summary type="html"><![CDATA[These are my basic expectations for managers that report to me]]></summary></entry><entry><title type="html">What are Healthy Relationships?</title><link href="https://chase-seibert.github.io/blog/2022/11/18/what-are-healthy-relationships.html" rel="alternate" type="text/html" title="What are Healthy Relationships?" /><published>2022-11-18T00:00:00+00:00</published><updated>2022-11-18T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2022/11/18/what-are-healthy-relationships</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2022/11/18/what-are-healthy-relationships.html"><![CDATA[<p>Five years into my career, I had gone from being one of the few engineers at the company, to being the expert on a medium-sized engineering team. If someone misunderstood how something worked, I could list all the ways there were wrong. If someone had a product idea, I could find all the ways it might not work. I even remember joking about this by saying, “if you need someone to poke holes in an idea, you know who to come to”. No one ever said anything directly, but my manager started getting feedback about how I was coming across. I got some formal 360 feedback that was filled with phrases describing me as “always needing to be right”, “thinks he knows everything”, and “too cocky”.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C6BYzLIqKB8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<p><br /></p>
+
+<p>I wasn’t sure how to process the feedback at first, but eventually I realized that the biggest thing limiting my impact was my relationships with other people. This was a formative piece of feedback in my career, and marked the first time I started thinking about my “soft skills”.</p>
+
+<p>Healthy relationships at work are not just about the people on your team, or even the people you interact with. They are also the way you interact over email, in a large Slack channel, or in a document. It’s OK to occasionally cross into curmudgeon territory, but don’t make a steady diet of it. If it’s too frequent, too visible, or inappropriate for the audience, it can cross the line. You can’t go wrong if you consistently take ownership, assume good intent, and radiate positivity.</p>
+
+<h1 id="what-good-looks-like">What Good Looks Like</h1>
+
+<p>You always want 360 feedback from your relationships to be excellent. In terms of having healthy relationships, this looks like consistent positive comments about your professionalism, tone, and collaboration. Feedback that is specifically about you or your relationship should not be negative, even if there are challenging projects, or circumstances. You want feedback from others to be critical of outcomes, not of you personally.</p>
+
+<p>For engineering managers, this means feedback from your direct reports as well as your peer product managers, designers, and engineering managers. Your manager probably gets feedback from these folks in one on ones, and from anonymous surveys. Feedback can also come from exit surveys when people leave the team.</p>
+
+<p>As you get more senior, the pool of people who have visibility on you grows. At some point, you can reasonably expect feedback to potentially come from anywhere in the company. It starts to reflect not just on you, but also your whole team, and your leads.</p>
+
+<p>Model the relationship that you want in your own interactions with folks. Demonstrate trust, always keep things professional, and criticize the work, not the person. Also, keep an eye out for common work stressors.</p>
+
+<h1 id="common-stressors-on-healthy-relationships">Common Stressors on Healthy Relationships</h1>
+
+<p>Having healthy relationships does not mean that nothing will ever go wrong. But when things do  go wrong, your relationships are not the cause, and your relationships are not burned resolving the issue.</p>
+
+<h2 id="blockers">Blockers</h2>
+
+<p>Whatever the issue is, you want to talk about it with your team, peers, and your boss. This happens in one on ones, and team check-ins. To some extent, it’s OK to vent or be frustrated in a one one one with your manager. That’s part of what they are there for. But in a team meeting, you want to quickly move forward constructively. You can do this by taking a lens of extreme ownership, where you take responsibility to solve the issue together.</p>
+
+<p>If you have an idea for a solution, use your manager as a sounding board to help you work through it. It’s OK to come to them without a solution, but be prepared for ideas from them. You should expect that 80% of the time, your manager will propose a solution you can act on yourself, versus having them act.</p>
+
+<p>What if the blocker is another person? Remind yourself that you need to assume good intent, ask open-ended questions, and frame things in a positive light. Don’t turn a non-people problem into a relationship problem.</p>
+
+<h2 id="uncertainty">Uncertainty</h2>
+
+<p>The level of uncertainty and ambiguity you deal with on a regular basis is only going to increase as your seniority and scope increases. At a certain level, no amount of uncertainty is anomalous or outside the range of expectations for your role. Uncertainty itself should not be an excuse for unhealthy relationships or interactions.</p>
+
+<p>Sometimes, you need to live with the uncertainty for a bit. You may catch yourself making the  mistake of trying to resolve uncertainty too quickly, versus not quickly enough. Sometimes what is required is just to sit patiently with the uncertainty. In general, your best tools here are going to be perspective, curiosity, and reaching out to the right people.</p>
+
+<p>If you need to escalate to resolve the uncertainty, be sure to follow <a href="/blog/2021/04/05/escalations.html">healthy escalation best practices</a>.</p>
+
+<h2 id="lack-of-confidence">Lack of Confidence</h2>
+
+<p>What if you think that a peer is not performing in their role? First, you should give them feedback. Then, try coaching them. Finally, give their manager feedback, either directly, or though your manager. Your working relationship with the person should never suffer. Even if the person is under-performing, you don’t want your relationship itself to become a contributor to blocking the team.</p>
+
+<p>Be mindful that it’s not your decision whether a cross-functional peer, or anyone outside your org, is performing well in their role. You cannot make that determination unilaterally with the information you have. Don’t assume you know what is expected of them outside the context of your roles and responsibilities with each other. What you can do is make your respective roles and responsibilities clear, in writing.</p>
+
+<p>Never balk at performing your own role based on a sense that someone else is not performing well. A specific case that you may see is when you are not happy with the level of detail in product specs. Do not refuse to estimate work, or put items on the roadmap. This can put your relationship with the product manager at risk. Instead, work with the whole team to refine and scope the work together.</p>
+
+<h2 id="all-hands-qa">All Hands Q&amp;A</h2>
+
+<p>The larger the audience, the more potential risk there is to damage relationships. One of the larger forums that you may be a part of in your work is an All Hands Q&amp;A session. You never want someone to be able to interpret a question you’re asking as having bad intent. Even if a question is anonymous, make sure it comes across in a healthy way. Avoid making unvalidated assumptions, and keep the tone positive. Ask yourself, how would you feel if this question was on the front page of the New York Times?</p>
+
+<p>Asking provocative questions is valuable, but not if they negatively affect morale, or reflect poorly on your team. It doesn’t matter if you’re 100% right, if you don’t find an effective way to ask the question. The ratio also matters, you don’t want to be the person always throwing bombs.</p>
+
+<h1 id="how-to-optimize-for-health-relationships">How to Optimize for Health Relationships</h1>
+
+<h2 id="communicate-with-ruthless-positivity">Communicate with Ruthless Positivity</h2>
+
+<p>It’s up to you to radiate the positivity that you would want to see in anyone. Relentlessly assume good intent. Psychological safety is a two-way street; in your interactions with peers and your manager, given them space to feel safe. Tailor your communication to leave the door open for constructive discussion. Take accountability for how you communicate, how it’s perceived by others, and it makes them feel.</p>
+
+<p>If you find yourself communicating with a sense of frustration or entitlement, take a step back. If you can’t find a way to say something that does not pose a risk to healthy relationships, save it for a one on one with your manager. You might try explicitly labeling it as a “rant”. As always, praise in public, and criticize in private.</p>
+
+<h2 id="prioritize-relationships">Prioritize Relationships</h2>
+
+<p>How and whether you show up for people affects the relationship. You should make time for regular one on ones with your team, as well as key peer relationships. Communicate that the relationship is important to you by keeping the time on the calendar, and coming engaged with topics to discuss.</p>
+
+<p>Get to know people on a personal level. Spend the first part of one on ones and smaller meetings asking folks what is going on outside of work. What are they excited about, right now? Smile and laugh with them. Make it genuine. Strong relationships built in the small moments will be what you lean on to get through tough times.</p>
+
+<p>Don’t underestimate the concentrated power of sharing a meal with someone, in person.</p>
+
+<h1 id="more-story-time">More Story Time</h1>
+
+<p>Much later in my career, I was fired from a role due to unhealthy relationships. My results were great. My peer, team and direct lead relationships were great. But, I had pissed off my great grand boss, and I didn’t last long after that. There was no warning, and no feedback. I’m not even 100% sure what happened, but I can guess.</p>
+
+<p>It came down to a refusal to engage my team, when I balked at moving forward with a project that didn’t have a product manager. I had given direct feedback, but my tone was “this is crazy”, “this is unreasonable”, and “YOU need to solve this”. That interaction put me on a knife’s edge. Later, there was a simple misunderstanding, but my credibility with this person was shot. I had burned the relationship, and it was unrecoverable.</p>
+
+<p>Outside of layoffs, I have more often seen attitude and unhealthy relationships result in termination than actual performance issues. Sometimes you can do enough damage to your internal reputation that it’s impossible to recover. There is no PIP for that.</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><summary type="html"><![CDATA[Strong relationships built in the small moments will be what you lean on to get through tough times]]></summary></entry><entry><title type="html">80 Percent is Done</title><link href="https://chase-seibert.github.io/blog/2022/10/21/80-percent-is-done.html" rel="alternate" type="text/html" title="80 Percent is Done" /><published>2022-10-21T00:00:00+00:00</published><updated>2022-10-21T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2022/10/21/80-percent-is-done</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2022/10/21/80-percent-is-done.html"><![CDATA[<p>It was a meeting with my design and product partners. Just the day before, we had been brainstorming ideas for the strategy for the coming year. In the 24 hours between, I had written up a draft of a strategy. It was more to gather my thoughts than anything else. My design partner smiled, and I worried that maybe I had overstepped. But he wasn’t annoyed or surprised. Instead, he was complimentary. He said, <strong>“I’m always impressed by how quickly you get to an 80% draft, and how you’re OK with sharing that early work”.</strong></p>
+
+<p>It’s true. In a leadership role, we’re asked over and over again to produce clarity from ambiguity. At every level of an organization, leaders are synthesizing the all the information they have, and outputting new information. Neither the inputs nor the outputs resolve all or even most of the ambiguity. As leaders, we need to be comfortable with both receiving and emitting ambiguity — it’s never going to be perfect.</p>
+
+<p>In many different situations, both large and small, I practice familiarity and comfort with ambiguity by striving to synthesize information, in writing, aiming to get to 80% fidelity in 20% of the time.</p>
+
+<h1 id="the-8020-rule">The 80/20 Rule</h1>
+
+<p>This is a form of the Pareto Principle, also known as the 80/20 rule.</p>
+
+<blockquote>
+  <p>The Pareto principle states that for many outcomes, roughly 80% of consequences come from 20% of causes (the “vital few”). Other names for this principle are the 80/20 rule, the law of the vital few, or the principle of factor sparsity. — <a href="https://en.wikipedia.org/wiki/Pareto_principle">Wikipedia</a></p>
+</blockquote>
+
+<p>The principle applies in many contexts. 80% of land is owned by 20% of the people. 80% of sales come from 20% of clients. 80% of bugs come from 20% of the code. <strong>My corollary is that 80% of impact for anything comes from the <em>first</em> 20% of the work.</strong></p>
+
+<p>In my experience, this is true of all kinds of different work. In the first 20% of a software project’s lifespan, you will get a prototype that is 80% indistinguishable from any form of that product that will ever exist. Maybe this corresponds to the initial MVP of the product, which required one quarter of work.</p>
+
+<p>For pure information processing, i.e. reading and writing, the first 20% of the time can be as little as one hour.</p>
+
+<p>Assuming you’re with me so far, a couple of insights follow naturally.</p>
+
+<ol>
+  <li>It rarely makes sense to wait for more information; if you have an hour right now, start synthesizing (writing)</li>
+  <li>Pass the information on quickly; by holding on to information to “perfect” it, you’re blocking downstream people from 80% of their immediate impact</li>
+</ol>
+
+<p>Together, these ideas are a powerful way to break through personal procrastination and paralyzation.</p>
+
+<h1 id="trust-your-professional-instincts">Trust Your (Professional) Instincts</h1>
+
+<p>Learn to think like a consultant. Companies pay consultants to synthesize information, and come up with recommendations. They have very little context in the actual business, maybe 20% of any leader on the inside. They have “business” training and experience — but this is not their primary value. Leaders use consultants to outsource creating clarity from ambiguity. In practice, very often their recommendation is something that the leader has already proposed, but which is now made into a compelling written artifact.</p>
+
+<p>The 80/20 rule is your permission to resolve this ambiguity yourself. <em>You</em> can create the written artifact, even without all the information you would like to have. It will be 80% as good as anything anyone could come up with, regardless of time. It’s faster than engaging any consultant.</p>
+
+<p>This applies no matter what the context is. In my career, I can think of times when I did not trust my own instincts about things like the valuation of a start-up I was thinking of joining, or the fundamental product flaws in something we were building. In all cases, my first take was 80% correct. I’ve learned to not dismiss my own analysis, just because I’m “not an expert”.</p>
+
+<h1 id="dont-optimize-for-perfect-information">Don’t Optimize for Perfect Information</h1>
+
+<p>When faced with ambiguity (i.e. in every situation, ever), it’s tempting to wait to get all the information you think you need. Even in the best case, you’re making a sub-20% optimization at the cost of time. It’s not worth it. In the worst case, your conclusion will arrive too late to matter.</p>
+
+<p>There is opportunity cost to waiting for more information, both in terms of other things you could be working to synthesize, and in terms of downstream leaders that you’re depriving of information. In these cases, do the 80% version and then send it out. Done is better than perfect.</p>
+
+<p>As an added bonus, you often capture some outsized value for getting it done quickly, or being the one to get it done first. In a sea of potential ideas, the ones that take form first will invariably have outsized influence in the formation of the final, coalesced proposal. “Getting there first” is not-too-subtly anchoring the group’s thinking.</p>
+
+<h1 id="when-to-go-to-100">When to Go to 100%?</h1>
+
+<p>When does it make sense to continue to put effort into something past 80%? Maybe never. But, sometimes the goal posts move significantly. What was an 80% solution in a fixed space is now just part of a solution in a much, much larger space. What you can do is sprint to an 80% solution in the new problem space. It may take as little as an hour.</p>
+
+<p>This may all sound like half-assing your way through everything. But, it’s actually very hard to send partially baked ideas out to your colleagues. It’s hard to take many different signals and synthesize them down into something coherent. Writing well is hard. Don’t confuse the number of minutes something takes with difficulty.</p>
+
+<p>In high school and college, I used to feel guilty about doing this. If I wasn’t always pushing to 100% effort, was I wasting my potential? Eventually, I came to two realizations. First, I never fully stopped thinking about any problem that was still in progress. Even if the 20% effort had not started yet, I was invariably thinking about the problem in the background, whether it was while walking to class, eating, or taking a shower. That effort count too — especially in salaried employment, we’re never really not working.</p>
+
+<p>Secondly, sprinting to 80% of the impact means you can then get started on the next thing. Now, I relish the prospect of checking off an item on my list at 80%, and looking down to see what I get started next.</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><category term="productivity" /><summary type="html"><![CDATA[80% of impact for anything comes from the first 20% of the work]]></summary></entry></feed>

@@ -1,0 +1,500 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>React Native Six Months In - Chase Seibert Blog</title>
+<meta name="description" content="NerdWallet released our first cross platform mobile app at the start of 2017, about six months ago. We choose to use React Native, and we are still using 99% of the same code base for the iOS and Android apps. What have we learned so far?">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="React Native Six Months In">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2017/05/26/react-native-six-months-in.html">
+
+
+  <meta property="og:description" content="NerdWallet released our first cross platform mobile app at the start of 2017, about six months ago. We choose to use React Native, and we are still using 99% of the same code base for the iOS and Android apps. What have we learned so far?">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="React Native Six Months In">
+  <meta name="twitter:description" content="NerdWallet released our first cross platform mobile app at the start of 2017, about six months ago. We choose to use React Native, and we are still using 99% of the same code base for the iOS and Android apps. What have we learned so far?">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2017/05/26/react-native-six-months-in.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2017-05-26T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2017/05/26/react-native-six-months-in.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="React Native Six Months In">
+    <meta itemprop="description" content="NerdWallet released our first cross platform mobile app at the start of 2017,about six months ago. We choose to use React Native, and we are still using99% of the same code base for the iOS and Android apps. What have we learnedso far?">
+    <meta itemprop="datePublished" content="2017-05-26T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2017/05/26/react-native-six-months-in.html" itemprop="url">React Native Six Months In
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>NerdWallet released our first cross platform mobile app at the start of 2017,
+about six months ago. We choose to use React Native, and we are still using
+99% of the same code base for the iOS and Android apps. What have we learned
+so far?</p>
+
+<h1 id="initial-reasoning">Initial reasoning</h1>
+
+<p>We initially chose React Native because it was the only way to hit our goals. We
+didn’t have any native mobile engineers, and we had been asked to deliver an
+iOS and Android app from scratch in just five weeks. We also happened to have
+very solid React experience on the team. Additionally, the app overlapped very
+nicely with some features we already had on the web, and we thought we could
+get some code re-use there.</p>
+
+<h1 id="code-reuse-deep-dive">Code Reuse Deep Dive</h1>
+
+<p>In our case, we started with an intuition that 50% of the mobile app codebase
+could actually be NPM modules re-used from our web stack. Plus, we got the
+obvious savings of 100% code re-use between the iOS and Android app code.</p>
+
+<p>After 6 months, we can look at our actual code re-use to get a better sense of
+where we actually ended up. Our current app has 26,000 lines of JavaScript. The
+NPM modules that we include from our web app stack total 40,000 lines of
+JavaScript. In practice, the maintenance of that shared code is virtually 100%
+offloaded to other teams.</p>
+
+<p><img src="https://docs.google.com/drawings/d/1-pqAgRwz9gh66290u3yJQ5Jfevn3hBEqzBFtORpQ9nE/pub?w=960&amp;h=720" alt="react" /></p>
+
+<p>Here is what it might look like if we had two separate native app code bases.</p>
+
+<p><img src="https://docs.google.com/drawings/d/1QWus2w-VxQRpIbR_y51DKukeGXIgYKGObWY5eJuQ8Pk/pub?w=480&amp;h=360" alt="native" /></p>
+
+<p>If you think of an app codebase as 2 unit of library code and 1 unit UX code,
+our app is about 1.2 units of code that we actually maintain. Writing two
+native apps would be about 6 units. The most interesting learning for me was
+just how much logic in an app is not related directly to the UI, as well as
+how easy it is to re-purpose NPM modules targeted at web.</p>
+
+<p><em>Note: if you’re interested in reading more about leveraging NPM modules in
+React Native, see <a href="https://t.co/tM8CSoZvlk">@parshap’s slides</a>.</em></p>
+
+<h1 id="limitations">Limitations</h1>
+
+<p>We have run into a number of areas where we are making compromises on the user
+experience. It’s not totally clear yet which of these are legitimate things that
+React Native is not good at, and which are due to us as a team not having
+focused on them.</p>
+
+<h2 id="performance">Performance</h2>
+
+<p>We have seen persistent issues with app performance, particularly around the
+time to switch between tabs in the navigation. That issue seems to be due to a
+bug in our navigation library, <code class="language-plaintext highlighter-rouge">react-native-router-flux</code>. But it’s important
+to call out that performance is largely dependent on getting React basics right.
+Performance has been good enough that we have not dedicated time to look
+into it further. In general, we still don’t think there is anything that most
+apps need to do for which React Native will not perform well, except maybe
+custom animations.</p>
+
+<h2 id="animations">Animations</h2>
+
+<p>Basic stock animations like screen transitions are available and perform well
+out of the box. For custom animations such as fading out a header as the user
+scrolls down on a list view, you need to write the animation yourself. We
+initially tried the naive solution where we control style properties from
+JavaScript. That did not perform well. But it was relatively easy to use the
+actual bridged animation primitives, at least for simple animations. We still
+don’t have a good sense of how difficult complex custom animations will be.</p>
+
+<h2 id="fonts">Fonts</h2>
+
+<p>Initially we did not use the correct default fonts for each platform. It turned
+out to be relatively simple to use either San Francisco or Roboto based on the
+platform. Some font variants that are normally available are not included. This
+ended up being something that probably took more time to get right than a native
+app would, but if you pay attention to it the first time it should be smooth.</p>
+
+<h1 id="biggest-risks">Biggest risks</h1>
+
+<p>The largest risk with React Native is still the immaturity of the platform.
+Releases come every two weeks with potentially breaking changes. But the larger
+risk is more existential; even though it’s still building in popularity, there
+is a chance that React Native fades away in the coming years as the framework
+ecosystem <a href="https://trends.google.com/trends/explore?q=react%20native,phonegap,cordova,Xamarin">continues to evolve</a>.</p>
+
+<p><img src="https://dl.dropboxusercontent.com/spa/sffu0th1cc1sg9q/ellfigls.png" alt="trends" /></p>
+
+<p>The second largest risk I see is a little more insidious. As we have ramped up
+the team with engineers who have prior mobile experience, they have begun to
+point out areas where we are not following best UX practices. Some of these are
+intentional. It’s very tempting once you have a cross platform app to make UX
+decisions to optimize for code re-use, not the best user experience. Even more
+troubling is the times when the engineers themselves don’t realize that a
+particular design is not following best practice UX; typically due to many of
+them not having mobile experience.</p>
+
+<h1 id="question-marks">Question marks</h1>
+
+<p>In my mind, the biggest open question is around how these mobile native
+platforms continue to evolve. Both Android and iOS have their developer
+conferences this time of year. Neither are expected to announce anything ground
+breaking in terms of how we build apps. This is a natural trend as the platforms
+mature; there is less interesting stuff to do. This happened to the PC operating
+system platforms over the last 30 years. 10 years into mobile, are we starting
+to see the same? This could be the time when putting an abstraction layer on top
+starts to make more sense, and actually becomes a winning strategy.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2017-05-26-react-native-six-months-in.md">_posts/2017-05-26-react-native-six-months-in.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2017-05-26T00:00:00+00:00">May 26, 2017</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2017/04/14/engineering-meeting-strategies.html" class="pagination--pager" title="Minimizing Impact of Interruptions on Engineers">Previous</a>
+    
+    
+      <a href="/blog/2017/07/13/value-quality-time.html" class="pagination--pager" title="Trading off Value, Quality and Time">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

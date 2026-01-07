@@ -1,0 +1,455 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Preventing duplicate form submissions with jQuery - Chase Seibert Blog</title>
+<meta name="description" content="A common problem for a new site to have is for their users to occasionally submit the same form two or more times. For example, maybe they were adding a new record, and were not sure if the application registered their submit button click, so they try again. This problem can be exacerbated by a slow website, which gives the users a larger window in which to come to this conclusion.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Preventing duplicate form submissions with jQuery">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2010/11/05/preventing-duplicate-form-submissions-with-jquery.html">
+
+
+  <meta property="og:description" content="A common problem for a new site to have is for their users to occasionally submit the same form two or more times. For example, maybe they were adding a new record, and were not sure if the application registered their submit button click, so they try again. This problem can be exacerbated by a slow website, which gives the users a larger window in which to come to this conclusion.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Preventing duplicate form submissions with jQuery">
+  <meta name="twitter:description" content="A common problem for a new site to have is for their users to occasionally submit the same form two or more times. For example, maybe they were adding a new record, and were not sure if the application registered their submit button click, so they try again. This problem can be exacerbated by a slow website, which gives the users a larger window in which to come to this conclusion.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2010/11/05/preventing-duplicate-form-submissions-with-jquery.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2010-11-05T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2010/11/05/preventing-duplicate-form-submissions-with-jquery.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Preventing duplicate form submissions with jQuery">
+    <meta itemprop="description" content="A common problem for a new site to have is for their users to occasionally submit the same form two or more times. For example, maybe they were adding a new record, and were not sure if the application registered their submit button click, so they try again. This problem can be exacerbated by a slow website, which gives the users a larger window in which to come to this conclusion.">
+    <meta itemprop="datePublished" content="2010-11-05T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2010/11/05/preventing-duplicate-form-submissions-with-jquery.html" itemprop="url">Preventing duplicate form submissions with jQuery
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+A common problem for a new site to have is for their users to occasionally submit the same form two or more times. For example, maybe they were adding a new record, and were not sure if the application registered their submit button click, so they try again. This problem can be exacerbated by a slow website, which gives the users a larger window in which to come to this conclusion.
+</p>
+
+<p>
+Typically, this is not a problem for edit forms. For the most past, committing the same edits twice to a single record is fine; the record ends up in the same final state either way. Of course, some edits have side effects, which could certainly be an issue. However, one case that almost always fails out of the box would be a user <i>adding</i> a record twice. Typically, this ends up with two new records in the system.
+</p>
+
+<p>
+One way to prevent these duplicate submissions is to use a unique token for each add/edit form. The server would render this token into a hidden field on the form, and then check for that token being present on the commit. But this can be difficult to implement on an existing code base with many different forms, unless your framework has some kind of middleware layer that you can leverage to apply to all form render/submissions.
+</p>
+
+<p>
+A more typical solution is to use Javascript. Of course, this does not guarantee that the user cannot submit the form twice; all they would need to do is disable Javascript, or hit an untrapped error on your code. But it does address the core issue, which is one of user experience. It's by far a better user experience to give a visual indication that the form is being processed. 
+</p>
+
+<p>
+Here is a simple approach that you can include in your base jQuery code, and which will provide consistent functionality across all the existing forms on your site. It requires jQuery, and was tested in version 1.4.2.
+</p>
+
+<pre name="code" class="javascript">
+ $("form").submit(function () {
+  var form = $(this);
+  form.find("input[type=submit]").attr("disabled", "disabled")
+  form.find("input[type=submit]").attr("value", "Processing...");
+  // prevent the user from hitting ENTER on a field to submit again
+  form.find("input").attr("readonly", true);
+  document.body.style.cursor = "wait";
+ });
+</pre>
+
+<p>
+The key trick here is NOT just disabling the form. That's a common approach, but it has one major issue. Disabled forms can't actually be submitted. A common hack is to disable the form after a certain timeout, but that's inviting a race condition on a slow machine. The readonly/disable the button approach is more robust.
+</p>
+
+<p>
+At the same time, you may want to change the style of the disabled form submit button, not just the text.
+</p>
+
+<pre name="code" class="html">
+input[type=button][disabled], input[type=submit][disabled] { background-color: #BBB; border-color: #444; }
+</pre>
+
+<p>
+One issue to be aware of with this solution is that if the the user uses the back button to navigate to a previous form, the submit button will still be disabled. That may or may not be desirable. It's definitely not desirable, for example, if the form submission page threw an error and the user is legitimately trying to submit again. I'm interested in some thoughts on a solution for this case.
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#jquery" class="page__taxonomy-item p-category" rel="tag">jquery</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2010-11-05-preventing-duplicate-form-submissions-with-jquery.html">_posts/2010-11-05-preventing-duplicate-form-submissions-with-jquery.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2010-11-05T00:00:00+00:00">November 5, 2010</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2010/10/29/django-uniform-image-resizing.html" class="pagination--pager" title="Django: uniform image resizing">Previous</a>
+    
+    
+      <a href="/blog/2010/11/19/django-url-tag-it-can-do-both-absoluterelative-urls.html" class="pagination--pager" title="Django {% url %} tag; it can do both absolute/relative urls!">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

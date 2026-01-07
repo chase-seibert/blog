@@ -1,0 +1,561 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Deploying Django staticfiles to Heroku via Hudson/Jenkins - Chase Seibert Blog</title>
+<meta name="description" content="Starting in Django 1.3, you can use the built-in staticfiles feature to bundle up css, javascript, images and other static resources for deployment to a CDN. There are two popular Django apps, django-compressor and django-pipeline that layer in additional functionality such as minification and seemless support for popular hosts like Amazon S3.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Deploying Django staticfiles to Heroku via Hudson/Jenkins">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2012/04/27/deploying-django-staticfiles-to-heroku-via-hudsonjenkins.html">
+
+
+  <meta property="og:description" content="Starting in Django 1.3, you can use the built-in staticfiles feature to bundle up css, javascript, images and other static resources for deployment to a CDN. There are two popular Django apps, django-compressor and django-pipeline that layer in additional functionality such as minification and seemless support for popular hosts like Amazon S3.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Deploying Django staticfiles to Heroku via Hudson/Jenkins">
+  <meta name="twitter:description" content="Starting in Django 1.3, you can use the built-in staticfiles feature to bundle up css, javascript, images and other static resources for deployment to a CDN. There are two popular Django apps, django-compressor and django-pipeline that layer in additional functionality such as minification and seemless support for popular hosts like Amazon S3.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2012/04/27/deploying-django-staticfiles-to-heroku-via-hudsonjenkins.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2012-04-27T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2012/04/27/deploying-django-staticfiles-to-heroku-via-hudsonjenkins.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Deploying Django staticfiles to Heroku via Hudson/Jenkins">
+    <meta itemprop="description" content="Starting in Django 1.3, you can use the built-in staticfiles feature to bundle up css, javascript, images and other static resources for deployment to a CDN. There are two popular Django apps, django-compressor and django-pipeline that layer in additional functionality such as minification and seemless support for popular hosts like Amazon S3.">
+    <meta itemprop="datePublished" content="2012-04-27T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2012/04/27/deploying-django-staticfiles-to-heroku-via-hudsonjenkins.html" itemprop="url">Deploying Django staticfiles to Heroku via Hudson/Jenkins
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+Starting in Django 1.3, you can use the built-in <a href="https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/">staticfiles</a> feature to bundle up css, javascript, images and other static resources for deployment to a CDN. There are two popular Django apps, <a href="https://github.com/jezdez/django_compressor">django-compressor</a> and <a href="https://github.com/cyberdelia/django-pipeline">django-pipeline</a> that layer in additional functionality such as minification and seemless support for popular hosts like <a href="http://aws.amazon.com/s3/">Amazon S3</a>.
+</p>
+
+<p>
+These "asset managers" both do the same basic things. They give you a mechanism to bundle multiple css and javascript files into one file, optionally minify the contents, and generate unique files names for the bundled versions. The idea behind unique file names is that you can then tell browsers to cache those files forever; any changes you make will use different URLs for the includes. They will also generate unique files names for images, and then go into your css files and replace the image file paths.
+</p>
+
+<p>
+Both libraries are a little immature; I ran into numerous issues trying to get deployment to S3 working. First I tried django-compressor paired with <a href="https://github.com/e-loue/django-storages">django-storages</a>, which can save directly to S3. Typically django-compressor creates the minified files on the fly, which would work great except that Heroku has an ephemeral file system, meaning that the files would be re-created every time a dyno process restarts. Making matters worse, the built-in S3 boto storage is really slow to sync files up to S3, especially considering most of the files do not change on any given deploy. All in all, I was looking at about 3 minutes of lag every time I wanted to start a dyno.
+</p>
+
+<p>
+I tried using their offline compressor, and I actually got it deploying the files. But I could not get django-compressor to use the correct minified URLs; it persistently tried to reference different filenames before and after the deploy, resulting in 404s. Even though it's the most popular framework, I decided to move on and try django-pipeline. Just as well, I'm not sure I agree with their very first design decision anyway, namely that "JS/CSS belong in the templates".
+</p>
+
+<p>
+By comparison, django-pipeline was a breeze to set up. Here is my cheat-sheet:
+</p>
+
+<pre name="code" class="bash">
+pip install django-pipeline
+apt-get install yui-compressor
+</pre>
+
+<p>
+Edit settings.py:
+</>
+
+<pre name="code" class="python">
+INSTALLED_APPS = (
+    ...
+    'pipeline',
+)
+
+PIPELINE = DEBUG
+PIPELINE_YUI_BINARY = '/usr/bin/yui-compressor'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+STATIC_ROOT = '/tmp/myapp-staticfiles'
+# using a protocol relative URL here so that resources load from http/https accordingly
+STATIC_URL = '/static/' if DEBUG else '//s3.amazonaws.com/mys3bucket/'
+
+# the directories stylesheets and javascript should be inside myapp/static,
+# as per the staticfiles convention. I also put an "images" directory there.
+
+PIPELINE_CSS = {
+    'base': {
+        'source_filenames': (
+          'stylesheets/reset.css',
+          'stylesheets/base.css',
+        ),
+        'output_filename': 'stylesheets/base.min.css',
+    },
+    'mobile': {
+        'source_filenames': (
+          'stylesheets/reset.css',
+          'stylesheets/mobile.css',
+        ),
+        'output_filename': 'stylesheets/mobile.min.css',
+    },
+}
+
+PIPELINE_JS = {
+    'base': {
+        'source_filenames': (
+          'javascript/jquery.min.js',
+          'javascript/jquery-ui.min.js',
+          'javascript/myapp.js',
+        ),
+        'output_filename': 'javascript/base.min.js',
+    },
+    'mobile': {
+        'source_filenames': (
+          'javascript/jquery.min.js',
+        ),
+        'output_filename': 'javascript/mobile.min.js',
+    },
+}
+</pre>
+
+<p>
+For development, you can serve up the static files from /static with the following lines in your urls.py:
+</p>
+
+<pre name="code" class="python">
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    )
+</pre>
+
+<p>
+In your templates, you reference your css/js differently:
+</p>
+
+<pre name="code" class="html">
+&#123;% load compressed %&#125;
+&lt;html&gt;
+    &lt;head&gt;
+        &#123;% compressed_css &quot;base&quot; %&#125;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- content here --&gt;
+        &#123;% compressed_js &quot;base&quot; %&#125;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>
+One tricky bit was that with both django-compressor and django-pipeline, I had significant trouble figuring out how to reference images inside my CSS files. I tried various things, with each either only working in my local development environment, or in production. Finally, I tried relative URLs, and it worked. In the past I had always used absolute relative links in the CSS.
+</p>
+
+<pre name="code" class="html">
+body {
+    background: url(../images/bg.png); /* NOT /static/images/bg.png, or images/bg.png */
+}
+</pre>
+
+<p>
+For deployment, I decided to use Hudson versus trying to get Heroku to do it via hacking Procfile. Here is the deploy script I'm currently using:
+</p>
+
+<pre name="code" class="bash">
+#!/bin/bash
+
+set -e
+
+# used to load different settings.py extension file
+export ENVIRONMENT=production
+
+# using virtualenv to separate build python class paths
+source /var/lib/hudson/virtualenv/prod/bin/activate
+pip install -r requirements.txt
+
+# this is the static files bit, collect the files and copy them to s3 using the fast s3cmd utility
+python manage.py collectstatic --noinput
+s3cmd sync /tmp/myapp-staticfiles/ s3://mys3bucket  # note the trailing slash, critical!
+
+heroku maintenance:on
+heroku pgbackups:capture HEROKU_POSTGRESQL_DB --expire
+git push -f heroku hudsonmerge:refs/heads/master
+heroku run python manage.py migrate --noinput --merge --ignore-ghost-migrations
+heroku maintenance:off
+</pre>
+
+<p>
+That's it. Currently, my builds take about 90 seconds to deploy, and include zero lag on dyno restarts.
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#heroku" class="page__taxonomy-item p-category" rel="tag">heroku</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#hudson" class="page__taxonomy-item p-category" rel="tag">hudson</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2012-04-27-deploying-django-staticfiles-to-heroku-via-hudsonjenkins.html">_posts/2012-04-27-deploying-django-staticfiles-to-heroku-via-hudsonjenkins.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2012-04-27T00:00:00+00:00">April 27, 2012</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2012/04/20/django-management-command-to-list-filter-and-exclude-models-from-a-fixture.html" class="pagination--pager" title="Django management command to list, filter and exclude models from a fixture">Previous</a>
+    
+    
+      <a href="/blog/2012/05/24/djangonewrelic-quickstart-gunicornd-django-13-hack.html" class="pagination--pager" title="Django/NewRelic Quickstart (gunicorn.d + Django 1.3 hack)">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

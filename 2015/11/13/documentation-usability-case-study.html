@@ -1,0 +1,461 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Case Study in Documentation Usability - Django vs. Flask/SQLAlchemy - Chase Seibert Blog</title>
+<meta name="description" content="When I’m evaluating new open source projects, there are a few things I look for. I look for how many stars they have on GitHub. I look at their issues in GitHub. If you are not on GitHub, I’m basically not interested. Finally, I look at their documentation. But how do you know if the documentation is any good? What makes good documentation, anyway?">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Case Study in Documentation Usability - Django vs. Flask/SQLAlchemy">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2015/11/13/documentation-usability-case-study.html">
+
+
+  <meta property="og:description" content="When I’m evaluating new open source projects, there are a few things I look for. I look for how many stars they have on GitHub. I look at their issues in GitHub. If you are not on GitHub, I’m basically not interested. Finally, I look at their documentation. But how do you know if the documentation is any good? What makes good documentation, anyway?">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Case Study in Documentation Usability - Django vs. Flask/SQLAlchemy">
+  <meta name="twitter:description" content="When I’m evaluating new open source projects, there are a few things I look for. I look for how many stars they have on GitHub. I look at their issues in GitHub. If you are not on GitHub, I’m basically not interested. Finally, I look at their documentation. But how do you know if the documentation is any good? What makes good documentation, anyway?">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2015/11/13/documentation-usability-case-study.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2015-11-13T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2015/11/13/documentation-usability-case-study.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Case Study in Documentation Usability - Django vs. Flask/SQLAlchemy">
+    <meta itemprop="description" content="When I’m evaluating new open source projects, there are a few things I look for. I look for how many stars they have on GitHub. I look at their issues in GitHub. If you are not on GitHub, I’m basically not interested. Finally, I look at their documentation. But how do you know if the documentation is any good? What makes good documentation, anyway?">
+    <meta itemprop="datePublished" content="2015-11-13T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2015/11/13/documentation-usability-case-study.html" itemprop="url">Case Study in Documentation Usability - Django vs. Flask/SQLAlchemy
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>When I’m evaluating new open source projects, there are a few things I look for. I look for how many stars they have on GitHub. I look at their issues in GitHub. If you are not on GitHub, I’m basically not interested. Finally, I look at their documentation. But how do you know if the documentation is any good? What makes good documentation, anyway?</p>
+
+<h2 id="documentation-usability">Documentation Usability</h2>
+
+<p>Documentation can be exhaustive and still not ultimately useful. Documentation usability is the idea that documentation ultimately needs to help users solve their problems. Given a task to be done, how quickly and correctly can the documentation enable the user to complete their task?</p>
+
+<p>The first thing you need to realize is that search is the interface for your documentation. You might get users to read a high level overview of the project when they are first starting out, but with rare exception no one is reading the entire documentation front to back for anything remotely complicated. Instead, they will search when they have a question. Usually using Google, not some crappy search functionality inside your documentation.</p>
+
+<p>Your first challenge then is finding out what terminology your users are using. Importantly, you cannot assume that they will use your invented vocabulary. Your project is part of the entire ecosystem of tools they already use. Your best bet is to use <a href="http://idratherbewriting.com/2009/04/28/documentation-usability-a-few-things-ive-learned-from-watching-users/">existing terminology</a>.</p>
+
+<p>Also, users should know at all times <a href="http://techwhirl.com/tips-and-tricks-10-heuristics-documentation-usability/">where they are</a> in the documentation relative to the whole, and relative to where they were previously. You want them to be able to quickly find related topics.</p>
+
+<h2 id="case-study---django-versus-flasksqlalchemyalembic">Case Study - Django versus Flask/SQLAlchemy/Alembic</h2>
+
+<p><a href="https://www.djangoproject.com/">Django</a> is a framework renowned for their excellent documentation. It’s a swiss army knife project that includes lots of functionality. A common alternative is a collection of projects, headlined by <a href="http://flask.pocoo.org/">Flask</a>, <a href="http://www.sqlalchemy.org/">SQLAlchemy</a> and <a href="https://alembic.readthedocs.org/en/latest/">Alembic</a>. The documentation for the second set of projects is better than most. It’s pretty exhaustive. But it’s not very usable.</p>
+
+<p>From the Django <a href="https://docs.djangoproject.com/en/1.8/internals/contributing/writing-documentation/">Guide to Documentation</a>:</p>
+
+<blockquote>
+  <p>We place a high importance on consistency and readability of documentation. After all, Django was created in a journalism environment! So we treat our documentation like we treat our code: we aim to improve it as often as possible.</p>
+</blockquote>
+
+<p>This dedication to continuous improvement of the documentation is evident in some common use cases.</p>
+
+<h3 id="task-sql-in-clause-queries">Task: SQL IN clause queries</h3>
+
+<p>One common task in both ecosystems is accessing a database. Further, there is a common (if not core) use case where you want to query a database by a list of record IDs. If you Google for <code class="language-plaintext highlighter-rouge">Django query in list</code>, the first hit is the <a href="https://docs.djangoproject.com/en/1.8/ref/models/querysets/#in">Django documentation</a>, and there is a sidebar with the “in” clause called out:</p>
+
+<p><img src="/blog/images/django_in.png" alt="django in" /></p>
+
+<p>If you search for <code class="language-plaintext highlighter-rouge">SQLAlchemy query in list</code>, you get five Stackoverflow answers before you see their official documentation. The first hit does not contain a correct answer. The <a href="https://pythonhosted.org/Flask-SQLAlchemy/api.html">actual documentation hit</a> takes you a nebulously titled page, “API”. The table of contents does not contain anything at the granularity of individual topics on that page. Searching the page for “in” is of course fruitless. There is <a href="http://docs.sqlalchemy.org/en/rel_0_7/core/expression_api.html#sqlalchemy.sql.operators.ColumnOperators.in_">specific documentation for this feature</a>, but it does not come back in the first few pages of Google results. Even if you find it, it does not include a specific code example.</p>
+
+<h3 id="task-modify-records-when-they-are-saved">Task: Modify records when they are saved</h3>
+
+<p>If you Google for <code class="language-plaintext highlighter-rouge">Django on save</code>, the first hit is Stackoverflow. The second hit a <a href="https://docs.djangoproject.com/en/1.8/ref/models/instances/#what-happens-when-you-save">specific documentation</a> for what happens when a record is saved. That links directly to how to over-ride a method called <code class="language-plaintext highlighter-rouge">post_save</code>.</p>
+
+<p>If you Google for <code class="language-plaintext highlighter-rouge">SQLAlchemy on save</code>, you see three identical results for three difference versions of SQLAlchemy. In each case, you get a page for ORM events, which you basically need to read the entirety of to understand. There are nebulous sidebar links for “Mapper Events”, “Session Events” and “Query Events”, but those are not terms that make immediate sense to me, without reading a bunch of other documentation.</p>
+
+<h2 id="task-redirecting-http-to-https">Task: Redirecting HTTP to HTTPS</h2>
+
+<p>If you Google <code class="language-plaintext highlighter-rouge">Django redirect HTTPS</code>, the third result is a <a href="https://code.djangoproject.com/ticket/12043">bug report</a> where someone went back and added a link to the canonical feature for this, <code class="language-plaintext highlighter-rouge">SECURE_PROXY_SSL_HEADER</code>. Great example of paying attention to what users are searching for.</p>
+
+<p>If you Google for <code class="language-plaintext highlighter-rouge">Flask redirect HTTPS</code>, you also get a bug report as the first hit. There is some discussion, but not solution, at least for the case where something like Flask-admin is doing the redirect. But there actually is a <a href="http://werkzeug.pocoo.org/docs/0.10/routing/">documented solution</a>, though it does not show up in the Google results.</p>
+
+<h1 id="take-aways">Take aways</h1>
+
+<ul>
+  <li>Exhaustive documentation is not necessarily useful documentation</li>
+  <li>Take time to write in your user’s vocabulary</li>
+  <li>Find out what they are actually searching for</li>
+  <li>Update old documentation to point to new solutions</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#documentation" class="page__taxonomy-item p-category" rel="tag">documentation</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2015-11-13-documentation-usability-case-study.md">_posts/2015-11-13-documentation-usability-case-study.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2015-11-13T00:00:00+00:00">November 13, 2015</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2015/11/09/specifications-in-agile.html" class="pagination--pager" title="The Role of Specifications in Agile">Previous</a>
+    
+    
+      <a href="/blog/2015/12/04/chat-message-platforms.html" class="pagination--pager" title="Comparison of Chat Message Platforms">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

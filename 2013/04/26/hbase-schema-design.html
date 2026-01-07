@@ -1,0 +1,457 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HBase Schema Introduction for Programmers - Chase Seibert Blog</title>
+<meta name="description" content="Schema design in NoSQL is very different from schema design in a RDBMS. Once you get something like HBase up and running, you may find yourself staring blankly at a shell, lost in the possibilities of creating your first table.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="HBase Schema Introduction for Programmers">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/04/26/hbase-schema-design.html">
+
+
+  <meta property="og:description" content="Schema design in NoSQL is very different from schema design in a RDBMS. Once you get something like HBase up and running, you may find yourself staring blankly at a shell, lost in the possibilities of creating your first table.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="HBase Schema Introduction for Programmers">
+  <meta name="twitter:description" content="Schema design in NoSQL is very different from schema design in a RDBMS. Once you get something like HBase up and running, you may find yourself staring blankly at a shell, lost in the possibilities of creating your first table.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/04/26/hbase-schema-design.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-04-26T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/04/26/hbase-schema-design.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HBase Schema Introduction for Programmers">
+    <meta itemprop="description" content="Schema design in NoSQL is very different from schema design in a RDBMS. Once you get something like HBase up and running, you may find yourself staring blankly at a shell, lost in the possibilities of creating your first table.">
+    <meta itemprop="datePublished" content="2013-04-26T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/04/26/hbase-schema-design.html" itemprop="url">HBase Schema Introduction for Programmers
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Schema design in NoSQL is very different from schema design in a RDBMS. Once you get something like HBase <a href="http://chase-seibert.github.io/blog/2013/02/01/getting-starting-with-hbase-and-pig.html">up and running</a>, you may find yourself staring blankly at a shell, lost in the possibilities of creating your first table.</p>
+
+<p>You’re probably used to thinking of tables like this:</p>
+
+<table>
+    <thead>
+        <th>rowkey</th>
+        <th>title</th>
+        <th>url</th>
+        <th>clicks</th>
+        <th>clicks_twitter</th>
+        <th>clicks_facebook</th>
+    </thead>
+    <tr>
+        <td>fcb75-bit.ly/Z0pngZ</td>
+        <td>Some Page</td>
+        <td>http://www.example.com</td>
+        <td>16</td>
+        <td>13</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>fb499-bit.ly/15C2TLF</td>
+        <td>null</td>
+        <td>null</td>
+        <td>1</td>
+        <td>null</td>
+        <td>null</td>
+    </tr>
+</table>
+
+<p>In HBase, this is actually modelled like this:</p>
+
+<p><img src="/blog/images/hbase_tables.png" alt="HBase Table Shema" /></p>
+
+<p>Notice that each row is basically a linked list, ordered by column family and then column name. This is how it’s laid down on disk, as well. Missing columns are free, because there is no space on disk pre-allocated to a null column. Given that, it’s reasonable to design a schema where rows have hundreds or thousands of columns.</p>
+
+<p>Just as columns are laid down on disk like a linked list, so too are rows. They are put on disk in order by row key. Because row keys can by any collection of bytes, ordering of row keys is <a href="http://en.wikipedia.org/wiki/Lexicographical_order">lexicographical</a>, aka alphabetical. This is in contrast to most RDBMS, where rowkeys are integers and ordered as such.</p>
+
+<p>Consider the following row key order: <code class="language-plaintext highlighter-rouge">1 &lt; 256 &lt; 43 &lt; 7</code>. The row key <code class="language-plaintext highlighter-rouge">265</code> is actually before <code class="language-plaintext highlighter-rouge">43</code>, because <code class="language-plaintext highlighter-rouge">2</code> comes before <code class="language-plaintext highlighter-rouge">4</code>. This is why it’s common in HBase to make at least parts of your row key fixed width, ex: <code class="language-plaintext highlighter-rouge">00000001 &lt; 00000007 &lt; 00000043 &lt; 00000256</code>. However, now we have another problem known as hot spotting.</p>
+
+<p>If all your row keys start with the same value, then they will all be going to the same region, and thus the same server. This could easily happen for monotonically increasing row keys, such as traditional RDBMS auto-incrementing PKs, or for timestamps. This can cause all the load for a big write job to block waiting for a single region server, versus spreading out the writes to the whole cluster. A common way to avoid this is to prefix row keys, for example by the md5 hash of the customer ID.</p>
+
+<p>Rows can most efficiently be read back by scanning for consecutive blocks. Say you have a table with a rowkey of <code class="language-plaintext highlighter-rouge">customer-date-user</code>. You can easily read back all the data for a given customer and date range using the prefix <code class="language-plaintext highlighter-rouge">customer-first-part-of-date</code>, but you can’t easily read back dates ranges for all users at once without scanning all the rows. If you reverse the row key and use <code class="language-plaintext highlighter-rouge">customer-user-date</code>, you have the reverse problem. So you want to think about what your primary read pattern is going to be when designing your keys.</p>
+
+<p>Say your primary read patten is going to be reading off the most recent rows. Depending on the format of the dates in your row keys, you may end up with the more recent data at the end of the table. For example: <code class="language-plaintext highlighter-rouge">20130101 &gt; 20130102 &gt; 20130303</code>. Instead, a common pattern is to invert your dates, such as <code class="language-plaintext highlighter-rouge">79869898 &gt; 79869897 &gt; 798698986</code>. This may not apply if you will know at run time the range of values that will be the most recent, i.e. the last 30 days.</p>
+
+<p>For more about HBase schema design, I recommend the online <a href="http://hbase.apache.org/book.html">HBase Reference Book</a>, as well as the excellent <a href="http://www.amazon.com/HBase-Definitive-Guide-Lars-George/dp/1449396100">HBase: The Definitive Guide</a>.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#hbase" class="page__taxonomy-item p-category" rel="tag">hbase</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-04-26-hbase-schema-design.md">_posts/2013-04-26-hbase-schema-design.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-04-26T00:00:00+00:00">April 26, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/04/19/python-pickle-attributeerror-module-has-no-attribute.html" class="pagination--pager" title="Python pickle AttributeError ‘module’ object has no attribute ‘foobar’">Previous</a>
+    
+    
+      <a href="/blog/2013/05/03/happybase-connection-pooling.html" class="pagination--pager" title="Happybase Connection Pooling">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

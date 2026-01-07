@@ -1,0 +1,505 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Django ManyToMany error: “Cannot resolve keyword XXX into a field” - Chase Seibert Blog</title>
+<meta name="description" content="This week I was doing some refactoring, and started getting the following exception in Django&#39;s admin site. This was under Django 1.1.1, and Python 2.6.4.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Django ManyToMany error: “Cannot resolve keyword XXX into a field”">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2010/04/30/django-manytomany-error-cannot-resolve-keyword-xxx-into-a-field.html">
+
+
+  <meta property="og:description" content="This week I was doing some refactoring, and started getting the following exception in Django&#39;s admin site. This was under Django 1.1.1, and Python 2.6.4.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Django ManyToMany error: “Cannot resolve keyword XXX into a field”">
+  <meta name="twitter:description" content="This week I was doing some refactoring, and started getting the following exception in Django&#39;s admin site. This was under Django 1.1.1, and Python 2.6.4.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2010/04/30/django-manytomany-error-cannot-resolve-keyword-xxx-into-a-field.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2010-04-30T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2010/04/30/django-manytomany-error-cannot-resolve-keyword-xxx-into-a-field.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Django ManyToMany error: “Cannot resolve keyword XXX into a field”">
+    <meta itemprop="description" content="This week I was doing some refactoring, and started getting the following exception in Django&#39;s admin site. This was under Django 1.1.1, and Python 2.6.4.">
+    <meta itemprop="datePublished" content="2010-04-30T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2010/04/30/django-manytomany-error-cannot-resolve-keyword-xxx-into-a-field.html" itemprop="url">Django ManyToMany error: “Cannot resolve keyword XXX into a field”
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>This week I was doing some refactoring, and started getting the following exception in Django's admin site. This was under Django 1.1.1, and Python 2.6.4.
+</p>
+
+<pre name="code" class="bash">
+Traceback:
+File "/usr/lib/pymodules/python2.6/django/core/handlers/base.py" in get_response
+  92.                 response = callback(request, *callback_args, **callback_kwargs)
+File "/usr/lib/pymodules/python2.6/django/contrib/admin/sites.py" in root
+  490.                 return self.model_page(request, *url.split('/', 2))
+File "/usr/lib/pymodules/python2.6/django/views/decorators/cache.py" in _wrapped_view_func
+  44.         response = view_func(request, *args, **kwargs)
+File "/usr/lib/pymodules/python2.6/django/contrib/admin/sites.py" in model_page
+  509.         return admin_obj(request, rest_of_url)
+File "/usr/lib/pymodules/python2.6/django/contrib/admin/options.py" in __call__
+  1098.             return self.change_view(request, unquote(url))
+File "/usr/lib/pymodules/python2.6/django/db/transaction.py" in _commit_on_success
+  240.                 res = func(*args, **kw)
+File "/usr/lib/pymodules/python2.6/django/contrib/admin/options.py" in change_view
+  840.             form = ModelForm(instance=obj)
+File "/home/chase/bullhorn/branches/powerfill/django/powerfill/search/admin.py" in __init__
+  113.         super(CompanyAdminForm, self).__init__(*args, **kwargs)
+File "/usr/lib/pymodules/python2.6/django/forms/models.py" in __init__
+  222.             object_data = model_to_dict(instance, opts.fields, opts.exclude)
+File "/usr/lib/pymodules/python2.6/django/forms/models.py" in model_to_dict
+  140.                 data[f.name] = [obj.pk for obj in f.value_from_object(instance)]
+File "/usr/lib/pymodules/python2.6/django/db/models/fields/related.py" in value_from_object
+  964.         return getattr(obj, self.attname).all()
+File "/usr/lib/pymodules/python2.6/django/db/models/manager.py" in all
+  105.         return self.get_query_set()
+File "/usr/lib/pymodules/python2.6/django/db/models/fields/related.py" in get_query_set
+  424.             return superclass.get_query_set(self)._next_is_sticky().filter(**(self.core_filters))
+File "/usr/lib/pymodules/python2.6/django/db/models/query.py" in filter
+  498.         return self._filter_or_exclude(False, *args, **kwargs)
+File "/usr/lib/pymodules/python2.6/django/db/models/query.py" in _filter_or_exclude
+  516.             clone.query.add_q(Q(*args, **kwargs))
+File "/usr/lib/pymodules/python2.6/django/db/models/sql/query.py" in add_q
+  1675.                             can_reuse=used_aliases)
+File "/usr/lib/pymodules/python2.6/django/db/models/sql/query.py" in add_filter
+  1569.                     negate=negate, process_extras=process_extras)
+File "/usr/lib/pymodules/python2.6/django/db/models/sql/query.py" in setup_joins
+  1737.                             "Choices are: %s" % (name, ", ".join(names)))
+
+Exception Type: FieldError at /admin/search/company/2273/
+Exception Value: Cannot resolve keyword 'company' into field.
+</pre>
+
+<p>
+Having made quite a number of changes before noticing this, it took some time to track down. It turned out that it started happening when I moved an import. Eventually, I found <a href="http://code.djangoproject.com/ticket/1796">Django Ticket #1796</a>. While that ticket is marked as "Fixed", it does not actually appear to be fixed in all cases.
+</p>
+
+<p>
+The problem is deep in the Django stack, and involves class loading at the Python level as well. It's in a piece of the Django code that is only executed for ManyToMany relationships. Read the ticket if you're interested in the details.
+</p>
+
+<p>
+In my case, the ManyToMany relationship in question was a field on a Company model which referenced a Django User model:
+</p>
+
+<pre name="code" class="python">
+class Company(models.Model):
+
+    ...
+
+    connection_users = models.ManyToManyField(
+        User,
+        symmetrical=False,
+        blank=True,
+        null=True
+        )
+</pre>
+
+<p>
+I also have a UserProfile model which extends the base User model:
+</p>
+
+
+<pre name="code" class="python">
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
+    company = models.ForeignKey(Company)
+    phone = PhoneNumberField()
+</pre>
+
+<p>
+Essentially, the django.contrib.auth.models.User model is necessarily loaded first, then my related UserProfile model is loaded before the Company model due to Python class loading behavior. When Company finally loads, the Django bug kicks in and it confuses the company field on UserProfile with a symmetric version of the ManyToMany relationship connection_users on Company.
+</p>
+
+<p>
+After much fiddling, the fix was to force the class loading order to load Company before UserProfile. A good spot to do this is at the top of the models module.
+</p>
+
+<pre name="code" class="python">
+from company import Company, UserProfile
+</pre>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2010-04-30-django-manytomany-error-cannot-resolve-keyword-xxx-into-a-field.html">_posts/2010-04-30-django-manytomany-error-cannot-resolve-keyword-xxx-into-a-field.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2010-04-30T00:00:00+00:00">April 30, 2010</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2010/04/23/slicehost-six-month-review.html" class="pagination--pager" title="Slicehost: Six month review">Previous</a>
+    
+    
+      <a href="/blog/2010/05/07/automatic-image-resize-in-django-for-thumbnails.html" class="pagination--pager" title="automatic image resize in Django for thumbnails">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,442 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Development on a Mac versus Linux - Chase Seibert Blog</title>
+<meta name="description" content="I love the Mac computing experience. Their laptop hardware, like their phones, feel solid and elegant. OSX usability is excellent, though it is myopically geared towards the lowest common denominator of user. For most tasks, I appreciate that trade-off of affordability versus advanced power features. But not when I’m doing development. Even though I use a Mac as my home laptop, I prefer a Linux machine for work. I also keep a Windows desktop at home for gaming. To me, that’s just using the right tool for the job.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Development on a Mac versus Linux">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/12/27/dev-osx-vs-linux.html">
+
+
+  <meta property="og:description" content="I love the Mac computing experience. Their laptop hardware, like their phones, feel solid and elegant. OSX usability is excellent, though it is myopically geared towards the lowest common denominator of user. For most tasks, I appreciate that trade-off of affordability versus advanced power features. But not when I’m doing development. Even though I use a Mac as my home laptop, I prefer a Linux machine for work. I also keep a Windows desktop at home for gaming. To me, that’s just using the right tool for the job.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Development on a Mac versus Linux">
+  <meta name="twitter:description" content="I love the Mac computing experience. Their laptop hardware, like their phones, feel solid and elegant. OSX usability is excellent, though it is myopically geared towards the lowest common denominator of user. For most tasks, I appreciate that trade-off of affordability versus advanced power features. But not when I’m doing development. Even though I use a Mac as my home laptop, I prefer a Linux machine for work. I also keep a Windows desktop at home for gaming. To me, that’s just using the right tool for the job.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/12/27/dev-osx-vs-linux.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-12-27T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/12/27/dev-osx-vs-linux.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Development on a Mac versus Linux">
+    <meta itemprop="description" content="I love the Mac computing experience. Their laptop hardware, like their phones, feel solid and elegant. OSX usability is excellent, though it is myopically geared towards the lowest common denominator of user. For most tasks, I appreciate that trade-off of affordability versus advanced power features. But not when I’m doing development. Even though I use a Mac as my home laptop, I prefer a Linux machine for work. I also keep a Windows desktop at home for gaming. To me, that’s just using the right tool for the job.">
+    <meta itemprop="datePublished" content="2013-12-27T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/12/27/dev-osx-vs-linux.html" itemprop="url">Development on a Mac versus Linux
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>I love the Mac computing experience. Their laptop hardware, like their phones, feel solid and elegant. OSX usability is excellent, though it is myopically geared towards the lowest common denominator of user. For most tasks, I appreciate that trade-off of affordability versus advanced power features. But not when I’m doing development. Even though I use a Mac as my home laptop, I prefer a Linux machine for work. I also keep a Windows desktop at home for gaming. To me, that’s just using the right tool for the job.</p>
+
+<h1 id="package-management">Package Management</h1>
+
+<p>By far my biggest complaint with OSX (and Windows) is the state of package management. Once you have experienced installing a piece of software in totally automated fashion from the command line, it’s hard to go back to Googling for a binary (or worse, the source) and struggling on from there. I feel dirty, like I’m hanging out on a BBS trawling for warez. That’s why almost every new language these days has package management built-in. Would you consider adopting a language without one? Then why do you put up with that for software?</p>
+
+<p>Whereas on Windows there is literally nothing (that I have heard of, anyway), on a Mac at least there is the App Store, and brew. The App Store is not what I would consider a package manager for development purposes; generally you can’t install stuff like MySQL, Redis, Python, etc from there. That’s what Brew is for. But their “packages” consist of essentially bash scripts that go out an download a binary from the same website you would get to if you Googled it, and they have per-package code that checks for things like dependencies. Often the veil is lifted and you will be presented with a GUI installer; exactly not the point.</p>
+
+<p>In my experience, brew fails to properly install something too often. Whether it’s a 404 on the download, a missing dependency it did not offer to install or just plain botched logic, it’s frustrating just as often as it’s useful. Blind rage ensued when installing brew itself, which required me to go register for an apple.com account and download a <strong>MASSIVE</strong> XCode installer manually. Arg! A good effort, but about what you would expect from trying to bolt-on a package manager after the fact.</p>
+
+<p>APT, on the other hand, is extremely reliable, and is much faster. It has binaries ready to go for almost every conceivable platform. It’s dependency management is excellent. You can even upgrade and remove packages reliably. Imagine that!</p>
+
+<h1 id="system-updates">System Updates</h1>
+
+<p>Recently I upgraded a Mac from OS 1.7 to 1.8. All of a sudden my Python dependencies are broken due to some path change. XCode isn’t even installed anymore. All of my project’s virtualenvs needs to be re-installed from scratch.</p>
+
+<p>This is one problem I have never run into on Linux. APT knows exactly what I have installed, and makes sure everything is up to date, even if you’re doing a full distro upgrade. Because package management is built-in and continuously exercised on production machines, you have a much better chance of not having to manually futz with anything.</p>
+
+<h1 id="passive-devops-education">Passive Devops Education</h1>
+
+<p>If your only experience with Linux starts with asking Amazon to clone an existing image, then you’re missing out on a whole bunch of ancillary knowledge. Configuring X is it’s own little world, complete with kernel panics and un-bootable systems. You will probably learn how to emergency boot into different run levels, and REISUB restart a seemingly dead system, both of which could come in handy if you even need to rescue a physical server. Maybe your video is skipping, so you learn all about nice levels and end up using that later on your production database. If you learn all about PPAs by tracking down a custom fork of GVIM with a transparent background, you may end up using that knowledge to easily install a commercial HBase version.</p>
+
+<p>The more exposure you get to the platform, the broader your knowledge base about Linux in general. This is especially valuable if you’re not really in a devops role trouble-shooting production systems every day. Sure, seemingly mundane tasks can take an unreasonable amount of time on Linux, especially for new users. But it builds character ;)</p>
+
+<h1 id="trade-offs">Trade-offs</h1>
+
+<p>Now, you might rightly point out that you don’t spend a very large percentage of your time installing packages. Nor do you update your operating system very often. You already learn a remarkable amount about Linux by simply SSHing into servers. True enough. That’s why, despite my rant, I don’t feel super strongly about this preference. Certainly there are times when I’m struggling to get multiple monitors working in X that I would just as soon not be wasting my time. In the end, I just like running all three of the major operating systems regularly, keeping my toe in the water for each.</p>
+
+<p>Graphics display configuration is definitely not the only downside to using Linux as your desktop. Some software may not be compatible at all, such as XCode. Some, like Hipchat, have half-baked Linux versions. God help you if you try to hook up a projector to a Linux laptop, or try to get the damn thing to sleep properly. Oh, and I hope you didn’t want any kind of remote desktop solution that doesn’t perform like you’re on a 14.4bps dial-up connection, even though Windows had that nailed back in 2000.</p>
+
+<p>On the other hand, at least you have your Linux desktop merit badge. Always impresses at parties.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#linux" class="page__taxonomy-item p-category" rel="tag">linux</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#osx" class="page__taxonomy-item p-category" rel="tag">osx</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-12-27-dev-osx-vs-linux.md">_posts/2013-12-27-dev-osx-vs-linux.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-12-27T00:00:00+00:00">December 27, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/12/17/python-decorator-optional-parameter.html" class="pagination--pager" title="Writing a Python decorator that can be called as a function or a callable">Previous</a>
+    
+    
+      <a href="/blog/2014/01/01/saving-for-retirement-as-a-software-engineer.html" class="pagination--pager" title="Saving for Retirement as a Software Engineer">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

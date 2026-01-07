@@ -1,0 +1,514 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Getting started with Splunk as an Engineer - Chase Seibert Blog</title>
+<meta name="description" content="What is Splunk, and how can you make the best use of it as an engineer? Splunk is first and foremost a hosted web-based tool for your log files. It gives you the following:">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Getting started with Splunk as an Engineer">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/09/13/splunk-getting-started.html">
+
+
+  <meta property="og:description" content="What is Splunk, and how can you make the best use of it as an engineer? Splunk is first and foremost a hosted web-based tool for your log files. It gives you the following:">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Getting started with Splunk as an Engineer">
+  <meta name="twitter:description" content="What is Splunk, and how can you make the best use of it as an engineer? Splunk is first and foremost a hosted web-based tool for your log files. It gives you the following:">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/09/13/splunk-getting-started.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-09-13T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/09/13/splunk-getting-started.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Getting started with Splunk as an Engineer">
+    <meta itemprop="description" content="What is Splunk, and how can you make the best use of it as an engineer? Splunk is first and foremost a hosted web-based tool for your log files. It gives you the following:">
+    <meta itemprop="datePublished" content="2013-09-13T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/09/13/splunk-getting-started.html" itemprop="url">Getting started with Splunk as an Engineer
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>What is <a href="http://www.splunk.com/">Splunk</a>, and how can you make the best use of it as an engineer? Splunk is first and foremost a hosted web-based tool for your log files. It gives you the following:</p>
+
+<ul>
+  <li>Aggregates all your logs in one place</li>
+  <li>Search</li>
+  <li>Extract meaning</li>
+  <li>Group, join, pivot and format results</li>
+  <li>Visualization</li>
+  <li>Email alerts</li>
+</ul>
+
+<h3 id="architecture">Architecture</h3>
+
+<p>How does it work? You setup all your servers to forward certain log statements to a centralized cluster of Splunk servers via rsyslog. Alternatively, you can use SFTP, NFS, etc. I don’t want to re-hash <a href="http://chase-seibert.github.io/blog/2010/12/31/splunkrsyslogapacheubuntu-quickstart.html">install steps</a> here. Instead, let’s focus on what you can <strong>DO</strong> with it once all your logs are in there.</p>
+
+<h3 id="hosts-and-sources">Hosts and Sources</h3>
+
+<p>The first thing you will notice is that your log files are broken down by host, and optionally by source. This means that you can quickly search all the logs from one machine, or from a logical group of machines (ex: web servers versus database servers).</p>
+
+<p><img src="/blog/images/splunk2.png" alt="splunk sources" /></p>
+
+<h3 id="searching">Searching</h3>
+
+<p>Searching is pretty easy to use, just type in a search string! You can also do more complicated stuff. Examples:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">sourcetype="hsl-prod-fe" "Chase Seibert"</code></li>
+  <li><code class="language-plaintext highlighter-rouge">sourcetype="hsl-prod-fe" e186f85c914261eec9e54d3767fdd3cc BEGIN</code></li>
+  <li><code class="language-plaintext highlighter-rouge">sourcetype="hsl-prod-crawl" |regex _raw="fanmgmt\.(analytics|metrics)"</code></li>
+  <li><code class="language-plaintext highlighter-rouge">sourcetype="hsl-prod-crawl" facebook OR twitter NOT linkedin</code></li>
+  <li><code class="language-plaintext highlighter-rouge">sourcetype="hsl-prod-crawl" facebook OR linkedin OR twitter earliest=-24h</code></li>
+</ul>
+
+<p><img src="/blog/images/splunk3.png" alt="splunk sources" /></p>
+
+<h3 id="extracting">Extracting</h3>
+
+<p>This is where is starts to get interesting. You can use a <a href="http://docs.splunk.com/Documentation/Splunk/5.0.4/Knowledge/Addfieldsatsearchtime">built-in GUI</a> to define a custom regex to pull pieces of your lines into variables, which you can then filter, group and aggregate by.</p>
+
+<p>If you can change your log format, you can get this to happen automatically without defining a regex by putting key/value pairs into <code class="language-plaintext highlighter-rouge">key=value</code> format. Here is some example code:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">key_value</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">log_level</span><span class="o">=</span><span class="s">'info'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">log_message</span> <span class="o">=</span> <span class="s">'%s: %s'</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">prefix</span><span class="p">,</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">'%s="%s"'</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">items</span><span class="p">()]))</span>
+    <span class="nb">getattr</span><span class="p">(</span><span class="n">logging</span><span class="p">,</span> <span class="n">log_level</span><span class="p">)(</span><span class="n">log_message</span><span class="p">.</span><span class="n">strip</span><span class="p">())</span></code></pre></figure>
+
+<h3 id="piping">Piping</h3>
+
+<p>Just like in Unix, you can pipe various commands together to produce more complicated behavior in your searches.  Example: <code class="language-plaintext highlighter-rouge">sourcetype="hsl-prod-crawl" succeeded |stats count perc95(task_seconds) by python_module |sort count desc |head 10</code>.</p>
+
+<p>Other basic <a href="http://docs.splunk.com/Documentation/Splunk/5.0.4/SearchReference/SearchCheatsheet">pipe commands</a>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">| uniq</code></li>
+  <li><code class="language-plaintext highlighter-rouge">| script python myscript myarg1 myarg2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">| bucket _time span=5m</code></li>
+  <li><code class="language-plaintext highlighter-rouge">| eval name=coalesce(firstName, lastName)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">| rare, | anomalous</code></li>
+  <li><code class="language-plaintext highlighter-rouge">| spath output=commit_author path=commits.author.name  # extract xml/json values</code></li>
+</ul>
+
+<p>Other <a href="http://docs.splunk.com/Documentation/Splunk/5.0.4/SearchReference/SearchCheatsheet">functions</a> you can call:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">avg()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">| eval description=case(error == 404, "Not found", error == 200, "OK")</code></li>
+  <li><code class="language-plaintext highlighter-rouge">floor(), ceiling()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">len()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">isbool(), isint(), etc</code></li>
+  <li><code class="language-plaintext highlighter-rouge">upper(), lower()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">trim(), ltrim(), rtrim()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">md5()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">now()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">random()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">replace()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">split()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">substr()</code></li>
+</ul>
+
+<h3 id="visualizations">Visualizations</h3>
+
+<p>It’s easy to create graphs and charts by pointing and clicking your way through their GUI builder. You can also do the same thing with raw commands and functions, assuming you know what to call. You can create pie charts, bar, columns and line graphs, as well as more complicated stuff like gauges.</p>
+
+<p><img src="/blog/images/splunk1.png" alt="splunk dashboard" /></p>
+
+<h3 id="email-alerts">Email Alerts</h3>
+
+<p>Finally, you can configure Splunk to send you email alerts based on a cron schedule when certain searches either produce or do not produce certain results. Alerts:</p>
+
+<ul>
+  <li>Start with a regular search</li>
+  <li>Take a time window</li>
+  <li>Can be scheduled (supports cron syntax)</li>
+  <li>Can alert always, or when num rows &gt; N</li>
+  <li>Can remember not to re-alert on the same items</li>
+  <li>Sends an email, or publishes to an RSS feed</li>
+</ul>
+
+<h3 id="next-steps">Next steps</h3>
+
+<ul>
+  <li><a href="http://docs.splunk.com/Documentation/Splunk">Official Documentation</a></li>
+  <li><a href="http://answers.splunk.com/">Help Forums</a></li>
+  <li><a href="http://www.splunk.com/view/education-videos">Getting Started Videos</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#splunk" class="page__taxonomy-item p-category" rel="tag">splunk</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-09-13-splunk-getting-started.md">_posts/2013-09-13-splunk-getting-started.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-09-13T00:00:00+00:00">September 13, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/09/03/curl-installer-python.html" class="pagination--pager" title="Writing a cURL to Python Install Script for a Django development environment">Previous</a>
+    
+    
+      <a href="/blog/2013/09/21/vim-grep-under-cursor.html" class="pagination--pager" title="Using grep from inside vim">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

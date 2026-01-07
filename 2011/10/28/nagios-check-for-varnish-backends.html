@@ -1,0 +1,494 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Nagios check for Varnish Backends - Chase Seibert Blog</title>
+<meta name="description" content="We recently starting using Varnish to cache un-authenticated requests to our web farm. It even has this great feature called grace mode, where it will keep serving a cached version of a page if the back-end server goes down. But we still want to be alerted that the back-end is down.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Nagios check for Varnish Backends">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2011/10/28/nagios-check-for-varnish-backends.html">
+
+
+  <meta property="og:description" content="We recently starting using Varnish to cache un-authenticated requests to our web farm. It even has this great feature called grace mode, where it will keep serving a cached version of a page if the back-end server goes down. But we still want to be alerted that the back-end is down.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Nagios check for Varnish Backends">
+  <meta name="twitter:description" content="We recently starting using Varnish to cache un-authenticated requests to our web farm. It even has this great feature called grace mode, where it will keep serving a cached version of a page if the back-end server goes down. But we still want to be alerted that the back-end is down.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2011/10/28/nagios-check-for-varnish-backends.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2011-10-28T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2011/10/28/nagios-check-for-varnish-backends.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Nagios check for Varnish Backends">
+    <meta itemprop="description" content="We recently starting using Varnish to cache un-authenticated requests to our web farm. It even has this great feature called grace mode, where it will keep serving a cached version of a page if the back-end server goes down. But we still want to be alerted that the back-end is down.">
+    <meta itemprop="datePublished" content="2011-10-28T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2011/10/28/nagios-check-for-varnish-backends.html" itemprop="url">Nagios check for Varnish Backends
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+We recently starting using <a href="https://www.varnish-cache.org/">Varnish</a> to cache un-authenticated requests to our web farm. It even has this great feature called <a href="https://www.varnish-cache.org/docs/trunk/tutorial/handling_misbehaving_servers.html">grace mode</a>, where it will keep serving a cached version of a page if the back-end server goes down. But we still want to be alerted that the back-end is down.
+</p>
+
+<p>
+I wrote a Nagios check to do just that. It's written in Python, and using the varnishadm command-line tool that ships with Varnish.
+</p>
+
+<pre name="code" class="python">
+#!/usr/bin/python
+# save as /usr/lib/nagios/plugins/check_varnish_backends.py
+
+from optparse import OptionParser
+import subprocess
+
+def getOptions():
+    arguments = OptionParser()
+    arguments.add_option(&quot;--host&quot;, dest=&quot;host&quot;, help=&quot;Host varnishadm is running on&quot;, type=&quot;string&quot;, default=&quot;localhost&quot;)
+    arguments.add_option(&quot;--port&quot;, dest=&quot;port&quot;, help=&quot;varnishadm port&quot;, type=&quot;string&quot;, default=&quot;6082&quot;)
+    arguments.add_option(&quot;--secret&quot;, dest=&quot;secret&quot;, help=&quot;varnishadm secret file&quot;, type=&quot;string&quot;, default=&quot;/etc/varnish/secret&quot;)
+    arguments.add_option(&quot;--command&quot;, dest=&quot;command&quot;, help=&quot;varnishadm backend health command&quot;, type=&quot;string&quot;, default=&quot;debug.health&quot;)
+    return arguments.parse_args()[0]
+
+def run(command, exit_on_fail=True):
+    # don't use check_output in order to supportPython 2.6
+    process = subprocess.Popen(command.split(&quot; &quot;), stdout=subprocess.PIPE)
+    output, unused_err = process.communicate()
+    _retcode = process.poll()
+    return output
+
+if __name__ == '__main__':
+
+    options = getOptions()
+    varnishadm_raw = run(&quot;varnishadm -T %(host)s:%(port)s -S %(secret)s %(command)s&quot; % options.__dict__)
+
+    lines = varnishadm_raw.split(&quot;\n&quot;)
+    backends_sick, backends_healthy = [], []
+    for line in lines:
+        if line.startswith(&quot;Backend&quot;):
+            if line.endswith(&quot;Sick&quot;):
+                backends_sick.append(line)
+            else:
+                backends_healthy.append(line)
+
+    if not backends_healthy and not backends_sick:
+        print &quot;There are NO backends&quot;
+        exit(2)
+
+    if backends_sick:
+        print &quot;&quot;.join(backends_sick)
+        exit(2)
+
+    print &quot;All %s backends are healthy&quot; % len(backends_healthy)
+</pre>
+
+<p>
+Because varnishadm uses a shared secret file, I decided to have the checks run on the actual Varnish hosts, using Nagios NRPE.
+</p>
+
+<pre name="code" class="bash">
+# add the following config line on the varnish hosts
+vim /etc/nagios/nrpe.cfg
+command[check_varnish_backends]=/usr/lib/nagios/plugins/check_varnish_backends.py
+
+service nagios-nrpe-server restart
+
+# and configure the Nagios server to look for that check
+vim /etc/nagios3/conf.d/services_nagios2.cfg
+define service {
+        use                             generic-service
+        hostgroup_name                  proxy-servers
+        service_description             check_varnish_backends
+        check_command                   check_nrpe_1arg!check_varnish_backends
+}
+
+service nagios3 restart
+</pre>
+
+<p>
+<i>Note:</i> depending on your setup, you may need to use chmod to give the nagios user access to ready the shared secret file (/etc/varnish/secret) on the Varnish servers.
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#nagios" class="page__taxonomy-item p-category" rel="tag">nagios</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#varnish" class="page__taxonomy-item p-category" rel="tag">varnish</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2011-10-28-nagios-check-for-varnish-backends.html">_posts/2011-10-28-nagios-check-for-varnish-backends.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2011-10-28T00:00:00+00:00">October 28, 2011</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2011/10/21/reduce-javascript-ui-code-with-django-forms.html" class="pagination--pager" title="Reduce javascript UI code with Django forms">Previous</a>
+    
+    
+      <a href="/blog/2011/11/10/backing-up-gmail-to-dropbox-using-getmail-on-linux.html" class="pagination--pager" title="Backing up gmail to Dropbox using getmail on Linux">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

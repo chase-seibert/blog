@@ -1,0 +1,592 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Flask-Admin Edit One To Many Fields from the List View - Chase Seibert Blog</title>
+<meta name="description" content="I got to play with Flask-Admin for the first time this week. Compared with Django admin, it’s very extensible, though the default UI is pretty ugly. In any case, I ran into one particular challenge that took a good deal longer to figure out than it should have. Specifically, making a one to many relationship editable from the list view.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Flask-Admin Edit One To Many Fields from the List View">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2015/09/25/flask-admin-list-edit-one-to-many.html">
+
+
+  <meta property="og:description" content="I got to play with Flask-Admin for the first time this week. Compared with Django admin, it’s very extensible, though the default UI is pretty ugly. In any case, I ran into one particular challenge that took a good deal longer to figure out than it should have. Specifically, making a one to many relationship editable from the list view.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Flask-Admin Edit One To Many Fields from the List View">
+  <meta name="twitter:description" content="I got to play with Flask-Admin for the first time this week. Compared with Django admin, it’s very extensible, though the default UI is pretty ugly. In any case, I ran into one particular challenge that took a good deal longer to figure out than it should have. Specifically, making a one to many relationship editable from the list view.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2015/09/25/flask-admin-list-edit-one-to-many.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2015-09-25T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2015/09/25/flask-admin-list-edit-one-to-many.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Flask-Admin Edit One To Many Fields from the List View">
+    <meta itemprop="description" content="I got to play with Flask-Admin for the first timethis week. Compared with Django admin, it’s very extensible, though the default UI is pretty ugly.In any case, I ran into one particular challenge that took a good deal longer to figure out thanit should have. Specifically, making a one to many relationship editable from the list view.">
+    <meta itemprop="datePublished" content="2015-09-25T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2015/09/25/flask-admin-list-edit-one-to-many.html" itemprop="url">Flask-Admin Edit One To Many Fields from the List View
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>I got to play with <a href="https://flask-admin.readthedocs.org/en/latest/">Flask-Admin</a> for the first time
+this week. Compared with Django admin, it’s very extensible, though the default UI is pretty ugly.
+In any case, I ran into one particular challenge that took a good deal longer to figure out than
+it should have. Specifically, making a one to many relationship editable from the list view.</p>
+
+<p>on the <code class="language-plaintext highlighter-rouge">ModelView</code>. 
+You can easily expose editable fields from the list view using <code class="language-plaintext highlighter-rouge">column_editable_list</code>. See
+<a href="https://flask-admin.readthedocs.org/en/latest/api/mod_model/#flask_admin.model.BaseModelView.column_editable_list">the documentation</a>
+for more.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyModelView</span><span class="p">(</span><span class="n">BaseModelView</span><span class="p">):</span>
+    <span class="n">column_editable_list</span> <span class="o">=</span> <span class="p">(</span><span class="s">'question'</span><span class="p">,</span> <span class="s">'details'</span><span class="p">,</span> <span class="s">'status'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This ends up looking like this:</p>
+
+<p><img src="/blog/images/column_editable_list.png" alt="column_editable_list" /></p>
+
+<p>This works for most <code class="language-plaintext highlighter-rouge">db.Model</code> column types I tried. For <code class="language-plaintext highlighter-rouge">String</code>, <code class="language-plaintext highlighter-rouge">Text</code> and <code class="language-plaintext highlighter-rouge">Integer</code>, you get a 
+simple <code class="language-plaintext highlighter-rouge">input</code> HTML element. For basic many to one relationships, you get a <code class="language-plaintext highlighter-rouge">select</code> HTML element.
+But when I tried to make a one to many relationship editable, I got a stack trace:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">"/srv/nerdwallet/myproject/venv/lib/python2.7/site-packages/flask/app.py"</span>, line 1836, <span class="k">in </span>__call__
+    <span class="k">return </span>self.wsgi_app<span class="o">(</span>environ, start_response<span class="o">)</span>
+  ...
+  File <span class="s2">"/srv/nerdwallet/myproject/venv/lib/python2.7/site-packages/wtforms/fields/core.py"</span>, line 149, <span class="k">in </span>__call__
+    <span class="k">return </span>self.meta.render_field<span class="o">(</span>self, kwargs<span class="o">)</span>
+  File <span class="s2">"/srv/nerdwallet/myproject/venv/lib/python2.7/site-packages/wtforms/meta.py"</span>, line 53, <span class="k">in </span>render_field
+    <span class="k">return </span>field.widget<span class="o">(</span>field, <span class="k">**</span>render_kw<span class="o">)</span>
+  File <span class="s2">"/srv/nerdwallet/myproject/venv/lib/python2.7/site-packages/flask_admin/model/widgets.py"</span>, line 93, <span class="k">in </span>__call__
+    kwargs <span class="o">=</span> self.get_kwargs<span class="o">(</span>subfield, kwargs<span class="o">)</span>
+  File <span class="s2">"/srv/nerdwallet/myproject/venv/lib/python2.7/site-packages/flask_admin/model/widgets.py"</span>, line 148, <span class="k">in </span>get_kwargs
+    raise Exception<span class="o">(</span><span class="s1">'Unsupported field type: %s'</span> % <span class="o">(</span><span class="nb">type</span><span class="o">(</span>subfield<span class="o">)</span>,<span class="o">))</span>
+Exception: Unsupported field <span class="nb">type</span>: &lt;class <span class="s1">'flask_admin.contrib.sqla.fields.QuerySelectMultipleField'</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>The model column definition in question was a simple relationship with a join table:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">AAAModel</span><span class="p">):</span>
+    <span class="p">...</span>
+    <span class="c1"># uselist=True means you can have more than one child MyChildModel per MyModel
+</span>    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s">'MyChildModel'</span><span class="p">,</span> <span class="n">secondary</span><span class="o">=</span><span class="s">'model_children_join'</span><span class="p">,</span> <span class="n">uselist</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Looking into the <a href="https://github.com/flask-admin/flask-admin/blob/master/flask_admin/model/widgets.py#L100">Flask-Admin code</a>, 
+they actually support a number of other fields types such as <code class="language-plaintext highlighter-rouge">Boolean</code>, <code class="language-plaintext highlighter-rouge">DateTime</code>, <code class="language-plaintext highlighter-rouge">Float</code>, etc. But
+no select multiple. Here is the <code class="language-plaintext highlighter-rouge">Flask-Admin</code> code block that I was looking at:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">XEditableWidget</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""
+        WTForms widget that provides in-line editing for the list view.
+
+        Determines how to display the x-editable/ajax form based on the
+        field inside of the FieldList (StringField, IntegerField, etc).
+    """</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'data-value'</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'value'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
+
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'data-role'</span><span class="p">,</span> <span class="s">'x-editable'</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'data-url'</span><span class="p">,</span> <span class="s">'./ajax/update/'</span><span class="p">)</span>
+
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'id'</span><span class="p">,</span> <span class="n">field</span><span class="p">.</span><span class="nb">id</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'name'</span><span class="p">,</span> <span class="n">field</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">'href'</span><span class="p">,</span> <span class="s">'#'</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'pk'</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'pk required'</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-pk'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">"pk"</span><span class="p">))</span>
+
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-csrf'</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">"csrf"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+
+        <span class="c1"># subfield is the first entry (subfield) from FieldList (field)
+</span>        <span class="n">subfield</span> <span class="o">=</span> <span class="n">field</span><span class="p">.</span><span class="n">entries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_kwargs</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">HTMLString</span><span class="p">(</span>
+            <span class="s">'&lt;a %s&gt;%s&lt;/a&gt;'</span> <span class="o">%</span> <span class="p">(</span><span class="n">html_params</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+                              <span class="n">escape</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s">'data-value'</span><span class="p">]))</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subfield</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+            Return extra kwargs based on the subfield type.
+        """</span>
+        <span class="k">if</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'StringField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'text'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'TextAreaField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'textarea'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-rows'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'5'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'BooleanField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'select'</span>
+            <span class="c1"># data-source = dropdown options
+</span>            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-source'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">''</span><span class="p">:</span> <span class="s">'False'</span><span class="p">,</span> <span class="s">'1'</span><span class="p">:</span> <span class="s">'True'</span><span class="p">}</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-role'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'x-editable-boolean'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'Select2Field'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'select'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-source'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">subfield</span><span class="p">.</span><span class="n">choices</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'DateField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'combodate'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-format'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'YYYY-MM-DD'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-template'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'YYYY-MM-DD'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'DateTimeField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'combodate'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-format'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'YYYY-MM-DD HH:mm:ss'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-template'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'YYYY-MM-DD  HH:mm:ss'</span>
+            <span class="c1"># x-editable-combodate uses 1 minute increments
+</span>            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-role'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'x-editable-combodate'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'TimeField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'combodate'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-format'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'HH:mm:ss'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-template'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'HH:mm:ss'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-role'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'x-editable-combodate'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'IntegerField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'number'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'FloatField'</span><span class="p">,</span> <span class="s">'DecimalField'</span><span class="p">]:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'number'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-step'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'any'</span>
+        <span class="k">elif</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'QuerySelectField'</span><span class="p">,</span> <span class="s">'ModelSelectField'</span><span class="p">]:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'select'</span>
+
+            <span class="n">choices</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">subfield</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">choices</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">.</span><span class="n">_value</span><span class="p">())]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">.</span><span class="n">label</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+                    <span class="n">choices</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">.</span><span class="n">_value</span><span class="p">())]</span> <span class="o">=</span> <span class="s">""</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">choices</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'Unsupported field type: %s'</span> <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">subfield</span><span class="p">),))</span>
+
+        <span class="c1"># for Select2, QuerySelectField, and ModelSelectField
+</span>        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="s">'allow_blank'</span><span class="p">,</span> <span class="bp">False</span><span class="p">):</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-source'</span><span class="p">][</span><span class="s">'__None'</span><span class="p">]</span> <span class="o">=</span> <span class="s">""</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span>
+</code></pre></div></div>
+
+<p>Basically, it’s generating some HTML from a <code class="language-plaintext highlighter-rouge">kwargs</code> dict based on the field type. These are 
+<a href="https://wtforms.readthedocs.org/en/latest/">WTForms</a> types from the 
+<a href="https://wtforms.readthedocs.org/en/latest/ext.html?highlight=queryselectfield#module-wtforms.ext.sqlalchemy">SQLAlchemy WTForm extension</a>. 
+But the <code class="language-plaintext highlighter-rouge">data-type</code> types are actually from a Javascript library called <a href="https://vitalets.github.io/x-editable/docs.html">x-editable</a>, which is
+doing the actual UI and Ajax call for the update.</p>
+
+<p>It turns out that <code class="language-plaintext highlighter-rouge">x-editable</code> doesn’t support a <code class="language-plaintext highlighter-rouge">select multiple</code> element, but they do have a <a href="https://vitalets.github.io/x-editable/docs.html#checklist">checklist</a>
+type, which is just as good (at least for a small number of choices). Hacking this into the 
+<code class="language-plaintext highlighter-rouge">ModelView</code> was pretty simple.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask.ext.admin.model.widgets</span> <span class="kn">import</span> <span class="n">XEditableWidget</span>
+
+
+<span class="k">class</span> <span class="nc">CustomWidget</span><span class="p">(</span><span class="n">XEditableWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subfield</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">subfield</span><span class="p">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s">'QuerySelectMultipleField'</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'checklist'</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-placement'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'left'</span>
+            <span class="c1"># copied from flask_admin/model/widgets.py
+</span>            <span class="n">choices</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">subfield</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">choices</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">.</span><span class="n">_value</span><span class="p">())]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">.</span><span class="n">label</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+                    <span class="n">choices</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">.</span><span class="n">_value</span><span class="p">())]</span> <span class="o">=</span> <span class="s">""</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">'data-source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">choices</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">CustomWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">get_kwargs</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="k">class</span> <span class="nc">CustomFieldList</span><span class="p">(</span><span class="n">ListEditableFieldList</span><span class="p">):</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">CustomWidget</span><span class="p">()</span>
+    
+<span class="k">class</span> <span class="nc">MyModelView</span><span class="p">(</span><span class="n">BaseModelView</span><span class="p">):</span>
+    <span class="n">column_editable_list</span> <span class="o">=</span> <span class="p">(</span><span class="s">'question'</span><span class="p">,</span> <span class="s">'details'</span><span class="p">,</span> <span class="s">'slug'</span><span class="p">,</span> <span class="s">'status'</span><span class="p">,</span> <span class="s">'children'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_list_form</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">scaffold_list_form</span><span class="p">(</span><span class="n">CustomFieldList</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#flask" class="page__taxonomy-item p-category" rel="tag">flask</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2015-09-25-flask-admin-list-edit-one-to-many.md">_posts/2015-09-25-flask-admin-list-edit-one-to-many.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2015-09-25T00:00:00+00:00">September 25, 2015</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2015/09/18/flask-test-client-setupclass.html" class="pagination--pager" title="Optimizing Flask client tests">Previous</a>
+    
+    
+      <a href="/blog/2015/10/09/getting-eng-involved-early.html" class="pagination--pager" title="Getting Engineering Involved Early in a Project">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

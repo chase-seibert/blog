@@ -1,0 +1,501 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Hibernate Search - Query API helper - Chase Seibert Blog</title>
+<meta name="description" content="If you are programmatically generating a query string and then parsing it with the query parser then you should seriously consider building your queries directly with the query API. In other words, the query parser is designed for human-entered text, not for program-generated text. - Lucene Documentation">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Hibernate Search - Query API helper">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2009/06/05/hibernate-search-query-api-helper.html">
+
+
+  <meta property="og:description" content="If you are programmatically generating a query string and then parsing it with the query parser then you should seriously consider building your queries directly with the query API. In other words, the query parser is designed for human-entered text, not for program-generated text. - Lucene Documentation">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Hibernate Search - Query API helper">
+  <meta name="twitter:description" content="If you are programmatically generating a query string and then parsing it with the query parser then you should seriously consider building your queries directly with the query API. In other words, the query parser is designed for human-entered text, not for program-generated text. - Lucene Documentation">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2009/06/05/hibernate-search-query-api-helper.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2009-06-05T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2009/06/05/hibernate-search-query-api-helper.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Hibernate Search - Query API helper">
+    <meta itemprop="description" content="If you are programmatically generating a query string and then parsing it with the query parser then you should seriously consider building your queries directly with the query API. In other words, the query parser is designed for human-entered text, not for program-generated text. - Lucene Documentation">
+    <meta itemprop="datePublished" content="2009-06-05T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2009/06/05/hibernate-search-query-api-helper.html" itemprop="url">Hibernate Search - Query API helper
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <blockquote>If you are programmatically generating a query string and then parsing it with the query parser then you should seriously consider building your queries directly with the query API. In other words, the query parser is designed for human-entered text, not for program-generated text. - <a href="http://lucene.apache.org/java/2_3_2/queryparsersyntax.html">Lucene Documentation</a></blockquote>
+
+<p>
+In Hibernate Search, as in vanilla Lucene, when you create a query it's critically important to use the same Analyzer and Bridges that you used when indexing the fields.
+</p>
+
+<p>
+Analyzers tokenize search strings into Terms. For example "a cool manager" might parse into "cool" and "manag". Notice that "manager" has been <span style="font-style:italic;">stemmed </span>into a shorter version. If you were to construct a Lucene query like "description:manager", it would not find any results. You could apply a tokenizer to the Lucene query string to correctly translate it, but that only works if all the fields in the query use the same Analyzer and are tokenized. Say you have a field isDeleted, that only has the un-tokenized values "true" and "false". If you run "+isDeleted:false +description:manager" through the Analyzer, you might get "+isDeleted:fals +description:manag" (not the missing "e" in false), which will not match anything.
+</p>
+
+<p>
+Bridges convert Objects into <a href="http://en.wikipedia.org/wiki/Lexicographical_order">lexicographic</a> text so that they can be indexed and used in range searches. Because everything is text in Lucene (and compared as text), you can't just put the value "1/1/2009" in for a date. If you did, when comparing values, Lucene would put "2/1/2008" <span style="font-style:italic;">after</span> "1/1/2009", instead of before. That's because it's comparing them as strings, left to right (just like "b" is greater than "a"). A typical bridge for dates might produce "20090101", which is lexicographically valid. When constructing queries, you obviously want to use the same bridges that you used to index the data.
+</p>
+
+<p>
+All of this should be taken as an argument for using the <a href="http://lucene.apache.org/java/2_4_0/api/org/apache/lucene/search/Query.html">Lucene Query API</a> to construct your non-static queries. Take "+isDeleted:false +description:manag +dateAdded:[20090101 to 40000101]", for example. If you are relying on the user to hand-enter a query, how are they going to know to format dates like that, and to stem "manager" to "manag"? They won't, and even if they do, they will fuck it up. Similarly, if you generate this as a string in code, you will fuck it up.
+</p>
+
+<p>
+Instead, use the Lucene Query API, which has a primitive of Term and bunches them into Queries (like BooleanQuery, RangeQuery, etc). Unfortunately, Hibernate Search does not provide any tools to help you apply the Anaylzers and Bridges you defined in your entity annotations to a given Term. So you might end up writing code that looks like:
+</p>
+
+<pre name="code" class="java">
+     BooleanQuery query = new BooleanQuery();
+     Analyzer analyzer = new StandardAnalyzer();
+     TokenStream tokenStream = analyzer.tokenStream("description", new StringReader("cool manager"));
+
+     Token token = new Token();
+     token = tokenStream.next(token);
+
+     while (token != null) {
+      if (token.termLength() &gt; 0) {
+       String term = new String(token.termBuffer(), 0, token.termLength());
+       query.add(new TermQuery(new Term("description", term)), BooleanClause.Occur.MUST);
+      }
+      token = tokenStream.next(token);
+     }
+
+     DateBridge dateBridge = new DateBridge();
+     Map params = new HashMap();
+     params.put("resolution", "day");
+     dateBridge.setParameterValues(params);
+     RangeQuery dateAdded = new RangeQuery(
+          new Term("dateAdded", dateBridge.objectToString(new GregorianCalendar(2009, Calendar.MARCH, 1).getTime())),
+          new Term("dateAdded", dateBridge.objectToString(new GregorianCalendar(3000, Calendar.JANUARY, 1).getTime())),
+          true
+      );
+
+     query.add(new BooleanClause(dateAdded, BooleanClause.Occur.MUST));
+</pre>
+
+<p>
+While it's pretty verbose, the <span style="font-style:italic;">real </span>problem with the above is that it violates <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>. You have to repeat the mappings you made in your annotations as to which Analyzers and Bridges you want to us. Wouldn't it be nice if there was some code to do this for you?
+</p>
+
+<p>
+Using reflection, I came up with a utility class that can get the correct Analyzers and Bridges at runtime, letting you write code that looks like:
+</p>
+
+<pre name="code" class="java">
+ BooleanQuery comments = SearchUtil.createQuery(
+  Note.class,
+  "comments",
+  "packaging c++ in 1947 hot/cold foo:bar",
+  BooleanClause.Occur.MUST
+  );
+
+ RangeQuery dateRange = SearchUtil.createRangeQuery(
+   Note.class,
+   "dateAdded",
+   new GregorianCalendar(2009, Calendar.MARCH, 1).getTime(),
+   new GregorianCalendar(3000, Calendar.JANUARY, 1).getTime()
+   );
+
+ BooleanQuery query = SearchUtil.createQuery(
+   Note.class,
+   "isDeleted",
+   "false",
+   BooleanClause.Occur.MUST
+   );
+
+ query.add(new BooleanClause(comments, BooleanClause.Occur.MUST));
+ query.add(new BooleanClause(dateRange, BooleanClause.Occur.MUST));
+</pre>
+
+<p>
+You can <a href="http://dl.dropbox.com/u/422013/bitkickers/SearchUtil.zip">download the code for SearchUtil</a> here. <span style="font-style:italic;">Note: I ripped this out of my project w/o changing packages, etc. You'll have to clean it up a little.</span>
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#hibernate" class="page__taxonomy-item p-category" rel="tag">hibernate</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#hibernate-search" class="page__taxonomy-item p-category" rel="tag">hibernate-search</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#lucene" class="page__taxonomy-item p-category" rel="tag">lucene</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2009-06-05-hibernate-search-query-api-helper.html">_posts/2009-06-05-hibernate-search-query-api-helper.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2009-06-05T00:00:00+00:00">June 5, 2009</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2009/05/26/coldfusion-whitespace.html" class="pagination--pager" title="ColdFusion whitespace">Previous</a>
+    
+    
+      <a href="/blog/2009/06/12/hibernate-search-shard-query-optimization.html" class="pagination--pager" title="Hibernate Search - Shard Query Optimization">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
