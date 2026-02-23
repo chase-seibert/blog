@@ -1,5 +1,5 @@
 server:
-	bundle exec jekyll serve --incremental --watch --drafts
+	bundle exec jekyll serve --incremental --watch --drafts --verbose
 tags:
 	egrep -r --color -h "tags:\ (.+)" _posts/*.md |xargs -n1 |sort |uniq -c |sort
 words:

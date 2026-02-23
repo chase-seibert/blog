@@ -79,7 +79,7 @@ defaults:
 # Build settings
 markdown: kramdown
 theme: minima
-remote_theme: "mmistakes/minimal-mistakes"
+remote_theme: "mmistakes/minimal-mistakes@4.27.3"
 minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 paginate: 10
 paginate_path: /page:num/
