@@ -7,23 +7,27 @@ on:
 
 jobs:
   github-pages:
-    runs-on: ubuntu-latest      
+    runs-on: ubuntu-latest
     steps:
       # see https://github.com/actions/checkout
       - uses: actions/checkout@v3.2.0
 
-      # see 
-      - uses: actions/cache@v4
+      # Set up Ruby 3.x (required by faraday-net_http dependency)
+      - uses: ruby/setup-ruby@v1
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+          ruby-version: '3.1'
+          bundler-cache: true
 
-      # see https://github.com/marketplace/actions/jekyll-actions
-      - uses: helaili/jekyll-action@2.4.0
+      # Build Jekyll site
+      - name: Build site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      # Deploy to gh-pages branch
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}    
-          target_branch: 'gh-pages'
-
-      # deployment done by second action
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
