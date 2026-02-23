@@ -32,3 +32,7 @@ gem "jekyll-sitemap"
 gem "jekyll-include-cache"
 
 gem "webrick", "~> 1.7"
+
+# Install theme as gem for local development (faster, works offline)
+# GitHub Pages will still use remote_theme since it doesn't have this gem
+gem "minimal-mistakes-jekyll", "~> 4.27.0"

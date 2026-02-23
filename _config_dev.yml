@@ -1,0 +1,11 @@
+# Local development overrides
+# This file overrides _config.yml settings for local development
+# Use with: bundle exec jekyll serve --config _config.yml,_config_dev.yml
+
+# Disable remote_theme plugin to use local gem instead (faster, works offline)
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-include-cache

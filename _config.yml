@@ -78,7 +78,8 @@ defaults:
 
 # Build settings
 markdown: kramdown
-theme: minima
+# Use gem theme locally (faster, works offline), remote_theme on GitHub Pages
+theme: minimal-mistakes-jekyll
 remote_theme: "mmistakes/minimal-mistakes@4.27.3"
 minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 paginate: 10
