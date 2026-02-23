@@ -1,0 +1,526 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>The Programmer Mindset - Main Debug Loop - Chase Seibert Blog</title>
+<meta name="description" content="Validating ONLY with tests is basically flying the plane on instrumentation, versus being able to look out the windshield. Flying visually and by muscle-memory is both more efficient and safer, in conjunction with instrumentation. You’re much less likely to hit a mountain by mistake.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="The Programmer Mindset - Main Debug Loop">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2019/06/26/main-debug-loop.html">
+
+
+  <meta property="og:description" content="Validating ONLY with tests is basically flying the plane on instrumentation, versus being able to look out the windshield. Flying visually and by muscle-memory is both more efficient and safer, in conjunction with instrumentation. You’re much less likely to hit a mountain by mistake.">
+
+
+
+  <meta property="og:image" content="https://chase-seibert.github.io/blog/images/header_flight.jpg">
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="The Programmer Mindset - Main Debug Loop">
+  <meta name="twitter:description" content="Validating ONLY with tests is basically flying the plane on instrumentation, versus being able to look out the windshield. Flying visually and by muscle-memory is both more efficient and safer, in conjunction with instrumentation. You’re much less likely to hit a mountain by mistake.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2019/06/26/main-debug-loop.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chase-seibert.github.io/blog/images/header_flight.jpg">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2019-06-26T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2019/06/26/main-debug-loop.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/blog/images/header_flight.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          The Programmer Mindset - Main Debug Loop
+
+        
+      </h1>
+      
+        <p class="page__lead">Validating ONLY with tests is basically flying the plane on instrumentation, versus being able to look out the windshield. Flying visually and by muscle-memory is both more efficient and safer, in conjunction with instrumentation. You’re much less likely to hit a mountain by mistake.
+</p>
+      
+      
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="The Programmer Mindset - Main Debug Loop">
+    <meta itemprop="description" content="Validating ONLY with tests is basically flying the plane on instrumentation, versus being able to look out the windshield. Flying visually and by muscle-memory is both more efficient and safer, in conjunction with instrumentation. You’re much less likely to hit a mountain by mistake.">
+    <meta itemprop="datePublished" content="2019-06-26T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#the-main-debug-loop">The Main Debug Loop</a></li><li><a href="#validation-happens-in-layers">Validation Happens in Layers</a></li><li><a href="#optimizing-loop-time">Optimizing Loop Time</a></li><li><a href="#why-fast-loops-are-better">Why Fast Loops are Better</a></li><li><a href="#are-short-loop-times-universal">Are Short Loop Times Universal?</a></li><li><a href="#some-integrated-testing-is-necessary">Some Integrated Testing is Necessary</a></li><li><a href="#does-complexity-lead-to-test-validation-loops">Does Complexity Lead to Test Validation Loops?</a></li><li><a href="#staging-environments-to-the-rescue">Staging Environments to the Rescue</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p>When you’ve been coding for more than twenty years, it can be difficult to recapture <a href="https://en.wikipedia.org/wiki/Shoshin">beginner’s mind</a>, and explain how to think like a programmer to someone who is new to it. I remember an incident in college, when I had been coding for a comparatively short time, that crystalized in my mind the thought process behind writing code — what you might call the programmer philosophy. I was helping a friend complete a Computer Science 101 assignment. They were completely new to coding.</p>
+
+<p>They had written an entire solution, on paper, beginning to end — maybe 100 lines of code. THEN they typed it all in to a text editor, and ran it. What do you think happened? They got about a thousand syntax errors. This is when they came to me, feeling like they had hit a brick wall. I had been sitting beside them in the same class — but critically, I had been coding for a while already. I had already internalized the basic thought process of writing code, without ever having to articulate it. Our professor had failed to impart that thought process.</p>
+
+<h1 id="the-main-debug-loop">The Main Debug Loop</h1>
+
+<p>What I had to then explain to my friend is the thought process that I’m now going to call the “Main Debug Loop”. I believe that this is a natural mindset that develops in all programmers — assuming they successfully learn to code. It involves breaking down the problem into very small pieces. Small enough such that you’re writing 1-3 lines of code at a time. Every time you write one of these small chunks, you run the program. Usually it doesn’t work, and you try again. Slowly, you accrete code that you’ve convinced yourself works. You build up the whole solution iteratively.</p>
+
+<p>The keys are two fold: you’re building incrementally, and you’re validating as you go. As you gain experience, you work on more and more complex systems. But this mindset scales to problems of any complexity — you just have to break them down more.</p>
+
+<p>This is the main debug loop. Write code, run code. Running the code is the validation.</p>
+
+<h1 id="validation-happens-in-layers">Validation Happens in Layers</h1>
+
+<p>What exactly is validation? Here is an example of what I’ll call in-application validation. In web development, you write a few lines of code, save the file, and refresh you browser. Then, you interact with the page/application manually to see if what you just changed works. For speed, you’re probably only testing the happy path, or the one edge case that you’re currently implementing. For any other kind of development, the process in analogous, but the specifics look different.</p>
+
+<p>Test validation does not happen in the application. Instead, you run a small set of synthetic assertions against the code you’ve just written. This a best-practice called <a href="https://en.wikipedia.org/wiki/Test-driven_development">test-driven development</a>. TDD is used in conjunction with in-application validation. In practice (and contrary to strict TDD), my observation has been that developers work in short loops, validating in-application, and then quickly fast-follow with unit-test coverage.</p>
+
+<p>Another layer of validation is automated integration testing, using either a tool like Selenium for application layer validation, or Postman for API layer validation. You may also have exhaustive manual testing, potentially by dedicated QA engineers. Finally, you can use feature gating to validate in production. All of these layers of validation work on concert to ensure quality. When you’re writing the code iteratively, you typically utilize in-application validation and/or or test validation, because they are so much faster.</p>
+
+<h1 id="optimizing-loop-time">Optimizing Loop Time</h1>
+
+<p>The main debug loop can be something that you execute hundreds of times an hour. Thinking and typing code are the natural bottlenecks — you’re a lot slower than the computer, after all. In an ideal world, running the code to validate what you just wrote is instantaneous. For the vast majority of my coding career, running small chunks of code averaged maybe 5 seconds. The overhead is due to latency in the file system registering that files have been updated, the runtime loading the change, and your own “human time” — interacting with the newly updated application to run the change and see the results.</p>
+
+<p>The computer’s portion of the loop time is variable based on the language, the framework and the application itself. Scripting languages don’t have to be compiled before they are run. Some types of coding naturally involve more or less human interaction. For example, running a console command tends to involve less human latency than refreshing a web app. But because the main debug loop time is so universally critical to the developer workflow, the language and framework authors have a large incentive to optimize it. The developers likewise are incentivized to optimize their own application for it.</p>
+
+<h1 id="why-fast-loops-are-better">Why Fast Loops are Better</h1>
+
+<p>To my mind, slow loop time recalls some of the worst debugging nightmares of my career, what I call “flying blind”. The worst cases have two properties: they are not reliably reproducible, and each attempt at reproduction takes a long time. For debugging, non-reproducibility by itself can lead to unacceptably slow loop time. If you have a deploy to production to see if it worked, or you have to run the code many times to see if it fails once, that’s a worst case slow loop time scenario.</p>
+
+<p>It’s easy to see how this extreme scenario can lead to slow development, and low quality output.</p>
+
+<p>In contrast, some of my most positive memories of being “in the flow” invoke the sensation of being in constant, fluid dialog with the computer. Like a back-and-forth conversation, you’re arriving at your conclusion collaboratively. You’re validating the code nearly as fast as you can think it and type it. For me, even a 10 second latency in being able to run and validate a change can break that flow.</p>
+
+<p>Still, the assertion that shorter loops times are better rests on an unprovable assumption — that running more cycles for a given scope of work will result in higher output per time period, and/or higher quality. I believe this is true, but I concede that (no matter how personally counter-intuitive) it’s possible that over-all throughput and quality could be as high or higher with slow loop times.</p>
+
+<h1 id="are-short-loop-times-universal">Are Short Loop Times Universal?</h1>
+
+<p>Loop times are not guaranteed to be short — in fact, technical entropy will exert constant pressure to increase loop times. Significant developer time needs to be expended to make sure that the test suite continues to run quickly, the application reloads code quickly, and that the UX itself (on user facing applications) affords developers the ability to quickly reload and validate.</p>
+
+<p>Given that brand-new projects tend to inherit short loop time on small codebases from their parent language and framework, it’s no surprise that in my career-to-date at small startups, we tended to have short loop time. We had to expend effort to keep them short, but we were generally able to do so.</p>
+
+<p>However, I have seen that in larger code bases, with larger teams, short loop time is not a given. Perhaps it is too costly to maintain short loop time as the complexity scales? What ever the cause, once the loop time hits the point of breaking flow, developers will naturally seek shorter loops, such as switching to test validation. In an extreme case, you may not validate in-application at all, and trust that your test are validating correctness.</p>
+
+<p>To me, the retreat to test validation seems super dangerous — but the developers will do what they need to do to keep loop times short, even if they are not validating fully.</p>
+
+<h1 id="some-integrated-testing-is-necessary">Some Integrated Testing is Necessary</h1>
+
+<p>Without running code in a fully integrated environment at some point before shipping it, you’re running a greatly elevated risk of shipping bugs. This could look like validating in-application as you write the code, exhaustive manual testing or gated validation in production. Validating only in a synthetic scenario simply does not afford the same confidence as running everything integrated together. How many times have separately developed components not worked properly once they are eventually integrated? This happens even if the interfaces match perfectly — the composed behavior is very often still wrong.</p>
+
+<p>No QA person on the planet would condone shipping something to production without running it the same way a user will experience it — integrated together.</p>
+
+<blockquote>
+  <p>Validating ONLY with tests is basically flying the plane on instrumentation, versus being able to look out the windshield. Flying visually and by muscle-memory is both more efficient and safer, in conjunction with instrumentation. You’re much less likely to hit a mountain by mistake.</p>
+</blockquote>
+
+<h1 id="does-complexity-lead-to-test-validation-loops">Does Complexity Lead to Test Validation Loops?</h1>
+
+<p>Keeping loop time short is hard when you have complex systems, and large codebases. Hot reloading may very well take longer than 10 seconds by itself, in order to load and recompile a large codebase. Scripting languages have an advantage here, but have their own non-orthogonal costs. Even scripting languages may have unacceptable latency if the framework requires transpiling.</p>
+
+<p>Service oriented architecture presents unique advantages and challenges for the main debug loop. On one hand, you are working on individual, smaller codebase most of the time. Hot reload times are shorter. On the other hand, running your application composed with services and external data-stores gets both very complicated and also takes a ton of compute resources. Before long, running it locally is not even possible.</p>
+
+<p>In practice, I have noticed a correlation between large codebases, service architecture, and a retreat to test validation as the primary debug loop.</p>
+
+<h1 id="staging-environments-to-the-rescue">Staging Environments to the Rescue</h1>
+
+<p>A staging environment is like a miniature version of production. It should have all the same services set up, as well as the same basic network architecture. It’s just scaled down significantly. Typically it has the exact same data-stores and schema, but totally different data-sets. Staging is totally isolated from production; you can’t talk to production versions of any services, and you can’t talk to production data-stores.</p>
+
+<p>Depending on the sensitivity of the product domain, you may be able to sync production data down to staging, either in whole or sanitized. In many domains, that is not possible from a security perspective, so you create fake test data, with the entire engineering team using the same test data-sets and data-stores. You begin to have your “favorite” test users and records, and can bring them up in-application quickly.</p>
+
+<p>Staging environments have a lot of uses - but how can they help keep developers in the in-application validation flow? Intelligent service routing can help solve the local machine resource problem, AND alleviate the burden of maintaining a local data set. The downside is that it requires that developers have an active internet connection to staging.</p>
+
+<p>The premise is that you hook your development service up to staging, and route your individual in-application validation requests through the normal staging service graph — EXCEPT for one or two services that you’re currently developing. The staging network topology will pieces of the service call graph from the staging environment in the cloud back to your development box, likely over a VPN. It sounds really complicated, but this dynamic routing is a standard feature of service aware routing mesh frameworks like <a href="https://linkerd.io/">linkerd</a>.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>The switch from in-application validation to test validation in the primary debug loop lead to lower quality, slower velocity, and to context switching.</p>
+
+<p><img src="https://imgs.xkcd.com/comics/compiling.png" alt="" /></p>
+
+<p>System entropy towards test validation takes a LOT of work to counter. Maintaining short debug loops quickly becomes a full time job for someone, or a team of someones. But, even with as few as 50 engineers, organizations I’ve been in have opted to pay that cost. It’s possible (though I’m not yet convinced) that the cost grows exponentially as you scale up in terms of people and codebase size. In that case, I would expect companies at large scale to near-universally live with slow debug cycles and the primacy of test validation.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#process" class="page__taxonomy-item p-category" rel="tag">process</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#reading-list" class="page__taxonomy-item p-category" rel="tag">reading-list</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#testing" class="page__taxonomy-item p-category" rel="tag">testing</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2019-06-26-main-debug-loop.md">_posts/2019-06-26-main-debug-loop.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2019-06-26T00:00:00+00:00">June 26, 2019</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2019/01/30/getting-started-with-story-points.html" class="pagination--pager" title="Getting Started Estimating with Story Points">Previous</a>
+    
+    
+      <a href="/blog/2019/08/05/eye-of-sauron-force-concentration.html" class="pagination--pager" title="How to Choose a Team Size">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

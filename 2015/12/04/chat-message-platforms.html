@@ -1,0 +1,620 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Comparison of Chat Message Platforms - Chase Seibert Blog</title>
+<meta name="description" content="If you’re writing a chat app, the first big question to consider is whether you are going to write the actual chat backend. Why would you want to? You would get complete control over the functionality, reliability and interface. Why would you not want to? Well, persistent socket systems that scale to thousands or hundreds of thousands of users are no small undertaking. Plus, a bunch of good platforms already exist. It probably comes down do whether chat is part if your core business. If you’re Snapchat, you probably want to write your own chat platform. If chat is just a feature you use to deliver your actual value, it probably does not make sense to spend the engineering time on it.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Comparison of Chat Message Platforms">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2015/12/04/chat-message-platforms.html">
+
+
+  <meta property="og:description" content="If you’re writing a chat app, the first big question to consider is whether you are going to write the actual chat backend. Why would you want to? You would get complete control over the functionality, reliability and interface. Why would you not want to? Well, persistent socket systems that scale to thousands or hundreds of thousands of users are no small undertaking. Plus, a bunch of good platforms already exist. It probably comes down do whether chat is part if your core business. If you’re Snapchat, you probably want to write your own chat platform. If chat is just a feature you use to deliver your actual value, it probably does not make sense to spend the engineering time on it.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Comparison of Chat Message Platforms">
+  <meta name="twitter:description" content="If you’re writing a chat app, the first big question to consider is whether you are going to write the actual chat backend. Why would you want to? You would get complete control over the functionality, reliability and interface. Why would you not want to? Well, persistent socket systems that scale to thousands or hundreds of thousands of users are no small undertaking. Plus, a bunch of good platforms already exist. It probably comes down do whether chat is part if your core business. If you’re Snapchat, you probably want to write your own chat platform. If chat is just a feature you use to deliver your actual value, it probably does not make sense to spend the engineering time on it.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2015/12/04/chat-message-platforms.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2015-12-04T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2015/12/04/chat-message-platforms.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Comparison of Chat Message Platforms">
+    <meta itemprop="description" content="If you’re writing a chat app, the first big question to consider is whether you are going to write the actual chat backend. Why would you want to? You would get complete control over the functionality, reliability and interface. Why would you not want to? Well, persistent socket systems that scale to thousands or hundreds of thousands of users are no small undertaking. Plus, a bunch of good platforms already exist. It probably comes down do whether chat is part if your core business. If you’re Snapchat, you probably want to write your own chat platform. If chat is just a feature you use to deliver your actual value, it probably does not make sense to spend the engineering time on it.">
+    <meta itemprop="datePublished" content="2015-12-04T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2015/12/04/chat-message-platforms.html" itemprop="url">Comparison of Chat Message Platforms
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>If you’re writing a chat app, the first big question to consider is whether you are going to write the actual chat backend. Why would you want to? You would get complete control over the functionality, reliability and interface. Why would you <em>not</em> want to? Well, persistent socket systems that scale to thousands or hundreds of thousands of users are no small undertaking. Plus, a bunch of good platforms already exist. It probably comes down do whether chat is part if your core business. If you’re Snapchat, you probably want to write your own chat platform. If chat is just a feature you use to deliver your actual value, it probably does not make sense to spend the engineering time on it.</p>
+
+<p>What platforms exist that could be used to write a chat app, and how do they stack up? Here is a rundown as of late 2015. My criteria is specific to what I’m trying to build:</p>
+
+<ul>
+  <li>Excellent documentation is a must.</li>
+  <li>iOS, Node and Python SDKs preferred.</li>
+  <li>iOS notifications.</li>
+  <li>Web hooks (so we can use stateless web servers).</li>
+  <li>Chats with more than two participants.</li>
+  <li>Need to be able to extend the messages with custom metadata.</li>
+  <li>End-to-end message encryption would be ideal.</li>
+  <li>Proven ability to handle a large number of sessions.</li>
+</ul>
+
+<p>I evaluated eight platforms, and seriously considered three options before making a final decision.</p>
+
+<h1 id="also-rans">Also Rans</h1>
+
+<p>These platforms <em>could</em> be used to create a chat app, but all had various glaring issues.</p>
+
+<ul>
+  <li><a href="https://telegram.org/">Telegram</a> - No SDKs, just a REST APIs and a bunch of iOS code you can refactor to meet your needs. Hey guys, I don’t want to write HTTP request code manually for three platforms!</li>
+  <li><a href="https://www.intercom.io/">Intercom.io</a> - Their primary focus is providing a call center chat app themselves, not enabling you to build your own app. As far as I could tell, chats were always one to one.</li>
+  <li><a href="https://pusher.com/">Pusher</a> - They do much more than chat, not focused on that. No iOS notification support.</li>
+  <li><a href="https://www.firebase.com/">Firebase</a> - They do <em>much</em> more than chat, you can build your whole app and deploy it inside their platform. No native chat semantics, you would need to implement everything yourself.</li>
+  <li><a href="http://www.iron.io/">Iron.io</a> - It’s a message queue. No iOS SDK. API is REST, not socket based.</li>
+</ul>
+
+<h1 id="3-quickblox">#3: Quickblox</h1>
+
+<p><a href="https://quickblox.com/">Quickblox</a> focuse on chat, and on the developer experience (they don’t have a chat app themselves). They have been around for a while (2013), and they’re based on XMPP, which is an open standard. They have an excellent reference iOS application.</p>
+
+<p>No Python SDK, and no web hooks. But the killer was the difficulty of our prototype work. Calling their REST API from Python was super painful. The auth request has a timestamp, nonce and HMAC signature, which is super brittle. If the order of the parameters is not alphabetical, or there is any problem with how you setup the HMAC, you just get a generic signature error with no trouble-shooting information. Then you have a series of required custom HTTP headers.</p>
+
+<p>All of these problems are solvable by writing your own Python SDK. But the iOS and Node.js SDKs were also hard to get working. Their Node library, admittedly in beta, was broken. Overall, their documentation was poor - it was hard to get stuff working. Take a look at how verbose the following code is:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="n">APP_ID</span> <span class="o">=</span> <span class="s">'XXX'</span>
+<span class="n">AUTH_KEY</span> <span class="o">=</span> <span class="s">'XXX'</span>
+<span class="n">AUTH_SECRET</span> <span class="o">=</span> <span class="s">'XXX'</span>
+<span class="n">USER_ID</span> <span class="o">=</span> <span class="s">'XXX'</span>
+<span class="n">PASSWORD</span> <span class="o">=</span> <span class="s">'XXX'</span>
+<span class="n">DIALOG_ID</span> <span class="o">=</span> <span class="s">'XXX'</span>
+
+
+<span class="k">def</span> <span class="nf">create_session</span><span class="p">():</span>
+    <span class="n">nonce</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()))</span>
+    <span class="n">signature_raw_body</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s">'application_id='</span> <span class="o">+</span> <span class="n">APP_ID</span> <span class="o">+</span>
+        <span class="s">'&amp;auth_key='</span> <span class="o">+</span> <span class="n">AUTH_KEY</span> <span class="o">+</span>
+        <span class="s">'&amp;nonce='</span> <span class="o">+</span> <span class="n">nonce</span> <span class="o">+</span>
+        <span class="s">'&amp;timestamp='</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span>
+        <span class="s">'&amp;user[login]=admin'</span> <span class="o">+</span>
+        <span class="s">'&amp;user[password]=password'</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">AUTH_SECRET</span><span class="p">,</span> <span class="n">signature_raw_body</span><span class="p">,</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha1</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="s">'https://api.quickblox.com/session.json'</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+            <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+            <span class="s">'QuickBlox-REST-API-Version'</span><span class="p">:</span> <span class="s">'0.1.0'</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+            <span class="s">'application_id'</span><span class="p">:</span> <span class="n">APP_ID</span><span class="p">,</span>
+            <span class="s">'auth_key'</span><span class="p">:</span> <span class="n">AUTH_KEY</span><span class="p">,</span>
+            <span class="s">'timestamp'</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+            <span class="s">'nonce'</span><span class="p">:</span> <span class="n">nonce</span><span class="p">,</span>
+            <span class="s">'signature'</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
+            <span class="s">'user'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">'login'</span><span class="p">:</span> <span class="s">'admin'</span><span class="p">,</span>
+                <span class="s">'password'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">,</span>
+                <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">json_data</span><span class="p">[</span><span class="s">'session'</span><span class="p">][</span><span class="s">'token'</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">get_messages</span><span class="p">(</span><span class="n">qb_token</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s">'https://api.quickblox.com/chat/Message.json?chat_dialog_id='</span> <span class="o">+</span> <span class="n">DIALOG_ID</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+            <span class="s">'QB-Token'</span><span class="p">:</span> <span class="n">qb_token</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">qb_token</span> <span class="o">=</span> <span class="n">create_session</span><span class="p">()</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="n">get_messages</span><span class="p">(</span><span class="n">qb_token</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">messages</span><span class="p">,</span> <span class="n">messages</span><span class="p">.</span><span class="n">content</span>
+</code></pre></div></div>
+
+<h1 id="2-pubnub">#2: PubNub</h1>
+
+<p><a href="https://www.pubnub.com/">PubNub</a> is not focused exclusively on chat, but chat is a first class topic in their documentation. Truly excellent SDKs for virtually every language you could care about. Sometimes there are multiple SDKs for the same language that are specialized for particular frameworks - think Django, Twisted and Tornado. They have a lot of mindshare in the developer community; I constantly hear about other engineers using PubNub for hackathon projects. They pop up organically in my Twitter feed a lot.</p>
+
+<p>Prototyping could not have been simpler. See the bellow code. The only downside is that they do not have true web hook support. Their web hooks are limited to when conversations start and stop, versus firing on every chat message.</p>
+
+<p>Why are web hooks a big deal? They probably are not for many use cases. But one thing we want to be able to do is have a Python bot that listens to all conversations and performs various actions in real-time. As far as I can tell, the PubNub model for this is to use something like Twisted, which is an asynchronous event-based networking engine in Python. You leave a socket open to PubNub all the time and get notified of new messages over that active connection.</p>
+
+<p>That performs really well, which is why they do it. But it drastically increases the complexity with regards to production high availability, versus a vanilla web server. With a web server, if you loose a node (and you will, think EC2 instance going down), it’s no problem. You simply have multiple nodes behind a load balancer. Because they are all stateless, recovery is automatic as new requests keep flowing to the remaining nodes.</p>
+
+<p>With an active socket daemon, you have to solve the high availability problem yourself. If you create a master/hot backup architecture, you need to realize that the primary node is down and have the secondary server establish a connection and <em>resume any in progress conversations</em>. That’s a separate critical code path that will execute only very rarely - a recipe for bugs. If you go active/active, then you have all the same problems of resuming a portion of the connections when a node fails, plus you have to figure out connection sharding.</p>
+
+<p>None of these are insurmountable problems. But they are significant added complexity, which is what I’m trying to avoid by using an existing platform. PubNub has a super simple SDK, but then they force you to solve a bunch of architectural complexity yourself.</p>
+
+<p>Here is our prototype code. Notice the paradigm; event loops. This code blocks until you kill the process.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pubnub</span> <span class="kn">import</span> <span class="n">Pubnub</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"ERROR : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"CONNECTED"</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">pubnub</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="s">'test'</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">'Hello from the PubNub Python SDK'</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">reconnect</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"RECONNECTED"</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"DISCONNECTED"</span><span class="p">)</span>
+
+
+<span class="n">pubnub</span> <span class="o">=</span> <span class="n">Pubnub</span><span class="p">(</span><span class="n">publish_key</span><span class="o">=</span><span class="s">'XXX'</span><span class="p">,</span> <span class="n">subscribe_key</span><span class="o">=</span><span class="s">'XXX'</span><span class="p">,</span> <span class="n">secret_key</span><span class="o">=</span><span class="s">'XXX'</span><span class="p">)</span>
+
+<span class="n">pubnub</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span>
+    <span class="n">channels</span><span class="o">=</span><span class="s">'dit'</span><span class="p">,</span>
+    <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+    <span class="n">error</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+    <span class="n">connect</span><span class="o">=</span><span class="n">connect</span><span class="p">,</span>
+    <span class="n">reconnect</span><span class="o">=</span><span class="n">reconnect</span><span class="p">,</span>
+    <span class="n">disconnect</span><span class="o">=</span><span class="n">disconnect</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="1-layer">#1: Layer</h1>
+
+<p><a href="https://layer.com/">Layer</a> is a new player. They focus solely on chat. They have good iOS and Node SDKs (but not Python). Their REST API semantics are dedicated to chat. Conversations and messages are first class concepts. Their documentation is good, if not as exhaustive as PubNub. Importantly, they have web hooks for each message (currently in private beta).</p>
+
+<p>One downside is that they do not support end-to-end encryption per-se. Of course, you can manually encrypt your message bodies yourself. Being newer, they also do not have the track record that PubNub has.</p>
+
+<p>Even though they do not have a Python SDK, our prototype code could not have been more Pythonic. This makes me confident we will be able to write clean code, and use a simple web server architecture.</p>
+
+<p>Finally, there is significant upside to being a chat specific platform. The SDKs support concepts like read/unread, typing indicators, etc. You can do that yourself via PubNub, but you have to write more code. PubNub is schemaless - you are writing all the schema plus serialization yourself, separately for each language. Code is the enemy!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="n">APP_ID</span> <span class="o">=</span> <span class="s">'XXX'</span>
+<span class="n">PLATFORM_API_TOKEN</span> <span class="o">=</span> <span class="s">'XXX'</span>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">'https://api.layer.com'</span>
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="n">HOST</span> <span class="o">+</span> <span class="s">'/apps/%s'</span> <span class="o">%</span> <span class="n">APP_ID</span>
+<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/vnd.layer+json; version=1.0'</span><span class="p">,</span>
+    <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Bearer %s'</span> <span class="o">%</span> <span class="n">PLATFORM_API_TOKEN</span><span class="p">,</span>
+    <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">relative_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="n">callable_</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">requests</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">callable_</span><span class="p">(</span>
+        <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">relative_url</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span>
+        <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_conversation</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">_request</span><span class="p">(</span><span class="s">'post'</span><span class="p">,</span> <span class="s">'/conversations'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+        <span class="s">'participants'</span><span class="p">:</span> <span class="p">[</span><span class="s">'John'</span><span class="p">,</span> <span class="s">'Jane'</span><span class="p">],</span>
+        <span class="s">'distinct'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="p">})</span>
+
+
+<span class="k">def</span> <span class="nf">get_messages</span><span class="p">(</span><span class="n">conversation_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_request</span><span class="p">(</span><span class="s">'get'</span><span class="p">,</span> <span class="s">'/conversations/%s/messages'</span> <span class="o">%</span> <span class="n">conversation_id</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">post_message</span><span class="p">(</span><span class="n">conversation_id</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_request</span><span class="p">(</span><span class="s">'post'</span><span class="p">,</span> <span class="s">'/conversations/%s/messages'</span> <span class="o">%</span> <span class="n">conversation_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+        <span class="s">'sender'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'name'</span><span class="p">:</span> <span class="s">'Chase'</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s">'parts'</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s">'body'</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span>
+                <span class="s">'mime_type'</span><span class="p">:</span> <span class="s">'text/plain'</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+
+
+<span class="n">conversation</span> <span class="o">=</span> <span class="n">get_conversation</span><span class="p">()</span>
+<span class="n">conversation_id</span> <span class="o">=</span> <span class="n">conversation</span><span class="p">.</span><span class="n">json</span><span class="p">().</span><span class="n">get</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+<span class="n">conversation_id</span> <span class="o">=</span> <span class="n">conversation_id</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'layer:///conversations/'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">conversation_id</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="n">get_messages</span><span class="p">(</span><span class="n">conversation_id</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">messages</span><span class="p">,</span> <span class="n">messages</span><span class="p">.</span><span class="n">content</span>
+
+<span class="n">post_response</span> <span class="o">=</span> <span class="n">post_message</span><span class="p">(</span><span class="n">conversation_id</span><span class="p">,</span> <span class="s">'this is a test'</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">post_response</span><span class="p">,</span> <span class="n">post_response</span><span class="p">.</span><span class="n">content</span>
+</code></pre></div></div>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>I hope this helps you if you need to make a similar decision. Hit me up on Twitter and let me know how it goes!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2015-12-04-chat-message-platforms.md">_posts/2015-12-04-chat-message-platforms.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2015-12-04T00:00:00+00:00">December 4, 2015</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2015/11/13/documentation-usability-case-study.html" class="pagination--pager" title="Case Study in Documentation Usability - Django vs. Flask/SQLAlchemy">Previous</a>
+    
+    
+      <a href="/blog/2016/01/29/cryptojs-pycrypto-ios-aes256.html" class="pagination--pager" title="Interoperable AES256 encryption between CryptoJS, PyCrypto and CryptoSwift">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,445 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>YSlow 80/20 - Chase Seibert Blog</title>
+<meta name="description" content="I spent some time this week optimising a new site, specifically looking at some of the YSlow recommendations.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="YSlow 80/20">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2009/11/06/yslow-8020.html">
+
+
+  <meta property="og:description" content="I spent some time this week optimising a new site, specifically looking at some of the YSlow recommendations.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="YSlow 80/20">
+  <meta name="twitter:description" content="I spent some time this week optimising a new site, specifically looking at some of the YSlow recommendations.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2009/11/06/yslow-8020.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2009-11-06T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2009/11/06/yslow-8020.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="YSlow 80/20">
+    <meta itemprop="description" content="I spent some time this week optimising a new site, specifically looking at some of the YSlow recommendations.">
+    <meta itemprop="datePublished" content="2009-11-06T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2009/11/06/yslow-8020.html" itemprop="url">YSlow 80/20
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+I spent some time this week optimising a new site, specifically looking at some of the <a href="http://developer.yahoo.com/yslow/">YSlow</a> recommendations.
+</p>
+
+<p>
+For a smaller, low traffic site, some of the recommendations are over-kill. I'm not paying for a CDN. But I did find some of the tidbits valuable, specifically around what Apache does not do by default.
+</p>
+
+<p>
+First of all, Apache2 out of the box has gzip enabled, but CSS and Javascript files are not in the list the zippable MIME types. Adding them is easy. Just edit /etc/apache2/mods-available/deflate.conf:
+</p>
+
+<pre name="code" class="xml">
+&lt;IfModule mod_deflate.c&gt;
+      AddOutputFilterByType DEFLATE text/html text/plain text/xml application/x-javascript text/javascript text/css application/javascript
+&lt;/IfModule&gt;
+</pre>
+
+<p>
+The larger win was the Expires HTTP header, which lets the browser know that it shouldn't even attempt to see if a CSS, Javascript or image has been updated until such and such a date. By default, Apache2 deploys with Expires disabled.
+</p>
+
+<p>
+Yahoo! recommends setting this to a "far future" value, like 10 years from now, and then managing this by changing the URLs for CSS, Javascript or images every time they actually change on the server. Implementing that is a PITA because you need a tool that can auto-rewrite the image URLs in the CSS, and the script URLs in your HTML.
+</p>
+
+<p>
+This may make sense for a large site, where you are concerned with minimising bandwidth. But on a smaller site like mine, I'm more concerned with minimising the number of HTTP connections when the user is rapidlly clicking between pages. I don't care if they have to hit the server again per resource every once in a while, just as long as in the average case they are only loading one HTML page per request.
+</p>
+
+<p>
+I picked an Expire window of just 12 hours. This is long enough so that during a single session, the user will only request each resource once. But it's short enough that if I push an actual change at night, everyone will get it in the morning.
+</p>
+
+<p>
+To make the actual change, you need to enable the expire_mod, and then set the actual Expires value per MIME type.
+</p>
+
+<pre>
+&gt;cd /etc/apache2
+&gt;sudo ln -s ../mods-available/expires.load mods-enabled/expires.load
+</pre>
+
+<pre name="code" class="bash">
+# edit /etc/apache2/sites-available/default
+ExpiresActive On
+ExpiresByType text/css "access plus 12 hours"
+ExpiresByType application/javascript "access plus 12 hours"
+ExpiresByType image/png "access plus 12 hours"
+ExpiresByType image/gif "access plus 12 hours"
+</pre>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2009-11-06-yslow-8020.html">_posts/2009-11-06-yslow-8020.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2009-11-06T00:00:00+00:00">November 6, 2009</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2009/10/29/easier-development-with-unobtrusive-javascript-part-iii.html" class="pagination--pager" title="Easier Development with Unobtrusive JavaScript, Part III">Previous</a>
+    
+    
+      <a href="/blog/2009/11/20/changing-image-links-in-css-to-use-a-static-domain-with-django-compress.html" class="pagination--pager" title="Changing image links in CSS to use a static domain with Django compress">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

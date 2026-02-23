@@ -1,0 +1,490 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>postfix: only enable sasl for some relays - Chase Seibert Blog</title>
+<meta name="description" content="Some mail hosts, like SendGrid, require you to use SASL authentication to relay mail through their systems. Many of those same hosts only want you to send mail for verified, double-opt-in squeaky clean recipients. But what if you have a subset of recipients that are not verified, and you want to continue sending mail to those yourself?">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="postfix: only enable sasl for some relays">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2012/07/19/postfix-only-enable-sasl-for-some-relays.html">
+
+
+  <meta property="og:description" content="Some mail hosts, like SendGrid, require you to use SASL authentication to relay mail through their systems. Many of those same hosts only want you to send mail for verified, double-opt-in squeaky clean recipients. But what if you have a subset of recipients that are not verified, and you want to continue sending mail to those yourself?">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="postfix: only enable sasl for some relays">
+  <meta name="twitter:description" content="Some mail hosts, like SendGrid, require you to use SASL authentication to relay mail through their systems. Many of those same hosts only want you to send mail for verified, double-opt-in squeaky clean recipients. But what if you have a subset of recipients that are not verified, and you want to continue sending mail to those yourself?">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2012/07/19/postfix-only-enable-sasl-for-some-relays.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2012-07-19T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2012/07/19/postfix-only-enable-sasl-for-some-relays.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="postfix: only enable sasl for some relays">
+    <meta itemprop="description" content="Some mail hosts, like SendGrid, require you to use SASL authentication to relay mail through their systems. Many of those same hosts only want you to send mail for verified, double-opt-in squeaky clean recipients. But what if you have a subset of recipients that are not verified, and you want to continue sending mail to those yourself?">
+    <meta itemprop="datePublished" content="2012-07-19T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2012/07/19/postfix-only-enable-sasl-for-some-relays.html" itemprop="url">postfix: only enable sasl for some relays
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+Some mail hosts, like <a href="http://sendgrid.com/">SendGrid</a>, require you to use <a href="http://asg.web.cmu.edu/sasl/">SASL</a> authentication to relay mail through their systems. Many of those same hosts only want you to send mail for verified, double-opt-in squeaky clean recipients. But what if you have a subset of recipients that are not verified, and you want to continue sending mail to those yourself?
+</p>
+
+<p>
+Seven (!) years ago, I covered <a href="http://bitkickers.blogspot.com/2005/10/postifx-header-based-routing.html">basic content based routing</a> in Postfix. You can use that same mechanism to route mail based on a custom header that you've inserted into your mail that designates a particular message as verified.
+</p>
+
+<p>
+For example, from Python you might do the following in your application server code.
+</p>
+
+<pre name="code" class="python">
+from django.core.mail get_connection
+from django.core.mail EmailMessage
+
+def send_message(to_user, from_addr, subject, body):
+    connection = get_connection()
+    headers = {"X-Recipient-Verified": to_user.is_verified}
+    message = EmailMessage(
+        subject, body, from_addr, [to_user.email],
+        connection=connection, headers=headers)
+    message.send()
+</pre>
+
+<p>
+To configure Postfix, you just need to add a header_checks file. This particular class of emails will get routed through SendGrid.
+</p>
+
+<pre name="code" class="bash">
+# /etc/postfix/header_checks
+/^X-Recipient-Verified: True$/ FILTER smtp:[smtp.sendgrid.net]:587
+</pre>
+
+<p>
+In your Postfix main.cf config file, you need to point to the header_checks file, and provide the boilerplate SendGrid SASL config.
+</p>
+
+<pre name="code" class="bash">
+# /etc/postfix/main.cf
+
+header_checks = regexp:/etc/postfix/header_checks
+
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/smtp_sasl_password_maps
+smtp_sasl_security_options = noanonymous
+smtp_tls_security_level = may
+header_size_limit = 4096000
+</pre>
+
+<p>
+Where this config differs from the <a href="http://docs.sendgrid.com/documentation/get-started/integrate/examples/postfix/">SendGrid documentation</a> is the smtp_sasl_password_maps setting. They suggest you get started by using the static mapping. This works fine as long as you're ONLY sending through SendGrid. But in our case, we need to enable SASL conditionally.
+</p>
+
+<p>
+To do this, we need another external file, smtp_sasl_password_maps. The key here is that if there is no hostname match in the SASL password map, then it proceeded <a href="http://www.postfix.org/postconf.5.html#smtp_sasl_password_maps">without authentication</a>.
+</p>
+
+<pre name="code" class="bash">
+# /etc/postfix/smtp_sasl_password_maps
+[smtp.sendgrid.net]:587 yourSendgridUsername:yourSendgridPassword
+</pre>
+
+<p>
+Then, you need to compile the text file smtp_sasl_password_maps into a binary smtp_sasl_password_maps.db, and restart postfix.
+</p>
+
+<pre name="code" class="bash">
+postmap /etc/postfix/smtp_sasl_password_maps
+service postfix restart
+</pre>
+
+<p>
+If you <a href="http://serverfault.com/questions/347842/postfix-sasl-auth-only-for-fallback-relay/409335#409335">fail to disable SASL</a> for non-SendGrid relays, you will likely find that while mail to large hosts like gmail is fine, mail to smaller hosts that do not support SASL will fail:
+</p>
+
+<pre name="code" class="bash">
+deferred (SASL authentication failed: server mail.example.com[1.2.3.4] offered no compatible authentication mechanisms for this type of connection security)
+</pre>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#postfix" class="page__taxonomy-item p-category" rel="tag">postfix</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2012-07-19-postfix-only-enable-sasl-for-some-relays.html">_posts/2012-07-19-postfix-only-enable-sasl-for-some-relays.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2012-07-19T00:00:00+00:00">July 19, 2012</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2012/07/13/pydev-colorscheme-for-gvim.html" class="pagination--pager" title="pydev colorscheme for gvim">Previous</a>
+    
+    
+      <a href="/blog/2012/07/27/faster-django-view-unit-tests-with-mocks.html" class="pagination--pager" title="Faster Django view unit tests with mocks">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

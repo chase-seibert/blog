@@ -1,0 +1,466 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Hadoop from a Python Perspective - Chase Seibert Blog</title>
+<meta name="description" content="I’m just coming off a project where we decided to use Hadoop for the first time. We’re a Python shop developing an analytics feature. We have about 150m records we need to analyze daily, or approx 20GB of data. Even in our initial discussions, we knew that we could do this with our existing stack of Python and MySQL. But we wanted to “get our feet wet” with Hadoop, and gain some experience with it to see if we could make use of it more broadly.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Hadoop from a Python Perspective">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/06/21/hadoop-from-a-python-perspective.html">
+
+
+  <meta property="og:description" content="I’m just coming off a project where we decided to use Hadoop for the first time. We’re a Python shop developing an analytics feature. We have about 150m records we need to analyze daily, or approx 20GB of data. Even in our initial discussions, we knew that we could do this with our existing stack of Python and MySQL. But we wanted to “get our feet wet” with Hadoop, and gain some experience with it to see if we could make use of it more broadly.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Hadoop from a Python Perspective">
+  <meta name="twitter:description" content="I’m just coming off a project where we decided to use Hadoop for the first time. We’re a Python shop developing an analytics feature. We have about 150m records we need to analyze daily, or approx 20GB of data. Even in our initial discussions, we knew that we could do this with our existing stack of Python and MySQL. But we wanted to “get our feet wet” with Hadoop, and gain some experience with it to see if we could make use of it more broadly.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/06/21/hadoop-from-a-python-perspective.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-06-21T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/06/21/hadoop-from-a-python-perspective.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Hadoop from a Python Perspective">
+    <meta itemprop="description" content="I’m just coming off a project where we decided to use Hadoop for the first time. We’re a Python shop developing an analytics feature. We have about 150m records we need to analyze daily, or approx 20GB of data. Even in our initial discussions, we knew that we could do this with our existing stack of Python and MySQL. But we wanted to “get our feet wet” with Hadoop, and gain some experience with it to see if we could make use of it more broadly.">
+    <meta itemprop="datePublished" content="2013-06-21T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/06/21/hadoop-from-a-python-perspective.html" itemprop="url">Hadoop from a Python Perspective
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>I’m just coming off a project where we decided to use Hadoop for the first time. We’re a Python shop developing an analytics feature. We have about 150m records we need to analyze daily, or approx 20GB of data. Even in our initial discussions, we knew that we could do this with our existing stack of Python and MySQL. But we wanted to “get our feet wet” with Hadoop, and gain some experience with it to see if we could make use of it more broadly.</p>
+
+<blockquote>
+  <p>Big data is like teenage sex: everyone talks about it, nobody really knows how to do it, everyone thinks everyone else is doing it, so everyone claims they are doing it… - <a href="https://www.facebook.com/dan.ariely/posts/904383595868?imm_mid=0a9701&amp;cmp=em-strata-newsletters-strata-olc-20130529-elist">Dan Ariely</a></p>
+</blockquote>
+
+<p>We actually did get everything working with a stack of HBase/Sqoop/Hive. But we were so unhappy with a number of aspects of the solution that we’re currently going back and re-implementing in Python/MySQL. So what did we learn?</p>
+
+<h2 id="hadoophbase-are-not-general-purpose">Hadoop/HBase are not general purpose</h2>
+
+<p>As should be obvious from even a cursory reading of the documentation, Hadoop HDFS itself is not a general purpose random access system. That’s was HBase is for. But even then, you’re gaining scalability of bulk writes and reads, but losing flexibility in the form of fast deletes and updates, as well as real-time sorting. You also end up having to denormalize your data once for every read pattern you will have. Having worked for so long with relational databases, you tend to take for granted all of the flexibility they give you to change your requirements on the fly. SQL is down-right magical for data sets up to a fairly large size like 1TB.</p>
+
+<p>Don’t give up one of the most valuable tools in your toolbox until you absolutely have to. I would go as far as to say if you have a big data problem, you’ll know it because it’s crushing your servers and you have already spent months optimizing. Until then, avoid Hadoop.</p>
+
+<blockquote>
+  <p>It’s likely that you simply have “large data,” which practically every company has. Large data - and even most big data right now - can be analyzed and visualized in real time using BI software like arcplan without the need to invest in in-memory appliances like SAP HANA, massive data warehouses like Teradata, NoSQL databases like Cassandra, and distributed processing like Hadoop. - <a href="http://biblog.arcplan.com/2012/12/why-im-not-impressed-with-your-big-data/">Tiemo Winterkamp</a></p>
+</blockquote>
+
+<h2 id="you-cant-avoid-java">You can’t avoid Java</h2>
+
+<p>I’ve worked with Java a lot in the past, and I made an explicit decision to re-orient my career more towards Python. I could list a dozen reasons why, but it all boils down to this: I personally find working with Python to be a joy, while working with Java always felt like work. With that in mind, you shouldn’t delude yourself into thinking that you can treat Hadoop like a black box.</p>
+
+<p>In theory you can just talk to HBase and kick off Hive jobs via their respective thrift clients. In practice, you end up having to deploy the services themselves, which is fairly complicated even with good distributions like Cloudera. You will also end up tuning JVM parameters and hunting through I-shit-you-not hundred line <code class="language-plaintext highlighter-rouge">CLASSPATH</code> declarations. You will end up Googling for that one JAR that you just can’t seem to find, and then decompressing it to make sure it really is the exact version you need.</p>
+
+<p>You will watch everything crash and burn because of a .01 version discrepancy between two dependencies you’re only notionally aware of. And you will find yourself staring at a 1,000 line stacktrace that tells you absolutely nothing about what the actual problem is. Don’t say I didn’t warn you.</p>
+
+<h2 id="you-cant-avoid-mapreduce-either">You can’t avoid MapReduce, either</h2>
+
+<p>Don’t think you can get away with exclusively using Hive or Pig for your map reduce jobs. Firstly, even if you could, the best case scenario is that you end up with either pig of hql scripts. Those are fairly ugly looking pieces of code, especially the pig scripts. They provide a decent abstraction layer, but not enough that you could put an actual Python abstraction layer on top of them without losing all their functionality. They are also not testable outside a JVM, so be prepared to implement a new stack of continuous integrations tests.</p>
+
+<p>Pig does have some Python interoperability. You can write custom UDFs in Python, and they will run via Jython in your map reduce jobs. But that only gives you very basic extensions. There are whole classes of UDFs that can only be written in Java.</p>
+
+<p>Hive, while pretty cool, is also missing a lot of basic operations. For example, there is currently no way to compute a running total without <a href="https://issues.apache.org/jira/browse/HIVE-2361">a custom UDF</a>. Implementing one is non-trivial; we’re talking thousands of lines of Java code, during which you have to fully comprehend the way map reduce works. Suddenly your map reduce abstraction isn’t so abstract.</p>
+
+<h2 id="hadoop-is-still-maturing">Hadoop is still maturing</h2>
+
+<p>Hadoop itself is fairly tricky to deploy. It’s also still a work in progress. Even minor version changes can still break things in spectacular fashion. Definitely use Cloudera, but don’t expect a turn-key deployment. You should expect to invest in at least a dozen physical machines or VMs to get started. In fact, if you’re not willing to eventually run tens or hundreds of machines in a cluster, you probably don’t really need Hadoop.</p>
+
+<p>Be prepared to spend at least some time on reliability issues. Like anything, new infrastructure can be flaky and will go down regularly until you work out all the kinks. For that reason, I would not recommend having anything user facing directly hitting HBase.</p>
+
+<h2 id="trust-your-gut">Trust your gut</h2>
+
+<blockquote>
+  <p>You don’t have a Big Data problem. - <a href="http://www.brentozar.com/archive/2013/03/you-dont-have-a-big-data-problem/">Brent Ozar</a></p>
+</blockquote>
+
+<p>Double and triple check that you really need a big data solution. Until then, you’re  better off with a traditional stack. If you think you can deliver a solution using Python + MySQL, do that. Leverage the “magic” of a relational database. Don’t under-value the loss of data integrity, flexibility, tooling, testability and maintainability of your existing stack.</p>
+
+<p>If you do end up with a big data infrastructure project, at least take a look at some of the newer Python native solutions. Also, think about doing a pure research/prototyping spike before you try to deliver a new feature AND a new infrastructure together.</p>
+
+<blockquote>
+  <p>A recent Microsoft research investigation facetiously titled ‘No one ever got fired for using Hadoop on a cluster’ found misguided Hadoop installations both at their company and at Yahoo!,  processing less than 14G of data.  The paper concludes by advising analysts to not go through the Hadoop hoops until your data size passes standard hard drive limits (currently around 1 Terabyte) or at least reasonable memory limits (512 GB). - <a href="http://www.wired.com/insights/2012/11/lets-talk-your-data-not-big-data/">Dave Fowler</a></p>
+</blockquote>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#hadoop" class="page__taxonomy-item p-category" rel="tag">hadoop</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#hbase" class="page__taxonomy-item p-category" rel="tag">hbase</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-06-21-hadoop-from-a-python-perspective.md">_posts/2013-06-21-hadoop-from-a-python-perspective.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-06-21T00:00:00+00:00">June 21, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/06/07/sqoop-quickstart.html" class="pagination--pager" title="Sqoop/HBase Quickstart on Linux">Previous</a>
+    
+    
+      <a href="/blog/2013/06/28/Google-charts-bars-with-bootstrap.html" class="pagination--pager" title="Fixing styling incompatibility with Google Charts and Twitter Bootstrap">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

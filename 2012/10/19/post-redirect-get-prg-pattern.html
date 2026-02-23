@@ -1,0 +1,454 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>The Post/Redirect/Get (PRG) Pattern - Chase Seibert Blog</title>
+<meta name="description" content="Anyone who has used a web browser has probably encountered the dreaded “form resubmission” dialog. This happens when the user tries to refresh or use the back button to navigate back to a HTTP POST.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="The Post/Redirect/Get (PRG) Pattern">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2012/10/19/post-redirect-get-prg-pattern.html">
+
+
+  <meta property="og:description" content="Anyone who has used a web browser has probably encountered the dreaded “form resubmission” dialog. This happens when the user tries to refresh or use the back button to navigate back to a HTTP POST.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="The Post/Redirect/Get (PRG) Pattern">
+  <meta name="twitter:description" content="Anyone who has used a web browser has probably encountered the dreaded “form resubmission” dialog. This happens when the user tries to refresh or use the back button to navigate back to a HTTP POST.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2012/10/19/post-redirect-get-prg-pattern.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2012-10-19T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2012/10/19/post-redirect-get-prg-pattern.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="The Post/Redirect/Get (PRG) Pattern">
+    <meta itemprop="description" content="Anyone who has used a web browser has probably encountered the dreaded “form resubmission” dialog. This happens when the user tries to refresh or use the back button to navigate back to a HTTP POST.">
+    <meta itemprop="datePublished" content="2012-10-19T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2012/10/19/post-redirect-get-prg-pattern.html" itemprop="url">The Post/Redirect/Get (PRG) Pattern
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Anyone who has used a web browser has probably encountered the dreaded “form resubmission” dialog. This happens when the user tries to refresh or use the back button to navigate back to a HTTP POST.</p>
+
+<p><img src="/blog/images/resubmit_ie.png" alt="Internet Explorer resubmit form dialog" />
+<img src="/blog/images/resubmit_chrome.png" alt="Chrome resubmit form dialog" />
+<img src="/blog/images/resubmit_firefox.jpeg" alt="Firefox resubmit form dialog" /></p>
+
+<p>A typical case where you might see this is when checking out from a web store. Maybe you have one page that takes your shipping address, and a second page that takes your billing information. The first page submits your data with an HTTP POST, and then returns a 200 response with the payment details form HTML. If the user hits the back button in their browser, or tries to refresh the second page, they will see one of the above dialogs.</p>
+
+<p>To the typical user, such a dialog is absolutely terrifying. Even if they know what it means, there is no clearly correct course of action. If they hit “Ok”, they may be creating <a href="http://en.wikipedia.org/wiki/Post/Redirect/Get">duplicate</a> shipping address records. Or maybe it’s just updating the one they already submitted. Or maybe it will just throw an error saying they can’t submit this form again. There is no way to be sure; they don’t know how it’s implemented on the server.</p>
+
+<p>If they hit cancel, they will be greeted with an even more obscure blank browser page. Hitting back forward again will prompt them with yet another resubmit form dialog!</p>
+
+<h1 id="the-prg-pattern">The PRG Pattern</h1>
+
+<p>To avoid this usability issue, you want to try to keep POST events out of the browser history. Conveniently, there there is a mechanism for this that all the browsers respect. <strong>If a HTTP POST returns a HTTP 302 redirect, only the location of the redirect will be stored in the browser history.</strong> Hitting the back button will skip over the POST, and the user can bounce freely between the first and second forms.</p>
+
+<h1 id="bad-code">Bad code</h1>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">view_record</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">record_id</span><span class="p">):</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Record</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">record_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">"POST"</span><span class="p">:</span>
+        <span class="n">record</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+        <span class="n">record</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render_to_response</span><span class="p">(</span><span class="s">"page.html"</span><span class="p">,</span> <span class="nb">locals</span><span class="p">())</span></code></pre></figure>
+
+<h1 id="good-code">Good code</h1>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">view_record</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">record_id</span><span class="p">):</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Record</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">record_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">"POST"</span><span class="p">:</span>
+        <span class="n">record</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+        <span class="n">record</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">"view_record"</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">record_id</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">render_to_response</span><span class="p">(</span><span class="s">"page.html"</span><span class="p">,</span> <span class="nb">locals</span><span class="p">())</span></code></pre></figure>
+
+<h1 id="caveats">Caveats</h1>
+
+<ul>
+  <li>This only affects full page refreshes, Ajax calls are unaffected.</li>
+  <li>In practice, this may sometimes require you to temporarily save state when otherwise you would not. For example, in multi-step forms. In those cases, you can often save the data safely in the <a href="http://www.theserverside.com/news/1365146/Redirect-After-Post">session scope</a>.</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#prg" class="page__taxonomy-item p-category" rel="tag">prg</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#view" class="page__taxonomy-item p-category" rel="tag">view</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2012-10-19-post-redirect-get-prg-pattern.md">_posts/2012-10-19-post-redirect-get-prg-pattern.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2012-10-19T00:00:00+00:00">October 19, 2012</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2012/09/07/what-to-spend-your-last-two-weeks-at-a-job-doing.html" class="pagination--pager" title="What to spend your last two weeks at a job doing">Previous</a>
+    
+    
+      <a href="/blog/2012/10/26/django-log-shell-and-dbshell.html" class="pagination--pager" title="Django Log Shell And Dbshell">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

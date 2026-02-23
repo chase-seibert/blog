@@ -1,0 +1,457 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Using Access-Control-Allow-Origin to make cross domain POST requests from javsacript - Chase Seibert Blog</title>
+<meta name="description" content="Making ajax calls from javascript, even without a framework like jQuery, is pretty trivial. However, once you try to make the same request cross-domain, it gets hard fast. This is due to the security model all modern browsers use, known as the same origin policy. This policy makes sense in a lot of ways, but it&#39;s also somewhat broken and antiquated on the web today.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Using Access-Control-Allow-Origin to make cross domain POST requests from javsacript">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2012/01/27/using-access-control-allow-origin-to-make-cross-domain-post-requests-from-javsacript.html">
+
+
+  <meta property="og:description" content="Making ajax calls from javascript, even without a framework like jQuery, is pretty trivial. However, once you try to make the same request cross-domain, it gets hard fast. This is due to the security model all modern browsers use, known as the same origin policy. This policy makes sense in a lot of ways, but it&#39;s also somewhat broken and antiquated on the web today.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Using Access-Control-Allow-Origin to make cross domain POST requests from javsacript">
+  <meta name="twitter:description" content="Making ajax calls from javascript, even without a framework like jQuery, is pretty trivial. However, once you try to make the same request cross-domain, it gets hard fast. This is due to the security model all modern browsers use, known as the same origin policy. This policy makes sense in a lot of ways, but it&#39;s also somewhat broken and antiquated on the web today.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2012/01/27/using-access-control-allow-origin-to-make-cross-domain-post-requests-from-javsacript.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2012-01-27T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2012/01/27/using-access-control-allow-origin-to-make-cross-domain-post-requests-from-javsacript.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Using Access-Control-Allow-Origin to make cross domain POST requests from javsacript">
+    <meta itemprop="description" content="Making ajax calls from javascript, even without a framework like jQuery, is pretty trivial. However, once you try to make the same request cross-domain, it gets hard fast. This is due to the security model all modern browsers use, known as the same origin policy. This policy makes sense in a lot of ways, but it&#39;s also somewhat broken and antiquated on the web today.">
+    <meta itemprop="datePublished" content="2012-01-27T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2012/01/27/using-access-control-allow-origin-to-make-cross-domain-post-requests-from-javsacript.html" itemprop="url">Using Access-Control-Allow-Origin to make cross domain POST requests from javsacript
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+Making ajax calls from javascript, even without a framework like jQuery, is pretty trivial. However, once you try to make the same request cross-domain, it gets hard fast. This is due to the security model all modern browsers use, known as the <a href="http://en.wikipedia.org/wiki/Same_origin_policy">same origin policy</a>. This policy makes sense in a lot of ways, but it's also somewhat broken and antiquated on the web today.
+</p>
+
+<p>
+Why might you want to make cross domain requests? Just take a look at some examples:
+</p>
+
+<ul>
+<li>Google Analytics sends metrics from your page to their central servers.</li>
+<li><a href="http://www.housingmaps.com/">HousingMaps</a>, a mashup of craigslist and GoogleMaps.</li>
+<li>The <a href="http://www.instapaper.com/extras">Read Later</a> Instapaper bookmarklet.</li>
+</ul>
+
+<p>
+For cross domain ajax requests, the same origin policy is "broken" in the sense that there have been work-arounds available for a years. First there were <a href="http://ajaxpatterns.org/Cross-Domain_Proxy">proxy pages</a>, where you wrap a remote URL in a page being served by the site the user is actually on. The proxy requires that you be in control of the page the user is on. Then there was a <a href="http://softwareas.com/cross-domain-communication-with-iframes">dual IFRAME hack</a>, but that requires that you be in control of both ends.
+</p>
+
+<p>
+Recently, <a href="http://www.ibm.com/developerworks/library/wa-aj-jsonp1">JSONP</a> has emerged as a standard
+to allow cross domain requests. It's something of a hack that works by returning an executable javascript function from a script tag request. It also exposes you to potential javascript injection vulnerabilities if you are not in control of the remote host. On the plus side, it's provided seamlessly as a <a href="http://api.jquery.com/jQuery.getJSON/">feature in recent jQuery</a> versions.
+</p>
+
+<p>
+Luckily, there is a true standard emerging that's not built on top of a hack. In 2004, the W3C started work on a draft called Cross-Origin Resource Sharing (CORS). In 2009, <a href="https://developer.mozilla.org/En/HTTP_access_control">Mozilla</a> was the first browser to implement support for CORS. Currently Chrome also supports it. It allows a HTTP server to set some new headers that tell the browser to modify its same origin policy.
+</p>
+
+<p>
+For example, the following <a href="http://stackoverflow.com/questions/298745/how-do-i-send-a-cross-domain-post-request-via-javascript">Django code</a> with allow an ajax request from another domain to your server.
+</p>
+
+<pre name="code" class="python">
+def myview(_request):
+    response = HttpResponse(json.dumps({&quot;key&quot;: &quot;value&quot;, &quot;key2&quot;: &quot;value&quot;}))
+    response[&quot;Access-Control-Allow-Origin&quot;] = &quot;*&quot;
+    response[&quot;Access-Control-Allow-Methods&quot;] = &quot;POST, GET, OPTIONS&quot;
+    response[&quot;Access-Control-Max-Age&quot;] = &quot;1000&quot;
+    response[&quot;Access-Control-Allow-Headers&quot;] = &quot;*&quot;
+    return response
+</pre>
+
+<p>
+In typical fashion, Microsoft went ahead and implemented their own incompatible version of the same thing, which they call <a href="http://msdn.microsoft.com/en-us/library/ie/cc288060(v=vs.85).aspx">XDR</a>. If you're masochistic, you can try to use it. Otherwise, you can wait until IE10 when <a href="http://blogs.msdn.com/b/ie/archive/2011/11/29/html5-for-applications-the-fourth-ie10-platform-preview.aspx">they will support CORS</a>, too.
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#javascript" class="page__taxonomy-item p-category" rel="tag">javascript</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#security" class="page__taxonomy-item p-category" rel="tag">security</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2012-01-27-using-access-control-allow-origin-to-make-cross-domain-post-requests-from-javsacript.html">_posts/2012-01-27-using-access-control-allow-origin-to-make-cross-domain-post-requests-from-javsacript.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2012-01-27T00:00:00+00:00">January 27, 2012</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2012/01/20/python-class-attributes-are-evaluated-on-declaration.html" class="pagination--pager" title="Python class attributes are evaluated on declaration">Previous</a>
+    
+    
+      <a href="/blog/2012/02/03/jquery-remove-script-tags-from-a-string-of-html.html" class="pagination--pager" title="jQuery: remove (script) tags from a string of html">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

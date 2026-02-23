@@ -1,0 +1,504 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Happybase Connection Pooling - Chase Seibert Blog</title>
+<meta name="description" content="Wrote a simple connection pool for Happybase using socketpool.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Happybase Connection Pooling">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/05/03/happybase-connection-pooling.html">
+
+
+  <meta property="og:description" content="Wrote a simple connection pool for Happybase using socketpool.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Happybase Connection Pooling">
+  <meta name="twitter:description" content="Wrote a simple connection pool for Happybase using socketpool.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/05/03/happybase-connection-pooling.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-05-03T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/05/03/happybase-connection-pooling.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Happybase Connection Pooling">
+    <meta itemprop="description" content="Wrote a simple connection pool for Happybase using socketpool.">
+    <meta itemprop="datePublished" content="2013-05-03T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/05/03/happybase-connection-pooling.html" itemprop="url">Happybase Connection Pooling
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Wrote a simple connection pool for <a href="https://github.com/wbolster/happybase">Happybase</a> using <a href="https://pypi.python.org/pypi/socketpool">socketpool</a>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">happybase</span>
+<span class="kn">from</span> <span class="nn">socketpool</span> <span class="kn">import</span> <span class="n">ConnectionPool</span>
+<span class="kn">from</span> <span class="nn">socketpool.conn</span> <span class="kn">import</span> <span class="n">TcpConnector</span>
+
+
+<span class="k">class</span> <span class="nc">HappybaseConnectionPool</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">''' singleton to share a connection pool per process '''</span>
+
+    <span class="n">_instance</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cls</span><span class="p">.</span><span class="n">_instance</span><span class="p">:</span>
+            <span class="n">cls</span><span class="p">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">HappybaseConnectionPool</span><span class="p">,</span> <span class="n">cls</span><span class="p">).</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">.</span><span class="n">_instance</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="n">options</span><span class="p">[</span><span class="s">'host'</span><span class="p">]</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">'pool'</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">ConnectionPool</span><span class="p">(</span>
+                <span class="n">factory</span><span class="o">=</span><span class="n">HappybaseConnector</span><span class="p">,</span>
+                <span class="n">max_size</span><span class="o">=</span><span class="n">options</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'max_size'</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool</span><span class="p">.</span><span class="n">connection</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="o">@</span><span class="n">contextlib</span><span class="p">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool</span><span class="p">.</span><span class="n">connection</span><span class="p">()</span> <span class="k">as</span> <span class="n">connector</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">connector</span><span class="p">.</span><span class="n">table</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">HappybaseConnector</span><span class="p">(</span><span class="n">TcpConnector</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">happybase</span><span class="p">.</span><span class="n">Connection</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_connected</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c1"># use a 'jiggle' value to make sure there is some
+</span>        <span class="c1"># randomization to expiry, to avoid many conns expiring very
+</span>        <span class="c1"># closely together.
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">_life</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="n">pool</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">logging</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'logging'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">_connected</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">connection</span><span class="p">.</span><span class="n">transport</span><span class="p">.</span><span class="n">isOpen</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># isOpen is unreliable, actually try to do something
+</span>                <span class="bp">self</span><span class="p">.</span><span class="n">connection</span><span class="p">.</span><span class="n">tables</span><span class="p">()</span>
+                <span class="k">return</span> <span class="bp">True</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">handle_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">logging</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">logging</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">exception</span>
+
+    <span class="k">def</span> <span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">connection</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_connected</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_life</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">release</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'table'</span><span class="p">,</span> <span class="s">'tables'</span><span class="p">,</span> <span class="s">'create_table'</span><span class="p">,</span> <span class="s">'delete_table'</span><span class="p">,</span>
+                <span class="s">'enable_table'</span><span class="p">,</span> <span class="s">'disable_table'</span><span class="p">,</span> <span class="s">'is_table_enabled'</span><span class="p">,</span> <span class="s">'compact_table'</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></code></pre></figure>
+
+<p>You can get a single pool object from anywhere in your stack with the following:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pool</span> <span class="o">=</span> <span class="n">HappybaseConnectionPool</span><span class="p">(</span><span class="s">'localhost'</span><span class="p">,</span> <span class="s">'9090'</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">pool</span><span class="p">.</span><span class="n">connection</span><span class="p">()</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+     <span class="n">connection</span><span class="p">.</span><span class="n">create_table</span><span class="p">(</span><span class="s">'foobar'</span><span class="p">)</span></code></pre></figure>
+
+<p>Note: happybase may be adding their <a href="https://github.com/wbolster/happybase/issues/21">own connection pool</a> shortly.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#hbase" class="page__taxonomy-item p-category" rel="tag">hbase</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-05-03-happybase-connection-pooling.md">_posts/2013-05-03-happybase-connection-pooling.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-05-03T00:00:00+00:00">May 3, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/04/26/hbase-schema-design.html" class="pagination--pager" title="HBase Schema Introduction for Programmers">Previous</a>
+    
+    
+      <a href="/blog/2013/05/10/hive-hbase-quickstart.html" class="pagination--pager" title="Hive with HBase Quickstart">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,533 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Getting Started with Sphinx docs - Chase Seibert Blog</title>
+<meta name="description" content="Everyone knows that you should write documentation for your code. Writing documentation actually is not that hard. Like any type of writing, the hardest part is beginning. So how do you begin writing documentation for your Python projects?">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Getting Started with Sphinx docs">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2015/08/14/getting-started-with-sphinx.html">
+
+
+  <meta property="og:description" content="Everyone knows that you should write documentation for your code. Writing documentation actually is not that hard. Like any type of writing, the hardest part is beginning. So how do you begin writing documentation for your Python projects?">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Getting Started with Sphinx docs">
+  <meta name="twitter:description" content="Everyone knows that you should write documentation for your code. Writing documentation actually is not that hard. Like any type of writing, the hardest part is beginning. So how do you begin writing documentation for your Python projects?">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2015/08/14/getting-started-with-sphinx.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2015-08-14T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2015/08/14/getting-started-with-sphinx.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Getting Started with Sphinx docs">
+    <meta itemprop="description" content="Everyone knows that you should write documentation for your code. Writing documentation actually is not that hard. Like any type of writing, the hardest part is beginning. So how do you begin writing documentation for your Python projects?">
+    <meta itemprop="datePublished" content="2015-08-14T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2015/08/14/getting-started-with-sphinx.html" itemprop="url">Getting Started with Sphinx docs
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Everyone knows that you should write documentation for your code. Writing documentation actually is not that hard. Like any type of writing, the hardest part is beginning. So how do you begin writing documentation for your Python projects?</p>
+
+<h1 id="enter-sphinx">Enter Sphinx</h1>
+
+<p><a href="http://sphinx-doc.org/">Sphinx</a> is the de-facto standard in the Python community for generating documentation for your projects. It’s simple to create HTML/PDF files with code samples, tables of contents, and built in search. Many popular projects host their Sphinx docs on <a href="https://readthedocs.org/">readthedocs.org</a>. A couple of good examples are <a href="http://celery.readthedocs.org/en/latest/getting-started/first-steps-with-celery.html#application">celery</a> and <a href="http://flask.readthedocs.org/en/latest/quickstart/">flask</a>.</p>
+
+<p>One of the key feature of Sphinx is that it allows you to generate as much of the documentation as possible from comments in your Python code. It can also automatically pull the signatures of your modules, classes, functions and methods. Together, these features allow you to keep most of your documentation up to date automatically. Of course, you will also want to write higher level pages on specific topics, and you can easily define those in either <a href="http://daringfireball.net/projects/markdown/">Markdown</a> or <a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>, both of which render as rich text when viewed directly in your GitHub repository.</p>
+
+<h1 id="quickstart">Quickstart</h1>
+
+<p>First, you need to install Sphinx. Then you run their quickstart command, which prompts you for configuration options. You’re pretty safe use the defaults in most cases. <strong>The only sphinx-quickstart options I typically customize are enabling autodoc and using “docs” as the project root.</strong></p>
+
+<p>Here are the basic console commands. You would run these from inside your project root.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>pip <span class="nb">install </span>sphinx
+sphinx-quickstart
+<span class="nb">cd </span>docs
+make html
+open _build/html/index.html
+</code></pre></div></div>
+
+<p>This will be sufficient to get a basic HTML document. Typically my next steps will be to integrated with my project README, and configure autodoc to find my code.</p>
+
+<h1 id="update-your-readme">Update your README</h1>
+
+<p>I usually have my READMEs defined in Markdown, but for the purposes of Sphinx I think it’s worth it to switch to reStructuredText, simply so that you can include the README as the first page of your docs. reStructuredText is pretty simple, here is a quick example of a <code class="language-plaintext highlighter-rouge">README.rst</code> to get you started.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">===========================================</span>
+ IPython: Productive Interactive Computing
+<span class="o">===========================================</span>
+
+Overview
+<span class="o">========</span>
+
+Welcome to IPython.  Our full documentation is available on <span class="sb">`</span>our website
+&lt;http://ipython.org/documentation.html&gt;<span class="sb">`</span>_<span class="p">;</span> <span class="k">if </span>you downloaded a built <span class="nb">source
+</span>distribution the <span class="sb">``</span>docs/source<span class="sb">``</span> directory contains the plaintext version of
+these manuals.  If you have Sphinx installed, you can build them by typing
+<span class="sb">``</span><span class="nb">cd </span>docs<span class="p">;</span> make html<span class="sb">``</span> <span class="k">for </span><span class="nb">local </span>browsing.
+
+Instant running
+<span class="o">===============</span>
+
+You can run IPython from this directory without even installing it system-wide
+by typing at the terminal::
+
+   python <span class="nt">-m</span> IPython
+</code></pre></div></div>
+
+<p>This example illustrates how to format titles, subtitles, links, inline code and code blocks.</p>
+
+<h1 id="include-the-readmerst-in-your-docs">Include the README.rst in your docs</h1>
+
+<p>Edit your <code class="language-plaintext highlighter-rouge">docs/index.rst</code> file to include the README:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.. include:: ../README.rst
+</code></pre></div></div>
+
+<p>If that’s all that’s in your index file, and you run <code class="language-plaintext highlighter-rouge">make html</code> again, you should see your README contents.</p>
+
+<h1 id="break-out-into-more-than-one-file">Break out into more than one file</h1>
+
+<p>Next, we will start breaking out our documentation into multiples files. Simply create a new reStructuredText file along side <code class="language-plaintext highlighter-rouge">index.rst</code>. You can call it anything, for example <code class="language-plaintext highlighter-rouge">example.rst</code>. You can then include this file in your index like so:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.. include:: ../README.rst
+
+Read More
+<span class="nt">---------</span>
+
+.. toctree::
+   :maxdepth: 2
+
+   example
+</code></pre></div></div>
+
+<p>This tells Sphinx to render your README, followed by a subtitle of “Read More”, followed by a list of other documents, one of which is your external <code class="language-plaintext highlighter-rouge">example.rst</code> file.</p>
+
+<h1 id="start-using-autodoc">Start using autodoc</h1>
+
+<p>In that <code class="language-plaintext highlighter-rouge">example.rst</code>, you could put the following.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Some Examples
+<span class="o">=============</span>
+
+Here are some examples to get you started.
+
+.. automodule:: src.examples
+    :members:
+</code></pre></div></div>
+
+<p>This will look at your code in <code class="language-plaintext highlighter-rouge">src/examples.py</code> for classes, functions and methods. Each one will be listed in this section of the docs, along with any docstrings that where present. See the following example. All of these sections in the text are optional.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">public_fn_with_sphinxy_docstring</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="s">"""This function does something.
+
+    write as much as you want here
+
+    here is a code sample:
+
+    &gt;&gt;&gt; from example import public_fn_with_sphinxy_docstring
+    &gt;&gt;&gt; public_fn_with_sphinxy_docstring(
+    ...     'foobar',
+    ...     'pending')
+    0
+
+    :param name: The name to use.
+    :type name: str.
+    :param state: Current state to be in.
+    :type state: bool.
+    :returns:  int -- the return code.
+    :raises: AttributeError, KeyError
+    """</span>
+    <span class="k">return</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<h1 id="automating-doc-generation">Automating Doc Generation</h1>
+
+<p>If you use Jenkins for your continuous integration system, you can use the <a href="https://wiki.jenkins-ci.org/display/JENKINS/HTML+Publisher+Plugin">HTML Publisher Plugin</a> to automatically build the documentation every time you merge. It will also host the HTML for you, right in Jenkins.</p>
+
+<h1 id="references">References</h1>
+
+<ul>
+  <li><a href="https://pythonhosted.org/an_example_pypi_project/sphinx.html">Sphinx Basics</a> - Good listing of basic reStructuredText syntax for Spinx</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2015-08-14-getting-started-with-sphinx.md">_posts/2015-08-14-getting-started-with-sphinx.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2015-08-14T00:00:00+00:00">August 14, 2015</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2015/07/24/custom-celery-arguments.html" class="pagination--pager" title="Customizing Celery with Task Arguments">Previous</a>
+    
+    
+      <a href="/blog/2015/09/11/virtual-env-osx.html" class="pagination--pager" title="Per-OS virtual environments in Python">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

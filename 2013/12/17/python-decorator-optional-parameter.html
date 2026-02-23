@@ -1,0 +1,641 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Writing a Python decorator that can be called as a function or a callable - Chase Seibert Blog</title>
+<meta name="description" content="A Python decorator wraps a function with another function. Classing examples are a @cache decorator or a @log decorator, which call the wrapped function and either cache its results or log the fact that it was called, respectively. Decorators can be implemented as functions or as classes; they just need to be callable.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Writing a Python decorator that can be called as a function or a callable">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/12/17/python-decorator-optional-parameter.html">
+
+
+  <meta property="og:description" content="A Python decorator wraps a function with another function. Classing examples are a @cache decorator or a @log decorator, which call the wrapped function and either cache its results or log the fact that it was called, respectively. Decorators can be implemented as functions or as classes; they just need to be callable.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Writing a Python decorator that can be called as a function or a callable">
+  <meta name="twitter:description" content="A Python decorator wraps a function with another function. Classing examples are a @cache decorator or a @log decorator, which call the wrapped function and either cache its results or log the fact that it was called, respectively. Decorators can be implemented as functions or as classes; they just need to be callable.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/12/17/python-decorator-optional-parameter.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-12-17T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/12/17/python-decorator-optional-parameter.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Writing a Python decorator that can be called as a function or a callable">
+    <meta itemprop="description" content="A Python decorator wraps a function with another function. Classing examples are a @cache decorator or a @log decorator, which call the wrapped function and either cache its results or log the fact that it was called, respectively. Decorators can be implemented as functions or as classes; they just need to be callable.">
+    <meta itemprop="datePublished" content="2013-12-17T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/12/17/python-decorator-optional-parameter.html" itemprop="url">Writing a Python decorator that can be called as a function or a callable
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A <a href="http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Decorators">Python decorator</a> wraps a function with another function. Classing examples are a <code class="language-plaintext highlighter-rouge">@cache</code> decorator or a <code class="language-plaintext highlighter-rouge">@log</code> decorator, which call the wrapped function and either cache its results or log the fact that it was called, respectively. Decorators can be implemented as functions or as classes; they just need to be callable.</p>
+
+<p>Here is the basic decorator pattern. This one does nothing but prints that it was called.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">'called decorator'</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapped</span>
+
+
+<span class="o">@</span><span class="n">my_decorator</span>
+<span class="k">def</span> <span class="nf">function_to_wrap</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints 'called decorator'</span></code></pre></figure>
+
+<p>Here is an example of a <code class="language-plaintext highlighter-rouge">@cache</code> decorator implemented in this fashion (as a function). It uses Django’s caching layer as the actual cache implementation.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span> <span class="k">as</span> <span class="n">_cache</span>
+
+
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">cache_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_cache</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">_cache</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapped</span>
+
+
+<span class="o">@</span><span class="n">cache</span>
+<span class="k">def</span> <span class="nf">function_to_wrap</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255'
+</span>    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255' also (cached)</span></code></pre></figure>
+
+<p>This uses a very simplistic cache key generation scheme. It assumes that the args and kwargs that your wrapped function will be passed are all castable to strings. Django’s default <a href="https://docs.djangoproject.com/en/dev/topics/cache/#cache-key-transformation">cache key generator</a> looks like:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">make_key</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">key_prefix</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">':'</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="n">key_prefix</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">),</span> <span class="n">key</span><span class="p">])</span></code></pre></figure>
+
+<p>There are also a number of caveats. For example, Django will throw an exception if the cache key is over 250 characters. Writing your own key generation is out of the scope of this post.</p>
+
+<p>You will also notice that I’m using a <a href="http://docs.python.org/2/library/functools.html#functools.wraps">functools.wraps</a>. This ensures that when callers introspect the <code class="language-plaintext highlighter-rouge">function_to_wrap</code> function, it shows its <code class="language-plaintext highlighter-rouge">__name__</code> attribute as <code class="language-plaintext highlighter-rouge">function_to_wrap</code> and not <code class="language-plaintext highlighter-rouge">cache</code>. This is especially useful for not mucking up your logging and performance stacktraces (for example, New Relic stats).</p>
+
+<p>Here is an example of the same decorator written as a class:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span> <span class="k">as</span> <span class="n">_cache</span>
+
+
+<span class="k">class</span> <span class="nc">cache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="n">functools</span><span class="p">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">cache_key</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_cache</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">_cache</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="o">@</span><span class="n">cache</span>
+<span class="k">def</span> <span class="nf">function_to_wrap</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255'
+</span>    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255' also (cached)</span></code></pre></figure>
+
+<p>Both implementations have the same usage syntax. You just <em>decorate</em> the function definition that you want to wrap with the @ syntax.</p>
+
+<h2 id="passing-parameters">Passing Parameters</h2>
+
+<p>Sometimes you want to pass parameters to your decorators. The trick here is to add another layer of indirection and create a function that takes parameters and returns your original decorator. As you can see, the naming also gets a little mind-bending here; as we struggle to propery name what should really be anonymous functions for the callable we’re returning, and the function that defines the logic of our decorator.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span> <span class="k">as</span> <span class="n">_cache</span>
+
+
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="o">@</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_cache</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">_cache</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">seconds</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">wrapped</span>
+
+    <span class="k">return</span> <span class="nb">callable</span>
+
+
+<span class="o">@</span><span class="n">cache</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">function_to_wrap</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255'
+</span>    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span></code></pre></figure>
+
+<p>Of course, you can also do the same thing in the class style. Again, the trick is that a decorator can be a callable, <em>or return a callable</em>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span> <span class="k">as</span> <span class="n">_cache</span>
+
+
+<span class="k">class</span> <span class="nc">cache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">seconds</span> <span class="o">=</span> <span class="n">seconds</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+
+        <span class="o">@</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">callable</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_cache</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">_cache</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">seconds</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="nb">callable</span>
+
+
+<span class="o">@</span><span class="n">cache</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">function_to_wrap</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255'
+</span>    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255' also (cached)</span></code></pre></figure>
+
+<h2 id="optional-parameters">Optional Parameters</h2>
+
+<p>Now, a whole in the design of decorators, in my opinion, is that while you’re deciding to make your decorator a callable or return a callable, you may also be struggling with how to make it do both at once.</p>
+
+<p>What if I don’t want the <code class="language-plaintext highlighter-rouge">seconds</code> argument to be mandatory? With either the functional or class based implementations, you will end up using your decorator like so:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">@</span><span class="n">cache</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">function_to_wrap</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span></code></pre></figure>
+
+<p>This is just ugly. It introduces a source of errors (leaving off the <code class="language-plaintext highlighter-rouge">()</code> will throw a somewhat mysterious exception:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">TypeError</span><span class="p">:</span> <span class="n">__call__</span><span class="p">()</span> <span class="n">takes</span> <span class="n">exactly</span> <span class="mi">2</span> <span class="n">arguments</span> <span class="p">(</span><span class="mi">1</span> <span class="n">given</span><span class="p">)</span></code></pre></figure>
+
+<p>With a little ingenuity, you can have your callable and return it, too. Here is a functional decorator that can be used as <code class="language-plaintext highlighter-rouge">@cache(seconds=60)</code>, or just <code class="language-plaintext highlighter-rouge">@cache</code>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span> <span class="k">as</span> <span class="n">_cache</span>
+
+
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="n">func</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">__builtins__</span><span class="p">.</span><span class="nb">callable</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">func</span><span class="p">:</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="mi">60</span>  <span class="c1"># default values
+</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">func</span><span class="p">:</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'seconds'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">callable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="o">@</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_cache</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">_cache</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">seconds</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">wrapped</span>
+
+    <span class="k">return</span> <span class="nb">callable</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">if</span> <span class="n">func</span> <span class="k">else</span> <span class="nb">callable</span>
+
+
+<span class="o">@</span><span class="n">cache</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">function_to_wrap</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+
+<span class="o">@</span><span class="n">cache</span>
+<span class="k">def</span> <span class="nf">function_to_wrap2</span><span class="p">(</span><span class="n">bits</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255'
+</span>    <span class="k">print</span> <span class="n">function_to_wrap</span><span class="p">()</span>  <span class="c1"># prints '47141457794590517513826129394479136255' also (cached)
+</span>    <span class="k">print</span> <span class="n">function_to_wrap2</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>  <span class="c1"># prints '2202905596'
+</span>    <span class="k">print</span> <span class="n">function_to_wrap2</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>  <span class="c1"># prints '2202905596' also (cached)</span></code></pre></figure>
+
+<p>First, you decide whether your decorator has been called as a callable or not. If not, you pull out your optional parameters (and default them if needed). Then you dynamically return either your decorator or a callable. Admittedly this is pretty ugly, but the resulting API is nice and clear. I’ve also failed repeatedly to produce a class based version of this. Submissions welcome!</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-12-17-python-decorator-optional-parameter.md">_posts/2013-12-17-python-decorator-optional-parameter.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-12-17T00:00:00+00:00">December 17, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/11/15/linux-shm-faster-sqlite.html" class="pagination--pager" title="Faster Django/sqlite runserver with /dev/shm">Previous</a>
+    
+    
+      <a href="/blog/2013/12/27/dev-osx-vs-linux.html" class="pagination--pager" title="Development on a Mac versus Linux">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

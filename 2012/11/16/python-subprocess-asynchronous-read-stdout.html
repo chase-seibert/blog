@@ -1,0 +1,485 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Python Subprocess Asynchronous Read Stdout - Chase Seibert Blog</title>
+<meta name="description" content="Python has a great standard library when it comes to invoking external processes. But one weakness it does have is that it’s not easy to communicate with a subprocess while it’s running, i.e. streaming its stdout. If you look at the documentation for popen, you will repeatedly see caveats like the following from the Python docs for Popen.communicate:">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Python Subprocess Asynchronous Read Stdout">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2012/11/16/python-subprocess-asynchronous-read-stdout.html">
+
+
+  <meta property="og:description" content="Python has a great standard library when it comes to invoking external processes. But one weakness it does have is that it’s not easy to communicate with a subprocess while it’s running, i.e. streaming its stdout. If you look at the documentation for popen, you will repeatedly see caveats like the following from the Python docs for Popen.communicate:">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Python Subprocess Asynchronous Read Stdout">
+  <meta name="twitter:description" content="Python has a great standard library when it comes to invoking external processes. But one weakness it does have is that it’s not easy to communicate with a subprocess while it’s running, i.e. streaming its stdout. If you look at the documentation for popen, you will repeatedly see caveats like the following from the Python docs for Popen.communicate:">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2012/11/16/python-subprocess-asynchronous-read-stdout.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2012-11-16T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2012/11/16/python-subprocess-asynchronous-read-stdout.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Python Subprocess Asynchronous Read Stdout">
+    <meta itemprop="description" content="Python has a great standard library when it comes to invoking external processes. But one weakness it does have is that it’s not easy to communicate with a subprocess while it’s running, i.e. streaming its stdout. If you look at the documentation for popen, you will repeatedly see caveats like the following from the Python docs for Popen.communicate:">
+    <meta itemprop="datePublished" content="2012-11-16T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2012/11/16/python-subprocess-asynchronous-read-stdout.html" itemprop="url">Python Subprocess Asynchronous Read Stdout
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Python has a great standard library when it comes to invoking <a href="http://docs.python.org/2/library/subprocess.html">external processes</a>. But one weakness it does have is that it’s not easy to communicate with a subprocess while it’s running, i.e. streaming its stdout. If you look at the documentation for <code class="language-plaintext highlighter-rouge">popen</code>, you will repeatedly see caveats like the following from the Python docs for <a href="http://docs.python.org/2/library/subprocess.html#subprocess.Popen.communicate">Popen.communicate</a>:</p>
+
+<blockquote>
+  <p>Interact with process: Send data to stdin. Read data from stdout and stderr, until end-of-file is reached. <strong>Wait for process to terminate.</strong> The optional input argument should be a string to be sent to the child process, or None, if no data should be sent to the child.</p>
+</blockquote>
+
+<p>It’s actually a well known problem. There is even an open enhancement proposal <a href="http://www.python.org/dev/peps/pep-3145/">PEP 3145</a> to address it. But that is currently on track for Python 3.2. Python 2.x will never get that update.</p>
+
+<p>Hunting around, I found a pretty decent partial solution on <a href="http://stackoverflow.com/questions/375427/non-blocking-read-on-a-subprocess-pipe-in-python">Stackoverflow</a>, but it took me quite a bit to tweaking to get it to work in my case.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">fcntl</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="n">mysql_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">(</span>
+        <span class="p">[</span><span class="s">'mysql'</span><span class="p">,</span> <span class="s">'--user=%s'</span> <span class="o">%</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">'--password=%s'</span> <span class="o">%</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s">'--batch'</span><span class="p">,</span> <span class="s">'--skip-tee'</span><span class="p">,</span> <span class="s">'--skip-pager'</span><span class="p">,</span> <span class="s">'--unbuffered'</span><span class="p">]</span>
+        <span class="n">stdin</span><span class="o">=</span><span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">)</span>
+
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">log_worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">mysql_process</span><span class="p">.</span><span class="n">stdout</span><span class="p">])</span>
+    <span class="n">thread</span><span class="p">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">thread</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">mysql_process</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="n">thread</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">log_worker</span><span class="p">(</span><span class="n">stdout</span><span class="p">):</span>
+    <span class="s">''' needs to be in a thread so we can read the stdout w/o blocking '''</span>
+    <span class="n">username</span><span class="p">,</span> <span class="n">hostname</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'USER'</span><span class="p">),</span> <span class="n">socket</span><span class="p">.</span><span class="n">gethostname</span><span class="p">()</span>
+    <span class="n">log_file</span> <span class="o">=</span> <span class="s">'/var/log/mysql-%s.log'</span> <span class="o">%</span> <span class="n">username</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_file</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">non_block_read</span><span class="p">(</span><span class="n">stdout</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="s">''' [Tue Oct 30 22:13:13 2012 cseibert@host1]&gt; '''</span>
+            <span class="n">prompt</span> <span class="o">=</span> <span class="s">'[%(timestamp)s %(username)s@%(host)s]&gt; </span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">'%a %b %d %H:%M:%S %Y'</span><span class="p">),</span>
+                    <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
+                    <span class="n">host</span><span class="o">=</span><span class="n">hostname</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">prompt</span> <span class="o">+</span> <span class="n">output</span>
+            <span class="n">log</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">prompt</span> <span class="o">+</span> <span class="n">output</span> <span class="o">+</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">log</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">non_block_read</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+    <span class="s">''' even in a thread, a normal read with block until the buffer is full '''</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="n">fileno</span><span class="p">()</span>
+    <span class="n">fl</span> <span class="o">=</span> <span class="n">fcntl</span><span class="p">.</span><span class="n">fcntl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">fcntl</span><span class="p">.</span><span class="n">F_GETFL</span><span class="p">)</span>
+    <span class="n">fcntl</span><span class="p">.</span><span class="n">fcntl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">fcntl</span><span class="p">.</span><span class="n">F_SETFL</span><span class="p">,</span> <span class="n">fl</span> <span class="o">|</span> <span class="n">os</span><span class="p">.</span><span class="n">O_NONBLOCK</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">''</span></code></pre></figure>
+
+<p>As you can see, this code is invoking the <code class="language-plaintext highlighter-rouge">mysql</code> command-line client in batch mode. I’m piping a file into my python script, and then turning around and piping that into mysql. I start the mysql subprocess, but at the same time I’m spinning off a worker thread to read its output. Additionally, I’m re-opening stdout in non-blocking mode, so I don’t have to wait for a buffer to fill up before I can read a chunk.</p>
+
+<p>Then I’m reading the mysql output and writing it both to the console, and to a log file. For this application, it’s critical that the mysql output be shown on the screen as it’s running. What if there’s an exception; the user will want to terminate before it runs any further.</p>
+
+<p>Doesn’t mysql provide logging by default? Yes, but only for interactive (i.e., non-batch) sessions. From the mysql command-line tool docs:</p>
+
+<blockquote>
+  <p>By using the –tee option when you invoke mysql, you can log statements and their output. All the data displayed on the screen is appended into a given file. This can be very useful for debugging purposes also. mysql flushes results to the file after each statement, just before it prints its next prompt. <strong>Tee functionality works only in interactive mode.</strong></p>
+</blockquote>
+
+<p>One additional caveat; you need to make sure that the subprocess you are invoking is not doing its own buffering. It took me a bit to figure out that mysql does do that, which is what the <code class="language-plaintext highlighter-rouge">--unbuffered</code> flag is there to disable.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#subprocess" class="page__taxonomy-item p-category" rel="tag">subprocess</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#threads" class="page__taxonomy-item p-category" rel="tag">threads</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2012-11-16-python-subprocess-asynchronous-read-stdout.md">_posts/2012-11-16-python-subprocess-asynchronous-read-stdout.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2012-11-16T00:00:00+00:00">November 16, 2012</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2012/11/09/vim-git-mksession-per-branch.html" class="pagination--pager" title="Keep Track of Vim Tabs Per Git Branch">Previous</a>
+    
+    
+      <a href="/blog/2012/11/21/introducing-django-pyfixtures.html" class="pagination--pager" title="Introducing Django Pyfixtures">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

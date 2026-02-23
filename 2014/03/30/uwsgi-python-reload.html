@@ -1,0 +1,453 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Reload Python inside uWSGI as fast as humanely possible - Chase Seibert Blog</title>
+<meta name="description" content="The Django development web server you get when you execute ./manage.py runserver optimizes for one thing; fast hot reloading when you change your Python code. It does almost nothing else well, by design.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Reload Python inside uWSGI as fast as humanely possible">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2014/03/30/uwsgi-python-reload.html">
+
+
+  <meta property="og:description" content="The Django development web server you get when you execute ./manage.py runserver optimizes for one thing; fast hot reloading when you change your Python code. It does almost nothing else well, by design.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Reload Python inside uWSGI as fast as humanely possible">
+  <meta name="twitter:description" content="The Django development web server you get when you execute ./manage.py runserver optimizes for one thing; fast hot reloading when you change your Python code. It does almost nothing else well, by design.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2014/03/30/uwsgi-python-reload.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2014-03-30T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2014/03/30/uwsgi-python-reload.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Reload Python inside uWSGI as fast as humanely possible">
+    <meta itemprop="description" content="The Django development web server you get when you execute ./manage.py runserver optimizes for one thing; fast hot reloading when you change your Python code. It does almost nothing else well, by design.">
+    <meta itemprop="datePublished" content="2014-03-30T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2014/03/30/uwsgi-python-reload.html" itemprop="url">Reload Python inside uWSGI as fast as humanely possible
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The Django development web server you get when you execute <code class="language-plaintext highlighter-rouge">./manage.py runserver</code> optimizes for one thing; fast hot reloading when you change your Python code. It does almost nothing else well, by design.</p>
+
+<blockquote>
+  <p>DO NOT USE THIS SERVER IN A PRODUCTION SETTING. It has not gone through security audits or performance tests. (And that’s how it’s gonna stay. We’re in the business of making Web frameworks, not Web servers, so improving this server to be able to handle a production environment is outside the scope of Django.)…
+The development server automatically reloads Python code for each request, as needed. You don’t need to restart the server for code changes to take effect. -  <a href="https://docs.djangoproject.com/en/dev/ref/django-admin/#runserver-port-or-address-port">The Django Docs</a></p>
+</blockquote>
+
+<p>If you’re running <a href="http://projects.unbit.it/uwsgi/">uWSGI</a> in production, you may decide that you want to run it in development, as well. But you’ll quickly notice that by default, code is not hot-reloaded in uWSGI. You can enable that with the <a href="http://uwsgi-docs.readthedocs.org/en/latest/Options.html#py-auto-reload-py-autoreload-python-auto-reload-python-autoreload">py-autoreload setting</a>. It works by polling the code every X seconds.</p>
+
+<p>Polling is already not ideal, but the story gets even worse if your code is on a remote file system, like an NFS share. This is a common setup if your development environment is running in a VM, like <a href="http://www.vagrantup.com/">Vagrant</a>. The problem is that polling is relatively slow over NFS. It can take 10 seconds on a medium sized code base to pick up changes. This is a bummer if you’re coming from a virtually instantaneous runserver reload.</p>
+
+<p>Recent versions of uwsgi also support <a href="https://github.com/unbit/uwsgi-docs/blob/master/Changelog-1.9.14.rst#filesystem-monitoring-interface-fsmon">inotify</a> to pick up changes more quickly. But that also doesn’t work over NFS.</p>
+
+<p>The good news is that uWSGI also supports touch reloading. Basically you set a <code class="language-plaintext highlighter-rouge">touch-reload</code> file in your config, and if you do a <code class="language-plaintext highlighter-rouge">touch thatfile</code>, your Python code gets reloaded immediately. This works well over NFS because uWSGI polls that file much more quickly.</p>
+
+<p>So how can we get an OSX host machine to update the touch file in the guest Linux host every time your code changes? Basically, you can use an inotify replacement for OSX called <a href="https://github.com/alandipert/fswatch">fswatch</a>. In this case, we’re going to have it run a command to open a socket to the guest VM, and tell a custom daemon to touch the reload file.</p>
+
+<p>First, you need to install fswatch locally.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">brew <span class="nb">install </span>fswatch</code></pre></figure>
+
+<p>Then, fork off a process watching your code directory, and pinging the remote daemon. I’m assuming that your VM has an entry in your hosts file called <code class="language-plaintext highlighter-rouge">vagrant-vm</code>. You can also use a static IP. The daemon will be listening on port 9001. <em>Note: fswatch does not currently take an extension filter, so this will restart uWSGI on ANY file change.</em></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">fswatch ~/mycode <span class="s2">"echo '.' |nc vagrant-vm 9001"</span> &amp;</code></pre></figure>
+
+<p>Then, on the Linux VM guest, you fork off the daemon listener.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">nc <span class="nt">-l</span> 9001 <span class="nt">-k</span> <span class="o">&gt;</span> ~/mycode/.reload</code></pre></figure>
+
+<p>This is assuming you have the uWSGI <code class="language-plaintext highlighter-rouge">touch-reload</code> file set to <code class="language-plaintext highlighter-rouge">~/mycode/.reload</code>. That’s it! When you update a file in <code class="language-plaintext highlighter-rouge">~/mycode</code> locally, you should see the following immediately in the uWSGI logs:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">...gracefully killing workers...
+Gracefully killing worker 1 <span class="o">(</span>pid: 25505<span class="o">)</span>...
+worker 1 buried after 1 seconds
+binary reloading uWSGI...
+...
+WSGI app 0 <span class="o">(</span><span class="nv">mountpoint</span><span class="o">=</span><span class="s1">''</span><span class="o">)</span> ready <span class="k">in </span>0 seconds on interpreter 0x239b270 pid: 18792 <span class="o">(</span>default app<span class="o">)</span>
+gracefully <span class="o">(</span>RE<span class="o">)</span>spawned uWSGI master process <span class="o">(</span>pid: 18792<span class="o">)</span>
+spawned uWSGI worker 1 <span class="o">(</span>pid: 25512, cores: 1<span class="o">)</span>
+Sun Mar 30 18:01:26 2014 - <span class="o">[</span>emperor] vassal is ready to accept requests
+Python auto-reloader enabled</code></pre></figure>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#uwsgi" class="page__taxonomy-item p-category" rel="tag">uwsgi</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2014-03-30-uwsgi-python-reload.md">_posts/2014-03-30-uwsgi-python-reload.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2014-03-30T00:00:00+00:00">March 30, 2014</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2014/03/21/python-multilevel-argparse.html" class="pagination--pager" title="Multi-level argparse in Python (parsing commands like git)">Previous</a>
+    
+    
+      <a href="/blog/2014/04/23/python-imp-examples.html" class="pagination--pager" title="Loading classes from modules with reflection in Python (imp module)">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,526 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Splunk/Rsyslog/Apache/Ubuntu Quickstart - Chase Seibert Blog</title>
+<meta name="description" content="I&#39;ve been using Splunk for several years. It&#39;s a great tool for log file visualization and analytics. One thing I use it for is to generate a graph of average milliseconds per request on an apache instance. Up until recently, I was running this directly on the production web server.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Splunk/Rsyslog/Apache/Ubuntu Quickstart">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2010/12/31/splunkrsyslogapacheubuntu-quickstart.html">
+
+
+  <meta property="og:description" content="I&#39;ve been using Splunk for several years. It&#39;s a great tool for log file visualization and analytics. One thing I use it for is to generate a graph of average milliseconds per request on an apache instance. Up until recently, I was running this directly on the production web server.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Splunk/Rsyslog/Apache/Ubuntu Quickstart">
+  <meta name="twitter:description" content="I&#39;ve been using Splunk for several years. It&#39;s a great tool for log file visualization and analytics. One thing I use it for is to generate a graph of average milliseconds per request on an apache instance. Up until recently, I was running this directly on the production web server.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2010/12/31/splunkrsyslogapacheubuntu-quickstart.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2010-12-31T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2010/12/31/splunkrsyslogapacheubuntu-quickstart.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Splunk/Rsyslog/Apache/Ubuntu Quickstart">
+    <meta itemprop="description" content="I&#39;ve been using Splunk for several years. It&#39;s a great tool for log file visualization and analytics. One thing I use it for is to generate a graph of average milliseconds per request on an apache instance. Up until recently, I was running this directly on the production web server.">
+    <meta itemprop="datePublished" content="2010-12-31T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2010/12/31/splunkrsyslogapacheubuntu-quickstart.html" itemprop="url">Splunk/Rsyslog/Apache/Ubuntu Quickstart
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+I've been using <a href="http://www.splunk.com/">Splunk</a> for several years. It's a great tool for log file visualization and analytics. One thing I use it for is to <a href="http://www.splunk.com/base/Documentation/latest/User/InteractiveFieldExtractionExample">generate a graph of average milliseconds</a> per request on an apache instance. Up until recently, I was running this directly on the production web server.
+</p>
+
+<p>
+Lately, it became clear that we needed to move this to a dedicated machine. For one thing, we were about to add a second apache server. Also, I have noticed that running this report hammers the server pretty hard, especially if you're doing field extraction on the fly. In any case, I decided it was time to look into syslog.
+</p>
+
+<blockquote>Syslog is a standard for logging program messages. It allows separation of the software that generates messages from the system that stores them and the software that reports and analyzes them. It also provides devices which would otherwise be unable to communicate a means to notify administrators of problems or performance. - <a href="http://en.wikipedia.org/wiki/Syslog">Wikipedia</a></blockquote>
+
+<p>
+In practice, the specific feature of syslog I wanted to leverage was the forwarding of log events from the production machine(s) to the Splunk server. In Splunk, the setup is just enabling TCP data inputs.
+</p>
+
+<img src="http://lh3.ggpht.com/_EE2zVzGv1Ds/TR30FHd9ANI/AAAAAAAALZw/Yt8JL-513qs/s800/splunk-tcp.png">
+
+<p>
+Port 5011 is a commonly unused port I chose at random. In my case, I also needed to open this port in iptables (the firewall) on the Splunk server.
+</p>
+
+<pre name="code" class="bash">
+iptables-save &gt; /etc/iptables.conf
+vim /etc/iptables.conf
+
+# add the following (allow the 10.177 subnet to open TCP port 5011 to the Splunk server)
+-A INPUT -s 10.177.0.0/16 -p tcp -m tcp --dport 5011 -j ACCEPT
+
+/sbin/iptables-restore &lt; /etc/iptables.conf
+</pre>
+
+<p>
+On a current Ubuntu installation, syslog service is provided by <a href="http://www.rsyslog.com/">rsyslog</a>. The first step is to configure rsyslog to forward log events to the Splunk server. In my case, the Splunk server is at 10.177.0.204.
+</p>
+
+<pre name="code" class="bash">
+vim /etc/rsyslog.d/50-default.conf
+
+# add the following, which defines a common format, and then forwards ALL syslog events
+$template SyslFormat,"%timegenerated% %HOSTNAME% %syslogtag%%msg:::space$
+*.* @@10.177.0.204:5011;SyslFormat
+
+service rsyslog restart
+</pre>
+
+<p>
+Again, I also needed to open port 5011 (outbound this time) in iptables.
+</p>
+
+<pre name="code" class="bash">
+-A OUTPUT -p tcp -m tcp --dport 5011 -j ACCEPT
+</pre>
+
+<p>
+At this point, you should start seeing syslog events in Splunk. An easy way to test it is to restart rsyslog. You should see the log events for shutting down/starting the rsyslog process. If not, you may want to try the following trouble-shooting steps. In my case, I initially ran into trouble because I was assuming the traffic was being sent over UDP, but in rsyslog it's TCP by default.
+</p>
+
+<pre name="code" class="bash">
+# tail the local syslog file, make sure events are being generated
+tail -f /var/log/syslog
+
+# try to open a port from the apache server to the splunk server, it's successful unless you see connection refused
+telnet 10.177.0.204 5011
+
+# try to open port 5011 on the Splunk server itself
+telnet localhost 5011
+</pre>
+
+<p>
+The next step is to get <a href="http://wiki.rsyslog.com/index.php/Working_Apache_and_Rsyslog_configuration">Apache to log to syslog</a>. In my case, the following was sufficient to log anything that Django prints to the console.
+</p>
+
+<pre name="code" class="bash">
+vim /etc/apache2/sites-available/default
+
+# add the following, logs most events in syslog
+ErrorLog syslog:local7
+
+service apache2 restart
+</pre>
+
+<p>
+Now you should be getting Apache + other syslog events into Splunk. But they all show up with a source type of "tcp:5011" by default. What's happening is that Splunk is seeing them all as the same virtual log file. Luckily, there is an easy <a href="http://blogs.splunk.com/2010/02/11/sourcetypes-gone-wild/">configuration</a> to break them out into separate source types.
+</p>
+
+<pre name="code" class="bash">
+vim /opt/splunk/etc/apps/search/default/props.conf
+
+# add the following to act on anything from tcp:5011
+[source::tcp:5011]
+TRANSFORMS-yummy = setSourceApache, setSourcePostfix
+
+vim /opt/splunk/etc/apps/search/default/transforms.conf
+
+# add the following to define setSourceApache and setSourcePostfix
+[setSourceApache]
+DEST_KEY = MetaData:Sourcetype
+# any log line that contains apache2
+REGEX = apache2
+FORMAT = sourcetype::apache
+
+[setSourcePostfix]
+DEST_KEY = MetaData:Sourcetype
+REGEX = postfix
+FORMAT = sourcetype::postfix
+
+/opt/splunk/bin/splunk restart
+</pre>
+
+<p>
+Finally, while you're trouble-shooting all of this, you will likely be generating junk log events. If you find yourself wanting to start over, you can aways bring up a set of results in Splunk, and just pipe the <a href="http://www.splunk.com/base/Documentation/latest/Admin/RemovedatafromSplunk">search to "|delete"</a> to blow them away.
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#apache" class="page__taxonomy-item p-category" rel="tag">apache</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#rsyslog" class="page__taxonomy-item p-category" rel="tag">rsyslog</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#splunk" class="page__taxonomy-item p-category" rel="tag">splunk</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#syslog" class="page__taxonomy-item p-category" rel="tag">syslog</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2010-12-31-splunkrsyslogapacheubuntu-quickstart.html">_posts/2010-12-31-splunkrsyslogapacheubuntu-quickstart.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2010-12-31T00:00:00+00:00">December 31, 2010</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2010/12/17/python-convert-a-wordpdf-document-to-html.html" class="pagination--pager" title="Python: Convert a Word/PDF document to html">Previous</a>
+    
+    
+      <a href="/blog/2011/01/07/getting-arbitrary-log-files-into-rsyslog.html" class="pagination--pager" title="Getting arbitrary log files into Rsyslog">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

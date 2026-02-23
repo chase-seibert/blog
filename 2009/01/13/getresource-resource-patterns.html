@@ -1,0 +1,452 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>getResource() resource patterns - Chase Seibert Blog</title>
+<meta name="description" content="The Java class loader contains a convenience method getResource(), which is great for externalizing some static content from your code. In the past, I&#39;ve used it almost exclusively with .properties files. Could there be a more ideal candidate for data that should be outside the code?">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="getResource() resource patterns">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2009/01/13/getresource-resource-patterns.html">
+
+
+  <meta property="og:description" content="The Java class loader contains a convenience method getResource(), which is great for externalizing some static content from your code. In the past, I&#39;ve used it almost exclusively with .properties files. Could there be a more ideal candidate for data that should be outside the code?">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="getResource() resource patterns">
+  <meta name="twitter:description" content="The Java class loader contains a convenience method getResource(), which is great for externalizing some static content from your code. In the past, I&#39;ve used it almost exclusively with .properties files. Could there be a more ideal candidate for data that should be outside the code?">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2009/01/13/getresource-resource-patterns.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2009-01-13T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2009/01/13/getresource-resource-patterns.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="getResource() resource patterns">
+    <meta itemprop="description" content="The Java class loader contains a convenience method getResource(), which is great for externalizing some static content from your code. In the past, I&#39;ve used it almost exclusively with .properties files. Could there be a more ideal candidate for data that should be outside the code?">
+    <meta itemprop="datePublished" content="2009-01-13T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2009/01/13/getresource-resource-patterns.html" itemprop="url">getResource() resource patterns
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The Java <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/lang/ClassLoader.html">class loader</a> contains a convenience method <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/lang/ClassLoader.html#getResource(java.lang.String)">getResource()</a>, which is great for externalizing some static content from your code. In the past, I've used it almost exclusively with .properties files. Could there be a more ideal candidate for data that should be outside the code?</p>
+
+<p>Recently, I wanted to leverage this concept to load text and html data. I needed to generate a email based on a static template. In order to support rich html email clients as well as plain text clients, it's necessary to send a MultiPart MIME email with both versions. My options were to hard-code the HTML/text templates in the Java code, or externalize them as files. I had a utility method lying around that would make this easy:</p>
+
+<pre name="code" class="java">
+    private static String txtTemplate, htmlTemplate;
+
+    private static final String EMAIL_TEMPLATE_TXT = &quot;LegacyAppointmentEmail.txt&quot;;
+    private static final String EMAIL_TEMPLATE_HTML = &quot;LegacyAppointmentEmail.html&quot;;
+ 
+ static {
+        try {
+            txtTemplate = readFile(EMAIL_TEMPLATE_TXT);
+            htmlTemplate = readFile(EMAIL_TEMPLATE_HTML);
+        } catch (IOException e) {
+            LOG.error(e);
+        }
+    }
+ 
+    private static String readFile(String fileName) throws IOException {
+
+        InputStream stream = LegacyAppointmentEmail.class.getResourceAsStream(fileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder builder = new StringBuilder();
+
+        String line;
+        while ((line = reader.readLine()) != null)
+            builder.append(line).append(&quot;\n&quot;);
+
+        reader.close();
+        return builder.toString();        
+    } 
+</pre>
+
+<p>My first unit test failed on the line where the first file was loaded. Initially, I thought the path must be wrong. I played with various combinations, such as moving the file to the root, putting the full scope into the file path, etc. Eventually, I went back and looked at some working code I had written in the past. The only difference I could see was that is was a .properties file, not a .txt file. I renamed the file, and it worked!</p>
+
+<p>I knew that <a href="http://www.java2s.com/Code/Java/Development-Class/Loadresourcefilerelativetotheclasslocation.htm">wasn't right</a>, but I put it aside and continued on. When I came back to it, I tried to come up with the smallest reproducible case I could. I thought that if I was still stumped, at least I could post it on <a href="http://stackoverflow.com/">stackoverflow</a>.</p>
+
+<pre name="code" class="java">
+    public class Test {
+
+        public static void main(String[] args) {
+
+            assert Test.class.getResource(&quot;file.properties&quot;) != null;
+            assert Test.class.getResource(&quot;file.txt&quot;) != null;
+        }
+    }
+</pre>
+
+<p><i>Note: file.properties and file.txt should both be blank files in the same directory as Test.java.</i></p>
+
+<p>This test was still failing on the txt file, <b>in IntelliJ</b>. In order to get the cleanest repo possible, I saved Test.java to a new directory, and compiled and ran it from the command line using just the "javac" and "java" JDK command-line tools. Immediately, it started working.</p>
+
+<p>Having isolated the issue to IntelliJ, I did a little digging. Even when I took all the classpath and "java" command arguments from IntelliJ and ran them manually, it still worked. Having eliminated runtime issues, I went into the IntelliJ compiler settings. The very first window shows the following option:</p>
+
+<img src="http://lh5.ggpht.com/_EE2zVzGv1Ds/SWzVaCeIsUI/AAAAAAAAH4s/N2t-8mVJUeM/s800/IntelliJResourcePatterns.gif" />
+
+<p><i>***Shakes fist at IntelliJ***</i> Oh well, it was a learning experience.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2009-01-13-getresource-resource-patterns.html">_posts/2009-01-13-getresource-resource-patterns.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2009-01-13T00:00:00+00:00">January 13, 2009</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2009/01/08/first-awk-script.html" class="pagination--pager" title="First AWK script">Previous</a>
+    
+    
+      <a href="/blog/2009/01/20/soap-vs-rest-from-a-consumers-perspective.html" class="pagination--pager" title="SOAP vs. REST from a consumer’s perspective">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

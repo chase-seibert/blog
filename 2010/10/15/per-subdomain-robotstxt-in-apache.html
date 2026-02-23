@@ -1,0 +1,468 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>per subdomain robots.txt in Apache - Chase Seibert Blog</title>
+<meta name="description" content="When I develop a website, I tend to go subdomain crazy. If the site is crazy.net, I probably configure www.crazy.net, admin.crazy.net, static.crazy.net, youare.crazy.net, etc. Some allow concurrent logins as different users such as yourself, an admin account and maybe as a particular live user. Others are to keep your static/media resources cookie free, as well as allow parallel sockets for html/media content.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="per subdomain robots.txt in Apache">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2010/10/15/per-subdomain-robotstxt-in-apache.html">
+
+
+  <meta property="og:description" content="When I develop a website, I tend to go subdomain crazy. If the site is crazy.net, I probably configure www.crazy.net, admin.crazy.net, static.crazy.net, youare.crazy.net, etc. Some allow concurrent logins as different users such as yourself, an admin account and maybe as a particular live user. Others are to keep your static/media resources cookie free, as well as allow parallel sockets for html/media content.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="per subdomain robots.txt in Apache">
+  <meta name="twitter:description" content="When I develop a website, I tend to go subdomain crazy. If the site is crazy.net, I probably configure www.crazy.net, admin.crazy.net, static.crazy.net, youare.crazy.net, etc. Some allow concurrent logins as different users such as yourself, an admin account and maybe as a particular live user. Others are to keep your static/media resources cookie free, as well as allow parallel sockets for html/media content.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2010/10/15/per-subdomain-robotstxt-in-apache.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2010-10-15T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2010/10/15/per-subdomain-robotstxt-in-apache.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="per subdomain robots.txt in Apache">
+    <meta itemprop="description" content="When I develop a website, I tend to go subdomain crazy. If the site is crazy.net, I probably configure www.crazy.net, admin.crazy.net, static.crazy.net, youare.crazy.net, etc. Some allow concurrent logins as different users such as yourself, an admin account and maybe as a particular live user. Others are to keep your static/media resources cookie free, as well as allow parallel sockets for html/media content. ">
+    <meta itemprop="datePublished" content="2010-10-15T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2010/10/15/per-subdomain-robotstxt-in-apache.html" itemprop="url">per subdomain robots.txt in Apache
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+When I develop a website, I tend to go <a href="http://en.wikipedia.org/wiki/Subdomain">subdomain</a> crazy. If the site is crazy.net, I probably configure www.crazy.net, admin.crazy.net, static.crazy.net, youare.crazy.net, etc. Some allow concurrent logins as different users such as yourself, an admin account and maybe as a particular live user. Others are to keep your <a href="http://developer.yahoo.com/performance/rules.html#cookie_free">static/media resources</a> cookie free, as well as allow parallel sockets for html/media content. 
+</p>
+
+<p>
+In my typical use case, all of these subdomains point to the same Apache instance. So you can go to a particular relative URL at any of the subdomains, and you will get the same page. But I certainly don't want Google to index all those subdomains; I want a single canonical domain for the site. I'm hardly an expert in Apache configuration, so it took me an hour to track down the solution to this problem. 
+</p>
+
+<p>
+Essentially, I wanted www.crazy.net to serve up a permissive <a href="http://en.wikipedia.org/wiki/Robots_exclusion_standard">robots.txt</a> file, as well as a <a href="http://en.wikipedia.org/wiki/Site_map">sitemap</a>.
+</p>
+
+<pre name="code" class="bash">
+# robots.txt @ http://www.crazy.net/robots.txt
+User-agent: *
+Sitemap: http://www.crazy.net/sitemap.txt
+</pre>
+
+<p>
+However, all subdomains should return a different, restrictive robots.txt for the same URL.
+</p>
+
+<pre name="code" class="bash">
+# norobots.txt @ http://admin.crazy.net/robots.txt, http://static.crazy.net/robots.txt, etc
+User-agent: *
+Disallow: /
+</pre>
+
+<p>
+Here is a sample of my /etc/apache2/sites-available/default config file that made this happen.
+</p>
+
+<pre name="code" class="bash">
+ServerAdmin admin@example.com
+
+ExpiresActive On
+ExpiresByType text/css "access plus 12 years"
+ExpiresByType application/javascript "access plus 12 years"
+ExpiresByType image/png "access plus 12 years"
+ExpiresByType image/gif "access plus 12 years"
+ExpiresByType image/jpeg "access plus 12 years"
+FileETag none
+
+...
+
+&lt;VirtualHost *:80&gt;
+ alias /robots.txt /home/apache/website/norobots.txt
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+ ServerName www.crazy.net
+ alias /robots.txt /home/apache/website/robots.txt
+ alias /sitemap.txt /home/apache/website/sitemap.txt
+&lt;/VirtualHost&gt;
+</pre>
+
+<p>
+Prior to this, all my directives were in a single VirtualHost. The key revelation on my part was that they don't need to be. Rather, Apache configs support inheritance from a global scope. So my VirtualHosts end up just being what's different between www.crazy.net and any other ServerName.
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#apache" class="page__taxonomy-item p-category" rel="tag">apache</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2010-10-15-per-subdomain-robotstxt-in-apache.html">_posts/2010-10-15-per-subdomain-robotstxt-in-apache.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2010-10-15T00:00:00+00:00">October 15, 2010</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2010/10/08/pulling-google-analytics-data-into-django.html" class="pagination--pager" title="Pulling Google Analytics data into Django">Previous</a>
+    
+    
+      <a href="/blog/2010/10/29/django-uniform-image-resizing.html" class="pagination--pager" title="Django: uniform image resizing">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

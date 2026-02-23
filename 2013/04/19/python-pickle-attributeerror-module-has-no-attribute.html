@@ -1,0 +1,443 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Python pickle AttributeError ‘module’ object has no attribute ‘foobar’ - Chase Seibert Blog</title>
+<meta name="description" content="Ran into an interesting edge case with pickle this week. I had a producer task that was querying objects from a database, and pickling them plus a reference to a callback function to pass to worker tasks. Everything was working fine, but I was getting sick of logging into a Django shell to invoke the workers with test data. So I wrote a quick __main__ function in my task code to do the same thing.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Python pickle AttributeError ‘module’ object has no attribute ‘foobar’">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/04/19/python-pickle-attributeerror-module-has-no-attribute.html">
+
+
+  <meta property="og:description" content="Ran into an interesting edge case with pickle this week. I had a producer task that was querying objects from a database, and pickling them plus a reference to a callback function to pass to worker tasks. Everything was working fine, but I was getting sick of logging into a Django shell to invoke the workers with test data. So I wrote a quick __main__ function in my task code to do the same thing.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Python pickle AttributeError ‘module’ object has no attribute ‘foobar’">
+  <meta name="twitter:description" content="Ran into an interesting edge case with pickle this week. I had a producer task that was querying objects from a database, and pickling them plus a reference to a callback function to pass to worker tasks. Everything was working fine, but I was getting sick of logging into a Django shell to invoke the workers with test data. So I wrote a quick __main__ function in my task code to do the same thing.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/04/19/python-pickle-attributeerror-module-has-no-attribute.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-04-19T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/04/19/python-pickle-attributeerror-module-has-no-attribute.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Python pickle AttributeError ‘module’ object has no attribute ‘foobar’">
+    <meta itemprop="description" content="Ran into an interesting edge case with pickle this week. I had a producer task that was querying objects from a database, and pickling them plus a reference to a callback function to pass to worker tasks. Everything was working fine, but I was getting sick of logging into a Django shell to invoke the workers with test data. So I wrote a quick __main__ function in my task code to do the same thing.">
+    <meta itemprop="datePublished" content="2013-04-19T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/04/19/python-pickle-attributeerror-module-has-no-attribute.html" itemprop="url">Python pickle AttributeError ‘module’ object has no attribute ‘foobar’
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Ran into an interesting edge case with <a href="http://docs.python.org/2/library/pickle.html">pickle</a> this week. I had a producer task that was querying objects from a database, and pickling them plus a reference to a callback function to pass to worker tasks. Everything was working fine, but I was getting sick of logging into a <a href="https://docs.djangoproject.com/en/dev/intro/tutorial01/#playing-with-the-api">Django shell</a> to invoke the workers with test data. So I wrote a quick <code class="language-plaintext highlighter-rouge">__main__</code> function in my task code to do the same thing.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">user</span>
+<span class="kn">from</span> <span class="nn">myproject.utils</span> <span class="kn">import</span> <span class="n">my_task_func</span><span class="p">,</span> <span class="n">worker</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'Invoke the workers manually.'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'user_id'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'User ID'</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">args</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span>
+    <span class="n">pickled_callback</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">my_task_func</span><span class="p">)</span>
+    <span class="n">pickled_cb_args</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">([</span><span class="n">user</span><span class="p">])</span>
+    <span class="n">worker</span><span class="p">.</span><span class="n">delay</span><span class="p">(</span><span class="n">pickled_callback</span><span class="p">,</span> <span class="n">pickled_cb_args</span><span class="p">)</span></code></pre></figure>
+
+<p>To my surprise, this exact same code I had been typing into a shell was now throwing an exception when invoked from inside a <code class="language-plaintext highlighter-rouge">__main__</code> function.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="p">...</span>
+  <span class="n">File</span> <span class="s">"/usr/lib/python2.4/pickle.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">872</span><span class="p">,</span> <span class="ow">in</span> <span class="n">load</span>
+    <span class="n">dispatch</span><span class="p">[</span><span class="n">key</span><span class="p">](</span><span class="bp">self</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">"/usr/lib/python2.4/pickle.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1083</span><span class="p">,</span> <span class="ow">in</span> <span class="n">load_inst</span>
+    <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">find_class</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">"/usr/lib/python2.4/pickle.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1140</span><span class="p">,</span> <span class="ow">in</span> <span class="n">find_class</span>
+    <span class="n">klass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="s">'module'</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s">'my_task_func'</span></code></pre></figure>
+
+<p>It turns out that when you pickle a function from inside a <code class="language-plaintext highlighter-rouge">__main__</code> block, the module reference that it will be pickled with is <code class="language-plaintext highlighter-rouge">__main__</code>, not the actual module namespace. This is actually a <a href="http://bugs.python.org/issue5509">known issue</a>. In my case, it was easy to work-around; I simply put this code into a <a href="https://docs.djangoproject.com/en/dev/howto/custom-management-commands/">Django custom management command</a>.</p>
+
+<p>More discussion of this issue <a href="http://stefaanlippens.net/pickleproblem">here</a>.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#pickle" class="page__taxonomy-item p-category" rel="tag">pickle</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-04-19-python-pickle-attributeerror-module-has-no-attribute.md">_posts/2013-04-19-python-pickle-attributeerror-module-has-no-attribute.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-04-19T00:00:00+00:00">April 19, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/04/12/getattr-setattr.html" class="pagination--pager" title="Dynamic Attributes in Python">Previous</a>
+    
+    
+      <a href="/blog/2013/04/26/hbase-schema-design.html" class="pagination--pager" title="HBase Schema Introduction for Programmers">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

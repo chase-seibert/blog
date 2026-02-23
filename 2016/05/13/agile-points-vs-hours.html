@@ -1,0 +1,508 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Using Points vs Hours for Estimates - Chase Seibert Blog</title>
+<meta name="description" content="One of the key innovations of Agile is that estimates should NOT be in hours, but in points. But it doesn’t just intuitively make sense. As a result, many teams resist using points. This is one of the reasons why for teams new to Agile, I always recommend that you try doing vanilla-by-the-book Agile first, before you change anything. I think that if you do, the value of points will be obvious.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Using Points vs Hours for Estimates">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2016/05/13/agile-points-vs-hours.html">
+
+
+  <meta property="og:description" content="One of the key innovations of Agile is that estimates should NOT be in hours, but in points. But it doesn’t just intuitively make sense. As a result, many teams resist using points. This is one of the reasons why for teams new to Agile, I always recommend that you try doing vanilla-by-the-book Agile first, before you change anything. I think that if you do, the value of points will be obvious.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Using Points vs Hours for Estimates">
+  <meta name="twitter:description" content="One of the key innovations of Agile is that estimates should NOT be in hours, but in points. But it doesn’t just intuitively make sense. As a result, many teams resist using points. This is one of the reasons why for teams new to Agile, I always recommend that you try doing vanilla-by-the-book Agile first, before you change anything. I think that if you do, the value of points will be obvious.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2016/05/13/agile-points-vs-hours.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2016-05-13T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2016/05/13/agile-points-vs-hours.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Using Points vs Hours for Estimates">
+    <meta itemprop="description" content="One of the key innovations of Agile is that estimates should NOT be in hours,but in points. But it doesn’t just intuitively make sense. As a result, manyteams resist using points. This is one of the reasons why for teams new toAgile, I always recommend that you try doing vanilla-by-the-book Agile first,before you change anything. I think that if you do, the value of points will beobvious.">
+    <meta itemprop="datePublished" content="2016-05-13T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2016/05/13/agile-points-vs-hours.html" itemprop="url">Using Points vs Hours for Estimates
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#points-are-relative-hours-are-absolute">Points are Relative, Hours are Absolute</a></li><li><a href="#points-enable-collaborative-estimates">Points Enable Collaborative Estimates</a></li><li><a href="#points-communicate-uncertainty">Points Communicate Uncertainty</a></li><li><a href="#points-make-the-team-accountable-for-stories-not-estimates">Points Make the Team Accountable for Stories, not Estimates</a></li><li><a href="#references">References</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p>One of the key innovations of Agile is that estimates should NOT be in hours,
+but in points. But it doesn’t just intuitively make sense. As a result, many
+teams resist using points. This is one of the reasons why for teams new to
+Agile, I always recommend that you try doing vanilla-by-the-book Agile first,
+before you change anything. I think that if you do, the value of points will be
+obvious.</p>
+
+<p>If you’re on a team that has always done Agile, but with hours, do you find
+yourselves chronically under-estimating stories and not completing them? If so,
+maybe I can convince you to give points a shot.</p>
+
+<h2 id="points-are-relative-hours-are-absolute">Points are Relative, Hours are Absolute</h2>
+
+<p>One of the primary insights of Agile is that humans suck at estimating in
+absolute terms, but are much better estimating in relative terms.</p>
+
+<blockquote>
+  <p>Unfortunately, <a href="http://pm.stackexchange.com/questions/11675/is-there-any-published-research-about-story-points-vs-time-estimation">reams of research</a> shows that humans are inherently horrible at
+estimating in time. It turns out when we estimate jobs by how long they will
+take us to complete we have an error rate of 400%. <a href="https://www.scruminc.com/points-vs-hours/">Scrum, Inc</a></p>
+</blockquote>
+
+<p>Instead of trying to estimate how long a task with take, simply try to estimate
+whether it is larger or smaller than another story. Don’t think, “I should be
+able to do that in three hours”. Compare the story to something you have already
+completed. Is it bigger than that 3 point story you did last sprint? Almost
+twice as big? Would you say it’s another 3, or is it more like 5 or 8?</p>
+
+<p>Fundamentally, we are not estimating how long a task will take, but how large
+it is relative to another task. In <a href="https://www.mountaingoatsoftware.com/blog/the-main-benefit-of-story-points">terms of an analogy</a>,
+we want to know how long the trail is, not how long it would take you to run it.</p>
+
+<h2 id="points-enable-collaborative-estimates">Points Enable Collaborative Estimates</h2>
+
+<p>An absolute estimate is how long it would take a particular engineer to complete
+the task. If the task needs to be re-assigned to another engineer, it would need
+to be re-estimated. Maybe this task involves regular expressions, or JavaScript
+or schema design. The skill set between your team members is not uniform; they
+will all have strengths and weaknesses.</p>
+
+<p>Points are not pegged to an individual’s implementation speed. Maybe we can all
+agree that a story is three points, even though it would take the most senior
+member on the team an hour, and other people would need five hours. That’s fine!
+At least we can all collaborate on a common estimate for the story. <a href="https://www.mountaingoatsoftware.com/blog/dont-equate-story-points-to-hours">This is
+likely to make the estimates more accurate</a>;
+the wisdom of the group may well identify both short-cuts and gotchas in the
+details.</p>
+
+<p>One particular related trap is having one person, usually the team lead, estimate
+all the stories. Are you sure you are estimating how long it will take the team
+to complete the story, and not how long it would take YOU? Big difference.
+Besides, the team will be much more committed to estimates that they came up
+with themselves.</p>
+
+<h2 id="points-communicate-uncertainty">Points Communicate Uncertainty</h2>
+
+<p>In particular, Agile recommends that you stick to the Fibonacci numbers for
+point estimates. Why? Because it accurately communicates the inherent
+uncertainty of estimates. Estimates are wrong; everyone on the team should
+internalize that. Given that they are going to be mostly wrong, we cannot also
+make them very exact. Deliberating on whether a story will take 3 or 4 hours is
+pointless, you are well inside the error bars. Deciding whether it’s a one
+point or a two point story forces you to accept an inherent margin of error.</p>
+
+<p>Points may also allow for more nuance in the estimates. If forced to pick a
+number of hours, there will be a tendency to be optimistic. But points should
+reflect not only how large a task is, but also how much risk or uncertainty
+there is. It’s common to say that a story should only be 3 points of work, but
+we’re calling it an 8 because we’re not sure about some of the details.</p>
+
+<h2 id="points-make-the-team-accountable-for-stories-not-estimates">Points Make the Team Accountable for Stories, not Estimates</h2>
+
+<p>A point is NOT equal to any number of hours - it’s an average. Eventually, you
+will get a sense that a point may take you anywhere from say 1 to 4 hours of
+work. Note: that’s just an example, points are always team specific; it’s a
+mistake to try to compare the velocity of one team to another using points.
+But importantly, you do not expect those hours spent to converge; you will always
+have a broad range of hours that a single point story took to complete.</p>
+
+<p>This makes it clear to the team that they are not being held accountable for
+100% or less overruns or under runs in their individual stories. If you use
+hours, there is a great tendency to say “you said this would take one hour, but
+it really took three”. That doesn’t matter! You should not even measure it.
+What matters is, did you complete all of the stories in the sprint?</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="http://pm.stackexchange.com/questions/11675/is-there-any-published-research-about-story-points-vs-time-estimation">Is there any published research about story points vs time estimation?</a></li>
+  <li><a href="https://www.infoq.com/news/2009/09/story-points-versus-hours">Sprint Planning: Story Points Versus Hours</a></li>
+  <li><a href="https://collaboration.csc.ncsu.edu/laurie/Papers/ESEM11_SCRUM_Experience_CameraReady.pdf">Scrum + Engineering Practices: Experiences of Three Microsoft Teams</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#manager" class="page__taxonomy-item p-category" rel="tag">manager</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2016-05-13-agile-points-vs-hours.md">_posts/2016-05-13-agile-points-vs-hours.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2016-05-13T00:00:00+00:00">May 13, 2016</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2016/04/21/what-makes-a-product.html" class="pagination--pager" title="What makes a compelling product?">Previous</a>
+    
+    
+      <a href="/blog/2016/05/27/sqlalchemy-version-string-column-type.html" class="pagination--pager" title="SQLAlchemy - Storing Application Version Strings">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

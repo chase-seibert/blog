@@ -1,0 +1,538 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Quickstart: Log shipping with Postgres 8.4 - Chase Seibert Blog</title>
+<meta name="description" content="The official Postgres documentation covers log shipping (aka WAL Archiving, aka warm standby) in some depth. But it&#39;s still quite a lot to absorb. The basic idea is to give you a hot spare to fail over to if your main database server crashes. Here is a step by step guide on how to set this up on the command line in Ubuntu (10.04). I assume you have two identical servers (vm clone?), a master and a slave.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Quickstart: Log shipping with Postgres 8.4">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2011/02/03/quickstart-log-shipping-with-postgres-84.html">
+
+
+  <meta property="og:description" content="The official Postgres documentation covers log shipping (aka WAL Archiving, aka warm standby) in some depth. But it&#39;s still quite a lot to absorb. The basic idea is to give you a hot spare to fail over to if your main database server crashes. Here is a step by step guide on how to set this up on the command line in Ubuntu (10.04). I assume you have two identical servers (vm clone?), a master and a slave.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Quickstart: Log shipping with Postgres 8.4">
+  <meta name="twitter:description" content="The official Postgres documentation covers log shipping (aka WAL Archiving, aka warm standby) in some depth. But it&#39;s still quite a lot to absorb. The basic idea is to give you a hot spare to fail over to if your main database server crashes. Here is a step by step guide on how to set this up on the command line in Ubuntu (10.04). I assume you have two identical servers (vm clone?), a master and a slave.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2011/02/03/quickstart-log-shipping-with-postgres-84.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2011-02-03T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2011/02/03/quickstart-log-shipping-with-postgres-84.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Quickstart: Log shipping with Postgres 8.4">
+    <meta itemprop="description" content="The official Postgres documentation covers log shipping (aka WAL Archiving, aka warm standby) in some depth. But it&#39;s still quite a lot to absorb. The basic idea is to give you a hot spare to fail over to if your main database server crashes. Here is a step by step guide on how to set this up on the command line in Ubuntu (10.04). I assume you have two identical servers (vm clone?), a master and a slave.">
+    <meta itemprop="datePublished" content="2011-02-03T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2011/02/03/quickstart-log-shipping-with-postgres-84.html" itemprop="url">Quickstart: Log shipping with Postgres 8.4
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>
+The official <a href="http://www.postgresql.org/docs/8.4/static/warm-standby.html">Postgres documentation</a> covers log shipping (aka WAL Archiving, aka warm standby) in some depth. But it's still quite a lot to absorb. The basic idea is to give you a hot spare to fail over to if your main database server crashes. Here is a step by step guide on how to set this up on the command line in Ubuntu (10.04). I assume you have two identical servers (vm clone?), a master and a slave.
+</p>
+
+<p>
+First, you need to setup a directory on the slave which will hold the WAL archives (logs). Unless otherwise notes, all commands are run as root.
+</p>
+
+<pre name="code" class="bash">
+# on the slave, must be outside main b/c we are going to blow that away
+mkdir /var/lib/postgresql/8.4/pg_wal
+chown postgres:postgres /var/lib/postgresql/8.4/pg_wal
+</pre>
+
+<p>
+We're going to use ssh/scp to copy WAL files from the master to the slave(<b>10.177.1.247</b>), so you need to exchange ssh keys for the postgres users on each end.
+</p>
+
+<pre name="code" class="bash">
+# on master, share postgres credentials with slave
+sudo su postgres
+ssh-keygen -t rsa # press enter to all prompts (don't set explicit password)
+ssh postgres@10.177.1.247 mkdir -p ~/.ssh
+cat ~/.ssh/id_rsa.pub | ssh postgres@10.177.1.247 'cat &gt;&gt; ~/.ssh/authorized_keys'
+
+# test the ssh connection
+ssh postgres@10.177.1.247 # should not prompt for a password
+exit # exit new ssh session
+exit # exit sudo as postgres, you're now root again
+
+# setup postgres WAL archiving to copy to slave
+vim /etc/postgresql/8.4/main/postgresql.conf
+
+# make the following edits
+archive_mode = on
+archive_command = 'scp %p postgres@10.177.1.247:/var/lib/postgresql/8.4/pg_wal/%f &lt;/dev/null'
+archive_timeout = 600 # 10 minutes
+
+# now, outside of vim, restart postgres
+/etc/init.d/postgresql restart
+</pre>
+
+<p>
+If you wait 10 minutes, you should see a new file in /var/lib/postgresql/8.4/pg_wal on the slave. Assuming that's working, you're ready to create the initial snapshot.
+</p>
+
+<p>
+I was confused by the documentation on this point. Basically, you want to issue a pg_start_backup SQL command on the master, then copy the entire /var/lib/postgresql/8.4/main directory to the slave. The pg_start_backup ensures that the physical files will be in a consistent state. You can perform this copy while master is running. 
+</p>
+
+<pre name="code" class="bash">
+# on master
+sudo -u postgres psql mydbname
+SELECT pg_start_backup('initial');
+# may take a few minutes, wait then control-D to exit
+
+# zip up the main data directory, and copy it to the slave
+cd /var/lib/postgresql/8.4
+zip -r main.zip main
+scp main.zip postgres@10.177.1.247:/var/lib/postgresql/8.4
+
+sudo -u postgres psql mydbname
+SELECT pg_stop_backup();
+</pre>
+
+<p>
+Now the initial snapshot is on the slave, but we need to actually restore those files as the new primary files on the slave. At the same time, we can restart the slave in recovery mode, using <a href="http://www.postgresql.org/docs/9.0/static/pgstandby.html">pg_standby</a>. Recovery is enabled by creating a .conf file right in main.
+</p>
+
+<pre name="code" class="bash">
+# on the SLAVE
+apt-get install postgresql-contrib-8.4 # installs the pg_standby tool
+/etc/init.d/postgresql-8.4 stop
+cd /var/lib/postgresql/8.4
+mv main main.bak
+unzip main.zip
+rm -f main/pg_xlog/* # these are from master, and are not needed
+
+# create the recovery config file
+vim /var/lib/postgresql/8.4/main/recovery.conf
+
+# add the following, and save
+restore_command = '/usr/lib/postgresql/8.4/bin/pg_standby -d -t /tmp/pgsql.trigger.5442 /var/lib/postgresql/8.4/pg_wal %f %p %r 2&gt;&gt;/var/log/postgresql/standby.log'
+recovery_end_command = 'rm -f /tmp/pgsql.trigger.5442'
+
+# make sure the new main (as well as recovery.conf) have the correct ownership
+chown postgres:postgres main -R
+
+# restart, and keep and eye on the new standby.log file to see if it's working
+/etc/init.d/postgresql-8.4 restart
+tail -f /var/log/postgresql/standby.log -n 100
+</pre>
+
+<p>
+You should see log lines like the following.
+</p>
+
+<pre name="code" class="bash">
+Trigger file   : /tmp/pgsql.trigger.5442
+Waiting for WAL file : 0000000100000006000000AE.00000020.backup
+WAL file path  : /var/lib/postgresql/8.4/pg_wal/0000000100000006000000AE.00000020.backup
+Restoring to  : pg_xlog/RECOVERYHISTORY
+Sleep interval  : 5 seconds
+Max wait interval : 0 forever
+Command for restore : cp "/var/lib/postgresql/8.4/pg_wal/0000000100000006000000AE.00000020.backup" "pg_xlog/RECOVERYHISTORY"
+Keep archive history : 000000000000000000000000 and later
+running restore  : OK
+Trigger file   : /tmp/pgsql.trigger.5442
+Waiting for WAL file : 0000000100000006000000AE
+WAL file path  : /var/lib/postgresql/8.4/pg_wal/0000000100000006000000AE
+Restoring to  : pg_xlog/RECOVERYXLOG
+Sleep interval  : 5 seconds
+Max wait interval : 0 forever
+Command for restore : cp "/var/lib/postgresql/8.4/pg_wal/0000000100000006000000AE" "pg_xlog/RECOVERYXLOG"
+Keep archive history : 000000000000000000000000 and later
+running restore  : OK
+
+Trigger file   : /tmp/pgsql.trigger.5442
+Waiting for WAL file : 0000000100000006000000AF
+WAL file path  : /var/lib/postgresql/8.4/pg_wal/0000000100000006000000AF
+Restoring to  : pg_xlog/RECOVERYXLOG
+Sleep interval  : 5 seconds
+Max wait interval : 0 forever
+Command for restore : cp "/var/lib/postgresql/8.4/pg_wal/0000000100000006000000AF" "pg_xlog/RECOVERYXLOG"
+Keep archive history : 0000000100000006000000AE and later
+WAL file not present yet. Checking for trigger file...
+WAL file not present yet. Checking for trigger file...
+WAL file not present yet. Checking for trigger file...
+</pre>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#postgres" class="page__taxonomy-item p-category" rel="tag">postgres</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2011-02-03-quickstart-log-shipping-with-postgres-84.html">_posts/2011-02-03-quickstart-log-shipping-with-postgres-84.html</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2011-02-03T00:00:00+00:00">February 3, 2011</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2011/01/28/sanitize-html-with-beautiful-soup.html" class="pagination--pager" title="Sanitize HTML with Beautiful Soup">Previous</a>
+    
+    
+      <a href="/blog/2011/02/11/cat-to-syslog.html" class="pagination--pager" title="cat to syslog">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

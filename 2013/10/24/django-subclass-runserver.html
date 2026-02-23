@@ -1,0 +1,439 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Subclassing Django’s runserver causes command to be run twice - Chase Seibert Blog</title>
+<meta name="description" content="This week I was creating my own version of the Django management command runserver. Like the built-in, I wanted to run a lightweight development only web server for my Django app. In addition, I was looking to run a syncdb, load some initial data and start up the server with that. The goal was to use an in-memory sqlite3 database, and use this command as a way to spin up an interactive test instance.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Subclassing Django’s runserver causes command to be run twice">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2013/10/24/django-subclass-runserver.html">
+
+
+  <meta property="og:description" content="This week I was creating my own version of the Django management command runserver. Like the built-in, I wanted to run a lightweight development only web server for my Django app. In addition, I was looking to run a syncdb, load some initial data and start up the server with that. The goal was to use an in-memory sqlite3 database, and use this command as a way to spin up an interactive test instance.">
+
+
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Subclassing Django’s runserver causes command to be run twice">
+  <meta name="twitter:description" content="This week I was creating my own version of the Django management command runserver. Like the built-in, I wanted to run a lightweight development only web server for my Django app. In addition, I was looking to run a syncdb, load some initial data and start up the server with that. The goal was to use an in-memory sqlite3 database, and use this command as a way to spin up an interactive test instance.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2013/10/24/django-subclass-runserver.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2013-10-24T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2013/10/24/django-subclass-runserver.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Subclassing Django’s runserver causes command to be run twice">
+    <meta itemprop="description" content="This week I was creating my own version of the Django management command runserver. Like the built-in, I wanted to run a lightweight development only web server for my Django app. In addition, I was looking to run a syncdb, load some initial data and start up the server with that. The goal was to use an in-memory sqlite3 database, and use this command as a way to spin up an interactive test instance.">
+    <meta itemprop="datePublished" content="2013-10-24T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://chase-seibert.github.io/blog/2013/10/24/django-subclass-runserver.html" itemprop="url">Subclassing Django’s runserver causes command to be run twice
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>This week I was creating my own version of the Django management command <code class="language-plaintext highlighter-rouge">runserver</code>. Like the built-in, I wanted to run a lightweight development only web server for my Django app. In addition, I was looking to run a syncdb, load some initial data and start up the server with that. The goal was to use an in-memory sqlite3 database, and use this command as a way to spin up an interactive test instance.</p>
+
+<p>This is easily achieved by using <code class="language-plaintext highlighter-rouge">call_command</code> to call <code class="language-plaintext highlighter-rouge">syncdb</code> and <code class="language-plaintext highlighter-rouge">runserver</code> in sequence. The in-memory sqlite3 config I would leave to a Django settings file. But I noticed that <code class="language-plaintext highlighter-rouge">syncdb</code> seemed to be getting called twice, leading to double the start up time.</p>
+
+<p>Rooting around in the Django bug database, I found that this was a <a href="https://code.djangoproject.com/ticket/8085">known issue</a> with the default auto-reloading functionality of <code class="language-plaintext highlighter-rouge">runserver</code>. The solution turned out to be a simple as disabling that functionality by passing an option to the native <code class="language-plaintext highlighter-rouge">runserver</code> when you use <code class="language-plaintext highlighter-rouge">call_command</code>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">django.core.management</span> <span class="kn">import</span> <span class="n">call_command</span>
+<span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span>
+<span class="kn">from</span> <span class="nn">django.core.management.commands.runserver</span> <span class="kn">import</span> <span class="n">BaseRunserverCommand</span>
+
+
+<span class="k">class</span> <span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="s">''' Runs the built-in Django runserver with initial schema and fixtures
+    Note: cannot use auto-reloading because that casues resetdb to be called
+    twice.
+    '''</span>
+
+    <span class="c1"># remove this option from the --help for this command
+</span>    <span class="n">option_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">o</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">BaseRunserverCommand</span><span class="p">.</span><span class="n">option_list</span> <span class="k">if</span> <span class="n">o</span><span class="p">.</span><span class="n">dest</span> <span class="o">!=</span> <span class="s">'use_reloader'</span><span class="p">)</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">'Starts a lightweight web server testing.'</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="s">'[optional port number, or ipaddr:port] appname appname'</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addrport</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="n">call_command</span><span class="p">(</span><span class="s">'syncdb'</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="c1"># BUG: runserver gets called twice if --noreload is False
+</span>        <span class="c1"># https://code.djangoproject.com/ticket/8085
+</span>        <span class="n">options</span><span class="p">[</span><span class="s">'use_reloader'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">call_command</span><span class="p">(</span><span class="s">'runserver'</span><span class="p">,</span> <span class="n">addrport</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code></pre></figure>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2013-10-24-django-subclass-runserver.md">_posts/2013-10-24-django-subclass-runserver.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2013-10-24T00:00:00+00:00">October 24, 2013</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2013/10/04/what-to-know-before-starting-at-a-startup.html" class="pagination--pager" title="Joining a software startup right out of school">Previous</a>
+    
+    
+      <a href="/blog/2013/11/03/django-runserver-launch-multiple-screen.html" class="pagination--pager" title="Hacking Django runserver to run multiple Django instances">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
