@@ -1,4 +1,6 @@
 server:
+	bundle exec jekyll serve --config _config.yml,_config_dev.yml --incremental --watch --drafts --verbose
+github:
 	bundle exec jekyll serve --incremental --watch --drafts --verbose
 tags:
 	egrep -r --color -h "tags:\ (.+)" _posts/*.md |xargs -n1 |sort |uniq -c |sort
