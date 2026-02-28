@@ -1,4 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://chase-seibert.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chase-seibert.github.io/blog/" rel="alternate" type="text/html" /><updated>2026-02-28T20:26:39+00:00</updated><id>https://chase-seibert.github.io/blog/feed.xml</id><title type="html">Chase Seibert Blog</title><subtitle>Facts, hacks and attacks from my life as a web application developer</subtitle><author><name>Chase Seibert</name></author><entry><title type="html">Why Engineering Managers Should Use Claude Code for Productivity, Not Just Coding</title><link href="https://chase-seibert.github.io/blog/2026/02/08/claude-code-engineering-manager-productivity.html" rel="alternate" type="text/html" title="Why Engineering Managers Should Use Claude Code for Productivity, Not Just Coding" /><published>2026-02-08T00:00:00+00:00</published><updated>2026-02-08T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2026/02/08/claude-code-engineering-manager-productivity</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2026/02/08/claude-code-engineering-manager-productivity.html"><![CDATA[<h1 id="a-moment-in-time">A moment in time</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://chase-seibert.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://chase-seibert.github.io/blog/" rel="alternate" type="text/html" /><updated>2026-02-28T20:30:09+00:00</updated><id>https://chase-seibert.github.io/blog/feed.xml</id><title type="html">Chase Seibert Blog</title><subtitle>Facts, hacks and attacks from my life as a web application developer</subtitle><author><name>Chase Seibert</name></author><entry><title type="html">Steering Coding Agents with Repo-Native Docs: A Playbook for Teams</title><link href="https://chase-seibert.github.io/blog/2026/02/28/coding-agent-repo-native-docs.html" rel="alternate" type="text/html" title="Steering Coding Agents with Repo-Native Docs: A Playbook for Teams" /><published>2026-02-28T00:00:00+00:00</published><updated>2026-02-28T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2026/02/28/coding-agent-repo-native-docs</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2026/02/28/coding-agent-repo-native-docs.html"><![CDATA[<p>Code documentation exists to help the next person. It explains <em>why</em>, not just <em>what</em>, and it makes onboarding faster. It reduces execution risk by making assumptions and constraints explicit. It also clarifies interfaces, so people can safely change or reuse things without guessing.</p>
+
+<p>We are entering an era where “next person” is comprised of the human <em>and their coding agent</em>. The job is to explain the why to both of them, onboard both of them, etc. For any job to be done, the engineer will break the problem down into many subproblems. The agent will use the docs to answer questions about many of those subproblems on the way to building a working solution.</p>
+
+<p>Even if the human never has the agent actually write code, being able to ask the agent these kinds of questions is supremely useful. For example, the human might ask:</p>
+
+<ul>
+  <li>How do I run the service for logging?</li>
+  <li>How do I run the test for creating a new user?</li>
+  <li>How do I create a new feature flag and branch in the code based on that?</li>
+  <li>Who owns the authentication service?</li>
+</ul>
+
+<p>These questions cannot be efficiently answered just by looking at the code itself. We need to make documentation more discoverable, legible and concise for effective agent consumption.</p>
+
+<h1 id="two-challenges-of-agent-facing-documentation">Two challenges of agent-facing documentation</h1>
+
+<p>The main challenge for AI agent documentation is limited context windows. Long documents mean too much additional context. That’s when the agent’s attention can wander, or it can lock onto irrelevant details. If it can’t quickly find the information it needs, it will be more likely to invent something. The job of AI documentation is to point the agent in the right direction, load just the context needed for the task, and no more.</p>
+
+<p>The secondary challenge is retrieval speed. The agent has to be able to find what it needs and retrieve the content of the documentation <em>quickly</em>. That means putting the key documentation into the codebase, where the agent is already operating, instead of forcing it to bounce across tools and tabs.</p>
+
+<h1 id="caching-as-the-mental-model-for-documentation">Caching as the mental model for documentation</h1>
+
+<p>A useful mental model here is to treat your documentation as a <strong>context cache</strong>. There is context that is hot-loaded (always in context), warm-loaded by proximity to where the agent is working in the repo, and cold-loaded context that has to be manually referenced (or fetched).</p>
+
+<h2 id="agentsmd-as-the-hot-cache-at-the-repo-root">AGENTS.md as the “hot cache” at the repo root</h2>
+
+<p>All major AI coding agents can work with a common structure based on AGENTS.md files at multiple folders in your repos. The root AGENTS.md should contain only context you want loaded into literally every prompt. This is your hot-loaded cache, and it must be <em>super small</em>.</p>
+
+<p>Good examples of root AGENTS.md content:</p>
+
+<ul>
+  <li>One-line description of what this repo (or top-level folder/module) is</li>
+  <li>Commands to build, run tests, and lint</li>
+  <li>A high-level map of the repository, where to find what</li>
+</ul>
+
+<p>That’s it. Anything else should be a reference to other code-based documentation such as a full repo index, architecture docs, how to write tests, and how to write or update documentation (yep, documentation about documentation). The root file should act like a router, not a wiki.</p>
+
+<p>When you reference another doc file, do it in plain English with an explicit pointer, for example: “Writing tests: @docs/writing-tests.md”. A practical tip is to ask the agent if it can find and read the docs you’re referencing. If it can’t, it will guess, and you will not enjoy the results.</p>
+
+<p>You will see varying guidance on the maximum advisable length of AGENTS.md files, anywhere from 50 to 100 lines, up to 32kb (roughly 350 lines). If you care about staying within a limit, you can enforce it with CI rules. In general, agents don’t need verbose documentation, so keep the style to short bullets and direct pointers.</p>
+
+<p>You should also consider having standard section headers (and baking that into your “how to write documentation” docs). Consistency helps humans, and it also helps agents reliably locate the same kinds of information across modules.</p>
+
+<h2 id="local-agentsmd-as-the-warm-cache">Local AGENTS.md as the “warm cache”</h2>
+
+<p>You should have many AGENTS.md files at various subfolders in your hierarchy. The principles are the same: don’t repeat context from a higher-level AGENTS.md, but add a local-specific description, any local commands, a mini map of this module, and any external references specific to this code.</p>
+
+<p>These are your warm-loaded documents. Most major coding agents will load both the root AGENTS.md and the ones closest to the code it’s working in. A practical pro tip is to start your coding sessions inside the appropriate module if you know it. If you don’t, switch to that module once you discover it, for example by explicitly referencing the local AGENTS.md file.</p>
+
+<p>Warm cache docs are where you earn your win rate. They are the place to describe “what is special about this module,” “how to run its tests,” and “what not to touch,” without bloating the root context. They also help humans, especially new hires, who are doing the same scavenger hunt as the agent.</p>
+
+<h2 id="referencing-cold-cache-human-first-docs">Referencing “cold cache” human-first docs</h2>
+
+<p>There is still a plan for handwritten human-first docs. Those should live in a wiki, or something similar, and you can reference the critical ones from your AGENTS.md files. If you want a cleaner separation, add a level of indirection with a REFERENCES.md file that collects and curates links.</p>
+
+<p>If you rely on external docs, you should test that agents can actually load them. Ideally you do this through global agent configuration and MCP, but the baseline requirement is simpler: verify that the agent can open the link and read it without manual heroics.</p>
+
+<p>README.md files are best kept human-first. The main constraint is to try not to repeat yourself, especially in ways that go stale. Treat README.md as the “narrative and onboarding” layer, and treat AGENTS.md as the “steering and execution” layer.</p>
+
+<h1 id="making-this-work-in-todays-most-common-agents">Making this work in today’s most common agents</h1>
+
+<p>The good news is that this approach maps cleanly onto what people are already doing:</p>
+
+<ul>
+  <li>Codex uses this file convention out of the box.</li>
+  <li>Cursor also uses this convention.</li>
+  <li>Copilot will also read these files.</li>
+  <li>Claude can be pointed to AGENTS.md files with stub CLAUDE.md files that say “Load AGENTS.md”.</li>
+</ul>
+
+<p>Even if the exact mechanics differ by tool, the core pattern holds. Put the steering docs in the repo, keep the always-loaded context small, and use proximity to decide what else gets pulled in.</p>
+
+<h2 id="what-about-code-comments">What about code comments?</h2>
+
+<p>Yes, code comments are useful for coding agents. For the AI, the most important comments are what a function does, what the arguments represent, and any required preconditions. Comments that explain <em>why a weird decision exists</em> are also high-leverage, because they prevent “helpful” refactors that break an invisible constraint.</p>
+
+<h1 id="scoring-documentation-so-you-know-its-working">Scoring documentation (so you know it’s working)</h1>
+
+<p>You can treat documentation quality as something you can measure. Ask agents to do tasks and measure the success rate, especially if you have a system that provides a UX on top of one-shot AI coding tasks. If the agent can’t complete common tasks reliably, your docs are not yet doing their job.</p>
+
+<p>You can also ask agents questions about the code and see if they get the answers right. A bonus move is to source new questions from your actual engineers, especially new hires. If a new hire asks “how do I run X,” and the agent can’t answer, you just found a missing or mislocated piece of context.</p>
+
+<p>Continuous integration can help keep you honest. Consider adding checks for:</p>
+
+<ul>
+  <li>AGENTS.md files that are too big</li>
+  <li>Standard format or sections (if you have them)</li>
+  <li>Commands that don’t exist</li>
+  <li>References to files that don’t exist</li>
+</ul>
+
+<h1 id="rollout-strategy">Rollout strategy</h1>
+
+<p>Pick a goal and a metric you can measure today, even if it’s manual. The first pass should be practical and small, because the fastest way to lose momentum is to attempt a grand rewrite of documentation across the entire company.</p>
+
+<p>Start with the root AGENTS.md file, plus the basic cross-agent compatibility layer (for example, the Claude stub layer). Then pick 2 to 3 areas, and create local structure for AGENTS.md, README.md, REFERENCES.md, and any supporting docs. Aim for the modules where onboarding cost, operational risk, or dependency load is highest.</p>
+
+<p>Finally, encode the above in a global reference for how to write AI documentation. That “how to” doc should suggest improvements to the documentation you have already written, and it should be referenced from the global AGENTS.md so it’s discoverable. Put another way, your documentation system should include the instructions to maintain itself.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>If you want agents to be reliable, you have to treat documentation like part of the execution surface area of the codebase. Keep the hot context small, use local AGENTS.md files to supply warm context near the code, and make cold context explicit and fetchable. Then score it, iterate, and enforce the basics with CI so it doesn’t rot.</p>
+
+<p>You do not need to throw away human-first docs to do this. You just need a repo-native steering layer that helps humans and agents collaborate without wandering, guessing, or inventing.</p>
+
+<h1 id="references">References</h1>
+<ul>
+  <li>Mercari: “<a href="https://engineering.mercari.com/en/blog/entry/20251030-taming-agents-in-the-mercari-web-monorepo/?utm_source=chatgpt.com">Taming agents in the Mercari Web monorepo</a>” (using AGENTS.md to reduce prompt boilerplate and help navigation):</li>
+  <li>Datadog: “<a href="https://dev.to/datadog-frontend-dev/steering-ai-agents-in-monorepos-with-agentsmd-13g0?utm_source=chatgpt.com">Steering AI agents in monorepos with Agents.md</a>” (framing AGENTS.md as a contract and describing steering docs):</li>
+</ul>]]></content><author><name>Chase Seibert</name></author><category term="ai" /><summary type="html"><![CDATA[Treat documentation like a context cache, keep the always loaded bits tiny, put the rest next to the code, and make agents faster and less wrong.]]></summary></entry><entry><title type="html">Why Engineering Managers Should Use Claude Code for Productivity, Not Just Coding</title><link href="https://chase-seibert.github.io/blog/2026/02/08/claude-code-engineering-manager-productivity.html" rel="alternate" type="text/html" title="Why Engineering Managers Should Use Claude Code for Productivity, Not Just Coding" /><published>2026-02-08T00:00:00+00:00</published><updated>2026-02-08T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2026/02/08/claude-code-engineering-manager-productivity</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2026/02/08/claude-code-engineering-manager-productivity.html"><![CDATA[<h1 id="a-moment-in-time">A moment in time</h1>
 
 <p>I’ve been playing with Claude Code lately, but not for coding in the traditional sense. I’ve been using it for personal productivity, specifically as a knowledge worker. That experiment turned into a small side project, and you can see the early results here: <a href="https://github.com/chase-seibert/chase-sidekick">chase-sidekick on GitHub</a>.</p>
 
@@ -963,79 +1074,4 @@ where you think they are already ready for a next level opportunity, and where t
 
 <h1 id="do-the-best-thing-for-the-company">Do the best thing for the company</h1>
 
-<p>When in doubt, do the best thing for the company. I expect this from anyone in a leadership position. Often there is temptation to optimize for the local team. As you get more senior, I expect you to optimize for the company more.</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><category term="newboss" /><summary type="html"><![CDATA[These are my basic expectations for managers that report to me]]></summary></entry><entry><title type="html">What are Healthy Relationships?</title><link href="https://chase-seibert.github.io/blog/2022/11/18/what-are-healthy-relationships.html" rel="alternate" type="text/html" title="What are Healthy Relationships?" /><published>2022-11-18T00:00:00+00:00</published><updated>2022-11-18T00:00:00+00:00</updated><id>https://chase-seibert.github.io/blog/2022/11/18/what-are-healthy-relationships</id><content type="html" xml:base="https://chase-seibert.github.io/blog/2022/11/18/what-are-healthy-relationships.html"><![CDATA[<p>Five years into my career, I had gone from being one of the few engineers at the company, to being the expert on a medium-sized engineering team. If someone misunderstood how something worked, I could list all the ways there were wrong. If someone had a product idea, I could find all the ways it might not work. I even remember joking about this by saying, “if you need someone to poke holes in an idea, you know who to come to”. No one ever said anything directly, but my manager started getting feedback about how I was coming across. I got some formal 360 feedback that was filled with phrases describing me as “always needing to be right”, “thinks he knows everything”, and “too cocky”.</p>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/C6BYzLIqKB8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-<p><br /></p>
-
-<p>I wasn’t sure how to process the feedback at first, but eventually I realized that the biggest thing limiting my impact was my relationships with other people. This was a formative piece of feedback in my career, and marked the first time I started thinking about my “soft skills”.</p>
-
-<p>Healthy relationships at work are not just about the people on your team, or even the people you interact with. They are also the way you interact over email, in a large Slack channel, or in a document. It’s OK to occasionally cross into curmudgeon territory, but don’t make a steady diet of it. If it’s too frequent, too visible, or inappropriate for the audience, it can cross the line. You can’t go wrong if you consistently take ownership, assume good intent, and radiate positivity.</p>
-
-<h1 id="what-good-looks-like">What Good Looks Like</h1>
-
-<p>You always want 360 feedback from your relationships to be excellent. In terms of having healthy relationships, this looks like consistent positive comments about your professionalism, tone, and collaboration. Feedback that is specifically about you or your relationship should not be negative, even if there are challenging projects, or circumstances. You want feedback from others to be critical of outcomes, not of you personally.</p>
-
-<p>For engineering managers, this means feedback from your direct reports as well as your peer product managers, designers, and engineering managers. Your manager probably gets feedback from these folks in one on ones, and from anonymous surveys. Feedback can also come from exit surveys when people leave the team.</p>
-
-<p>As you get more senior, the pool of people who have visibility on you grows. At some point, you can reasonably expect feedback to potentially come from anywhere in the company. It starts to reflect not just on you, but also your whole team, and your leads.</p>
-
-<p>Model the relationship that you want in your own interactions with folks. Demonstrate trust, always keep things professional, and criticize the work, not the person. Also, keep an eye out for common work stressors.</p>
-
-<h1 id="common-stressors-on-healthy-relationships">Common Stressors on Healthy Relationships</h1>
-
-<p>Having healthy relationships does not mean that nothing will ever go wrong. But when things do  go wrong, your relationships are not the cause, and your relationships are not burned resolving the issue.</p>
-
-<h2 id="blockers">Blockers</h2>
-
-<p>Whatever the issue is, you want to talk about it with your team, peers, and your boss. This happens in one on ones, and team check-ins. To some extent, it’s OK to vent or be frustrated in a one one one with your manager. That’s part of what they are there for. But in a team meeting, you want to quickly move forward constructively. You can do this by taking a lens of extreme ownership, where you take responsibility to solve the issue together.</p>
-
-<p>If you have an idea for a solution, use your manager as a sounding board to help you work through it. It’s OK to come to them without a solution, but be prepared for ideas from them. You should expect that 80% of the time, your manager will propose a solution you can act on yourself, versus having them act.</p>
-
-<p>What if the blocker is another person? Remind yourself that you need to assume good intent, ask open-ended questions, and frame things in a positive light. Don’t turn a non-people problem into a relationship problem.</p>
-
-<h2 id="uncertainty">Uncertainty</h2>
-
-<p>The level of uncertainty and ambiguity you deal with on a regular basis is only going to increase as your seniority and scope increases. At a certain level, no amount of uncertainty is anomalous or outside the range of expectations for your role. Uncertainty itself should not be an excuse for unhealthy relationships or interactions.</p>
-
-<p>Sometimes, you need to live with the uncertainty for a bit. You may catch yourself making the  mistake of trying to resolve uncertainty too quickly, versus not quickly enough. Sometimes what is required is just to sit patiently with the uncertainty. In general, your best tools here are going to be perspective, curiosity, and reaching out to the right people.</p>
-
-<p>If you need to escalate to resolve the uncertainty, be sure to follow <a href="/blog/2021/04/05/escalations.html">healthy escalation best practices</a>.</p>
-
-<h2 id="lack-of-confidence">Lack of Confidence</h2>
-
-<p>What if you think that a peer is not performing in their role? First, you should give them feedback. Then, try coaching them. Finally, give their manager feedback, either directly, or though your manager. Your working relationship with the person should never suffer. Even if the person is under-performing, you don’t want your relationship itself to become a contributor to blocking the team.</p>
-
-<p>Be mindful that it’s not your decision whether a cross-functional peer, or anyone outside your org, is performing well in their role. You cannot make that determination unilaterally with the information you have. Don’t assume you know what is expected of them outside the context of your roles and responsibilities with each other. What you can do is make your respective roles and responsibilities clear, in writing.</p>
-
-<p>Never balk at performing your own role based on a sense that someone else is not performing well. A specific case that you may see is when you are not happy with the level of detail in product specs. Do not refuse to estimate work, or put items on the roadmap. This can put your relationship with the product manager at risk. Instead, work with the whole team to refine and scope the work together.</p>
-
-<h2 id="all-hands-qa">All Hands Q&amp;A</h2>
-
-<p>The larger the audience, the more potential risk there is to damage relationships. One of the larger forums that you may be a part of in your work is an All Hands Q&amp;A session. You never want someone to be able to interpret a question you’re asking as having bad intent. Even if a question is anonymous, make sure it comes across in a healthy way. Avoid making unvalidated assumptions, and keep the tone positive. Ask yourself, how would you feel if this question was on the front page of the New York Times?</p>
-
-<p>Asking provocative questions is valuable, but not if they negatively affect morale, or reflect poorly on your team. It doesn’t matter if you’re 100% right, if you don’t find an effective way to ask the question. The ratio also matters, you don’t want to be the person always throwing bombs.</p>
-
-<h1 id="how-to-optimize-for-health-relationships">How to Optimize for Health Relationships</h1>
-
-<h2 id="communicate-with-ruthless-positivity">Communicate with Ruthless Positivity</h2>
-
-<p>It’s up to you to radiate the positivity that you would want to see in anyone. Relentlessly assume good intent. Psychological safety is a two-way street; in your interactions with peers and your manager, given them space to feel safe. Tailor your communication to leave the door open for constructive discussion. Take accountability for how you communicate, how it’s perceived by others, and it makes them feel.</p>
-
-<p>If you find yourself communicating with a sense of frustration or entitlement, take a step back. If you can’t find a way to say something that does not pose a risk to healthy relationships, save it for a one on one with your manager. You might try explicitly labeling it as a “rant”. As always, praise in public, and criticize in private.</p>
-
-<h2 id="prioritize-relationships">Prioritize Relationships</h2>
-
-<p>How and whether you show up for people affects the relationship. You should make time for regular one on ones with your team, as well as key peer relationships. Communicate that the relationship is important to you by keeping the time on the calendar, and coming engaged with topics to discuss.</p>
-
-<p>Get to know people on a personal level. Spend the first part of one on ones and smaller meetings asking folks what is going on outside of work. What are they excited about, right now? Smile and laugh with them. Make it genuine. Strong relationships built in the small moments will be what you lean on to get through tough times.</p>
-
-<p>Don’t underestimate the concentrated power of sharing a meal with someone, in person.</p>
-
-<h1 id="more-story-time">More Story Time</h1>
-
-<p>Much later in my career, I was fired from a role due to unhealthy relationships. My results were great. My peer, team and direct lead relationships were great. But, I had pissed off my great grand boss, and I didn’t last long after that. There was no warning, and no feedback. I’m not even 100% sure what happened, but I can guess.</p>
-
-<p>It came down to a refusal to engage my team, when I balked at moving forward with a project that didn’t have a product manager. I had given direct feedback, but my tone was “this is crazy”, “this is unreasonable”, and “YOU need to solve this”. That interaction put me on a knife’s edge. Later, there was a simple misunderstanding, but my credibility with this person was shot. I had burned the relationship, and it was unrecoverable.</p>
-
-<p>Outside of layoffs, I have more often seen attitude and unhealthy relationships result in termination than actual performance issues. Sometimes you can do enough damage to your internal reputation that it’s impossible to recover. There is no PIP for that.</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><summary type="html"><![CDATA[Strong relationships built in the small moments will be what you lean on to get through tough times]]></summary></entry></feed>
+<p>When in doubt, do the best thing for the company. I expect this from anyone in a leadership position. Often there is temptation to optimize for the local team. As you get more senior, I expect you to optimize for the company more.</p>]]></content><author><name>Chase Seibert</name></author><category term="manager" /><category term="newboss" /><summary type="html"><![CDATA[These are my basic expectations for managers that report to me]]></summary></entry></feed>

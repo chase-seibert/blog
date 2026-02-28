@@ -1966,4 +1966,10 @@ var store = [{
         "tags": ["ai","productivity","automation"],
         "url": "/blog/2026/02/08/claude-code-engineering-manager-productivity.html",
         "teaser": null
+      },{
+        "title": "Steering Coding Agents with Repo-Native Docs: A Playbook for Teams",
+        "excerpt":"Code documentation exists to help the next person. It explains why, not just what, and it makes onboarding faster. It reduces execution risk by making assumptions and constraints explicit. It also clarifies interfaces, so people can safely change or reuse things without guessing. We are entering an era where “next...","categories": [],
+        "tags": ["ai"],
+        "url": "/blog/2026/02/28/coding-agent-repo-native-docs.html",
+        "teaser": null
       }]

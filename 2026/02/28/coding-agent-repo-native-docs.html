@@ -1,0 +1,553 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Steering Coding Agents with Repo-Native Docs: A Playbook for Teams - Chase Seibert Blog</title>
+<meta name="description" content="Treat documentation like a context cache, keep the always loaded bits tiny, put the rest next to the code, and make agents faster and less wrong.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Steering Coding Agents with Repo-Native Docs: A Playbook for Teams">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2026/02/28/coding-agent-repo-native-docs.html">
+
+
+  <meta property="og:description" content="Treat documentation like a context cache, keep the always loaded bits tiny, put the rest next to the code, and make agents faster and less wrong.">
+
+
+
+  <meta property="og:image" content="https://chase-seibert.github.io/blog/images/header-ai-docs.png">
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Steering Coding Agents with Repo-Native Docs: A Playbook for Teams">
+  <meta name="twitter:description" content="Treat documentation like a context cache, keep the always loaded bits tiny, put the rest next to the code, and make agents faster and less wrong.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2026/02/28/coding-agent-repo-native-docs.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chase-seibert.github.io/blog/images/header-ai-docs.png">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2026-02-28T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2026/02/28/coding-agent-repo-native-docs.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/blog/images/header-ai-docs.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Steering Coding Agents with Repo-Native Docs: A Playbook for Teams
+
+        
+      </h1>
+      
+        <p class="page__lead">Treat documentation like a context cache, keep the always loaded bits tiny, put the rest next to the code, and make agents faster and less wrong.
+</p>
+      
+      
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Steering Coding Agents with Repo-Native Docs: A Playbook for Teams">
+    <meta itemprop="description" content="Treat documentation like a context cache, keep the always loaded bits tiny, put the rest next to the code, and make agents faster and less wrong.">
+    <meta itemprop="datePublished" content="2026-02-28T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#two-challenges-of-agent-facing-documentation">Two challenges of agent-facing documentation</a></li><li><a href="#caching-as-the-mental-model-for-documentation">Caching as the mental model for documentation</a><ul><li><a href="#agentsmd-as-the-hot-cache-at-the-repo-root">AGENTS.md as the “hot cache” at the repo root</a></li><li><a href="#local-agentsmd-as-the-warm-cache">Local AGENTS.md as the “warm cache”</a></li><li><a href="#referencing-cold-cache-human-first-docs">Referencing “cold cache” human-first docs</a></li></ul></li><li><a href="#making-this-work-in-todays-most-common-agents">Making this work in today’s most common agents</a><ul><li><a href="#what-about-code-comments">What about code comments?</a></li></ul></li><li><a href="#scoring-documentation-so-you-know-its-working">Scoring documentation (so you know it’s working)</a></li><li><a href="#rollout-strategy">Rollout strategy</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references">References</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p>Code documentation exists to help the next person. It explains <em>why</em>, not just <em>what</em>, and it makes onboarding faster. It reduces execution risk by making assumptions and constraints explicit. It also clarifies interfaces, so people can safely change or reuse things without guessing.</p>
+
+<p>We are entering an era where “next person” is comprised of the human <em>and their coding agent</em>. The job is to explain the why to both of them, onboard both of them, etc. For any job to be done, the engineer will break the problem down into many subproblems. The agent will use the docs to answer questions about many of those subproblems on the way to building a working solution.</p>
+
+<p>Even if the human never has the agent actually write code, being able to ask the agent these kinds of questions is supremely useful. For example, the human might ask:</p>
+
+<ul>
+  <li>How do I run the service for logging?</li>
+  <li>How do I run the test for creating a new user?</li>
+  <li>How do I create a new feature flag and branch in the code based on that?</li>
+  <li>Who owns the authentication service?</li>
+</ul>
+
+<p>These questions cannot be efficiently answered just by looking at the code itself. We need to make documentation more discoverable, legible and concise for effective agent consumption.</p>
+
+<h1 id="two-challenges-of-agent-facing-documentation">Two challenges of agent-facing documentation</h1>
+
+<p>The main challenge for AI agent documentation is limited context windows. Long documents mean too much additional context. That’s when the agent’s attention can wander, or it can lock onto irrelevant details. If it can’t quickly find the information it needs, it will be more likely to invent something. The job of AI documentation is to point the agent in the right direction, load just the context needed for the task, and no more.</p>
+
+<p>The secondary challenge is retrieval speed. The agent has to be able to find what it needs and retrieve the content of the documentation <em>quickly</em>. That means putting the key documentation into the codebase, where the agent is already operating, instead of forcing it to bounce across tools and tabs.</p>
+
+<h1 id="caching-as-the-mental-model-for-documentation">Caching as the mental model for documentation</h1>
+
+<p>A useful mental model here is to treat your documentation as a <strong>context cache</strong>. There is context that is hot-loaded (always in context), warm-loaded by proximity to where the agent is working in the repo, and cold-loaded context that has to be manually referenced (or fetched).</p>
+
+<h2 id="agentsmd-as-the-hot-cache-at-the-repo-root">AGENTS.md as the “hot cache” at the repo root</h2>
+
+<p>All major AI coding agents can work with a common structure based on AGENTS.md files at multiple folders in your repos. The root AGENTS.md should contain only context you want loaded into literally every prompt. This is your hot-loaded cache, and it must be <em>super small</em>.</p>
+
+<p>Good examples of root AGENTS.md content:</p>
+
+<ul>
+  <li>One-line description of what this repo (or top-level folder/module) is</li>
+  <li>Commands to build, run tests, and lint</li>
+  <li>A high-level map of the repository, where to find what</li>
+</ul>
+
+<p>That’s it. Anything else should be a reference to other code-based documentation such as a full repo index, architecture docs, how to write tests, and how to write or update documentation (yep, documentation about documentation). The root file should act like a router, not a wiki.</p>
+
+<p>When you reference another doc file, do it in plain English with an explicit pointer, for example: “Writing tests: @docs/writing-tests.md”. A practical tip is to ask the agent if it can find and read the docs you’re referencing. If it can’t, it will guess, and you will not enjoy the results.</p>
+
+<p>You will see varying guidance on the maximum advisable length of AGENTS.md files, anywhere from 50 to 100 lines, up to 32kb (roughly 350 lines). If you care about staying within a limit, you can enforce it with CI rules. In general, agents don’t need verbose documentation, so keep the style to short bullets and direct pointers.</p>
+
+<p>You should also consider having standard section headers (and baking that into your “how to write documentation” docs). Consistency helps humans, and it also helps agents reliably locate the same kinds of information across modules.</p>
+
+<h2 id="local-agentsmd-as-the-warm-cache">Local AGENTS.md as the “warm cache”</h2>
+
+<p>You should have many AGENTS.md files at various subfolders in your hierarchy. The principles are the same: don’t repeat context from a higher-level AGENTS.md, but add a local-specific description, any local commands, a mini map of this module, and any external references specific to this code.</p>
+
+<p>These are your warm-loaded documents. Most major coding agents will load both the root AGENTS.md and the ones closest to the code it’s working in. A practical pro tip is to start your coding sessions inside the appropriate module if you know it. If you don’t, switch to that module once you discover it, for example by explicitly referencing the local AGENTS.md file.</p>
+
+<p>Warm cache docs are where you earn your win rate. They are the place to describe “what is special about this module,” “how to run its tests,” and “what not to touch,” without bloating the root context. They also help humans, especially new hires, who are doing the same scavenger hunt as the agent.</p>
+
+<h2 id="referencing-cold-cache-human-first-docs">Referencing “cold cache” human-first docs</h2>
+
+<p>There is still a plan for handwritten human-first docs. Those should live in a wiki, or something similar, and you can reference the critical ones from your AGENTS.md files. If you want a cleaner separation, add a level of indirection with a REFERENCES.md file that collects and curates links.</p>
+
+<p>If you rely on external docs, you should test that agents can actually load them. Ideally you do this through global agent configuration and MCP, but the baseline requirement is simpler: verify that the agent can open the link and read it without manual heroics.</p>
+
+<p>README.md files are best kept human-first. The main constraint is to try not to repeat yourself, especially in ways that go stale. Treat README.md as the “narrative and onboarding” layer, and treat AGENTS.md as the “steering and execution” layer.</p>
+
+<h1 id="making-this-work-in-todays-most-common-agents">Making this work in today’s most common agents</h1>
+
+<p>The good news is that this approach maps cleanly onto what people are already doing:</p>
+
+<ul>
+  <li>Codex uses this file convention out of the box.</li>
+  <li>Cursor also uses this convention.</li>
+  <li>Copilot will also read these files.</li>
+  <li>Claude can be pointed to AGENTS.md files with stub CLAUDE.md files that say “Load AGENTS.md”.</li>
+</ul>
+
+<p>Even if the exact mechanics differ by tool, the core pattern holds. Put the steering docs in the repo, keep the always-loaded context small, and use proximity to decide what else gets pulled in.</p>
+
+<h2 id="what-about-code-comments">What about code comments?</h2>
+
+<p>Yes, code comments are useful for coding agents. For the AI, the most important comments are what a function does, what the arguments represent, and any required preconditions. Comments that explain <em>why a weird decision exists</em> are also high-leverage, because they prevent “helpful” refactors that break an invisible constraint.</p>
+
+<h1 id="scoring-documentation-so-you-know-its-working">Scoring documentation (so you know it’s working)</h1>
+
+<p>You can treat documentation quality as something you can measure. Ask agents to do tasks and measure the success rate, especially if you have a system that provides a UX on top of one-shot AI coding tasks. If the agent can’t complete common tasks reliably, your docs are not yet doing their job.</p>
+
+<p>You can also ask agents questions about the code and see if they get the answers right. A bonus move is to source new questions from your actual engineers, especially new hires. If a new hire asks “how do I run X,” and the agent can’t answer, you just found a missing or mislocated piece of context.</p>
+
+<p>Continuous integration can help keep you honest. Consider adding checks for:</p>
+
+<ul>
+  <li>AGENTS.md files that are too big</li>
+  <li>Standard format or sections (if you have them)</li>
+  <li>Commands that don’t exist</li>
+  <li>References to files that don’t exist</li>
+</ul>
+
+<h1 id="rollout-strategy">Rollout strategy</h1>
+
+<p>Pick a goal and a metric you can measure today, even if it’s manual. The first pass should be practical and small, because the fastest way to lose momentum is to attempt a grand rewrite of documentation across the entire company.</p>
+
+<p>Start with the root AGENTS.md file, plus the basic cross-agent compatibility layer (for example, the Claude stub layer). Then pick 2 to 3 areas, and create local structure for AGENTS.md, README.md, REFERENCES.md, and any supporting docs. Aim for the modules where onboarding cost, operational risk, or dependency load is highest.</p>
+
+<p>Finally, encode the above in a global reference for how to write AI documentation. That “how to” doc should suggest improvements to the documentation you have already written, and it should be referenced from the global AGENTS.md so it’s discoverable. Put another way, your documentation system should include the instructions to maintain itself.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>If you want agents to be reliable, you have to treat documentation like part of the execution surface area of the codebase. Keep the hot context small, use local AGENTS.md files to supply warm context near the code, and make cold context explicit and fetchable. Then score it, iterate, and enforce the basics with CI so it doesn’t rot.</p>
+
+<p>You do not need to throw away human-first docs to do this. You just need a repo-native steering layer that helps humans and agents collaborate without wandering, guessing, or inventing.</p>
+
+<h1 id="references">References</h1>
+<ul>
+  <li>Mercari: “<a href="https://engineering.mercari.com/en/blog/entry/20251030-taming-agents-in-the-mercari-web-monorepo/?utm_source=chatgpt.com">Taming agents in the Mercari Web monorepo</a>” (using AGENTS.md to reduce prompt boilerplate and help navigation):</li>
+  <li>Datadog: “<a href="https://dev.to/datadog-frontend-dev/steering-ai-agents-in-monorepos-with-agentsmd-13g0?utm_source=chatgpt.com">Steering AI agents in monorepos with Agents.md</a>” (framing AGENTS.md as a contract and describing steering docs):</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#ai" class="page__taxonomy-item p-category" rel="tag">ai</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2026-02-28-coding-agent-repo-native-docs.md">_posts/2026-02-28-coding-agent-repo-native-docs.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-02-28T00:00:00+00:00">February 28, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2026/02/08/claude-code-engineering-manager-productivity.html" class="pagination--pager" title="Why Engineering Managers Should Use Claude Code for Productivity, Not Just Coding">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
