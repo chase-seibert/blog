@@ -6,7 +6,8 @@
       "Bash(bundle exec jekyll serve:*)",
       "Bash(bundle update:*)",
       "Bash(ruby -v:*)",
-      "Bash(gem install:*)"
+      "Bash(gem install:*)",
+      "Bash(egrep:*)"
     ]
   }
 }
