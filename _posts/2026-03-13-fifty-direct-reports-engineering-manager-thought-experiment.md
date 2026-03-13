@@ -15,7 +15,7 @@ Is this where the industry is headed?
 
 Imagine a future where you manage **50 people** working on 50 different projects. Your day starts with reviewing an AI summary of important updates on some subset of those 50 projects from the last 24 hours. You have unread Slack messages in 75 different channels, and your AI bot triages and responds to most of them automatically.
 
-You have three one on ones on your calendar from direct reports who have signed up for on-demand 1:1s. There are 8 project-related meetings today, you dispatch AI agents to attend 5 of them, and plan to attend the other two in person. You also have a sync with a low performer and HR today on the progress against a Performance Improvement Plan, you cannot automate these, yet.
+You have three one on ones on your calendar from direct reports who have signed up for on-demand 1:1s. There are 8 project-related meetings today, you dispatch AI agents to attend 5 of them, and plan to attend the other 2 in person. You also have a sync with a low performer and HR today on the progress against a Performance Improvement Plan, you cannot automate these, yet.
 
 You have a block of time this afternoon to review an AI summary of summaries from various product, engineering, and engineering productivity dashboards. In a few spare moments at the end of the day, you use an AI coding agent to make some progress on a small feature you are working on. 
 
@@ -25,7 +25,7 @@ You are really dreading next week, when a peer manager is going on PTO, and you 
 
 Does this sound far fetched?
 
-Does this sound far-fetched? Apparently, [Meta is experimenting with exactly this](https://www.wsj.com/tech/ai/meta-to-create-new-applied-ai-engineering-organization-in-reality-labs-division-d41c4a69). Some other companies will likely follow suit, citing Facebook as precedent.
+Apparently, [Meta is experimenting with exactly this](https://www.wsj.com/tech/ai/meta-to-create-new-applied-ai-engineering-organization-in-reality-labs-division-d41c4a69). Some other companies will likely follow suit, citing Facebook as precedent.
 
 The key points from the initiative:
 
@@ -47,7 +47,7 @@ There are also some activities we can maybe reduce with AI. Code review is an ob
 
 At the same time, some responsibilities probably expand. Engineers will need to identify the right problems to work on, gather requirements, and explore solutions much more directly than many do today. If fewer people are involved in each project, more of the thinking work shifts onto the people actually shipping.
 
-The tradeoff is that something has to give. One thing that probably gives is mentoring other engineers. In a world where everyone is expected to move faster and own more surface area, mentorship gets squeezed unless a company explicitly protects time for it.
+Something has to give. One thing that probably gives is mentoring other engineers. In a world where everyone is expected to move faster and own more surface area, mentorship gets squeezed unless a company explicitly protects time for it.
 
 ## Manager expectations
 
@@ -55,7 +55,7 @@ For managers, the core responsibilities remain hiring, performance management, a
 
 There are definitely management activities that AI can reduce. Execution management, one on ones, project unblocking, and written communication all look more compressible than they did even a couple years ago. A lot of status gathering, follow-ups, summarization, and coordination work is ripe for automation.
 
-But if you stretch a manager too far, the work that probably disappears is some of the most important work. Setting strategy is the obvious casualty. There is only so much time in a week, and if a manager is trying to keep 50 people moving, the job quickly becomes reactive.
+But if you stretch a manager too far, the work that probably disappears is some of the most important work. For example, setting strategy. 
 
 ### What will your direct reports say if asked?
 
