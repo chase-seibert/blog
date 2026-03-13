@@ -72,7 +72,7 @@ excerpt: "Short description"
 ```
 
 - Posts support table of contents via `toc: true`
-- Images should reference `/blog/images/` path (includes baseurl)
+- Images should reference `/blog/images/` path (includes baseurl), ex: `# ![](/blog/images/escalations2.png)`
 - The theme is Minimal Mistakes with dark skin
 
 ### Configuration

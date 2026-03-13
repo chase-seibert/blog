@@ -12,6 +12,3 @@ excerpt: "XXX"
 # story format first
 
 # bullets to hit
-
-# See: https://itopaloglu83.github.io/Jekyll-Markdown-Cheat-Sheet/
-# ![](/blog/images/escalations2.png)
