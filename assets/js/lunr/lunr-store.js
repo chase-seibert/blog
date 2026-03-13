@@ -1972,4 +1972,10 @@ var store = [{
         "tags": ["ai"],
         "url": "/blog/2026/02/28/coding-agent-repo-native-docs.html",
         "teaser": null
+      },{
+        "title": "Can Engineering Management Scale to 50 Direct Reports?",
+        "excerpt":"Potential future Is this where the industry is headed? Imagine a future where you manage 50 people working on 50 different projects. Your day starts with reviewing an AI summary of important updates on some subset of those 50 projects from the last 24 hours. You have unread Slack messages...","categories": [],
+        "tags": ["manager","ai"],
+        "url": "/blog/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html",
+        "teaser": null
       }]

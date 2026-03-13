@@ -1,0 +1,652 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Can Engineering Management Scale to 50 Direct Reports? - Chase Seibert Blog</title>
+<meta name="description" content="A thought exercise on ultra-flat engineering organizations, AI leverage, and what breaks when one manager is expected to support 50 direct reports.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Can Engineering Management Scale to 50 Direct Reports?">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html">
+
+
+  <meta property="og:description" content="A thought exercise on ultra-flat engineering organizations, AI leverage, and what breaks when one manager is expected to support 50 direct reports.">
+
+
+
+  <meta property="og:image" content="https://chase-seibert.github.io/blog/images/header-50-direct-reports.jpg">
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Can Engineering Management Scale to 50 Direct Reports?">
+  <meta name="twitter:description" content="A thought exercise on ultra-flat engineering organizations, AI leverage, and what breaks when one manager is expected to support 50 direct reports.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chase-seibert.github.io/blog/images/header-50-direct-reports.jpg">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2026-03-13T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/blog/images/header-50-direct-reports.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Can Engineering Management Scale to 50 Direct Reports?
+
+        
+      </h1>
+      
+        <p class="page__lead">A thought exercise on ultra-flat engineering organizations, AI leverage, and what breaks when one manager is expected to support 50 direct reports.
+</p>
+      
+      
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Can Engineering Management Scale to 50 Direct Reports?">
+    <meta itemprop="description" content="A thought exercise on ultra-flat engineering organizations, AI leverage, and what breaks when one manager is expected to support 50 direct reports.">
+    <meta itemprop="datePublished" content="2026-03-13T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#potential-future">Potential future</a></li><li><a href="#facebook-is-trying-it">Facebook is trying it</a></li><li><a href="#traditional-expectation">Traditional expectation</a><ul><li><a href="#senior-eng-ic-activities">Senior Eng IC activities</a></li><li><a href="#manager-expectations">Manager expectations</a><ul><li><a href="#what-will-your-direct-reports-say-if-asked">What will your direct reports say if asked?</a></li></ul></li></ul></li><li><a href="#three-scenarios">Three scenarios</a></li><li><a href="#hypothetical-tools-for-a-50-direct-report-manager">Hypothetical tools for a 50-direct-report manager</a></li><li><a href="#objections-and-faqs">Objections and FAQs</a><ul><li><a href="#how-can-a-manager-meaningfully-support-50-people">How can a manager meaningfully support 50 people?</a></li><li><a href="#what-happens-to-mentorship-and-career-growth">What happens to mentorship and career growth?</a></li><li><a href="#how-do-you-detect-struggling-engineers-early">How do you detect struggling engineers early?</a></li><li><a href="#how-do-performance-reviews-work-at-this-scale">How do performance reviews work at this scale?</a></li><li><a href="#how-do-you-build-trust-without-regular-one-on-ones">How do you build trust without regular one on ones?</a></li><li><a href="#would-managers-burn-out-with-this-many-reports">Would managers burn out with this many reports?</a></li><li><a href="#can-product-managers-produce-shovel-ready-work-this-fast">Can product managers produce shovel-ready work this fast?</a></li></ul></li><li><a href="#cross-functional-layers">Cross-functional layers</a><ul><li><a href="#organizational-design">Organizational design</a></li></ul></li><li><a href="#migration-and-transition-strategy">Migration and transition strategy</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+            </nav>
+          </aside>
+        
+        <h1 id="potential-future">Potential future</h1>
+
+<p>Is this where the industry is headed?</p>
+
+<p>Imagine a future where you manage <strong>50 people</strong> working on 50 different projects. Your day starts with reviewing an AI summary of important updates on some subset of those 50 projects from the last 24 hours. You have unread Slack messages in 75 different channels, and your AI bot triages and responds to most of them automatically.</p>
+
+<p>You have three one on ones on your calendar from direct reports who have signed up for on-demand 1:1s. There are 8 project-related meetings today, you dispatch AI agents to attend 5 of them, and plan to attend the other two in person. You also have a sync with a low performer and HR today on the progress against a Performance Improvement Plan, you cannot automate these, yet.</p>
+
+<p>You have a block of time this afternoon to review an AI summary of summaries from various product, engineering, and engineering productivity dashboards. In a few spare moments at the end of the day, you use an AI coding agent to make some progress on a small feature you are working on.</p>
+
+<p>You are really dreading next week, when a peer manager is going on PTO, and you are going to be doing all of this for 100 people instead.</p>
+
+<h1 id="facebook-is-trying-it">Facebook is trying it</h1>
+
+<p>Does this sound far fetched?</p>
+
+<p>Does this sound far-fetched? Apparently, <a href="https://www.wsj.com/tech/ai/meta-to-create-new-applied-ai-engineering-organization-in-reality-labs-division-d41c4a69">Meta is experimenting with exactly this</a>. Some other companies will likely follow suit, citing Facebook as precedent.</p>
+
+<p>The key points from the initiative:</p>
+
+<ul>
+  <li><strong>Ultra-flat structure</strong> of up to 50 employees per manager</li>
+  <li>Projects that used to require big teams can now be accomplished by a <strong>single, very talented person</strong></li>
+  <li>This aligns with Zuckerberg’s ongoing “Year of Efficiency” philosophy, which emphasizes removing management layers to increase speed</li>
+</ul>
+
+<p>The stated goal is to increase speed.</p>
+
+<h1 id="traditional-expectation">Traditional expectation</h1>
+
+<p>Let’s think about some generic but common activities for engineering ICs and managers today. I am assuming at least senior level, going to staff and principal. This is where the most bang for the buck exists today, leveraging current AI coding tools.</p>
+
+<h2 id="senior-eng-ic-activities">Senior Eng IC activities</h2>
+
+<p>For senior engineers, the core responsibilities are still pretty recognizable. Estimate work, implement, test, QA, deploy, and measure. None of that disappears just because coding gets faster.</p>
+
+<p>There are also some activities we can maybe reduce with AI. Code review is an obvious one. So are mitigating production issues, fixing bugs, and even parts of interviewing candidates, especially screening and structured evaluation support.</p>
+
+<p>At the same time, some responsibilities probably expand. Engineers will need to identify the right problems to work on, gather requirements, and explore solutions much more directly than many do today. If fewer people are involved in each project, more of the thinking work shifts onto the people actually shipping.</p>
+
+<p>The tradeoff is that something has to give. One thing that probably gives is mentoring other engineers. In a world where everyone is expected to move faster and own more surface area, mentorship gets squeezed unless a company explicitly protects time for it.</p>
+
+<h2 id="manager-expectations">Manager expectations</h2>
+
+<p>For managers, the core responsibilities remain hiring, performance management, and team health. Those are the durable parts of the role. You can compress some workflows, but you cannot wish them away.</p>
+
+<p>There are definitely management activities that AI can reduce. Execution management, one on ones, project unblocking, and written communication all look more compressible than they did even a couple years ago. A lot of status gathering, follow-ups, summarization, and coordination work is ripe for automation.</p>
+
+<p>But if you stretch a manager too far, the work that probably disappears is some of the most important work. Setting strategy is the obvious casualty. There is only so much time in a week, and if a manager is trying to keep 50 people moving, the job quickly becomes reactive.</p>
+
+<h3 id="what-will-your-direct-reports-say-if-asked">What will your direct reports say if asked?</h3>
+
+<p>Consider what your direct reports would say if asked whether their manager:</p>
+
+<ul>
+  <li>Has meaningful discussions with them about career development</li>
+  <li>Keeps the team focused on clear priorities</li>
+  <li>Provides feedback to help them do their job better</li>
+  <li>Unblocks them so they can achieve important goals quickly</li>
+  <li>Fosters a culture of inclusion</li>
+  <li>Is someone they would recommend to others</li>
+  <li>Creates an environment where they feel comfortable being candid</li>
+  <li>Helps them understand how their work connects to company strategy</li>
+</ul>
+
+<p>That’s a hard list to satisfy with 50 direct reports and a calendar full of AI proxies.</p>
+
+<h1 id="three-scenarios">Three scenarios</h1>
+
+<p>Even if we take as a given that projects that used to require big teams can now be accomplished by a single, very talented person, there are still multiple ways this could play out across the industry.</p>
+
+<ol>
+  <li><strong>50 direct reports, each doing 1x the work</strong></li>
+  <li><strong>50 direct reports, each doing 10x the work</strong></li>
+  <li><strong>10 direct reports, each doing 10x the work</strong></li>
+</ol>
+
+<p>The first version is not really what is being proposed, because it fails to meet the goal of increasing speed. The last version will still happen no matter what at small companies that do not have 50+ engineers, especially early stage start-ups. I would personally be excited to lead engineering for a company where the express goal was to never have more than 10 engineers.</p>
+
+<p>But that is a much easier problem.</p>
+
+<p>For the purposes of this thought exercise, the scenario worth solving for is #2. That is the interesting one, 50 direct reports, each doing dramatically more work.</p>
+
+<h1 id="hypothetical-tools-for-a-50-direct-report-manager">Hypothetical tools for a 50-direct-report manager</h1>
+
+<p>What would you actually need in your toolkit to pull this off?</p>
+
+<ul>
+  <li><strong>AI one-on-one bot</strong> for pulse check-ins</li>
+  <li><strong>Meeting summary AI</strong> to attend meetings on your behalf and distill decisions</li>
+  <li><strong>Real-time performance dashboard</strong> with metrics and feedback</li>
+  <li><strong>Context concierge</strong> to summarize individual and project history</li>
+  <li><strong>Bi-directional visibility on status</strong> so stakeholders can correct AI context when it’s wrong</li>
+  <li><strong>Priority triage AI</strong> to rank incoming requests</li>
+</ul>
+
+<p>You might also need indirect access to the AI chat logs of all your direct reports. Who is going to have time to write a status report for you to read?</p>
+
+<p>You would also need implicit support from the company and IT department to allow AI automation to access all of these systems without requiring human intervention at every step.</p>
+
+<h1 id="objections-and-faqs">Objections and FAQs</h1>
+
+<p>There are some obvious objections.</p>
+
+<h2 id="how-can-a-manager-meaningfully-support-50-people">How can a manager meaningfully support 50 people?</h2>
+
+<p>I do not think you can, at least not in the way we usually mean support. It is more likely that you focus on the 5 to 10 highest performers and mostly support the rest through self-serve automation.</p>
+
+<h2 id="what-happens-to-mentorship-and-career-growth">What happens to mentorship and career growth?</h2>
+
+<p>A lot of it gets delegated to ICs, and a lot of it gets concentrated on top performers. Training junior and entry level engineers remains an unsolved problem in an AI-coding world. People will need to own much more of their own performance evaluation narrative, and it will become harder to create real growth opportunities for new manager.</p>
+
+<h2 id="how-do-you-detect-struggling-engineers-early">How do you detect struggling engineers early?</h2>
+
+<p>This likely becomes heavily driven by productivity metrics and automation, at least for initial detection. The system would need to identify cases that need attention before a human manager has enough direct contact to notice. That is efficient on paper, but it also has some obvious risks and blind spots.</p>
+
+<h2 id="how-do-performance-reviews-work-at-this-scale">How do performance reviews work at this scale?</h2>
+
+<p>Evaluation gets harder because you have less context on each engineer and each project. Decision making, oddly enough, gets easier because one person can just decide promotions and ratings for all 50 people without much calibration with other humans. That may sound efficient, but it is also a pretty radical concentration of judgment.</p>
+
+<h2 id="how-do-you-build-trust-without-regular-one-on-ones">How do you build trust without regular one on ones?</h2>
+
+<p>I do not believe this works without significant face time, and face time is exactly what you cannot afford in this model. I would expect the company-employee relationship to become more transactional. Maybe that is acceptable to some companies, but it is still a real cost.</p>
+
+<h2 id="would-managers-burn-out-with-this-many-reports">Would managers burn out with this many reports?</h2>
+
+<p>Maybe not. The workload is potentially solvable with enough automation. But burnout also comes from being misaligned with your day to day work, and a day or week spent with relatively little time interacting with people will burn out many managers.</p>
+
+<h2 id="can-product-managers-produce-shovel-ready-work-this-fast">Can product managers produce shovel-ready work this fast?</h2>
+
+<p>I do not think so. In fact, I suspect product managers will spend a lot more of their time implementing features too. My bet is that defining strategy and requirements falls more on engineers in this scenario, similar to the way engineering has already picked up more QA, DevOps, and adjacent responsibilities over time.</p>
+
+<h1 id="cross-functional-layers">Cross-functional layers</h1>
+
+<p>The traditional 1:1 mapping of one product manager and one designer to a team, or to 50 people, almost certainly does not hold. I do not see how one product manager or one designer could define work for 50 different projects. Each project requires too much thinking time, and if projects are also shipping faster, the demand for strategy and requirements goes up rather than down.</p>
+
+<p>I think in this world product managers and designers start landing code themselves.</p>
+
+<p>The real kicker is strategy alignment. How are we going to align on strategy in a world where 50 times as many things are moving at once? Maybe we do not actually need as much alignment for prioritization purposes, but it is going to be chaos if 50 projects are landing all the time and experiments are stomping all over each other.</p>
+
+<p>Maybe even more AI tooling helps with that.</p>
+
+<h2 id="organizational-design">Organizational design</h2>
+
+<p>My bet is that engineering, product, and design spans of control all scale to the same level, 50 direct reports. There is relatively little distinction between these roles in this world. They all become people manager roles with some specialization around discipline.</p>
+
+<p>For a company of 150 EPD employees, you could theoretically have 3 managers and a CEO. Today, with a span of control of roughly 10, you’d need at least 15 managers plus a layer of 2-3 VPs. That’s north of an <strong>80% reduction in management roles</strong>.</p>
+
+<p>Of course, if this works, many of those managers could theoretically be repurposed as individual contributors shipping code as well. For companies with 3k, 10k, or 50k engineers, the reduction in management roles scales linearly.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total Employees</th>
+      <th>Managers (Span = 50)</th>
+      <th>Managers (Span = 10)</th>
+      <th>Managers Removed</th>
+      <th>Reduction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>150</td>
+      <td>4</td>
+      <td>18</td>
+      <td>14</td>
+      <td>4.5x fewer</td>
+    </tr>
+    <tr>
+      <td>3,000</td>
+      <td>63</td>
+      <td>334</td>
+      <td>271</td>
+      <td>5.3x fewer</td>
+    </tr>
+    <tr>
+      <td>10,000</td>
+      <td>205</td>
+      <td>1,111</td>
+      <td>906</td>
+      <td>5.4x fewer</td>
+    </tr>
+    <tr>
+      <td>50,000</td>
+      <td>1,021</td>
+      <td>5,556</td>
+      <td>4,535</td>
+      <td>5.4x fewer</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>It is still TBD whether a traditional VP Eng, Director, or line manager would be the dominant surviving manager role in engineering. With the right automation, it could be any of them. That said, some management scenarios favor the manager always being more senior than their direct reports, which points more toward the VP Eng model.</p>
+
+<p>If that turns out to be true, the most likely remaining roles for more junior managers may be at companies with more junior engineers. Historically, that probably means start-ups.</p>
+
+<h1 id="migration-and-transition-strategy">Migration and transition strategy</h1>
+
+<p>If you actually wanted to move a company into this state, how would you do it?</p>
+
+<p>Start with humans performing the support roles in a VP Eng org: Directors, line managers, and TPMs. Set an explicit goal for those roles to automate themselves out of existence. These employees write the tools that the VP Eng needs day to day. Don’t forget to train the VP Eng to maintain those tools themselves. Those management roles may disappear, but the transition trains the people to switch into IC roles using AI coding.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>This is an interesting thought exercise, but not something I personally want to ever do.</p>
+
+<p>My preferred future is still the small-but-mighty team of 10 engineers scenario. Yes, each engineer is augmented by AI and doing dramatically more work. Yes, each of them might ship projects that would have taken a team of 10 people circa 2025. But managers still get to invest time in building real relationships and trust.</p>
+
+<p>AI can compress workflows, summarize context, and help people ship faster. It still cannot replace coffee chats, dinners, conversations, and human connection.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#ai" class="page__taxonomy-item p-category" rel="tag">ai</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#manager" class="page__taxonomy-item p-category" rel="tag">manager</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2026-03-13-fifty-direct-reports-engineering-manager-thought-experiment.md">_posts/2026-03-13-fifty-direct-reports-engineering-manager-thought-experiment.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-13T00:00:00+00:00">March 13, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2026/02/28/coding-agent-repo-native-docs.html" class="pagination--pager" title="Steering Coding Agents with Repo-Native Docs: A Playbook for Teams">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

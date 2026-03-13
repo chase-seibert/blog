@@ -5,13 +5,230 @@
   <description>Posts tagged as 'manager'</description>
      <atom:link href="https://chase-seibert.github.io/feeds/feed.manager.xml" rel="self" type="application/rss+xml" />
   <link>https://chase-seibert.github.io/tag/manager/</link>
-  <updated>2026-02-28T20:30:09+00:00</updated>
+  <updated>2026-03-13T23:05:05+00:00</updated>
   <author>
    <name>Chase Seibert</name>
    <email></email>
   </author>
 
   
+  
+   <item>
+    <title>Can Engineering Management Scale to 50 Direct Reports?</title>
+    <description>&lt;h1 id=&quot;potential-future&quot;&gt;Potential future&lt;/h1&gt;
+
+&lt;p&gt;Is this where the industry is headed?&lt;/p&gt;
+
+&lt;p&gt;Imagine a future where you manage &lt;strong&gt;50 people&lt;/strong&gt; working on 50 different projects. Your day starts with reviewing an AI summary of important updates on some subset of those 50 projects from the last 24 hours. You have unread Slack messages in 75 different channels, and your AI bot triages and responds to most of them automatically.&lt;/p&gt;
+
+&lt;p&gt;You have three one on ones on your calendar from direct reports who have signed up for on-demand 1:1s. There are 8 project-related meetings today, you dispatch AI agents to attend 5 of them, and plan to attend the other two in person. You also have a sync with a low performer and HR today on the progress against a Performance Improvement Plan, you cannot automate these, yet.&lt;/p&gt;
+
+&lt;p&gt;You have a block of time this afternoon to review an AI summary of summaries from various product, engineering, and engineering productivity dashboards. In a few spare moments at the end of the day, you use an AI coding agent to make some progress on a small feature you are working on.&lt;/p&gt;
+
+&lt;p&gt;You are really dreading next week, when a peer manager is going on PTO, and you are going to be doing all of this for 100 people instead.&lt;/p&gt;
+
+&lt;h1 id=&quot;facebook-is-trying-it&quot;&gt;Facebook is trying it&lt;/h1&gt;
+
+&lt;p&gt;Does this sound far fetched?&lt;/p&gt;
+
+&lt;p&gt;Does this sound far-fetched? Apparently, &lt;a href=&quot;https://www.wsj.com/tech/ai/meta-to-create-new-applied-ai-engineering-organization-in-reality-labs-division-d41c4a69&quot;&gt;Meta is experimenting with exactly this&lt;/a&gt;. Some other companies will likely follow suit, citing Facebook as precedent.&lt;/p&gt;
+
+&lt;p&gt;The key points from the initiative:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Ultra-flat structure&lt;/strong&gt; of up to 50 employees per manager&lt;/li&gt;
+  &lt;li&gt;Projects that used to require big teams can now be accomplished by a &lt;strong&gt;single, very talented person&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;This aligns with Zuckerberg’s ongoing “Year of Efficiency” philosophy, which emphasizes removing management layers to increase speed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The stated goal is to increase speed.&lt;/p&gt;
+
+&lt;h1 id=&quot;traditional-expectation&quot;&gt;Traditional expectation&lt;/h1&gt;
+
+&lt;p&gt;Let’s think about some generic but common activities for engineering ICs and managers today. I am assuming at least senior level, going to staff and principal. This is where the most bang for the buck exists today, leveraging current AI coding tools.&lt;/p&gt;
+
+&lt;h2 id=&quot;senior-eng-ic-activities&quot;&gt;Senior Eng IC activities&lt;/h2&gt;
+
+&lt;p&gt;For senior engineers, the core responsibilities are still pretty recognizable. Estimate work, implement, test, QA, deploy, and measure. None of that disappears just because coding gets faster.&lt;/p&gt;
+
+&lt;p&gt;There are also some activities we can maybe reduce with AI. Code review is an obvious one. So are mitigating production issues, fixing bugs, and even parts of interviewing candidates, especially screening and structured evaluation support.&lt;/p&gt;
+
+&lt;p&gt;At the same time, some responsibilities probably expand. Engineers will need to identify the right problems to work on, gather requirements, and explore solutions much more directly than many do today. If fewer people are involved in each project, more of the thinking work shifts onto the people actually shipping.&lt;/p&gt;
+
+&lt;p&gt;The tradeoff is that something has to give. One thing that probably gives is mentoring other engineers. In a world where everyone is expected to move faster and own more surface area, mentorship gets squeezed unless a company explicitly protects time for it.&lt;/p&gt;
+
+&lt;h2 id=&quot;manager-expectations&quot;&gt;Manager expectations&lt;/h2&gt;
+
+&lt;p&gt;For managers, the core responsibilities remain hiring, performance management, and team health. Those are the durable parts of the role. You can compress some workflows, but you cannot wish them away.&lt;/p&gt;
+
+&lt;p&gt;There are definitely management activities that AI can reduce. Execution management, one on ones, project unblocking, and written communication all look more compressible than they did even a couple years ago. A lot of status gathering, follow-ups, summarization, and coordination work is ripe for automation.&lt;/p&gt;
+
+&lt;p&gt;But if you stretch a manager too far, the work that probably disappears is some of the most important work. Setting strategy is the obvious casualty. There is only so much time in a week, and if a manager is trying to keep 50 people moving, the job quickly becomes reactive.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-will-your-direct-reports-say-if-asked&quot;&gt;What will your direct reports say if asked?&lt;/h3&gt;
+
+&lt;p&gt;Consider what your direct reports would say if asked whether their manager:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Has meaningful discussions with them about career development&lt;/li&gt;
+  &lt;li&gt;Keeps the team focused on clear priorities&lt;/li&gt;
+  &lt;li&gt;Provides feedback to help them do their job better&lt;/li&gt;
+  &lt;li&gt;Unblocks them so they can achieve important goals quickly&lt;/li&gt;
+  &lt;li&gt;Fosters a culture of inclusion&lt;/li&gt;
+  &lt;li&gt;Is someone they would recommend to others&lt;/li&gt;
+  &lt;li&gt;Creates an environment where they feel comfortable being candid&lt;/li&gt;
+  &lt;li&gt;Helps them understand how their work connects to company strategy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;That’s a hard list to satisfy with 50 direct reports and a calendar full of AI proxies.&lt;/p&gt;
+
+&lt;h1 id=&quot;three-scenarios&quot;&gt;Three scenarios&lt;/h1&gt;
+
+&lt;p&gt;Even if we take as a given that projects that used to require big teams can now be accomplished by a single, very talented person, there are still multiple ways this could play out across the industry.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;50 direct reports, each doing 1x the work&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;50 direct reports, each doing 10x the work&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;10 direct reports, each doing 10x the work&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The first version is not really what is being proposed, because it fails to meet the goal of increasing speed. The last version will still happen no matter what at small companies that do not have 50+ engineers, especially early stage start-ups. I would personally be excited to lead engineering for a company where the express goal was to never have more than 10 engineers.&lt;/p&gt;
+
+&lt;p&gt;But that is a much easier problem.&lt;/p&gt;
+
+&lt;p&gt;For the purposes of this thought exercise, the scenario worth solving for is #2. That is the interesting one, 50 direct reports, each doing dramatically more work.&lt;/p&gt;
+
+&lt;h1 id=&quot;hypothetical-tools-for-a-50-direct-report-manager&quot;&gt;Hypothetical tools for a 50-direct-report manager&lt;/h1&gt;
+
+&lt;p&gt;What would you actually need in your toolkit to pull this off?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;AI one-on-one bot&lt;/strong&gt; for pulse check-ins&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Meeting summary AI&lt;/strong&gt; to attend meetings on your behalf and distill decisions&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Real-time performance dashboard&lt;/strong&gt; with metrics and feedback&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Context concierge&lt;/strong&gt; to summarize individual and project history&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Bi-directional visibility on status&lt;/strong&gt; so stakeholders can correct AI context when it’s wrong&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Priority triage AI&lt;/strong&gt; to rank incoming requests&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You might also need indirect access to the AI chat logs of all your direct reports. Who is going to have time to write a status report for you to read?&lt;/p&gt;
+
+&lt;p&gt;You would also need implicit support from the company and IT department to allow AI automation to access all of these systems without requiring human intervention at every step.&lt;/p&gt;
+
+&lt;h1 id=&quot;objections-and-faqs&quot;&gt;Objections and FAQs&lt;/h1&gt;
+
+&lt;p&gt;There are some obvious objections.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-can-a-manager-meaningfully-support-50-people&quot;&gt;How can a manager meaningfully support 50 people?&lt;/h2&gt;
+
+&lt;p&gt;I do not think you can, at least not in the way we usually mean support. It is more likely that you focus on the 5 to 10 highest performers and mostly support the rest through self-serve automation.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-happens-to-mentorship-and-career-growth&quot;&gt;What happens to mentorship and career growth?&lt;/h2&gt;
+
+&lt;p&gt;A lot of it gets delegated to ICs, and a lot of it gets concentrated on top performers. Training junior and entry level engineers remains an unsolved problem in an AI-coding world. People will need to own much more of their own performance evaluation narrative, and it will become harder to create real growth opportunities for new manager.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-do-you-detect-struggling-engineers-early&quot;&gt;How do you detect struggling engineers early?&lt;/h2&gt;
+
+&lt;p&gt;This likely becomes heavily driven by productivity metrics and automation, at least for initial detection. The system would need to identify cases that need attention before a human manager has enough direct contact to notice. That is efficient on paper, but it also has some obvious risks and blind spots.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-do-performance-reviews-work-at-this-scale&quot;&gt;How do performance reviews work at this scale?&lt;/h2&gt;
+
+&lt;p&gt;Evaluation gets harder because you have less context on each engineer and each project. Decision making, oddly enough, gets easier because one person can just decide promotions and ratings for all 50 people without much calibration with other humans. That may sound efficient, but it is also a pretty radical concentration of judgment.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-do-you-build-trust-without-regular-one-on-ones&quot;&gt;How do you build trust without regular one on ones?&lt;/h2&gt;
+
+&lt;p&gt;I do not believe this works without significant face time, and face time is exactly what you cannot afford in this model. I would expect the company-employee relationship to become more transactional. Maybe that is acceptable to some companies, but it is still a real cost.&lt;/p&gt;
+
+&lt;h2 id=&quot;would-managers-burn-out-with-this-many-reports&quot;&gt;Would managers burn out with this many reports?&lt;/h2&gt;
+
+&lt;p&gt;Maybe not. The workload is potentially solvable with enough automation. But burnout also comes from being misaligned with your day to day work, and a day or week spent with relatively little time interacting with people will burn out many managers.&lt;/p&gt;
+
+&lt;h2 id=&quot;can-product-managers-produce-shovel-ready-work-this-fast&quot;&gt;Can product managers produce shovel-ready work this fast?&lt;/h2&gt;
+
+&lt;p&gt;I do not think so. In fact, I suspect product managers will spend a lot more of their time implementing features too. My bet is that defining strategy and requirements falls more on engineers in this scenario, similar to the way engineering has already picked up more QA, DevOps, and adjacent responsibilities over time.&lt;/p&gt;
+
+&lt;h1 id=&quot;cross-functional-layers&quot;&gt;Cross-functional layers&lt;/h1&gt;
+
+&lt;p&gt;The traditional 1:1 mapping of one product manager and one designer to a team, or to 50 people, almost certainly does not hold. I do not see how one product manager or one designer could define work for 50 different projects. Each project requires too much thinking time, and if projects are also shipping faster, the demand for strategy and requirements goes up rather than down.&lt;/p&gt;
+
+&lt;p&gt;I think in this world product managers and designers start landing code themselves.&lt;/p&gt;
+
+&lt;p&gt;The real kicker is strategy alignment. How are we going to align on strategy in a world where 50 times as many things are moving at once? Maybe we do not actually need as much alignment for prioritization purposes, but it is going to be chaos if 50 projects are landing all the time and experiments are stomping all over each other.&lt;/p&gt;
+
+&lt;p&gt;Maybe even more AI tooling helps with that.&lt;/p&gt;
+
+&lt;h2 id=&quot;organizational-design&quot;&gt;Organizational design&lt;/h2&gt;
+
+&lt;p&gt;My bet is that engineering, product, and design spans of control all scale to the same level, 50 direct reports. There is relatively little distinction between these roles in this world. They all become people manager roles with some specialization around discipline.&lt;/p&gt;
+
+&lt;p&gt;For a company of 150 EPD employees, you could theoretically have 3 managers and a CEO. Today, with a span of control of roughly 10, you’d need at least 15 managers plus a layer of 2-3 VPs. That’s north of an &lt;strong&gt;80% reduction in management roles&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Of course, if this works, many of those managers could theoretically be repurposed as individual contributors shipping code as well. For companies with 3k, 10k, or 50k engineers, the reduction in management roles scales linearly.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Total Employees&lt;/th&gt;
+      &lt;th&gt;Managers (Span = 50)&lt;/th&gt;
+      &lt;th&gt;Managers (Span = 10)&lt;/th&gt;
+      &lt;th&gt;Managers Removed&lt;/th&gt;
+      &lt;th&gt;Reduction&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;150&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;18&lt;/td&gt;
+      &lt;td&gt;14&lt;/td&gt;
+      &lt;td&gt;4.5x fewer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3,000&lt;/td&gt;
+      &lt;td&gt;63&lt;/td&gt;
+      &lt;td&gt;334&lt;/td&gt;
+      &lt;td&gt;271&lt;/td&gt;
+      &lt;td&gt;5.3x fewer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10,000&lt;/td&gt;
+      &lt;td&gt;205&lt;/td&gt;
+      &lt;td&gt;1,111&lt;/td&gt;
+      &lt;td&gt;906&lt;/td&gt;
+      &lt;td&gt;5.4x fewer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;50,000&lt;/td&gt;
+      &lt;td&gt;1,021&lt;/td&gt;
+      &lt;td&gt;5,556&lt;/td&gt;
+      &lt;td&gt;4,535&lt;/td&gt;
+      &lt;td&gt;5.4x fewer&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;It is still TBD whether a traditional VP Eng, Director, or line manager would be the dominant surviving manager role in engineering. With the right automation, it could be any of them. That said, some management scenarios favor the manager always being more senior than their direct reports, which points more toward the VP Eng model.&lt;/p&gt;
+
+&lt;p&gt;If that turns out to be true, the most likely remaining roles for more junior managers may be at companies with more junior engineers. Historically, that probably means start-ups.&lt;/p&gt;
+
+&lt;h1 id=&quot;migration-and-transition-strategy&quot;&gt;Migration and transition strategy&lt;/h1&gt;
+
+&lt;p&gt;If you actually wanted to move a company into this state, how would you do it?&lt;/p&gt;
+
+&lt;p&gt;Start with humans performing the support roles in a VP Eng org: Directors, line managers, and TPMs. Set an explicit goal for those roles to automate themselves out of existence. These employees write the tools that the VP Eng needs day to day. Don’t forget to train the VP Eng to maintain those tools themselves. Those management roles may disappear, but the transition trains the people to switch into IC roles using AI coding.&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;This is an interesting thought exercise, but not something I personally want to ever do.&lt;/p&gt;
+
+&lt;p&gt;My preferred future is still the small-but-mighty team of 10 engineers scenario. Yes, each engineer is augmented by AI and doing dramatically more work. Yes, each of them might ship projects that would have taken a team of 10 people circa 2025. But managers still get to invest time in building real relationships and trust.&lt;/p&gt;
+
+&lt;p&gt;AI can compress workflows, summarize context, and help people ship faster. It still cannot replace coffee chats, dinners, conversations, and human connection.&lt;/p&gt;
+</description>
+    <link>https://chase-seibert.github.io/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html </link>
+    <pubDate>2026-03-13T00:00:00+00:00</pubDate>
+    <guid isPermaLink="true">https://chase-seibert.github.io/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html</guid>
+   </item>
   
    <item>
     <title>Beyond Google Sheets, Practical Airtable Workflows for Managers</title>
@@ -1090,126 +1307,6 @@ owe it to yourself to have a system that makes the best use of it.&lt;/p&gt;
     <link>https://chase-seibert.github.io/2022/06/06/how-i-get-things-done-with-omnifocus.html </link>
     <pubDate>2022-06-06T00:00:00+00:00</pubDate>
     <guid isPermaLink="true">https://chase-seibert.github.io/2022/06/06/how-i-get-things-done-with-omnifocus.html</guid>
-   </item>
-  
-   <item>
-    <title>How to run a Retrospective</title>
-    <description>&lt;p&gt;A retrospective is a team meeting following a sprint, a quarter, or a specific project. The team talks about what went well, what didn’t go well, and what they could do better. Everyone has a chance to voice their ideas on how to improve the team. Over time, the team builds a set
-of best practices that they truly feel ownership over. You may even surface some feedback that
-you never would save seen, otherwise.&lt;/p&gt;
-
-&lt;p&gt;As an engineering manager, my teams always did retrospectives every two weeks, at the end of a sprint. I’ve probably been in something like 250 retrospectives, and I’ve run about 80% of those. Running a retrospective is easy. If you’re looking to get started as a facilitator, this blog post should get you up and running quickly.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Note: the manager’s role in a retrospective is to facilitate the conversation, not steer it. You want to be cautious about offering your own ideas. Besides facilitating, the most useful thing you can do is make sure the action items get completed.&lt;/em&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;basic-retrospective-format&quot;&gt;Basic Retrospective Format&lt;/h1&gt;
-
-&lt;p&gt;Your first job as a facilitator is to create psychological safety. I like to include this quote in the agenda doc, or on the calendar item itself.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Regardless of what we discover, we understand and truly believe that everyone did the best job they could, given what they knew at the time, their skills and abilities, the resources available, and the situation at hand.”
-– &lt;a href=&quot;http://retrospectivewiki.org/index.php?title=The_Prime_Directive&quot;&gt;Norm Kerth, Project Retrospectives: A Handbook for Team Review&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The most common retrospective format is brainstorming, voting, discussion, and action items. Here is a sample agenda for a 60 minute team retrospective:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Give the team a prompt, for example “How could we be moving faster?”. Write the categories Start, Stop, and Continue on the whiteboard.&lt;/li&gt;
-  &lt;li&gt;Silent brainstorming, team members write ideas down on sticky notes (10 minutes)&lt;/li&gt;
-  &lt;li&gt;Team members take turns putting their stickies on the whiteboard, quickly summarizing each one (10 minutes)&lt;/li&gt;
-  &lt;li&gt;Silent grouping into themes, for example “Testing” (5 minutes)&lt;/li&gt;
-  &lt;li&gt;Voting on top themes, everyone gets 3 votes, put stickers or use a whiteboard marker to vote on a theme (5 minutes)&lt;/li&gt;
-  &lt;li&gt;Discuss the top 3 themes, and generate one action item per theme (25 minutes)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/images/retro-start-stop.jpeg&quot; alt=&quot;Start, Stop, Continue Retrospective Whiteboard&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;variations-on-prompts&quot;&gt;Variations on Prompts&lt;/h2&gt;
-
-&lt;p&gt;This is the most effective way to steer the retrospective, as a manager. If they team is having issues reliably executing, the prompt should be some variation of that. Other prompts:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;How could we increase the quality of our work?&lt;/li&gt;
-  &lt;li&gt;How could we be working together as more of a team?&lt;/li&gt;
-  &lt;li&gt;How could we run more efficiently?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;variations-on-categories&quot;&gt;Variations on Categories&lt;/h2&gt;
-
-&lt;p&gt;Most retrospectives will follow this basic format. To keep things interesting, the facilitator can change up the brainstorm categories.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Wishes, Complaints, and Puzzles&lt;/li&gt;
-  &lt;li&gt;Headwinds, Tailwinds, and Anchors&lt;/li&gt;
-  &lt;li&gt;Glad, Sad, and Mad&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;action-items&quot;&gt;Action Items&lt;/h2&gt;
-
-&lt;p&gt;As the facilitator, you want to steer the team away from having too many action items. 
-You want the team to commit to actually completing a small set of action items, versus 
-having an exhaustive list. Remind the team that they will be able to generate more action
-items next retrospective.&lt;/p&gt;
-
-&lt;p&gt;Common action items:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Update the team’s &lt;a href=&quot;https://medium.com/ideas-by-crema/how-to-create-an-agile-team-working-agreement-7bc98df008a1&quot;&gt;working agreement&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Update the team’s &lt;a href=&quot;https://www.leadingagile.com/2017/02/definition-of-done/&quot;&gt;definition of done&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Update the team’s user story, test plan, or deploy checklist template&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;alternative-retrospective-formats&quot;&gt;Alternative Retrospective Formats&lt;/h1&gt;
-
-&lt;p&gt;If you’re looking for additional ideas, I recommend the book &lt;a href=&quot;https://www.amazon.com/Agile-Retrospectives-Making-Teams-Great/dp/0977616649&quot;&gt;Agile Retrospectives: Making Good Teams Great&lt;/a&gt;. It covers not only many different brainstorming prompts, but also entirely different agendas and formats.&lt;/p&gt;
-
-&lt;h2 id=&quot;sailboat-retrospective&quot;&gt;Sailboat Retrospective&lt;/h2&gt;
-
-&lt;p&gt;In a “sail boat” retrospective, teams that find themselves in dangerous waters imagine challenges they face as anchors, headwinds, and treacherous rocks.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/images/retro-boat.jpeg&quot; alt=&quot;Boat Retrospective Whiteboard&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;timeline-retrospective&quot;&gt;Timeline Retrospective&lt;/h2&gt;
-
-&lt;p&gt;In a “timeline” retrospective, teams look back at a long term project that is wrapping up, 
-and try to recall what happened when, and how they felt about it.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/images/retro-timeline.jpeg&quot; alt=&quot;Timeline Retrospective Whiteboard&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Looking for even more ideas? Check out &lt;a href=&quot;https://retromat.org/&quot;&gt;Retromat&lt;/a&gt; which can generate
-a random retrospective agenda for you.&lt;/p&gt;
-
-&lt;h1 id=&quot;agenda-add-ons&quot;&gt;Agenda Add-ons&lt;/h1&gt;
-
-&lt;p&gt;If the retrospective is your only reliable, frequent whole-team meeting, you might want to include some additional agenda items.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Reviewing the previous sprint, what was shipped, and what slipped? This can help generate ideas for the brainstorm.&lt;/li&gt;
-  &lt;li&gt;Kudos! Go around the room and thank each other for something specific. This can help break the ice and prime individuals to share.&lt;/li&gt;
-  &lt;li&gt;Do a light anonymous team health survey. How are you feeling from 1-10 about a few key questions. Record the scores over time.&lt;/li&gt;
-  &lt;li&gt;Quick +/-/delta about the retrospective itself. What should we do differently next time?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;tooling-for-virtual-retrospectives&quot;&gt;Tooling for Virtual Retrospectives&lt;/h1&gt;
-
-&lt;p&gt;Most of the retrospectives I have been involved in were in-person, using sticky notes and a whiteboard. Virtually, you can replicate that experience with something like &lt;a href=&quot;https://stickies.io/&quot;&gt;stickies.io&lt;/a&gt;. You could also use Miro, Trello, or any collaborative text editor.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/blog/images/retro-miro.png&quot; alt=&quot;Miro Retrospective Example&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;the-retrospective-scorecard-&quot;&gt;The Retrospective Scorecard 💯&lt;/h1&gt;
-
-&lt;p&gt;Is your team following best practices?&lt;/p&gt;
-
-&lt;ul class=&quot;task-list&quot;&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Retrospectives happen every sprint&lt;/li&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;The whole team is present&lt;/li&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Generate a small number of action items&lt;/li&gt;
-  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Previous action items are completed&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    <link>https://chase-seibert.github.io/2022/04/22/how-to-run-a-retrospective.html </link>
-    <pubDate>2022-04-22T00:00:00+00:00</pubDate>
-    <guid isPermaLink="true">https://chase-seibert.github.io/2022/04/22/how-to-run-a-retrospective.html</guid>
    </item>
   
  </channel>
