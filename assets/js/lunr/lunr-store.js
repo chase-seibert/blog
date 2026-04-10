@@ -1345,7 +1345,7 @@ var store = [{
       },{
         "title": "Saving for Retirement as a Software Engineer",
         "excerpt":"Take 100 young Americans starting out at age 25. By age 65, one will be rich and four will be financially independent. The remaining 95 will reach the traditional retirement age unable to self-sustain the lifestyle to which they have become accustomed. - The Bogleheads’ Guide to Investing This is...","categories": [],
-        "tags": ["401k","reading-list"],
+        "tags": ["personal-finance","reading-list"],
         "url": "/blog/2014/01/01/saving-for-retirement-as-a-software-engineer.html",
         "teaser": null
       },{
@@ -1465,7 +1465,7 @@ var store = [{
       },{
         "title": "Creating a Budget and Sticking to It",
         "excerpt":"The hardest part of doing anything is starting. If you’re someone who has delayed getting serious about retirement savings, or budgeting in general, I would encourage you to simply begin, today. I’ll describe my personal budgeting system, not because I think it’s the best system, but because it’s a place...","categories": [],
-        "tags": ["finance","401k"],
+        "tags": ["personal-finance"],
         "url": "/blog/2014/11/30/pay-yourself-weekly.html",
         "teaser": null
       },{
