@@ -1,6 +1,6 @@
 ---
 title: Creating a Budget and Sticking to It
-tags: finance 401k
+tags: personal-finance
 ---
 
 The hardest part of doing anything is starting. If you're someone who has delayed
