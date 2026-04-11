@@ -11,44 +11,46 @@ excerpt: "A simple, data-backed approach to investing that prioritizes consisten
 
 ## The Bogleheads Investing Philosophy and How to "Stay the Course"
 
-When I started by first job out of college at a startup, the CFO asked me what I wanted to do for 401k contributions. I told him to just max it out. He said “Good answer.” But I didn’t know anything about investing, and just picked some fund without much thought. It wasn’t seven years later that I started to look into what I should actually do for investments.
+When I started by first job out of college at a startup, the CFO asked me what I wanted to do for 401k contributions. I told him to just max it out. He said “Good answer.” But I didn’t know anything about investing, and just picked some fund without much thought. It wasn’t until seven years later that I started to look into what I should actually do for investments.
 
-I found [The Bogleheads' Guide to Investing](https://www.amazon.com/Bogleheads-Guide-Investing-Taylor-Larimore/dp/0470067365). It really resonated, and kicked off my interest in personal finance. Up until that point, I had been doing something right by accident, but I didn’t understand why. That book gave me a framework that actually made sense and was grounded in data.
+I found [The Bogleheads' Guide to Investing](https://www.amazon.com/Bogleheads-Guide-Investing-Taylor-Larimore/dp/0470067365). It really resonated, and kicked off my interest in personal finance. That book gave me a framework for both what to invest in and how to think about risk. 
 
 ## Jack Bogle & Bogleheads
 
 Jack Bogle (1929–2019) was the [founder of Vanguard](https://www.bogleheads.org/wiki/Getting_started). He invented the index fund as a way to lower the costs of investing for average people. His invention changed the investing world in a fundamental way.
 
-Before index funds, investing was about picking a mutual fund run by a set of people and betting that they would outperform the market. Bogle looked at the data and realized that almost no one beat the market after even 5–10 years, especially after accounting for fees. Instead of trying to beat the market, index funds own the whole market or a very large representative subset.
+Before index funds, investing was about picking a mutual fund and betting that it would outperform the market. Bogle looked at the data and realized that almost no funds beat the market after even 5–10 years, especially after accounting for fees. Instead of trying to beat the market, index funds own the whole market or a very large representative subset.
 
-They don’t get above average returns, they get exactly the average. But that turns out to be great, and the cost is very low because it’s essentially managed by an algorithm.
+They don’t get above average returns, they get exactly the average. But that turns out to be great, and the cost is very low because you're not paying someones salary, and also because they minimize trades and associated fees inside the fund. 
 
 Bogleheads is an online community that focuses on investing advice inspired by John Bogle. There are forums with hundreds of thousands of posts going back decades. They have a [specific philosophy](https://www.bogleheads.org/wiki/Bogleheads%C2%AE_investment_philosophy). I’ll try to distill the most important parts here.
 
 ## Invest early and often
 
-Live below your means. You need to have money left over every month so that you can invest it. Start investing as early as you can, because the amount of time your money has to grow is one of the top factors that determines the ultimate value of your investments.
+Live below your means. You need to have money left over every month so that you have something to invest. Start investing as early as you can, because the amount of time your money has to grow is one of the top factors that determines the ultimate value of your investments.
 
-The second most important factor is how much you invest. Investing more beats most other types of optimizations, including what you invest in.
+The second most important factor is how much you invest. Investing more beats most other types of optimizations, including what you invest in. Both factors are inputs in how compound interest increases iver time. 
 
 > "Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn’t, pays it."
 > — Albert Einstein
 
-Make it simple. Investing doesn’t actually need to be complicated. Make it automatic, because part of investing is doing it consistently, ideally every paycheck. 401k plans make this easy with contributions directly from payroll, but automatic contributions into taxable accounts are also important.
+What you invest in is relatively unimportant. Make it simple, such as a set amount every month. Make it automatic, ideally every paycheck. 401k plans make this easy with contributions directly from payroll. If you have funds beyond that, making automatic contributions into taxable accounts is the next best way to increase how much you invest. 
 
 Side note: I was wary for way too long about setting up a brokerage account to make investments above and beyond my 401k. This is one of my largest regrets about investing, not investing more than the 401k max sooner.
 
 ## Use index funds
 
-Index funds are known as “passive,” in that they don’t require anyone to manage what they choose to invest in or when they buy and sell. That’s opposed to “active,” where there is a person or board making those decisions regularly.
+Index funds are known as “passive,” in that they don’t require a person make decions on what they invest in or when they buy and sell. That’s opposed to “active,” where there is a person or board, and you are paying them a fee to manage the fund. 
 
-Passive beats active partly because active managers charge 1% or more for their services. This comes right off the top of your investment returns. So if a fund earned 7% growth in a year, you actually get 6%. That’s 14% of your return gone, even though managers make it sound like it’s “just” 1%.
+Passive beats active partly because active managers charge 1% or more for this service. This comes right off the top of your investment returns. So if a fund earned 7% growth in a year, you actually get 6%. That’s 14% of your return gone, even though managers make it sound like it’s “just” 1%. Thanks to compounding, it adds up to a lot over 20 years or more. 
 
 But the bigger reason index funds win is that even professional managers can’t beat the market very consistently.
 
 ![Active Managers vs Index](/blog/images/spiva-after-tax-scorecard-year-end-2024-exhibit-2.png)
 
 From [SPIVA After-Tax Scorecard Year-End 2024: The Effect of Taxes on Indices and Active Funds](https://www.spglobal.com/spdji/en/spiva/article/spiva-after-tax-scorecard)
+
+Today, this is a well understood fact acknowledged by the industry. 
 
 > “Most investors, both institutional and individual, will find that the best way to own common stocks is through an index fund that charges minimal fees. Those following this path are sure to beat the net results (after fees and expenses) delivered by the great majority of investment professionals.”  
 > — Warren Buffett ([1996 letter to shareholders](https://www.berkshirehathaway.com/1996ar/1996.html))
