@@ -1,101 +1,100 @@
 ---
 name: draft-to-post
-description: Write up my notes as a blog post. Don't change the words or formatting too much, just flesh out the prose. Follow my style.
-args:
-  - name: file_path
-    description: Path to the draft file to transform
-    required: false
+description: Turn a blog draft or notes file into a fleshed-out Jekyll `_posts` Markdown post while preserving the author's wording and style. Use when Codex needs to convert a draft into a publishable blog post, annotate the draft with the `_posts` path being worked on, then create or update the `_posts` version with Markdown prose. 
 ---
 
-# draft-to-post
+# Draft To Post
 
-## Description
-Write up my notes as a blog post. Don't change the words or formatting too much, just flesh out the prose. Follow STYLE.md.
+Use this documentation-only workflow to turn a draft notes file into a publishable blog post in this repository.
 
-## Usage
+## Model
+
+When model choice is available, use the latest/highest-capability thinking or reasoning model for the drafting pass.
+
+## Inputs
+
+- Require a draft file path. If the user does not provide one, ask for it.
+- Preserve the original draft content. Only modify the draft to add or update the tracking annotation.
+
+## Workflow
+
+### 1. Find The Post Target
+
+First, determine whether a `_posts` version already exists.
+
+- Look in the draft for a tracking annotation:
+
+```markdown
+<!-- draft-to-post: _posts/YYYY-MM-DD-title-slug.md -->
 ```
-/draft-to-post [file_path]
-```
 
-If no file path is provided, prompt the user to specify which draft file to process.
+- If the annotation exists and the referenced `_posts` file exists, use that file as the target. 
+- If the annotation exists but the referenced `_posts` file does not exist, treat this as a first creation path. Use the annotation as context, but still require a title before creating the post.
+- If no annotation exists, search `_posts/` for an obvious corresponding post by draft slug, draft title, or distinctive title-like phrase.
+- If exactly one corresponding `_posts` file already exists, add the annotation to the draft and use that file as the target. Do not suggest titles.
+- If multiple plausible `_posts` files exist, ask the user which one to use.
+- If no corresponding `_posts` file exists, continue to first creation
 
-## Instructions
+### 2. Create Or Update The Post File
 
-### Step 1: Get the file path
-- If the user provided a file path as an argument, use it
-- If not, ask the user which draft file they want to process
-- Validate that the file exists
+If creating a new post:
 
-### Step 2: Backup original notes
-- Read the original draft notes file content
-- Preserve the original draft notes at the bottom of the written blog post, underneath a horizontal break 
+- Create a Jekyll post file in `_posts/`.
+- Use today's date for the filename unless the user specifies another date.
+- Slugify the chosen title for the filename: `_posts/YYYY-MM-DD-title-slug.md`.
+- If a file already exists at the target path, ask before overwriting it.
+- Add or update the tracking annotation in the draft so it points to the created `_posts` file.
 
-### Step 3: Read the style guide
-- Read the STYLE.md file to understand the writing voice and patterns
-- Keep the style guidelines in mind for the transformation
+If updating an existing post:
 
-### Step 4: Transform the draft
-- Read the draft notes file carefully
-- Transform the notes into fleshed out prose following STYLE.md guidelines
-- Key principles:
-  - Don't change the core words or ideas too much
-  - Flesh out the prose to be more complete, readable, and to flow nicely
-  - Use direct, prescriptive language
-  - Use short declarative sentences for emphasis
-  - Add structure with headers (H1, H2, H3)
-  - Use lists, bullet points, and code blocks where appropriate
-  - Be specific and actionable
-  - Avoid hedging, passive voice, and excessive praise
-  - Keep paragraphs to 2-4 sentences
-  - Use bold for key terms, italics for notes
+- Use the `_posts` file identified in step 1.
+- Preserve the existing front matter title unless the user explicitly asks to change it.
+- Do not suggest alternate titles.
+- Add or update the tracking annotation in the draft if needed.
 
-### Step 5: Add front matter
-Create appropriate Jekyll front matter at the top of the file:
+Place the tracking annotation after the draft's YAML front matter if it has front matter. Otherwise, place it as the first line of the draft.
+
+Add front matter like this:
+
 ```yaml
 ---
-title: "[Suggested Title]"
-tags: tag1 tag2 tag3
+title: "Chosen Title"
+tags: tag1 tag2
 toc: true
 header:
-  overlay_image: /images/header-something.png
+  overlay_image: /images/header-title-slug.png
   overlay_color: "#000"
   overlay_filter: "0.5"
-excerpt: "[Brief 1-2 sentence excerpt]"
+excerpt: "One or two sentence excerpt."
 ---
 ```
 
-Suggest appropriate:
-- Title (direct, clear, reflects content)
-- Tags (relevant topics covered, primarily use existing tags)
-- Excerpt (compelling 1-2 sentence summary)
+Prefer existing tag names when the repository makes them obvious. Use a concise excerpt that reflects the post's actual thesis.
 
-### Step 6: Write the transformed content
-- Use the Write tool to replace the draft file with the polished version
-- Include the front matter at the top
-- Keep the same file path
+### 3. Flesh Out The Draft
 
-### Step 7: Suggest alternative titles
-After writing the post, present 5 alternative title options to the user:
-1. [Title option 1]
-2. [Title option 2]
-3. [Title option 3]
-4. [Title option 4]
-5. [Title option 5]
+Write the post using the selected title for a new post, or the existing post title for an update.
 
-Ask the user if they want to use one of these titles instead. If yes, update the front matter with their choice.
+- Do not change the original words or formatting too much.
+- Preserve the user's ideas, sequence, examples, and phrasing wherever possible.
+- Flesh out fragments into readable prose without adding new topics.
+- If adding phrases or transitions, keep them plain and serious. Do not make them glib, cute, or joke-like.
+- Combine related bullets or fragments into paragraphs where it makes sense.
+- Most paragraphs should be 3-5 sentences.
+- The occasional one-sentence paragraph is fine for emphasis, but use no more than one one-sentence paragraph per section.
+- Group the post into sections with Markdown headers. Use the user's headers when provided.
+- Add a conclusion section that follows naturally from the draft.
 
-### Step 8: Create LinkedIn post
-Write a short LinkedIn post (3-5 sentences) that:
-- Hooks the reader with a key insight or question
-- Summarizes the main value of the blog post
-- Includes a call-to-action to read the full post
-- Uses a professional but engaging tone
-- Ends with a link placeholder: [Link to blog post]
+### 4. Clean Up Markdown
 
-Present this to the user for them to copy.
+Use Markdown for sections, bold, italics, links, images, quotes, and code.
 
-## Notes
-- The transformation should enhance readability while preserving the author's voice and key points
-- Don't add new topics that were not in the original notes
-- Focus on structure, clarity, and flow
-- Follow STYLE.md for voice and formatting
+- Convert all-caps emphasis words to bold regular-case text. For example, change `IMPORTANT` to `**Important**`. Preserve true acronyms such as `API`, `URL`, `LLM`, `CPU`, and `HTML`.
+- Format quotes as Markdown blockquotes.
+- Format bare image paths as Markdown images using the blog base URL: `![img](/blog/images/$path.ext)`.
+- Format bare links as Markdown links. Derive the link text from the URL's page title or most readable URL segment when a page title is not readily available.
+- Keep existing Markdown structure when it is already good.
+
+## Final Response
+
+When finished, report the created `_posts` path and summarize only the most important changes. Mention if any assumptions were made, such as the publication date, tags, or header image path.
