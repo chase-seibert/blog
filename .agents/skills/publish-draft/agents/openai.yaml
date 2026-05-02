@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish Draft"
+  short_description: "Move a draft to posts and push it"
+  default_prompt: "Use $publish-draft to publish a blog draft."

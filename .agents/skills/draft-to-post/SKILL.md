@@ -1,11 +1,11 @@
 ---
 name: draft-to-post
-description: Turn a blog draft or notes file into a fleshed-out Jekyll `_posts` Markdown post while preserving the author's wording and style. Use when Codex needs to convert a draft into a publishable blog post, annotate the draft with the `_posts` path being worked on, then create or update the `_posts` version with Markdown prose. 
+description: Turn a blog draft or notes file into a second, prose-filled Jekyll draft in `_drafts/` while preserving the author's original bullet draft. Use when Codex needs to convert raw notes into a publishable draft, annotate the source draft with the generated `_drafts` path, then create or update that generated draft with Markdown prose. 
 ---
 
 # Draft To Post
 
-Use this documentation-only workflow to turn a draft notes file into a publishable blog post in this repository.
+Use this documentation-only workflow to turn a notes-style draft into a publishable prose draft in this repository.
 
 ## Model
 
@@ -14,45 +14,53 @@ When model choice is available, use the latest/highest-capability thinking or re
 ## Inputs
 
 - Require a draft file path. If the user does not provide one, ask for it.
-- Preserve the original draft content. Only modify the draft to add or update the tracking annotation.
+- Preserve the original draft content. Only modify the source draft to add or update the tracking annotation.
+- Keep both drafts in `_drafts/`: the user's original source draft and the Codex-generated prose draft.
 
 ## Workflow
 
-### 1. Find The Post Target
+### 1. Find The Generated Draft Target
 
-First, determine whether a `_posts` version already exists.
+First, determine whether a generated `_drafts` version already exists.
 
 - Look in the draft for a tracking annotation:
 
 ```markdown
-<!-- draft-to-post: _posts/YYYY-MM-DD-title-slug.md -->
+<!-- draft-to-post: _drafts/title-slug.md -->
 ```
 
-- If the annotation exists and the referenced `_posts` file exists, use that file as the target. 
-- If the annotation exists but the referenced `_posts` file does not exist, treat this as a first creation path. Use the annotation as context, but still require a title before creating the post.
-- If no annotation exists, search `_posts/` for an obvious corresponding post by draft slug, draft title, or distinctive title-like phrase.
-- If exactly one corresponding `_posts` file already exists, add the annotation to the draft and use that file as the target. Do not suggest titles.
-- If multiple plausible `_posts` files exist, ask the user which one to use.
-- If no corresponding `_posts` file exists, continue to first creation
+- If the annotation exists and the referenced `_drafts` file exists, use that file as the generated draft target.
+- If the annotation exists but the referenced `_drafts` file does not exist, treat this as a first creation path. Use the annotation as context, but still require a title before creating the generated draft.
+- If the annotation points to `_posts/`, treat it as legacy tracking from the old workflow. If the referenced `_posts` file exists, ask the user whether to update that published post or create a new generated draft in `_drafts/`.
+- If no annotation exists, search `_drafts/` for an obvious corresponding generated draft by source slug, draft title, or distinctive title-like phrase. Exclude the source draft itself.
+- If exactly one corresponding generated draft already exists, add the annotation to the source draft and use that file as the target. Do not suggest titles.
+- If multiple plausible generated drafts exist, ask the user which one to use.
+- If no corresponding generated draft exists, continue to first creation.
 
-### 2. Create Or Update The Post File
+### 2. Create Or Update The Generated Draft File
 
-If creating a new post:
+If creating a new generated draft:
 
-- Create a Jekyll post file in `_posts/`.
-- Use today's date for the filename unless the user specifies another date.
-- Slugify the chosen title for the filename: `_posts/YYYY-MM-DD-title-slug.md`.
+- Create a Jekyll draft file in `_drafts/`.
+- Slugify the chosen title for the filename: `_drafts/title-slug.md`.
+- If the source draft already uses the chosen filename, add a `-generated` suffix or another short differentiator so the original draft remains untouched.
 - If a file already exists at the target path, ask before overwriting it.
-- Add or update the tracking annotation in the draft so it points to the created `_posts` file.
+- Add or update the tracking annotation in the source draft so it points to the generated `_drafts` file.
 
-If updating an existing post:
+If updating an existing generated draft:
 
-- Use the `_posts` file identified in step 1.
+- Use the generated `_drafts` file identified in step 1.
 - Preserve the existing front matter title unless the user explicitly asks to change it.
 - Do not suggest alternate titles.
-- Add or update the tracking annotation in the draft if needed.
+- Add or update the tracking annotation in the source draft if needed.
 
-Place the tracking annotation after the draft's YAML front matter if it has front matter. Otherwise, place it as the first line of the draft.
+Place the tracking annotation after the source draft's YAML front matter if it has front matter. Otherwise, place it as the first line of the source draft.
+
+Optionally add a source-reference annotation near the top of the generated draft:
+
+```markdown
+<!-- draft-source: _drafts/original-source-draft.md -->
+```
 
 Add front matter like this:
 
@@ -73,7 +81,7 @@ Prefer existing tag names when the repository makes them obvious. Use a concise 
 
 ### 3. Flesh Out The Draft
 
-Write the post using the selected title for a new post, or the existing post title for an update.
+Write the generated draft using the selected title for a new draft, or the existing generated draft title for an update.
 
 - Do not change the original words or formatting too much.
 - Preserve the user's ideas, sequence, examples, and phrasing wherever possible.
@@ -97,4 +105,4 @@ Use Markdown for sections, bold, italics, links, images, quotes, and code.
 
 ## Final Response
 
-When finished, report the created `_posts` path and summarize only the most important changes. Mention if any assumptions were made, such as the publication date, tags, or header image path.
+When finished, report the generated `_drafts` path and summarize only the most important changes. Mention if any assumptions were made, such as tags, title, or header image path. Do not describe the generated draft as published; publishing is handled by the `publish-draft` skill.
