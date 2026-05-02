@@ -9,7 +9,7 @@ header:
 excerpt: "XXX"
 ---
 
-<!-- draft-to-post: _drafts/migrating-a-claude-project-to-a-codex-claude-hybrid.md -->
+<!-- draft-to-post: _posts/2026-05-01-migrating-a-claude-project-to-a-codex-claude-hybrid.md -->
 
 # story format first
 
