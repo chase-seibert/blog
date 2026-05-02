@@ -58,7 +58,7 @@ CLAUDE.local.md
 local/
 ```
 
-In Claude, this can go into `CLAUDE.local.md`. Codex has a similar pattern with `AGENTS.override.md`. You can use the same trick here and make `CLAUDE.local.md` contain only:
+In Claude, the canonical location for this is `CLAUDE.local.md`. Codex has a similar pattern with `AGENTS.override.md`. You can use the same trick here and make `CLAUDE.local.md` contain only:
 
 ```markdown
 Load @AGENTS.override.md
