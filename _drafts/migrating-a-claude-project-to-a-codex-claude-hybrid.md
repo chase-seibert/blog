@@ -23,7 +23,7 @@ It was a little tricky to convert the project to use Codex because I did not wan
 
 My short answer is: don't switch agents, support all the agents.
 
-We are likely heading into a period with a lot of newer and better agents. Some agents will be better at some things than others. You may want to invoke different agents for different tasks in the same repo. For example, in my experience, Codex is especially good at English prose and implementation follow-through. Claude remains useful in its own ways. There is no reason to force a personal automation project into tool purity if the project can instead become agent-compatible.
+We are likely heading into a period with a lot of newer and better agents. Some agents will be better at some things than others. You may want to invoke different agents for different tasks in the same repo. For example, in my experience, Codex is especially good at English prose and implementation follow-through. There is no reason to force a personal automation project into tool purity if the project can instead become agent-compatible.
 
 There may also be practical cost reasons to stay flexible. Different companies may subsidize tokens to drive adoption. Pricing, limits, and access models will keep changing. A repo that can be used by multiple agents gives you room to move.
 
@@ -39,7 +39,7 @@ The simple hack is to make `AGENTS.md` the canonical checked-in file, and have `
 Load @AGENTS.md
 ```
 
-You could use actual symlinks for this, but I prefer the file-reference approach. It lets `CLAUDE.md` stay Claude-specific if I ever need that, while still keeping the shared guidance in one place. In other words, `AGENTS.md` is the source of truth, and `CLAUDE.md` is a compatibility shim.
+You could use actual symlinks for this, but I prefer the file-reference approach. It lets `CLAUDE.md` stay Claude-specific if I ever need that, i.e. by putting other content after the file reference. This makes `AGENTS.md` is the source of truth, and `CLAUDE.md` is a compatibility shim.
 
 This also makes the repo easier for other agents to pick up. If a new agent supports `AGENTS.md`, it can start from the shared instructions. If it expects its own file name, you can add another tiny compatibility file without duplicating the whole context.
 
