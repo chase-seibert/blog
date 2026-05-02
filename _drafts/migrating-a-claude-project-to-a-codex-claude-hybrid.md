@@ -131,7 +131,11 @@ repo/
     skills -> ../.agents/skills
 ```
 
-The checked-in shared guidance lives in `AGENTS.md`. Claude gets a tiny `CLAUDE.md` file that tells it to load `AGENTS.md`. Personal local context lives outside git but is surfaced through `AGENTS.override.md` and `CLAUDE.local.md`. Shared skills live once, under `.agents/skills`, with Claude pointed at them through a symlink.
+In short:
+- The checked-in shared guidance lives in `AGENTS.md`.
+- Claude gets a tiny `CLAUDE.md` file that tells it to load `AGENTS.md`.
+- Personal local context lives in `AGENTS.override.md`. 
+- Shared skills live once, under `.agents/skills`, with Claude pointed at them through a symlink.
 
 # Permissions for cowork use cases
 
