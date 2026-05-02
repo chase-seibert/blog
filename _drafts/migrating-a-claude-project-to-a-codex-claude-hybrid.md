@@ -49,6 +49,15 @@ For cowork-style use cases, local context is especially useful. By local context
 
 You would never check that into your code. It may contain private information, internal links, or details that only make sense on your machine.
 
+I add these local files and directories to `.gitignore`:
+
+```gitignore
+AGENTS.override.md
+CLAUDE.local.md
+.env
+local/
+```
+
 In Claude, this can go into `CLAUDE.local.md`. Codex has a similar pattern with `AGENTS.override.md`. You can use the same trick here and make `CLAUDE.local.md` contain only:
 
 ```markdown
@@ -76,15 +85,6 @@ For a list of projects, see @local/projects.md.
 ```
 
 This trick is also useful once context files get larger than about 250 lines. At that point, the file probably wants to become a router rather than a complete knowledge base.
-
-I add these local files and directories to `.gitignore`:
-
-```gitignore
-AGENTS.override.md
-CLAUDE.local.md
-.env
-local/
-```
 
 # Skills
 
