@@ -107,7 +107,7 @@ I make `.agents/skills` the canonical location:
 
 Then I replace `.claude/skills` with a symlink to `../.agents/skills`. That lets Claude and Codex read the same skill files.
 
-The important thing is not the exact folder name. The important thing is that reusable workflows should exist once. If the same skill is copied into two agent-specific folders, those copies will drift. The whole point of the migration is to make the repo more maintainable, not to create another synchronization problem.
+The important thing is that reusable workflows should exist once. If the same skill is copied into two agent-specific folders, those copies will drift. The whole point of the migration is to make the repo more maintainable, not to create another synchronization problem.
 
 # Suggested folder structure
 
