@@ -1,0 +1,708 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Migrating a Claude Project to a Codex/Claude Hybrid - Chase Seibert Blog</title>
+<meta name="description" content="How to migrate a Claude Code project into a shared Claude and Codex setup without duplicating context files, skills, permissions, or local workflow documentation.">
+
+
+  <meta name="author" content="Chase Seibert">
+  
+  <meta property="article:author" content="Chase Seibert">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chase Seibert Blog">
+<meta property="og:title" content="Migrating a Claude Project to a Codex/Claude Hybrid">
+<meta property="og:url" content="https://chase-seibert.github.io/blog/2026/05/01/migrating-a-claude-project-to-a-codex-claude-hybrid.html">
+
+
+  <meta property="og:description" content="How to migrate a Claude Code project into a shared Claude and Codex setup without duplicating context files, skills, permissions, or local workflow documentation.">
+
+
+
+  <meta property="og:image" content="https://chase-seibert.github.io/blog/images/header-migrating-claude-project-to-codex-claude-hybrid.png">
+
+
+
+  <meta name="twitter:site" content="@chase_seibert">
+  <meta name="twitter:title" content="Migrating a Claude Project to a Codex/Claude Hybrid">
+  <meta name="twitter:description" content="How to migrate a Claude Code project into a shared Claude and Codex setup without duplicating context files, skills, permissions, or local workflow documentation.">
+  <meta name="twitter:url" content="https://chase-seibert.github.io/blog/2026/05/01/migrating-a-claude-project-to-a-codex-claude-hybrid.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://chase-seibert.github.io/blog/images/header-migrating-claude-project-to-codex-claude-hybrid.png">
+  
+
+  
+
+
+
+  <meta property="article:published_time" content="2026-05-01T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://chase-seibert.github.io/blog/2026/05/01/migrating-a-claude-project-to-a-codex-claude-hybrid.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="KbUN2yK33xTFIQa6xopl2QZyG02prTwsPwnCTjRRYMM" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/blog/feed.xml" type="application/atom+xml" rel="alternate" title="Chase Seibert Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+<a rel="me" href="https://hachyderm.io/@chase_seibert"></a>
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/blog/">
+          Chase Seibert Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/blog/me/"
+                
+                
+              >Top Posts</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/reading-list/"
+                
+                
+              >Reading List</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/resume.pdf"
+                
+                
+              >Resume</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/blog/images/header-migrating-claude-project-to-codex-claude-hybrid.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Migrating a Claude Project to a Codex/Claude Hybrid
+
+        
+      </h1>
+      
+        <p class="page__lead">How to migrate a Claude Code project into a shared Claude and Codex setup without duplicating context files, skills, permissions, or local workflow documentation.
+</p>
+      
+      
+
+
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://chase-seibert.github.io/blog/">
+        <img src="/blog/images/chase-square.jpg" alt="Chase Seibert" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://chase-seibert.github.io/blog/" itemprop="url">Chase Seibert</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Director of Engineering at Dropbox</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">San Francisco, CA</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.facebook.com/chase.seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-facebook-square" aria-hidden="true"></i><span class="label">Facebook</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/chase-seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.goodreads.com/chaseseibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-goodreads" aria-hidden="true"></i><span class="label">Goodreads</span></a></li>
+          
+        
+          
+            <li><a href="https://letterboxd.com/quasigenx/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-film" aria-hidden="true"></i><span class="label">Letterboxd</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/chaseseibert/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://hachyderm.io/@chase_seibert" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-mastodon" aria-hidden="true"></i><span class="label">Mastodon</span></a></li>
+          
+        
+          
+            <li><a href="https://stackoverflow.com/users/7679" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i><span class="label">Stack Overflow</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Migrating a Claude Project to a Codex/Claude Hybrid">
+    <meta itemprop="description" content="How to migrate a Claude Code project into a shared Claude and Codex setup without duplicating context files, skills, permissions, or local workflow documentation.">
+    <meta itemprop="datePublished" content="2026-05-01T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#implementing-a-personal-cowork-project">Implementing a Personal Cowork Project</a></li><li><a href="#why-support-multiple-agents">Why Support Multiple Agents?</a></li><li><a href="#context-loading">Context Loading</a></li><li><a href="#local-context">Local Context</a></li><li><a href="#local-context-indexes">Local Context Indexes</a></li><li><a href="#skills">Skills</a></li><li><a href="#suggested-folder-structure">Suggested Folder Structure</a></li><li><a href="#working-with-worktrees">Working With Worktrees</a></li><li><a href="#permissions-for-cowork-use-cases">Permissions for Cowork Use Cases</a></li><li><a href="#asking-codex-to-do-the-migration">Asking Codex to Do the Migration</a></li><li><a href="#closing">Closing</a></li></ul>
+            </nav>
+          </aside>
+        
+        <h1 id="implementing-a-personal-cowork-project">Implementing a Personal Cowork Project</h1>
+
+<p>I’ve been working on a personal cowork project called <a href="https://github.com/chase-seibert/chase-sidekick">chase-sidekick</a>. It is kind of like a custom OpenClaw: a repo full of scripts, clients, context, and reusable instructions that let an agent help me with knowledge work. The goal is not just to write code faster. The goal is to have an assistant that can operate safely inside the same messy workflow I already use: calendars, email, Slack, docs, project systems, and all the local context that makes those things meaningful.</p>
+
+<p>I started with Claude and loved the ability to set context locally with Markdown files and custom skills. That model felt immediately useful. I could build up project-specific knowledge, keep it next to the code, and teach the assistant how I wanted it to behave without rebuilding the whole context every session.</p>
+
+<p>But I also ran into issues around frequent reauthentication and being asked for basic permissions over and over. To be clear, those were configuration issues, not the fault of Claude. At the same time, Codex had just been released, and I wanted to try moving the implementation loop there.</p>
+
+<p>It was a little tricky to convert the project to use Codex because I did not want to make it a Codex-only project. I wanted to retain compatibility with Claude. I also did not want to repeat skills, local context, or documentation in two different places that would immediately drift apart.</p>
+
+<h1 id="why-support-multiple-agents">Why Support Multiple Agents?</h1>
+
+<p>My short answer is: don’t switch agents, support all the agents.</p>
+
+<p>We are likely heading into a period with a lot of newer and better agents. Some agents will be better at some things than others. You may want to invoke different agents for different tasks in the same repo. For example, in my experience, Codex is especially good at English prose and implementation follow-through. There is no reason to force a personal automation project into tool purity if the project can instead become agent-compatible.</p>
+
+<p>There may also be practical cost reasons to stay flexible. Different companies may subsidize tokens to drive adoption. Pricing, limits, and access models will keep changing. A repo that can be used by multiple agents gives you room to move.</p>
+
+<p>This assumes we are converging on standards for things like skills, agent instructions, and repo-native context files. That future is not quite here yet. For now, you still need to bridge a few things.</p>
+
+<h1 id="context-loading">Context Loading</h1>
+
+<p>Claude and Codex expect different files by default. Claude Code uses <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> for top-level project guidance. Codex uses <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, which looks like it may become the more general convention across agents in the future.</p>
+
+<p>The simple hack is to make <code class="language-plaintext highlighter-rouge">AGENTS.md</code> the canonical checked-in file, and have <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> point to it:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Load @AGENTS.md
+</code></pre></div></div>
+
+<p>You could use actual symlinks for this, but I prefer the file-reference approach. It lets <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> stay Claude-specific if I ever need that, i.e. by putting other content after the file reference. This makes <code class="language-plaintext highlighter-rouge">AGENTS.md</code> is the source of truth, and <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> is a compatibility shim.</p>
+
+<p>This also makes the repo easier for other agents to pick up. If a new agent supports <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, it can start from the shared instructions. If it expects its own file name, you can add another tiny compatibility file without duplicating the whole context.</p>
+
+<h1 id="local-context">Local Context</h1>
+
+<p>For cowork-style use cases, local context is especially useful. By local context, I mean Markdown files that are specific to me personally and should not be checked into git. Examples include my name and email address, who reports to me, what projects I am working on, links to meeting notes documents, personal preferences, and other operational details.</p>
+
+<p>You would never check that into your code. It may contain private information, internal links, or details that only make sense on your machine.</p>
+
+<p>I add these local files and directories to <code class="language-plaintext highlighter-rouge">.gitignore</code>:</p>
+
+<pre><code class="language-gitignore">AGENTS.override.md
+CLAUDE.local.md
+.env
+local/
+</code></pre>
+
+<p>In Claude, the canonical location for this is <code class="language-plaintext highlighter-rouge">CLAUDE.local.md</code>. Codex has a similar pattern with <code class="language-plaintext highlighter-rouge">AGENTS.override.md</code>. You can use the same trick here and make <code class="language-plaintext highlighter-rouge">CLAUDE.local.md</code> contain only:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Load @AGENTS.override.md
+</code></pre></div></div>
+
+<p>One difference is worth calling out. Codex does not necessarily load both <code class="language-plaintext highlighter-rouge">AGENTS.override.md</code> and <code class="language-plaintext highlighter-rouge">AGENTS.md</code> by default in the same way Claude may layer files. You can make the behavior explicit by adding this at the end of <code class="language-plaintext highlighter-rouge">AGENTS.override.md</code>, after the actual local context:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Also load @AGENTS.md
+</code></pre></div></div>
+
+<p>That gives you one local private context file that can be shared across both tools, while still letting each tool enter through the file name it expects.</p>
+
+<h1 id="local-context-indexes">Local Context Indexes</h1>
+
+<p>Your context files can grow to be unwieldy. Large context files will blow up your agent context window, especially if they are loaded on every session. This can cause the agent to get less focused and degrade results.</p>
+
+<p>Instead, create a context index inside the globally loaded file. Reference other files from there for subject-specific context, and let those files be loaded on demand. This saves space in the context window and keeps the always-loaded instructions much smaller.</p>
+
+<p>For example:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>For a list of projects, see @local/projects.md.
+</code></pre></div></div>
+
+<p>This trick is also useful once context files get larger than about 250 lines. At that point, the file probably wants to become a router rather than a complete knowledge base.</p>
+
+<h1 id="skills">Skills</h1>
+
+<p>My skills tend to be documentation-only. They are usually Markdown files that describe a reusable workflow, not scripts. In Claude, these live under <code class="language-plaintext highlighter-rouge">.claude/skills</code>. In Codex, they live under <code class="language-plaintext highlighter-rouge">.agents/skills</code>, with a more canonical file structure around them.</p>
+
+<p>There are some front matter differences, but the same Codex-style skill front matter also works with Claude in practice. That means you do not need duplicate skill trees.</p>
+
+<p>I make <code class="language-plaintext highlighter-rouge">.agents/skills</code> the canonical location:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.agents/
+  skills/
+    skill-name/
+      SKILL.md
+      README.md
+      scripts/
+      references/
+      assets/
+</code></pre></div></div>
+
+<p>Then I replace <code class="language-plaintext highlighter-rouge">.claude/skills</code> with a symlink to <code class="language-plaintext highlighter-rouge">../.agents/skills</code>. That lets Claude and Codex read the same skill files.</p>
+
+<p>The important thing is that reusable workflows should exist once. If the same skill is copied into two agent-specific folders, those copies will drift. The whole point of the migration is to make the repo more maintainable, not to create another synchronization problem.</p>
+
+<h1 id="suggested-folder-structure">Suggested Folder Structure</h1>
+
+<p>Here is the rough shape I ended up with:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>repo/
+  AGENTS.md
+  CLAUDE.md
+  CLAUDE.local.md
+  .agents/
+    skills/
+      skill-name/
+        SKILL.md
+        README.md
+        scripts/
+        references/
+        assets/
+  .claude/
+    settings.json
+    skills -&gt; ../.agents/skills
+</code></pre></div></div>
+
+<p>In short:</p>
+<ul>
+  <li>The checked-in shared guidance lives in <code class="language-plaintext highlighter-rouge">AGENTS.md</code>.</li>
+  <li>Claude gets a tiny <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> file that tells it to load <code class="language-plaintext highlighter-rouge">AGENTS.md</code>.</li>
+  <li>Personal local context lives in <code class="language-plaintext highlighter-rouge">AGENTS.override.md</code>.</li>
+  <li>Shared skills live once, under <code class="language-plaintext highlighter-rouge">.agents/skills</code>, with Claude pointed at them through a symlink.</li>
+</ul>
+
+<h1 id="working-with-worktrees">Working With Worktrees</h1>
+
+<p>Worktrees are useful when using agents. They let you run multiple agents at once, each operating on a copy of the repo. If one or more agents wants to modify the project code, the other agents are not effected. For example, you can kick off a long running report and create a new Skill at the same time.</p>
+
+<p>When you create a worktree in git, it copies all your repo files to a new folder under the hood. That is great for tracked files, but it creates a problem for local context files, which are necessarily not tracked. These files are not copied automatically.</p>
+
+<p>The solution is to copy or symlink those additional files and directories yourself. In Codex, I do this with a <code class="language-plaintext highlighter-rouge">.codex/hooks.json</code> file:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"hooks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"SessionStart"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"matcher"</span><span class="p">:</span><span class="w"> </span><span class="s2">"startup|resume"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"hooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"command"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">".codex/hooks/link_sidekick_context.sh"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Then the hook script links the shared local context into the current worktree:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+<span class="nb">set</span> <span class="nt">-euo</span> pipefail
+
+<span class="nv">REPO_ROOT</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cd</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">dirname</span> <span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span><span class="s2">/.."</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span><span class="si">)</span><span class="s2">"</span>
+<span class="nv">LOCAL_ROOT</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">MYAPP_LOCAL_ROOT</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.config/myapp</span><span class="k">}</span><span class="s2">"</span>
+
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">"</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">/local"</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">/memory"</span>
+
+<span class="nb">touch</span> <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">/AGENTS.override.md"</span>
+<span class="nb">touch</span> <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">/CLAUDE.local.md"</span>
+
+link_path<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local source</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+  <span class="nb">local </span><span class="nv">target</span><span class="o">=</span><span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span>
+
+  <span class="k">if</span> <span class="o">[</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$target</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-L</span> <span class="s2">"</span><span class="nv">$target</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Skipping </span><span class="nv">$target</span><span class="s2">: exists and is not a symlink"</span>
+    <span class="k">return </span>0
+  <span class="k">fi
+
+  if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$source</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Skipping </span><span class="nv">$target</span><span class="s2">: source does not exist: </span><span class="nv">$source</span><span class="s2">"</span>
+    <span class="k">return </span>0
+  <span class="k">fi
+
+  </span><span class="nb">rm</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$target</span><span class="s2">"</span>
+  <span class="nb">ln</span> <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$source</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$target</span><span class="s2">"</span>
+  <span class="nb">echo</span> <span class="s2">"Linked </span><span class="nv">$target</span><span class="s2"> -&gt; </span><span class="nv">$source</span><span class="s2">"</span>
+<span class="o">}</span>
+
+link_path <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">/AGENTS.override.md"</span> <span class="s2">"</span><span class="nv">$REPO_ROOT</span><span class="s2">/AGENTS.override.md"</span>
+link_path <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">/CLAUDE.local.md"</span> <span class="s2">"</span><span class="nv">$REPO_ROOT</span><span class="s2">/CLAUDE.local.md"</span>
+link_path <span class="s2">"</span><span class="nv">$LOCAL_ROOT</span><span class="s2">/local"</span> <span class="s2">"</span><span class="nv">$REPO_ROOT</span><span class="s2">/local"</span>
+</code></pre></div></div>
+
+<p>This keeps the private context out of git, but makes it available inside every worktree where the agent starts. It also avoids a subtle failure mode where the agent appears to be working normally, but is missing the local context that makes the cowork project useful.</p>
+
+<h1 id="permissions-for-cowork-use-cases">Permissions for Cowork Use Cases</h1>
+
+<p>Cowork use cases mean using the agent to interact with knowledge work tools. That might include Jira, Confluence, Slack, Calendar, Email, GitHub, internal command-line clients, or anything else you use to do real work. Often you are chaining many of these together in a single prompt.</p>
+
+<p>Having to approve each individual tool every time can turn a task from async back into sync. Many of the tool calls are also read only, especially the custom scripts in the project itself. BUt the agent may not know that for sure.</p>
+
+<p>For cowork, my permission goals are:</p>
+
+<ul>
+  <li>Don’t interrupt up the async / parallel job flow</li>
+  <li>Avoid repeated approval prompts across sessions for safe tool calls</li>
+  <li>It’s OK for the agent to update it’s own Skills</li>
+  <li>Make sure work trees can read the untracked files in the parent repo</li>
+</ul>
+
+<p>Here is a simplified example of a <code class="language-plaintext highlighter-rouge">~/.codex/config.toml</code> setup:</p>
+
+<div class="language-toml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">approval_policy</span> <span class="p">=</span> <span class="s">"never"</span>
+<span class="py">default_permissions</span> <span class="p">=</span> <span class="s">"myapp"</span>
+
+<span class="c"># Allow Loading Local Project Config</span>
+<span class="nn">[projects."/path/to/myapp"]</span>
+<span class="py">trust_level</span> <span class="p">=</span> <span class="s">"trusted"</span>
+
+<span class="c"># Allow Writes to the Repo</span>
+<span class="py">writable_roots</span> <span class="p">=</span> <span class="p">[</span>
+  <span class="s">"/path/to/myapp"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c"># Make Sure Work Trees Can Always Read These</span>
+<span class="nn">[permissions.myapp.filesystem]</span>
+<span class="py">"/path/to/myapp/AGENTS.override.md"</span> <span class="p">=</span> <span class="s">"read"</span>
+<span class="py">"/path/to/myapp/CLAUDE.local.md"</span> <span class="p">=</span> <span class="s">"read"</span>
+<span class="py">"/path/to/myapp/.agents"</span> <span class="p">=</span> <span class="s">"write"</span>
+</code></pre></div></div>
+
+<p>This is where a cowork project differs from a normal coding project. A coding project mostly needs filesystem and test-runner permissions. A cowork project may eventually talk to systems that can send messages, move meetings, update tickets, or change documents. The permission model should reflect that difference.</p>
+
+<h1 id="asking-codex-to-do-the-migration">Asking Codex to Do the Migration</h1>
+
+<p>If you want Codex to do this kind of migration, give it an explicit plan. The plan should say what is canonical, what is compatibility, and what should not be duplicated.</p>
+
+<p>Here is the prompt shape I would use:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># Claude + Codex Hybrid Migration Plan</span>
+
+<span class="gu">## Summary</span>
+
+Migrate the project from a Claude-only workflow to a shared Claude/Codex setup. Keep reusable workflows in one canonical location, while preserving separate top-level instruction files for each assistant.
+
+<span class="gu">## Plan</span>
+<span class="p">
+-</span> Create a shared <span class="sb">`.agents/skills/`</span> directory for reusable workflows.
+<span class="p">-</span> Move existing Claude skills or workflow files into <span class="sb">`.agents/skills/&lt;skill-name&gt;/SKILL.md`</span>.
+<span class="p">-</span> Convert Claude-specific "agents" that are really workflow playbooks into shared skills.
+<span class="p">-</span> Update Claude configuration so Claude can read the shared skills through a compatibility symlink.
+<span class="p">-</span> Remove or replace Claude-only metadata that does not apply to Codex skills.
+<span class="p">-</span> Update README/setup docs so the project is described as working with both Claude and Codex.
+<span class="p">-</span> Keep both assistant-specific context files:
+<span class="p">  -</span> <span class="sb">`CLAUDE.md`</span> for Claude Code
+<span class="p">  -</span> <span class="sb">`AGENTS.md`</span> for Codex
+<span class="p">-</span> Make <span class="sb">`AGENTS.md`</span> the single checked-in source of shared agent instructions.
+<span class="p">-</span> Make <span class="sb">`CLAUDE.md`</span> a small file that says <span class="sb">`Load @AGENTS.md`</span>.
+<span class="p">-</span> Make <span class="sb">`CLAUDE.local.md`</span> contain <span class="sb">`Load @AGENTS.override.md`</span>.
+<span class="p">-</span> Make <span class="sb">`AGENTS.override.md`</span> contain <span class="sb">`Also load @AGENTS.md`</span>.
+</code></pre></div></div>
+
+<p>The key is to make the invariants clear. Shared instructions live once. Local context stays private. Compatibility files are allowed, but they should point to the canonical files instead of repeating them.</p>
+
+<h1 id="closing">Closing</h1>
+
+<p>The migration is really about setting your repo up for success in a cowork project. Thoughtful layout preserves compatibility with multiple agents. Shared skills prevent duplicated workflows. Permissions keep cowork automation async. Worktrees keep agent work isolated.</p>
+
+<p>The goal is to keep you in the cowork invention loop as agents evolve.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/blog/tags/#ai" class="page__taxonomy-item p-category" rel="tag">ai</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#automation" class="page__taxonomy-item p-category" rel="tag">automation</a><span class="sep">, </span>
+    
+      <a href="/blog/tags/#productivity" class="page__taxonomy-item p-category" rel="tag">productivity</a>
+    
+    </span>
+  </p>
+
+
+
+
+
+
+    <p class="page__date">
+        <strong><i class="fas fa-fw fa-edit" aria-hidden="true"></i> GitHub:</strong>
+        <a href="https://github.com/chase-seibert/blog/blob/master/_posts/2026-05-01-migrating-a-claude-project-to-a-codex-claude-hybrid.md">_posts/2026-05-01-migrating-a-claude-project-to-a-codex-claude-hybrid.md</a>
+    </p>
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-05-01T00:00:00+00:00">May 1, 2026</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html" class="pagination--pager" title="Can Engineering Management Scale to 50 Direct Reports?">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/blog/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://chase-seibert.github.io">Chase Seibert Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/blog/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

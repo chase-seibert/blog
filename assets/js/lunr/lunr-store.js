@@ -1978,4 +1978,10 @@ var store = [{
         "tags": ["manager","ai"],
         "url": "/blog/2026/03/13/fifty-direct-reports-engineering-manager-thought-experiment.html",
         "teaser": null
+      },{
+        "title": "Migrating a Claude Project to a Codex/Claude Hybrid",
+        "excerpt":"Implementing a Personal Cowork Project I’ve been working on a personal cowork project called chase-sidekick. It is kind of like a custom OpenClaw: a repo full of scripts, clients, context, and reusable instructions that let an agent help me with knowledge work. The goal is not just to write code...","categories": [],
+        "tags": ["ai","productivity","automation"],
+        "url": "/blog/2026/05/01/migrating-a-claude-project-to-a-codex-claude-hybrid.html",
+        "teaser": null
       }]
