@@ -231,6 +231,7 @@ trust_level = "trusted"
 # Allow Writes to the Repo
 writable_roots = [
   "/path/to/myapp",
+  "~/.codex/worktrees",
 ]
 
 # Make Sure Work Trees Can Always Read These
