@@ -236,6 +236,8 @@ writable_roots = [
 
 # Make Sure Work Trees Can Always Read These
 [permissions.myapp.filesystem]
+"~/.codex/worktrees" = "write" 
+"/path/to/myapp" = "write"
 "/path/to/myapp/AGENTS.override.md" = "read"
 "/path/to/myapp/CLAUDE.local.md" = "read"
 "/path/to/myapp/.agents" = "write"
