@@ -1984,4 +1984,10 @@ var store = [{
         "tags": ["ai","productivity","automation"],
         "url": "/blog/2026/05/01/migrating-a-claude-project-to-a-codex-claude-hybrid.html",
         "teaser": null
+      },{
+        "title": "Why I Built Sideline Save",
+        "excerpt":"Sideline Save is a personal software project I built to solve a problem I kept having at my son’s baseball games: I wanted to capture the important moments, but I could never know which pitch would become one. Using the built-in Camera app meant making the decision too early. I...","categories": [],
+        "tags": ["ios","youth-sports","elsewhere"],
+        "url": "/blog/2026/08/27/why-i-built-sideline-save.html",
+        "teaser": null
       }]
