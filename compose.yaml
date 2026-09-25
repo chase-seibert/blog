@@ -1,0 +1,15 @@
+services:
+  jekyll:
+    build:
+      context: .
+    working_dir: /app
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+    ports:
+      - "4000:4000"
+    environment:
+      JEKYLL_ENV: development
+
+volumes:
+  bundle:

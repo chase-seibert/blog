@@ -6,7 +6,7 @@ RUBY_ENV = . "$(CHRUBY_SH)" && chruby "ruby-$(RUBY_VERSION)"
 SITE_URL ?= https://chase-seibert.github.io/blog/
 WORKFLOW ?= jekyll-4-gh-pages.yml
 
-.PHONY: setup build check server github deploy-status verify-deploy tags words diff draft
+.PHONY: setup build check server github docker-setup docker-build docker-check docker-server docker-github docker-down deploy-status verify-deploy tags words diff draft
 
 setup:
 	$(RUBY_ENV) && bundle install
@@ -23,6 +23,25 @@ server:
 
 github:
 	$(RUBY_ENV) && bundle exec jekyll serve --incremental --watch --drafts
+
+docker-setup: docker-build
+
+docker-build:
+	docker compose build
+
+docker-check: docker-build
+	docker compose run --rm --no-deps --env JEKYLL_ENV=production jekyll bundle exec jekyll build
+	test -s _site/index.html
+	grep -q '<title>Chase Seibert Blog</title>' _site/index.html
+
+docker-server: docker-build
+	docker compose up jekyll
+
+docker-github: docker-build
+	docker compose run --rm --service-ports --env JEKYLL_ENV=development jekyll bundle exec jekyll serve --incremental --watch --drafts --host 0.0.0.0 --port 4000
+
+docker-down:
+	docker compose down
 
 deploy-status:
 	gh run list --workflow "$(WORKFLOW)" --branch master --limit 5

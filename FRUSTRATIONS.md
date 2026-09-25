@@ -2,6 +2,18 @@
 
 This log captures recurring failure modes and the shortest known path around them. Keep entries concise and reusable.
 
+## 2026-09-25: Ruby 3.1.2 Docker image does not have a Bookworm tag
+
+- Symptom: Docker cannot resolve `ruby:3.1.2-slim-bookworm`.
+- Cause: that Ruby release is published with the Bullseye slim variant, not the Bookworm variant.
+- Workaround: use a current Ruby 3.1 patch release with the Bookworm slim image in the project Dockerfile.
+
+## 2026-09-25: The Ruby 3.1.2 Bullseye image has stale Debian security packages
+
+- Symptom: `apt-get install` returns 404 errors for packages from the Bullseye security repository.
+- Cause: the old base image points at package versions that are no longer available from the live mirror.
+- Workaround: use a current Ruby 3.1 patch release with the Bookworm slim image.
+
 ## 2026-08-13: Jekyll is missing under the default macOS Ruby
 
 - Symptom: `bundle exec jekyll build` reports `bundler: command not found: jekyll`, while `ruby -v` reports 2.6.x.
